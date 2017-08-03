@@ -15,7 +15,7 @@ class Functions
 		self::appendFunction('li', 'getLectureById', 'Gets a Lecture by id. Uses id as param.');
 		self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
 		self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
-		self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
+		#self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
 		self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
 		self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
 		self::appendFunction('gg', 'getAllParallelGroups', 'Gets all parallel group types.', true);
