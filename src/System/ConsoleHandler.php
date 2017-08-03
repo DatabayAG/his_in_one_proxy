@@ -239,4 +239,57 @@ class ConsoleHandler
 			$this->unknownCommand();
 		}
 	}
+
+
+	protected function wsdlDownloader($file, $url)
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_REFERER, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		$result = curl_exec($ch);
+		curl_close($ch);
+
+		if($result)
+		{
+			file_put_contents($file, $result);
+			DataCache::getInstance()->getLog()->warning(sprintf('Successfully downloaded %s from %s', $file, $url));
+		}
+		else if( ! $result)
+		{
+			DataCache::getInstance()->getLog()->warning(sprintf('Failed to download %s from %s', $file, $url));
+		}
+	}
+
+	public function wsdlHelper()
+	{
+		$wsdls = array('AddressService.wsdl', 
+			  'CourseCatalogService.wsdl', 
+			  'CourseInterfaceService.wsdl', 
+			  'CourseService.wsdl', 
+			  'CourseOfStudyService.wsdl',
+			  'FacilityService.wsdl',
+			  'OrgUnitService.wsdl',
+			  'PersonService.wsdl',
+			  'StudentService.wsdl',
+			  'SystemEventAbonnenmentService.wsdl',
+			  'TermService.wsdl',
+			  'UnitService.wsdl',
+			  'ValueService.wsdl'
+		);
+		foreach($wsdls as $wsdl)
+		{
+			$file = 'test/wsdl/'.$wsdl;
+			if(file_exists($file))
+			{
+				unlink($file);
+			}
+			$this->wsdlDownloader($file,  Utils::ensureTrailingSlash(GlobalSettings::getInstance()->getHisServerUrl()) . $file );
+		}
+
+	}
 }
