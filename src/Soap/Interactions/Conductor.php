@@ -368,11 +368,11 @@ class Conductor
 		$builder = new JsonBuilder();
 		$structure = $builder::convertOrgUnitsToJson($org_unit_root);
 
-		/*$queue = new SimpleQueue();
+		$queue = new SimpleQueue();
 		$queue->push(QueueConstants::SERVICE_QUEUE, json_encode($structure), QueueConstants::PUBLISH_COURSE_CATALOG_TO_ECS);
 
 		$this->log->debug('...added institution structure to queue done.');
-	*/
+
 		return true;
 	}
 

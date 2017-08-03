@@ -44,6 +44,7 @@ class ConsoleHandler
 	 */
 	public function __construct($term = null, $year = null)
 	{
+		$this->startTimer();
 		$log           = new Log('debug');
 		$streamHandler = new StreamHandler('php://stdout', 'debug');
 		$output        = "%message%\n";
@@ -56,6 +57,7 @@ class ConsoleHandler
 		$this->term_id   = $term;
 
 		$this->collection = Functions::getFunctions();
+		$this->endTimer('Initialisation');
 	}
 
 	protected function getLectures()
@@ -191,7 +193,7 @@ class ConsoleHandler
 			$debug = '';
 			if(GlobalSettings::getInstance()->isDebug() && $func->isDebug())
 			{
-				echo "\t\t " . $func->getId() . " => " . $func->getComment() . " (Debug)\n";
+				echo "\t\t " . $func->getId() . " => (Debug) " . $func->getComment() . "\n";
 			}
 			else
 			{
@@ -206,10 +208,10 @@ class ConsoleHandler
 		$this->start_time = microtime(TRUE);
 	}
 
-	protected function endTimer()
+	protected function endTimer($what = 'Queries')
 	{
 		$end_time = microtime(TRUE);
-		DataCache::getInstance()->getLog()->info(sprintf('Queries took %s seconds.', round($end_time - $this->start_time, 4)));
+		DataCache::getInstance()->getLog()->info(sprintf($what . ' took %s seconds.', round($end_time - $this->start_time, 4)));
 	}
 
 	/**

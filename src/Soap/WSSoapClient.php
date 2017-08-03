@@ -3,7 +3,10 @@
 namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Config\GlobalSettings;
+use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\Soap\SoapService\ConfigClient;
+use HisInOneProxy\System\Utils;
+use Noodlehaus\Exception;
 
 class WSSoapClient extends \SoapClient
 {
@@ -51,9 +54,12 @@ class WSSoapClient extends \SoapClient
 		}
 
 		$this->soap_debug =  GlobalSettings::getInstance()->isSoapDebug();
-
-		$this->__setUsernameToken(GlobalSettings::getInstance()->getHisUserName(), GlobalSettings::getInstance()->getHisPassword());
-		parent::__construct($wsdl, $config);
+		#try{
+			$this->__setUsernameToken(GlobalSettings::getInstance()->getHisUserName(), GlobalSettings::getInstance()->getHisPassword());
+			parent::__construct($wsdl, $config);
+		#}catch(\Exception $e){
+			#DataCache::getInstance()->getLog()->critical($e->getMessage());
+		#}
 	}
 
 	/**
@@ -76,12 +82,17 @@ class WSSoapClient extends \SoapClient
 	 */
 	public function __soapCall($function_name, $arguments, $options = NULL, $input_headers = NULL, &$output_headers = NULL)
 	{
-		if($this->add_secure_header === true)
-		{
-			$this->__setSoapHeaders($this->generateWSSecurityHeader());
-		}
+		#try{
+			if($this->add_secure_header === true)
+			{
+				$this->__setSoapHeaders($this->generateWSSecurityHeader());
+			}
 
-		return parent::__soapCall($function_name, $arguments, $options, $input_headers, $output_headers);
+			return parent::__soapCall($function_name, $arguments, $options, $input_headers, $output_headers);
+		#}
+		#catch(\Exception $e){
+			#DataCache::getInstance()->getLog()->critical($e->getMessage());
+		#}
 	}
 
 	public function __doRequest($request, $location, $action, $version, $one_way = 0)
