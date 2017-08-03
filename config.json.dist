@@ -15,6 +15,7 @@
 	},
 	"ECS" : {
 		"auth_id"            : "",
+		"receiver_memberships": "1",
 		"url"                : "",
 		"ssl_validation"     : ""
 	},

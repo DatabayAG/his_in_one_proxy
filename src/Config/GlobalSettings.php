@@ -100,6 +100,11 @@ class GlobalSettings
 	protected $debug;
 
 	/**
+	 * @var string
+	 */
+	protected $receiver_memberships;
+
+	/**
 	 * @param $name
 	 */
 	protected function overWriteDefaultConfigFileName($name)
@@ -171,6 +176,7 @@ class GlobalSettings
 		$this->setEcsServerUrl($this->config->get('ECS.url'));
 		$this->setEcsAuthId($this->config->get('ECS.auth_id'));
 		$this->setValidateSsl($this->config->get('ECS.ssl_validation'));
+		$this->receiver_memberships = $this->config->get('ECS.receiver_memberships');
 
 		$this->setPathToQueue($this->config->get('path_to_queue'));
 		$this->setQueueTimer($this->config->get('queue_timer'));
@@ -477,6 +483,12 @@ class GlobalSettings
 	{
 		$this->debug = $debug;
 	}
-	
-	
+
+	/**
+	 * @return string
+	 */
+	public function getReceiverMemberships()
+	{
+		return $this->receiver_memberships;
+	}
 }
