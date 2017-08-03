@@ -6,6 +6,7 @@ use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue\QueueProcess;
 use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use HisInOneProxy\Soap\SoapService\SoapClientService;
 use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -244,13 +245,12 @@ class ConsoleHandler
 	protected function wsdlDownloader($file, $url)
 	{
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_REFERER, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$result = curl_exec($ch);
 		curl_close($ch);
 
@@ -267,20 +267,8 @@ class ConsoleHandler
 
 	public function wsdlHelper()
 	{
-		$wsdls = array('AddressService.wsdl', 
-			  'CourseCatalogService.wsdl', 
-			  'CourseInterfaceService.wsdl', 
-			  'CourseService.wsdl', 
-			  'CourseOfStudyService.wsdl',
-			  'FacilityService.wsdl',
-			  'OrgUnitService.wsdl',
-			  'PersonService.wsdl',
-			  'StudentService.wsdl',
-			  'SystemEventAbonnenmentService.wsdl',
-			  'TermService.wsdl',
-			  'UnitService.wsdl',
-			  'ValueService.wsdl'
-		);
+		$wsdls = $this->gatherServicesForWsdl();
+
 		foreach($wsdls as $wsdl)
 		{
 			$file = 'test/wsdl/'.$wsdl;
@@ -291,5 +279,27 @@ class ConsoleHandler
 			$this->wsdlDownloader($file,  Utils::ensureTrailingSlash(GlobalSettings::getInstance()->getHisServerUrl()) . $file );
 		}
 
+	}
+	
+	protected function gatherServicesForWsdl()
+	{
+		$rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator('../src/Soap/SoapService/'));
+		$services = array();
+		foreach($rii as $file)
+		{
+			if($file->isFile() && $file->getExtension() === 'php')
+			{
+				$class = str_replace(array('class.', '.php'), '', $file->getBasename());
+				require_once $file;
+				$reflection = new \ReflectionClass($class);
+				if(!$reflection->isAbstract() && !$reflection->isInterface())
+				{
+					/** @var $c SoapClientService */
+					$c = new $class;
+					$services[] = $c->getServiceWsdl();
+				}
+			}
+		}
+		return $services;
 	}
 }
