@@ -1,0 +1,13 @@
+	<eventDate>
+		<individualDate>
+			<id>32</id>
+			<objGuid>324324234123-34132432-41324-1234-13241</objGuid>
+			<lockVersion>1</lockVersion>
+			<plannedDatesId>23</plannedDatesId>
+			<executiondate>22.12.2017</executiondate>
+			<starttime>8:00</starttime>
+			<endtime>11:00</endtime>
+			<weekday>2</weekday>
+			<roomId>23112</roomId>
+		</individualDate>
+	</eventDate>

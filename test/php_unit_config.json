@@ -1,0 +1,26 @@
+{
+	"HIS" : {
+		"username"           : "",
+		"password"           : "",
+		"url"                : "test/wsdl",
+		"soap_caching"       : "0",
+		"soap_debug"         : "false",
+		"endpoint"           : {
+			"register_listener"  : "false",
+			"listener_url"       : "http://my_his_listener",
+			"listener_port"      : "8080",
+			"username"           : "user",
+			"password"           : "pass"
+		}
+	},
+	"ECS" : {
+		"auth_id"            : "",
+		"url"                : "",
+		"ssl_validation"     : ""
+	},
+	"path_to_queue"          : "/tmp/phpunit_test/",
+	"path_to_log"            : "/tmp/phpunit.log",
+	"keep_elements_in_queue" : "true",
+	"queue_timer"            : "1",
+	"debug"                  : "true"
+}

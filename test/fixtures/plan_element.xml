@@ -1,0 +1,30 @@
+	<planelements>
+
+			<id>234</id>
+			<objGuid>324-234-23-4325</objGuid>
+			<lockVersion>2</lockVersion>
+			<attendeeMaximum>2</attendeeMaximum>
+			<attendeeMinimum>1</attendeeMinimum>
+			<cancelEnd>22.01.2017</cancelEnd>
+			<cancelled>0</cancelled>
+			<defaultlanguage>2</defaultlanguage>
+			<defaulttext>Def Text</defaulttext>
+			<genderId>1</genderId>
+			<gradeAssessmentStatusId>23</gradeAssessmentStatusId>
+			<hoursPerWeek>2</hoursPerWeek>
+			<longtext>Long Text</longtext>
+			<parallelgroupId>3</parallelgroupId>
+			<registerBegin>10.01.2017</registerBegin>
+			<registerEnd>22.01.2017</registerEnd>
+			<rotation>1</rotation>
+			<shorttext>Short text</shorttext>
+			<termSegment>3</termSegment>
+			<termTypeValueId>4</termTypeValueId>
+			<unitId>12</unitId>
+			<year>2017</year>
+			<eventDate>22.01.2017</eventDate>
+			<planningPreference></planningPreference>
+			<personPlanelements></personPlanelements>
+			<plannedDates></plannedDates>
+
+	</planelements>

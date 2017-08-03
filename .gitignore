@@ -1,0 +1,5 @@
+coverage/*
+.idea/*
+config.json
+pid/*.pid
+test/wsdl/*.wsdl

@@ -1,0 +1,45 @@
+<resp>
+	<id>6756876</id>
+	<academicdegreeValueId>1</academicdegreeValueId>
+	<admissionToStudyId>2</admissionToStudyId>
+	<astatDegree>3</astatDegree>
+	<astatSubject>4</astatSubject>
+	<courseOfStudyTypeValueId>5</courseOfStudyTypeValueId>
+	<courseSpecializationId>6</courseSpecializationId>
+	<courseSpecializationLid>7</courseSpecializationLid>
+	<defaultlanguage>8</defaultlanguage>
+	<defaulttext>9</defaulttext>
+	<degreeId>10</degreeId>
+	<degreeLid>11</degreeLid>
+	<enrollmentId>12</enrollmentId>
+	<examinationversionId>13</examinationversionId>
+	<formOfStudiesId>14</formOfStudiesId>
+	<isAdmissionToStudy>15</isAdmissionToStudy>
+	<isCourseOfStudyStart>16</isCourseOfStudyStart>
+	<lid>17</lid>
+	<longtext>Langer Text</longtext>
+	<majorFieldOfStudyId>18</majorFieldOfStudyId>
+	<majorFieldOfStudyLid>19</majorFieldOfStudyLid>
+	<objectLocale>20</objectLocale>
+	<orgunitId>21</orgunitId>
+	<orgunitLid>22</orgunitLid>
+	<partOfStudies>23</partOfStudies>
+	<partTimePercentage>24</partTimePercentage>
+	<placeOfStudiesId>25</placeOfStudiesId>
+	<regularNumberOfSemesters>26</regularNumberOfSemesters>
+	<shorttext>Kurzer Text</shorttext>
+	<subjectId>27</subjectId>
+	<subjectIndicatorId>28</subjectIndicatorId>
+	<subjectLid>29</subjectLid>
+	<teachingunitOrgunitId>30</teachingunitOrgunitId>
+	<teachingunitOrgunitLid>31</teachingunitOrgunitLid>
+	<typeOfStudyId>32</typeOfStudyId>
+	<uniquename>Uniquename</uniquename>
+	<validFrom>2017-12-24</validFrom>
+	<validFromTermTermTypeValueId>33</validFromTermTermTypeValueId>
+	<validFromTermYear>2018</validFromTermYear>
+	<validTo>2018-12-28</validTo>
+	<validToTermTermTypeValueId>34</validToTermTermTypeValueId>
+	<combinationParameter>35</combinationParameter>
+	<validToTermYear>2019</validToTermYear>
+</resp>

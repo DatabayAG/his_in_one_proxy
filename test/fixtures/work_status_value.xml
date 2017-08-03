@@ -1,0 +1,10 @@
+<workstatusvalue>
+	<id>23</id>
+	<shorttext>Bla</shorttext>
+	<defaulttext>My little workstatus</defaulttext>
+	<longtext>Loooooooooong Workstatus text</longtext>
+	<uniquename>TotallyUnique</uniquename>
+	<sortorder>0</sortorder>
+	<defaultlanguage>12</defaultlanguage>
+	<objGuid>45432654763756243</objGuid>
+</workstatusvalue>

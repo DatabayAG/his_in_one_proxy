@@ -1,0 +1,12 @@
+
+<allVisibleChildren>
+	<!--Zero or more repetitions:-->
+	<visibleChild>
+		<relationTypeId>56</relationTypeId>
+		<!--Optional:-->
+		<sortorder>0</sortorder>
+		<childDefaulttext>dsafdag</childDefaulttext>
+		<!--Optional:-->
+		<childElementnr>4</childElementnr>
+	</visibleChild>
+</allVisibleChildren>

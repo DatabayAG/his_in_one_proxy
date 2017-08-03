@@ -1,0 +1,22 @@
+	<eventDate>
+		<id>2</id>
+		<objGuid>3453443-435345435-43543543</objGuid>
+		<lockVersion>34</lockVersion>
+		<academicYear>2016</academicYear>
+		<compulsoryRequirement>This</compulsoryRequirement>
+		<contents>Short Content</contents>
+		<courseAchievement>courseAchievement</courseAchievement>
+		<credits>12</credits>
+		<examinationAchievement>YEAH</examinationAchievement>
+		<externOrganizer>Him</externOrganizer>
+		<grading>5</grading>
+		<learningTarget>23</learningTarget>
+		<literature>This Book</literature>
+		<objectiveQualification>None</objectiveQualification>
+		<planelementId>23</planelementId>
+		<recommendedRequirement>That</recommendedRequirement>
+		<targetGroup>You</targetGroup>
+		<teachingLanguageId>2</teachingLanguageId>
+		<teachingMethod>4</teachingMethod>
+		<workload>12</workload>
+	</eventDate>

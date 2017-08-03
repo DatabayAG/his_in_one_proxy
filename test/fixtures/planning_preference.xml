@@ -1,0 +1,12 @@
+	<planning_preference>
+		<id>435</id>
+		<objGuid>4324-2343534-234-23-4-23</objGuid>
+		<lockVersion>6</lockVersion>
+		<comment>My super duper comment</comment>
+		<fixedTime>12:23</fixedTime>
+		<ownerPlanelementId>2</ownerPlanelementId>
+		<partsInARow>4</partsInARow>
+		<termTypeValueId>5</termTypeValueId>
+		<preferenceParts></preferenceParts>
+		<timePreferences></timePreferences>
+	</planning_preference>

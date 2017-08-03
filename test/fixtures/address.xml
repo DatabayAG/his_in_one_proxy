@@ -1,0 +1,23 @@
+<postAdresses>
+	<postAddress>
+		<id>23435</id>
+		<objGuid>87043563577076</objGuid>
+		<addresstagId>3434</addresstagId>
+		<sortorder>0</sortorder>
+		<validTo>22-11-2019</validTo>
+		<validFrom>22-11-2014</validFrom>
+		<personId>34</personId>
+		<orgunitLid>45345234</orgunitLid>
+		<buildingId>1</buildingId>
+		<createdAt>22-11-1920</createdAt>
+		<updatedAt>22-11-2015</updatedAt>
+		<postcode>13432</postcode>
+		<street>Super street</street>
+		<city>Here</city>
+		<addressaddition>No addition.</addressaddition>
+		<postofficebox>2</postofficebox>
+		<company>23234</company>
+		<state>Enter state here</state>
+		<countryId>45</countryId>
+	</postAddress>
+</postAdresses>

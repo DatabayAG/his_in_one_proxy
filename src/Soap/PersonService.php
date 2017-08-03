@@ -1,0 +1,44 @@
+<?php
+
+namespace HisInOneProxy\Soap;
+
+use HisInOneProxy\Log\Log;
+use HisInOneProxy\Parser;
+
+class PersonService extends SoapService
+{
+
+	/**
+	 * CourseCatalogService constructor.
+	 * @param Log $log
+	 * @param SoapServiceRouter $soap_service_router
+	 */
+	public function __construct($log, $soap_service_router)
+	{
+		parent::__construct($log, $soap_service_router);
+	}
+
+	/**
+	 * @param $person_id
+	 * @return \HisInOneProxy\DataModel\Person | null
+	 */
+	public function readPerson($person_id)
+	{
+		$params = array(array('id' => $person_id));
+		try{
+			$response	= $this->soap_service_router->getSoapClientPersonService()->__soapCall('readPerson', $params);
+			$parser		= new Parser\ParsePerson($this->log);
+			if(isset($response->person) && $response->person != null && $response->person != '')
+			{
+				$person = $parser->parse($response->person);
+				return $person;
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+}

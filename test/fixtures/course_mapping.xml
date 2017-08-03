@@ -1,0 +1,10 @@
+<resp>
+	<examplans>
+		<examplan>
+			<personId>67568376</personId>
+			<planelementId>23</planelementId>
+			<cancellation>32432</cancellation>
+			<workstatusId>8</workstatusId>
+		</examplan>
+	</examplans>
+</resp>

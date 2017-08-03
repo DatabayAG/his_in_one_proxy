@@ -1,0 +1,20 @@
+<planelementChanges>
+	<planelementChange>
+		<id>98</id>
+		<objGuid>54-234234-234-23421</objGuid>
+		<lockVersion>1</lockVersion>
+		<instructors>
+			<instructor>
+				<id>124</id>
+			</instructor>
+		</instructors>
+		<languageId>2</languageId>
+		<newdate>12.02.2017</newdate>
+		<olddate>31.02.2017</olddate>
+		<plannedDatesId>4324523</plannedDatesId>
+		<roomId>4324521</roomId>
+		<remark>1</remark>
+		<starttime>11:00</starttime>
+		<endtime>11:15</endtime>
+	</planelementChange>
+</planelementChanges>

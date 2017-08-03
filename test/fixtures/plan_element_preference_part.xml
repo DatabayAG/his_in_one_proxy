@@ -1,0 +1,23 @@
+<preferenceParts>
+	<planelementPreferencePart>
+		<id>231</id>
+		<objGuid>54-24334234-234-23421</objGuid>
+		<lockVersion>2</lockVersion>
+		<belongsToPlanelementPreferenceId>21312</belongsToPlanelementPreferenceId>
+		<preferredInstructors>
+			<instructor>
+				<id>4433</id>
+				<objGuid>43543-5345-345-34-5-3454</objGuid>
+				<lockVersion>7</lockVersion>
+				<preferredInstructorId>45</preferredInstructorId>
+				<preferredInstructorForPlanelementPartsId>245</preferredInstructorForPlanelementPartsId>
+				<priority>2</priority>
+			</instructor>
+		</preferredInstructors>
+		<preferredRooms>
+			<room>
+				<id>23</id>
+			</room>
+		</preferredRooms>
+	</planelementPreferencePart>
+</preferenceParts>

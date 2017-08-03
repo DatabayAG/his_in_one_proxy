@@ -1,0 +1,9 @@
+<orgunit>
+	<id>23</id>
+	<shortcut>My Unique OrgUnitName</shortcut>
+	<shorttext>Shortext</shorttext>
+	<displaytext>Displaytext sligthly longer</displaytext>
+	<longtext>Even Longer Text which does not mean here is more information, only longer text.</longtext>
+	<type>4711</type>
+	<childcount>0</childcount>
+</orgunit>

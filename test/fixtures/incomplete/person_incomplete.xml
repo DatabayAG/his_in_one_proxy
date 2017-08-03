@@ -1,0 +1,23 @@
+<person>
+	<id></id>
+	<objGuid>1232342</objGuid>
+	<firstname>Anton</firstname>
+	<surname>Roy</surname>
+	<allfirstnames>Anton Werner</allfirstnames>
+	<dateofbirth>1900-12-21</dateofbirth>
+	<gender>0</gender>
+	<birthname>Roy</birthname>
+	<artistname>Also know as</artistname>
+	<nameprefix>Prefix</nameprefix>
+	<namesuffix>Suffix</namesuffix>
+	<academicdegreesuffix>Prof. Dr.</academicdegreesuffix>
+	<academicdegreeId>23</academicdegreeId>
+	<titleId>1</titleId>
+	<birthcity>München</birthcity>
+	<countryId>12</countryId>
+	<nationalityId>22</nationalityId>
+	<secondNationalityId>21</secondNationalityId>
+	<accounts>
+	</accounts>
+	<selfregistrationStatusId>1</selfregistrationStatusId>
+</person>

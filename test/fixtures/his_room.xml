@@ -1,0 +1,16 @@
+<room xsi:type="Room" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<id>1</id>
+	<objGuid>033d5dcf-fe96-4f6e-8d4f-90d66b0d48ea</objGuid>
+	<shorttext>S001</shorttext>
+	<defaulttext>Seminarraum 001</defaulttext>
+	<longtext xsi:nil="true"/>
+	<defaultlanguageId>12</defaultlanguageId>
+	<uniquename>S001</uniquename>
+	<description xsi:nil="true"/>
+	<partOfRoomComposition>false</partOfRoomComposition>
+	<classRoomName>Room</classRoomName>
+	<floorId>1</floorId>
+	<din277RoomuseId>96</din277RoomuseId>
+	<area>100.000000</area>
+	<roomSegmentCount>0</roomSegmentCount>
+</room>

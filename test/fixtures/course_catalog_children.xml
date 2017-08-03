@@ -1,0 +1,17 @@
+<courseCatalogChildrenList>
+	<courseCatalogChildren>
+		<courseCatalogElementId>6756876</courseCatalogElementId>
+		<type>courseCatalog</type>
+		<sortorder>0</sortorder>
+	</courseCatalogChildren>
+	<courseCatalogChildren>
+		<courseCatalogElementId>33334</courseCatalogElementId>
+		<type>planelement</type>
+		<sortorder>1</sortorder>
+	</courseCatalogChildren>
+	<courseCatalogChildren>
+		<courseCatalogElementId>5555</courseCatalogElementId>
+		<type>unit</type>
+		<sortorder>1</sortorder>
+	</courseCatalogChildren>
+</courseCatalogChildrenList>

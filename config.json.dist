@@ -1,0 +1,26 @@
+{
+	"HIS" : {
+		"username"           : "",
+		"password"           : "",
+		"url"                : "test/wsdl",
+		"soap_caching"       : "0",
+		"soap_debug"         : "false",
+		"endpoint"           : {
+			"register_listener"  : "true",
+			"listener_url"       : "",
+			"listener_port"      : "",
+			"username"           : "",
+			"password"           : ""
+		}
+	},
+	"ECS" : {
+		"auth_id"            : "",
+		"url"                : "",
+		"ssl_validation"     : ""
+	},
+	"path_to_queue"          : "",
+	"path_to_log"            : "",
+	"keep_elements_in_queue" : "",
+	"queue_timer"            : "",
+	"debug"                  : ""
+}

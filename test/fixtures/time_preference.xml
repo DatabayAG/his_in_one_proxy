@@ -1,0 +1,22 @@
+<timePreferences>
+	<timePreference>
+		<id>432423</id>
+		<objGuid>4324-234-234-23-4-23</objGuid>
+		<lockVersion>55</lockVersion>
+		<ownerPersonPreferenceId>12</ownerPersonPreferenceId>
+		<ownerPlanelementPreferenceId>42</ownerPlanelementPreferenceId>
+		<ownerRoomclassId>1</ownerRoomclassId>
+		<termTypeValueId>2</termTypeValueId>
+		<timeslot>
+			<id>3213</id>
+			<objGuid>32432-45324-23-432-4-23</objGuid>
+			<lockVersion>1</lockVersion>
+			<starttime>12:45</starttime>
+			<endtime>15:01</endtime>
+			<weekdayId>2</weekdayId>
+		</timeslot>
+		<weightingFactor>1</weightingFactor>
+		<year>1200</year>
+
+	</timePreference>
+</timePreferences>

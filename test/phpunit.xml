@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
+	<testsuite name="My Test Suite">
+		<file>./GlobalTestSuite.php</file>
+	</testsuite>
+	<php>
+		<const name="PHPUNIT_HisInOneProxy_TEST_SUITE" value="true"/>
+	</php>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../src</directory>
+			<exclude>
+				<directory suffix=".php">../src/Exceptions</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>

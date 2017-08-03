@@ -1,0 +1,16 @@
+<instructors>
+	<!--Zero or more repetitions:-->
+	<instructor>
+	<id>90</id>
+	<objGuid>43543-5345-345-34-5-3454</objGuid>
+	<lockVersion>7</lockVersion>
+	<examinationsubareaId>45</examinationsubareaId>
+	<instructortaskId>64</instructortaskId>
+	<personId>334</personId>
+	<planelementChangeId>43545</planelementChangeId>
+	<plannedDatesId>6547</plannedDatesId>
+	<sortorder>3</sortorder>
+	<teachingLoadPercentage>60</teachingLoadPercentage>
+	<weight>1</weight>
+	</instructor>
+</instructors>

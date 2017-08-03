@@ -1,0 +1,923 @@
+<?php
+include_once './libs/composer/vendor/autoload.php';
+
+use HisInOneProxy\Parser;
+
+require_once 'test/TestCaseExtension.php';
+
+class SimpleXmlTest extends TestCaseExtension
+{
+	protected function setUp()
+	{
+		parent::setUp();
+	}
+
+	public function test_instantiateObject_shouldReturnInstance()
+	{
+		$instance = new Parser\SimpleXmlParser($this->log);
+		$this->assertInstanceOf('HisInOneProxy\Parser\SimpleXmlParser', $instance);
+	}
+
+	public function test_simplePersonIncompleteParsing_shouldReturnLogWarning()
+	{
+		$xml    = file_get_contents('test/fixtures/incomplete/person_incomplete.xml');
+		$parser = new Parser\ParsePerson($this->log);
+		$person = $parser->parse($xml);
+		$msg    = array_pop($this->collectedMessages);
+		$this->assertEquals('Warning: No id given for user, skipping!', $msg);
+		$this->assertNull($person->getObjGuid());
+		$this->assertNull($person->getFirstName());
+		$this->assertNull($person->getSurName());
+		$this->assertNull($person->getAllFirstNames());
+		$this->assertNull($person->getDateOfBirth());
+		$this->assertNull($person->getGenderId());
+		$this->assertNull($person->getBirthName());
+		$this->assertNull($person->getArtistName());
+		$this->assertNull($person->getNamePrefix());
+		$this->assertNull($person->getNameSuffix());
+		$this->assertNull($person->getAcademicDegreeSuffix());
+		$this->assertNull($person->getAcademicDegreeId());
+		$this->assertNull($person->getTitleId());
+		$this->assertNull($person->getBirthCity());
+		$this->assertNull($person->getCountryId());
+		$this->assertNull($person->getNationalityId());
+		$this->assertNull($person->getSecondNationalityId());
+		$this->assertNull($person->getSelfRegistrationStatusId());
+	}
+
+	public function test_simplePersonParsing_shouldReturnPerson()
+	{
+		$xml    = file_get_contents('test/fixtures/person.xml');
+		$parser = new Parser\ParsePerson($this->log);
+		$person = $parser->parse(simplexml_load_string($xml)->person);
+		$this->assertEquals('122', $person->getId());
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found user with id 122.', $msg);
+		$this->assertEquals('1232342', $person->getObjGuid());
+		$this->assertEquals('Anton', $person->getFirstName());
+		$this->assertEquals('Roy', $person->getSurName());
+		$this->assertEquals('Anton Werner', $person->getAllFirstNames());
+		$this->assertEquals('1900-12-21', $person->getDateOfBirth());
+		$this->assertEquals('0', $person->getGenderId());
+		$this->assertEquals('Roy', $person->getBirthName());
+		$this->assertEquals('Also know as', $person->getArtistName());
+		$this->assertEquals('Prefix', $person->getNamePrefix());
+		$this->assertEquals('Suffix', $person->getNameSuffix());
+		$this->assertEquals('Prof. Dr.', $person->getAcademicDegreeSuffix());
+		$this->assertEquals('23', $person->getAcademicDegreeId());
+		$this->assertEquals('1', $person->getTitleId());
+		$this->assertEquals('München', $person->getBirthCity());
+		$this->assertEquals('12', $person->getCountryId());
+		$this->assertEquals('22', $person->getNationalityId());
+		$this->assertEquals('21', $person->getSecondNationalityId());
+		$this->assertEquals('1', $person->getSelfRegistrationStatusId());
+	}
+
+	public function test_simpleOrgUnitIncompleteParsing_shouldReturnLogWarning()
+	{
+		$xml      = file_get_contents('test/fixtures/incomplete/orgunit_incomplete.xml');
+		$parser   = new Parser\ParseOrgUnit($this->log, $xml);
+		$org_unit = $parser->parse(simplexml_load_string($xml));
+		$msg      = array_pop($this->collectedMessages);
+		$this->assertEquals('Warning: No id given for OrgUnit, skipping!', $msg);
+		$this->assertNull($org_unit->getShortCut());
+		$this->assertNull($org_unit->getShortText());
+		$this->assertNull($org_unit->getDefaultText());
+		$this->assertNull($org_unit->getLongText());
+		$this->assertNull($org_unit->getTypeId());
+		$this->assertNull($org_unit->getChildCount());
+	}
+
+	public function test_simpleUnitParsing_shouldLogCorrectly()
+	{
+		$xml    = file_get_contents('test/fixtures/unit.xml');
+		$parser = new Parser\ParseUnit($this->log, $xml);
+		$unit   = $parser->parse(simplexml_load_string($xml));
+		$this->assertEquals('55', $unit->getId());
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 777.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementChange with id 76874654645.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementCancellation with id 31231.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 6876856.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found IndividualDate with id 765464554.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlannedDate with id 423423.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PersonPlanElement with id 435643.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found TimeSlot with id 765456.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found TimePreference with id 6574.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Room with id 23435.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PreferredInstructor with id 7668.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementPreferencePart with id 21321123.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanningPreference with id 23123.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found EventDate with id 23.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElement with id 123123.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Course with id 12.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Unit with id 55.', $msg);
+	}
+
+	public function test_simpleUnitParsing_shouldReturnUnit()
+	{
+		$xml    = file_get_contents('test/fixtures/unit.xml');
+		$parser = new Parser\ParseUnit($this->log, $xml);
+		$unit   = $parser->parse(simplexml_load_string($xml));
+		$this->assertEquals('55', $unit->getId());
+
+		$this->assertEquals('553123124343245', $unit->getObjGuid());
+		$this->assertEquals('2', $unit->getLockVersion());
+		$this->assertEquals('My little comment', $unit->getComment());
+		$this->assertEquals('de', $unit->getDefaultLanguage());
+		$this->assertEquals('My default text.', $unit->getDefaultText());
+		$this->assertEquals('4', $unit->getElementNr());
+		$this->assertEquals('2', $unit->getElementTypeId());
+		$this->assertEquals('213213123', $unit->getLid());
+		$this->assertEquals('My not so looooooong text.', $unit->getLongText());
+		$this->assertEquals('Short comment.', $unit->getShortComment());
+		$this->assertEquals('My short text.', $unit->getShortText());
+		$this->assertEquals('22', $unit->getStatusId());
+		$this->assertEquals('2017-02-25', $unit->getValidFrom());
+		$this->assertEquals('2018-02-25', $unit->getValidTo());
+		$this->assertEquals('My version comment', $unit->getVersionComment());
+		$this->assertEquals('0.2.2', $unit->getVersionTag());
+
+		$course = $unit->getCourseContainer()[0];
+		$this->assertEquals('12', $course->getId());
+		$this->assertEquals('3243254654234', $course->getObjGuid());
+		$this->assertEquals('2', $course->getLockVersion());
+		$this->assertEquals('WS 2017', $course->getAcademicYear());
+		$this->assertEquals('Attendance', $course->getClassAttendance());
+		$this->assertEquals('Course 25', $course->getCompulsoryRequirement());
+		$this->assertEquals('Contents of course', $course->getContents());
+		$this->assertEquals('My little achievement', $course->getCourseAchievement());
+		$this->assertEquals('12', $course->getCredits());
+		$this->assertEquals('This directive', $course->getDirective());
+		$this->assertEquals('2', $course->getEventTypeId());
+		$this->assertEquals('Examination Achievement', $course->getExaminationAchievement());
+		$this->assertEquals('Extern organizer', $course->getExternOrganizer());
+		$this->assertEquals('34', $course->getFrequencyOfOfferValueId());
+		$this->assertEquals('Grading', $course->getGrading());
+		$this->assertEquals('Maschinenbau', $course->getIndependentStudy());
+		$this->assertEquals('4', $course->getIntendedSemester());
+		$this->assertEquals('Learning Target', $course->getLearningTarget());
+		$this->assertEquals('This to read.', $course->getLiterature());
+		$this->assertEquals('Objective Qualification', $course->getObjectiveQualification());
+		$this->assertEquals('Recommendation', $course->getRecommendation());
+		$this->assertEquals('Recommended requirement', $course->getRecommendedRequirement());
+		$this->assertEquals('4', $course->getScheduledGroupSize());
+		$this->assertEquals('Studenten', $course->getTargetGroup());
+		$this->assertEquals('1', $course->getTeachingKLanguageId());
+		$this->assertEquals('2', $course->getTeachingMethod());
+		$this->assertEquals('23', $course->getUnitId());
+		$this->assertEquals('40', $course->getWorkload());
+		$this->assertEquals('1', count($unit->getPlanElementsContainer()));
+
+		$plan_element = $unit->getPlanElementsContainer()[0];
+		$this->assertEquals('123123', $plan_element->getId());
+		$this->assertEquals('2133432534643', $plan_element->getObjGuid());
+		$this->assertEquals('12', $plan_element->getLockVersion());
+		$this->assertEquals('10000', $plan_element->getAttendeeMaximum());
+		$this->assertEquals('4', $plan_element->getAttendeeMinimum());
+		$this->assertEquals('2018-02-03', $plan_element->getCancelEnd());
+		$this->assertEquals('0', $plan_element->getCancelled());
+		$this->assertEquals('2', $plan_element->getDefaultLanguage());
+		$this->assertEquals('My pretty default text', $plan_element->getDefaultText());
+		$this->assertEquals('1', $plan_element->getGenderId());
+		$this->assertEquals('987', $plan_element->getGradeAssessmentStatusId());
+		$this->assertEquals('40', $plan_element->getHoursPerWeek());
+		$this->assertEquals('My not so very long text', $plan_element->getLongText());
+		$this->assertEquals('323213', $plan_element->getParallelGroupId());
+		$this->assertEquals('2017-06-15', $plan_element->getRegisterBegin());
+		$this->assertEquals('2017-11-15', $plan_element->getRegisterEnd());
+		$this->assertEquals('34', $plan_element->getRotation());
+		$this->assertEquals('My short little text.', $plan_element->getShortText());
+		$this->assertEquals('2', $plan_element->getTermSegment());
+		$this->assertEquals('4', $plan_element->getTermTypeValueId());
+		$this->assertEquals('6756', $plan_element->getUnitId());
+		$this->assertEquals('2017', $plan_element->getYear());
+
+		$this->assertEquals('23123', $plan_element->getPlanningPreference()->getId());
+		$this->assertEquals('0894739057430752734', $plan_element->getPlanningPreference()->getObjGuid());
+		$this->assertEquals('22', $plan_element->getPlanningPreference()->getLockVersion());
+		$this->assertEquals('This could be your comment', $plan_element->getPlanningPreference()->getComment());
+		$this->assertEquals('90', $plan_element->getPlanningPreference()->getFixedTime());
+		$this->assertEquals('123124', $plan_element->getPlanningPreference()->getOwnerPlanElementId());
+		$this->assertEquals('5', $plan_element->getPlanningPreference()->getPartsInARow());
+		$this->assertEquals('435', $plan_element->getPlanningPreference()->getTermTypeValueId());
+
+		$this->assertEquals('1', count($plan_element->getPlanningPreference()->getTimePreferenceContainer()));
+		$time_preference = $plan_element->getPlanningPreference()->getTimePreferenceContainer()[0];
+		$this->assertEquals('6574', $time_preference->getId());
+		$this->assertEquals('985786345323442', $time_preference->getObjGuid());
+		$this->assertEquals('655', $time_preference->getLockVersion());
+		$this->assertEquals('563', $time_preference->getOwnerPersonPreferenceId());
+		$this->assertEquals('654', $time_preference->getOwnerPlanElementPreferenceId());
+		$this->assertEquals('45634', $time_preference->getOwnerRoomClassId());
+		$this->assertEquals('4563', $time_preference->getTermTypeValueId());
+		$this->assertEquals('5', $time_preference->getWeightingFactor());
+		$this->assertEquals('2017', $time_preference->getYear());
+
+		$time_slot = $time_preference->getTimeSlotContainer();
+		$this->assertEquals('765456', $time_slot->getId());
+		$this->assertEquals('658756345', $time_slot->getObjGuid());
+		$this->assertEquals('43', $time_slot->getLockVersion());
+		$this->assertEquals('10:00', $time_slot->getStartTime());
+		$this->assertEquals('14:00', $time_slot->getEndTime());
+		$this->assertEquals('4', $time_slot->getWeekDay());
+
+		$this->assertEquals('1', count($plan_element->getPersonPlanElementContainer()));
+		$person_plan_element = $plan_element->getPersonPlanElementContainer()[0];
+		$this->assertEquals('435643', $person_plan_element->getId());
+		$this->assertEquals('657456345234123', $person_plan_element->getObjGuid());
+		$this->assertEquals('76', $person_plan_element->getLockVersion());
+		$this->assertEquals('32423', $person_plan_element->getPersonId());
+		$this->assertEquals('435435', $person_plan_element->getPlanElementId());
+		$this->assertEquals('0', $person_plan_element->getSortOrder());
+
+		$plan_element_preferences_parts = $plan_element->getPlanningPreference()->getPlanElementPreferenceParts()[0];
+		$this->assertEquals('21321123', $plan_element_preferences_parts->getId());
+		$this->assertEquals('1234322314', $plan_element_preferences_parts->getObjGuid());
+		$this->assertEquals('4', $plan_element_preferences_parts->getLockVersion());
+		$this->assertEquals('4325543', $plan_element_preferences_parts->getBelongsToPlanElementPreferenceId());
+
+		$preferred_instructors = $plan_element_preferences_parts->getPreferredInstructors()[0];
+		$this->assertEquals('7668', $preferred_instructors->getId());
+		$this->assertEquals('4567658567456345', $preferred_instructors->getObjGuid());
+		$this->assertEquals('2', $preferred_instructors->getLockVersion());
+		$this->assertEquals('87686', $preferred_instructors->getPreferredInstructorId());
+		$this->assertEquals('76876547645', $preferred_instructors->getPreferredInstructorForPlanElementPartsId());
+		$this->assertEquals('1', $preferred_instructors->getPriority());
+
+		$room = $plan_element_preferences_parts->getPreferredRooms()[0];
+		$this->assertEquals('23435', $room->getId());
+		$this->assertEquals('87043563577076', $room->getObjGuid());
+		$this->assertEquals('122', $room->getLockVersion());
+		$this->assertEquals('6875675', $room->getPreferredRoomId());
+		$this->assertEquals('87687567', $room->getPreferredRoomForPlanElementPartsId());
+		$this->assertEquals('1', $room->getPriority());
+
+		$this->assertEquals('1', count($plan_element->getEventDateContainer()));
+		$event_date = $plan_element->getEventDateContainer()[0];
+		$this->assertEquals('23', $event_date->getId());
+		$this->assertEquals('213423423412325476897', $event_date->getObjGuid());
+		$this->assertEquals('2', $event_date->getLockVersion());
+		$this->assertEquals('WS 2017', $event_date->getAcademicYear());
+		$this->assertEquals('My compulsoryRequirement', $event_date->getCompulsoryRequirement());
+		$this->assertEquals('My super duper contents', $event_date->getContents());
+		$this->assertEquals('This can be achieved', $event_date->getCourseAchievement());
+		$this->assertEquals('8', $event_date->getCredits());
+		$this->assertEquals('This can be achieved after examination', $event_date->getExaminationAchievement());
+		$this->assertEquals('Whoever', $event_date->getExternOrganizer());
+		$this->assertEquals('Noten', $event_date->getGrading());
+		$this->assertEquals('This should be your learning target', $event_date->getLearningTarget());
+		$this->assertEquals('My little literature list', $event_date->getLiterature());
+		$this->assertEquals('This should be the objective qualification', $event_date->getObjectiveQualification());
+		$this->assertEquals('5433', $event_date->getPlanElementId());
+		$this->assertEquals('You should have achieved this requirements before', $event_date->getRecommendedRequirement());
+		$this->assertEquals('The target groups is "bla"', $event_date->getTargetGroup());
+		$this->assertEquals('3', $event_date->getTeachingLanguageId());
+		$this->assertEquals('My teaching method will be unknown to you', $event_date->getTeachingMethod());
+		$this->assertEquals('A bucket full of work', $event_date->getWorkload());
+
+		$this->assertEquals('1', count($plan_element->getPlannedDateContainer()));
+		$event_date = $plan_element->getPlannedDateContainer()[0];
+		$this->assertEquals('423423', $event_date->getId());
+		$this->assertEquals('67865745654', $event_date->getObjGuid());
+		$this->assertEquals('23423', $event_date->getLockVersion());
+		$this->assertEquals('214325432', $event_date->getAcademicTimeSpecificationId());
+		$this->assertEquals('2018-02-22', $event_date->getEndDate());
+		$this->assertEquals('18:00', $event_date->getEndTime());
+		$this->assertEquals('342', $event_date->getExpectedAttendeesCount());
+		$this->assertEquals('My magic notice', $event_date->getNotice());
+		$this->assertEquals('4711', $event_date->getPlanElementId());
+		$this->assertEquals('5', $event_date->getRhythmId());
+		$this->assertEquals('1231453', $event_date->getRoomId());
+		$this->assertEquals('2016-03-31', $event_date->getStartDate());
+		$this->assertEquals('09:00', $event_date->getStartTime());
+		$this->assertEquals('5', $event_date->getWeekdayId());
+
+		$this->assertEquals('1', count($event_date->getIndividualDateContainer()));
+		$individual_date = $event_date->getIndividualDateContainer()[0];
+		$this->assertEquals('765464554', $individual_date->getId());
+		$this->assertEquals('764572345435', $individual_date->getObjGuid());
+		$this->assertEquals('3242345', $individual_date->getLockVersion());
+		$this->assertEquals('21312312', $individual_date->getPlannedDatesId());
+		$this->assertEquals('2017-01-01', $individual_date->getExecutionDate());
+		$this->assertEquals('7:45', $individual_date->getStartTime());
+		$this->assertEquals('17:00', $individual_date->getEndTime());
+		$this->assertEquals('2', $individual_date->getWeekDay());
+		$this->assertEquals('23123123', $individual_date->getRoomId());
+		$this->assertEquals('1', count($event_date->getIndividualDateContainer()));
+
+		$this->assertEquals('1', count($event_date->getInstructorContainer()));
+		$instructor = $event_date->getInstructorContainer()[0];
+		$this->assertEquals('6876856', $instructor->getId());
+		$this->assertEquals('576354657456', $instructor->getObjGuid());
+		$this->assertEquals('4324', $instructor->getLockVersion());
+		$this->assertEquals('234452', $instructor->getExaminationSubareaId());
+		$this->assertEquals('56776456', $instructor->getInstructorTaskId());
+		$this->assertEquals('456345', $instructor->getPersonId());
+		$this->assertEquals('454363454', $instructor->getPlanElementChangeId());
+		$this->assertEquals('657345', $instructor->getPlannedDatesId());
+		$this->assertEquals('0', $instructor->getSortOrder());
+		$this->assertEquals('34', $instructor->getTeachingLoadPercentage());
+		$this->assertEquals('4', $instructor->getWeight());
+
+		$this->assertEquals('1', count($event_date->getPlanElementCancellationContainer()));
+		$plan_element_cancellation = $event_date->getPlanElementCancellationContainer()[0];
+		$this->assertEquals('31231', $plan_element_cancellation->getId());
+		$this->assertEquals('3245435243', $plan_element_cancellation->getObjGuid());
+		$this->assertEquals('23', $plan_element_cancellation->getLockVersion());
+		$this->assertEquals('2018-11-23', $plan_element_cancellation->getCanceledDate());
+		$this->assertEquals('324', $plan_element_cancellation->getLanguageId());
+		$this->assertEquals('2131', $plan_element_cancellation->getPlannedDatesId());
+		$this->assertEquals('2341', $plan_element_cancellation->getRemark());
+
+		$this->assertEquals('1', count($event_date->getPlanElementChangeContainer()));
+		$plan_element_changed = $event_date->getPlanElementChangeContainer()[0];
+		$this->assertEquals('76874654645', $plan_element_changed->getId());
+		$this->assertEquals('876845654645', $plan_element_changed->getObjGuid());
+		#$this->assertEquals('45645', $plan_element_changed->getLockVersion());
+		$this->assertEquals('34', $plan_element_changed->getLanguageId());
+		$this->assertEquals('2017-01-08', $plan_element_changed->getNewDate());
+		$this->assertEquals('2017-01-01', $plan_element_changed->getOldDate());
+		$this->assertEquals('324324', $plan_element_changed->getPlannedDatesId());
+		$this->assertEquals('32423', $plan_element_changed->getRemark());
+		$this->assertEquals('543', $plan_element_changed->getRoomId());
+		$this->assertEquals('08:00', $plan_element_changed->getStartTime());
+		$this->assertEquals('10:00', $plan_element_changed->getEndTime());
+
+		$this->assertEquals('1', count($plan_element_changed->getInstructorContainer()));
+		$instructor = $plan_element_changed->getInstructorContainer()[0];
+		$this->assertEquals('777', $instructor->getId());
+		$this->assertEquals('123435', $instructor->getObjGuid());
+		$this->assertEquals('2312', $instructor->getLockVersion());
+		$this->assertEquals('213124', $instructor->getExaminationSubareaId());
+		$this->assertEquals('324341', $instructor->getInstructorTaskId());
+		$this->assertEquals('213214', $instructor->getPersonId());
+		$this->assertEquals('324312', $instructor->getPlanElementChangeId());
+		$this->assertEquals('213124', $instructor->getPlannedDatesId());
+		$this->assertEquals('1', $instructor->getSortOrder());
+		$this->assertEquals('23', $instructor->getTeachingLoadPercentage());
+		$this->assertEquals('421', $instructor->getWeight());
+	}
+
+	public function test_complexUnitParsing_shouldReturnUnit()
+	{
+		$xml    = file_get_contents('test/fixtures/unit_complex.xml');
+		$parser = new Parser\ParseUnit($this->log, $xml);
+		$unit   = $parser->parse(simplexml_load_string($xml));
+		$this->assertEquals('55', $unit->getId());
+
+		$this->assertEquals('553123124343245', $unit->getObjGuid());
+		$this->assertEquals('2', $unit->getLockVersion());
+		$this->assertEquals('My little comment', $unit->getComment());
+		$this->assertEquals('de', $unit->getDefaultLanguage());
+		$this->assertEquals('My default text.', $unit->getDefaultText());
+		$this->assertEquals('4', $unit->getElementNr());
+		$this->assertEquals('2', $unit->getElementTypeId());
+		$this->assertEquals('213213123', $unit->getLid());
+		$this->assertEquals('My not so looooooong text.', $unit->getLongText());
+		$this->assertEquals('Short comment.', $unit->getShortComment());
+		$this->assertEquals('My short text.', $unit->getShortText());
+		$this->assertEquals('22', $unit->getStatusId());
+		$this->assertEquals('2017-02-25', $unit->getValidFrom());
+		$this->assertEquals('2018-02-25', $unit->getValidTo());
+		$this->assertEquals('My version comment', $unit->getVersionComment());
+		$this->assertEquals('0.2.2', $unit->getVersionTag());
+
+		$course = $unit->getCourseContainer()[0];
+		$this->assertEquals('12', $course->getId());
+		$this->assertEquals('3243254654234', $course->getObjGuid());
+		$this->assertEquals('2', $course->getLockVersion());
+		$this->assertEquals('WS 2017', $course->getAcademicYear());
+		$this->assertEquals('Attendance', $course->getClassAttendance());
+		$this->assertEquals('Course 25', $course->getCompulsoryRequirement());
+		$this->assertEquals('Contents of course', $course->getContents());
+		$this->assertEquals('My little achievement', $course->getCourseAchievement());
+		$this->assertEquals('12', $course->getCredits());
+		$this->assertEquals('This directive', $course->getDirective());
+		$this->assertEquals('2', $course->getEventTypeId());
+		$this->assertEquals('Examination Achievement', $course->getExaminationAchievement());
+		$this->assertEquals('Extern organizer', $course->getExternOrganizer());
+		$this->assertEquals('34', $course->getFrequencyOfOfferValueId());
+		$this->assertEquals('Grading', $course->getGrading());
+		$this->assertEquals('Maschinenbau', $course->getIndependentStudy());
+		$this->assertEquals('4', $course->getIntendedSemester());
+		$this->assertEquals('Learning Target', $course->getLearningTarget());
+		$this->assertEquals('This to read.', $course->getLiterature());
+		$this->assertEquals('Objective Qualification', $course->getObjectiveQualification());
+		$this->assertEquals('Recommendation', $course->getRecommendation());
+		$this->assertEquals('Recommended requirement', $course->getRecommendedRequirement());
+		$this->assertEquals('4', $course->getScheduledGroupSize());
+		$this->assertEquals('Studenten', $course->getTargetGroup());
+		$this->assertEquals('1', $course->getTeachingKLanguageId());
+		$this->assertEquals('2', $course->getTeachingMethod());
+		$this->assertEquals('23', $course->getUnitId());
+		$this->assertEquals('40', $course->getWorkload());
+		$this->assertEquals('1', count($unit->getPlanElementsContainer()));
+
+		$plan_element = $unit->getPlanElementsContainer()[0];
+		$this->assertEquals('123123', $plan_element->getId());
+		$this->assertEquals('2133432534643', $plan_element->getObjGuid());
+		$this->assertEquals('12', $plan_element->getLockVersion());
+		$this->assertEquals('10000', $plan_element->getAttendeeMaximum());
+		$this->assertEquals('4', $plan_element->getAttendeeMinimum());
+		$this->assertEquals('2018-02-03', $plan_element->getCancelEnd());
+		$this->assertEquals('0', $plan_element->getCancelled());
+		$this->assertEquals('2', $plan_element->getDefaultLanguage());
+		$this->assertEquals('My pretty default text', $plan_element->getDefaultText());
+		$this->assertEquals('1', $plan_element->getGenderId());
+		$this->assertEquals('987', $plan_element->getGradeAssessmentStatusId());
+		$this->assertEquals('40', $plan_element->getHoursPerWeek());
+		$this->assertEquals('My not so very long text', $plan_element->getLongText());
+		$this->assertEquals('323213', $plan_element->getParallelGroupId());
+		$this->assertEquals('2017-06-15', $plan_element->getRegisterBegin());
+		$this->assertEquals('2017-11-15', $plan_element->getRegisterEnd());
+		$this->assertEquals('34', $plan_element->getRotation());
+		$this->assertEquals('My short little text.', $plan_element->getShortText());
+		$this->assertEquals('2', $plan_element->getTermSegment());
+		$this->assertEquals('4', $plan_element->getTermTypeValueId());
+		$this->assertEquals('6756', $plan_element->getUnitId());
+		$this->assertEquals('2017', $plan_element->getYear());
+
+		$this->assertEquals('23123', $plan_element->getPlanningPreference()->getId());
+		$this->assertEquals('0894739057430752734', $plan_element->getPlanningPreference()->getObjGuid());
+		$this->assertEquals('22', $plan_element->getPlanningPreference()->getLockVersion());
+		$this->assertEquals('This could be your comment', $plan_element->getPlanningPreference()->getComment());
+		$this->assertEquals('90', $plan_element->getPlanningPreference()->getFixedTime());
+		$this->assertEquals('123124', $plan_element->getPlanningPreference()->getOwnerPlanElementId());
+		$this->assertEquals('5', $plan_element->getPlanningPreference()->getPartsInARow());
+		$this->assertEquals('435', $plan_element->getPlanningPreference()->getTermTypeValueId());
+
+		$this->assertEquals('3', count($plan_element->getPlanningPreference()->getTimePreferenceContainer()));
+		$time_preference = $plan_element->getPlanningPreference()->getTimePreferenceContainer()[0];
+		$this->assertEquals('6574', $time_preference->getId());
+		$this->assertEquals('985786345323442', $time_preference->getObjGuid());
+		$this->assertEquals('655', $time_preference->getLockVersion());
+		$this->assertEquals('563', $time_preference->getOwnerPersonPreferenceId());
+		$this->assertEquals('654', $time_preference->getOwnerPlanElementPreferenceId());
+		$this->assertEquals('45634', $time_preference->getOwnerRoomClassId());
+		$this->assertEquals('4563', $time_preference->getTermTypeValueId());
+		$this->assertEquals('5', $time_preference->getWeightingFactor());
+		$this->assertEquals('2017', $time_preference->getYear());
+		$time_slot = $time_preference->getTimeSlotContainer();
+		$this->assertEquals('765456', $time_slot->getId());
+		$this->assertEquals('658756345', $time_slot->getObjGuid());
+		$this->assertEquals('43', $time_slot->getLockVersion());
+		$this->assertEquals('10:00', $time_slot->getStartTime());
+		$this->assertEquals('14:00', $time_slot->getEndTime());
+		$this->assertEquals('4', $time_slot->getWeekDay());
+
+		$time_preference = $plan_element->getPlanningPreference()->getTimePreferenceContainer()[1];
+		$this->assertEquals('111', $time_preference->getId());
+		$this->assertEquals('984345323442', $time_preference->getObjGuid());
+		$this->assertEquals('1', $time_preference->getLockVersion());
+		$this->assertEquals('5', $time_preference->getOwnerPersonPreferenceId());
+		$this->assertEquals('6', $time_preference->getOwnerPlanElementPreferenceId());
+		$this->assertEquals('2', $time_preference->getOwnerRoomClassId());
+		$this->assertEquals('3', $time_preference->getTermTypeValueId());
+		$this->assertEquals('15', $time_preference->getWeightingFactor());
+		$this->assertEquals('2018', $time_preference->getYear());
+		$time_slot = $time_preference->getTimeSlotContainer();
+		$this->assertEquals('34', $time_slot->getId());
+		$this->assertEquals('97', $time_slot->getObjGuid());
+		$this->assertEquals('90', $time_slot->getLockVersion());
+		$this->assertEquals('15:00', $time_slot->getStartTime());
+		$this->assertEquals('17:00', $time_slot->getEndTime());
+		$this->assertEquals('6', $time_slot->getWeekDay());
+
+		$time_preference = $plan_element->getPlanningPreference()->getTimePreferenceContainer()[2];
+		$this->assertEquals('98', $time_preference->getId());
+		$this->assertEquals('6453453', $time_preference->getObjGuid());
+		$this->assertEquals('2', $time_preference->getLockVersion());
+		$this->assertEquals('54', $time_preference->getOwnerPersonPreferenceId());
+		$this->assertEquals('36', $time_preference->getOwnerPlanElementPreferenceId());
+		$this->assertEquals('17', $time_preference->getOwnerRoomClassId());
+		$this->assertEquals('56', $time_preference->getTermTypeValueId());
+		$this->assertEquals('7', $time_preference->getWeightingFactor());
+		$this->assertEquals('2018', $time_preference->getYear());
+		$time_slot = $time_preference->getTimeSlotContainer();
+		$this->assertEquals('54', $time_slot->getId());
+		$this->assertEquals('76', $time_slot->getObjGuid());
+		$this->assertEquals('1', $time_slot->getLockVersion());
+		$this->assertEquals('17:00', $time_slot->getStartTime());
+		$this->assertEquals('18:00', $time_slot->getEndTime());
+		$this->assertEquals('1', $time_slot->getWeekDay());
+
+		$this->assertEquals('2', count($plan_element->getPersonPlanElementContainer()));
+		$person_plan_element = $plan_element->getPersonPlanElementContainer()[0];
+		$this->assertEquals('435643', $person_plan_element->getId());
+		$this->assertEquals('657456345234123', $person_plan_element->getObjGuid());
+		$this->assertEquals('76', $person_plan_element->getLockVersion());
+		$this->assertEquals('32423', $person_plan_element->getPersonId());
+		$this->assertEquals('435435', $person_plan_element->getPlanElementId());
+		$this->assertEquals('0', $person_plan_element->getSortOrder());
+
+		$person_plan_element = $plan_element->getPersonPlanElementContainer()[1];
+		$this->assertEquals('23', $person_plan_element->getId());
+		$this->assertEquals('6342343', $person_plan_element->getObjGuid());
+		$this->assertEquals('71', $person_plan_element->getLockVersion());
+		$this->assertEquals('3333423', $person_plan_element->getPersonId());
+		$this->assertEquals('425435', $person_plan_element->getPlanElementId());
+		$this->assertEquals('1', $person_plan_element->getSortOrder());
+
+		$this->assertEquals('2', count($plan_element->getPlanningPreference()->getPlanElementPreferenceParts()));
+		$plan_element_preferences_parts = $plan_element->getPlanningPreference()->getPlanElementPreferenceParts()[0];
+		$this->assertEquals('21321123', $plan_element_preferences_parts->getId());
+		$this->assertEquals('1234322314', $plan_element_preferences_parts->getObjGuid());
+		$this->assertEquals('4', $plan_element_preferences_parts->getLockVersion());
+		$this->assertEquals('4325543', $plan_element_preferences_parts->getBelongsToPlanElementPreferenceId());
+
+		$this->assertEquals('2', count($plan_element_preferences_parts->getPreferredInstructors()));
+		$preferred_instructors = $plan_element_preferences_parts->getPreferredInstructors()[0];
+		$this->assertEquals('7668', $preferred_instructors->getId());
+		$this->assertEquals('4567658567456345', $preferred_instructors->getObjGuid());
+		$this->assertEquals('2', $preferred_instructors->getLockVersion());
+		$this->assertEquals('87686', $preferred_instructors->getPreferredInstructorId());
+		$this->assertEquals('76876547645', $preferred_instructors->getPreferredInstructorForPlanElementPartsId());
+		$this->assertEquals('1', $preferred_instructors->getPriority());
+		$preferred_instructors = $plan_element_preferences_parts->getPreferredInstructors()[1];
+		$this->assertEquals('34', $preferred_instructors->getId());
+		$this->assertEquals('', $preferred_instructors->getObjGuid());
+		$this->assertEquals('', $preferred_instructors->getLockVersion());
+		$this->assertEquals('', $preferred_instructors->getPreferredInstructorId());
+		$this->assertEquals('', $preferred_instructors->getPreferredInstructorForPlanElementPartsId());
+		$this->assertEquals('', $preferred_instructors->getPriority());
+
+		$this->assertEquals('4', count($plan_element_preferences_parts->getPreferredRooms()));
+		$room = $plan_element_preferences_parts->getPreferredRooms()[0];
+		$this->assertEquals('23435', $room->getId());
+		$this->assertEquals('87043563577076', $room->getObjGuid());
+		$this->assertEquals('122', $room->getLockVersion());
+		$this->assertEquals('6875675', $room->getPreferredRoomId());
+		$this->assertEquals('87687567', $room->getPreferredRoomForPlanElementPartsId());
+		$this->assertEquals('1', $room->getPriority());
+		$room = $plan_element_preferences_parts->getPreferredRooms()[1];
+		$this->assertEquals('45', $room->getId());
+		$this->assertEquals('6456234', $room->getObjGuid());
+		$this->assertEquals('3', $room->getLockVersion());
+		$this->assertEquals('4234', $room->getPreferredRoomId());
+		$this->assertEquals('5435', $room->getPreferredRoomForPlanElementPartsId());
+		$this->assertEquals('0', $room->getPriority());
+		$room = $plan_element_preferences_parts->getPreferredRooms()[2];
+		$this->assertEquals('68', $room->getId());
+		$this->assertEquals('764563454', $room->getObjGuid());
+		$this->assertEquals('885', $room->getLockVersion());
+		$this->assertEquals('54646', $room->getPreferredRoomId());
+		$this->assertEquals('756', $room->getPreferredRoomForPlanElementPartsId());
+		$this->assertEquals('2', $room->getPriority());
+		$room = $plan_element_preferences_parts->getPreferredRooms()[3];
+		$this->assertEquals('8989', $room->getId());
+		$this->assertEquals('765674', $room->getObjGuid());
+		$this->assertEquals('664', $room->getLockVersion());
+		$this->assertEquals('657345', $room->getPreferredRoomId());
+		$this->assertEquals('65734', $room->getPreferredRoomForPlanElementPartsId());
+		$this->assertEquals('3', $room->getPriority());
+
+		$plan_element_preferences_parts = $plan_element->getPlanningPreference()->getPlanElementPreferenceParts()[1];
+		$this->assertEquals('9896', $plan_element_preferences_parts->getId());
+		$this->assertEquals('9567', $plan_element_preferences_parts->getObjGuid());
+		$this->assertEquals('77', $plan_element_preferences_parts->getLockVersion());
+		$this->assertEquals('786875', $plan_element_preferences_parts->getBelongsToPlanElementPreferenceId());
+
+		$this->assertEquals('1', count($plan_element_preferences_parts->getPreferredInstructors()));
+		$preferred_instructors = $plan_element_preferences_parts->getPreferredInstructors()[0];
+		$this->assertEquals('34', $preferred_instructors->getId());
+		$this->assertEquals('', $preferred_instructors->getObjGuid());
+		$this->assertEquals('', $preferred_instructors->getLockVersion());
+		$this->assertEquals('', $preferred_instructors->getPreferredInstructorId());
+		$this->assertEquals('', $preferred_instructors->getPreferredInstructorForPlanElementPartsId());
+		$this->assertEquals('', $preferred_instructors->getPriority());
+
+		$this->assertEquals('1', count($plan_element_preferences_parts->getPreferredRooms()));
+		$room = $plan_element_preferences_parts->getPreferredRooms()[0];
+		$this->assertEquals('1121', $room->getId());
+		$this->assertEquals('231435435', $room->getObjGuid());
+		$this->assertEquals('34', $room->getLockVersion());
+		$this->assertEquals('35234', $room->getPreferredRoomId());
+		$this->assertEquals('534512', $room->getPreferredRoomForPlanElementPartsId());
+		$this->assertEquals('1', $room->getPriority());
+
+		$this->assertEquals('1', count($plan_element->getEventDateContainer()));
+		$event_date = $plan_element->getEventDateContainer()[0];
+		$this->assertEquals('23', $event_date->getId());
+		$this->assertEquals('213423423412325476897', $event_date->getObjGuid());
+		$this->assertEquals('2', $event_date->getLockVersion());
+		$this->assertEquals('WS 2017', $event_date->getAcademicYear());
+		$this->assertEquals('My compulsoryRequirement', $event_date->getCompulsoryRequirement());
+		$this->assertEquals('My super duper contents', $event_date->getContents());
+		$this->assertEquals('This can be achieved', $event_date->getCourseAchievement());
+		$this->assertEquals('8', $event_date->getCredits());
+		$this->assertEquals('This can be achieved after examination', $event_date->getExaminationAchievement());
+		$this->assertEquals('Whoever', $event_date->getExternOrganizer());
+		$this->assertEquals('Noten', $event_date->getGrading());
+		$this->assertEquals('This should be your learning target', $event_date->getLearningTarget());
+		$this->assertEquals('My little literature list', $event_date->getLiterature());
+		$this->assertEquals('This should be the objective qualification', $event_date->getObjectiveQualification());
+		$this->assertEquals('5433', $event_date->getPlanElementId());
+		$this->assertEquals('You should have achieved this requirements before', $event_date->getRecommendedRequirement());
+		$this->assertEquals('The target groups is "bla"', $event_date->getTargetGroup());
+		$this->assertEquals('3', $event_date->getTeachingLanguageId());
+		$this->assertEquals('My teaching method will be unknown to you', $event_date->getTeachingMethod());
+		$this->assertEquals('A bucket full of work', $event_date->getWorkload());
+
+		$this->assertEquals('1', count($plan_element->getPlannedDateContainer()));
+		$event_date = $plan_element->getPlannedDateContainer()[0];
+		$this->assertEquals('423423', $event_date->getId());
+		$this->assertEquals('67865745654', $event_date->getObjGuid());
+		$this->assertEquals('23423', $event_date->getLockVersion());
+		$this->assertEquals('214325432', $event_date->getAcademicTimeSpecificationId());
+		$this->assertEquals('2018-02-22', $event_date->getEndDate());
+		$this->assertEquals('18:00', $event_date->getEndTime());
+		$this->assertEquals('342', $event_date->getExpectedAttendeesCount());
+		$this->assertEquals('My magic notice', $event_date->getNotice());
+		$this->assertEquals('4711', $event_date->getPlanElementId());
+		$this->assertEquals('5', $event_date->getRhythmId());
+		$this->assertEquals('1231453', $event_date->getRoomId());
+		$this->assertEquals('2016-03-31', $event_date->getStartDate());
+		$this->assertEquals('09:00', $event_date->getStartTime());
+		$this->assertEquals('5', $event_date->getWeekdayId());
+
+		$this->assertEquals('3', count($event_date->getIndividualDateContainer()));
+		$individual_date = $event_date->getIndividualDateContainer()[0];
+		$this->assertEquals('765464554', $individual_date->getId());
+		$this->assertEquals('764572345435', $individual_date->getObjGuid());
+		$this->assertEquals('3242345', $individual_date->getLockVersion());
+		$this->assertEquals('21312312', $individual_date->getPlannedDatesId());
+		$this->assertEquals('2017-01-01', $individual_date->getExecutionDate());
+		$this->assertEquals('7:45', $individual_date->getStartTime());
+		$this->assertEquals('17:00', $individual_date->getEndTime());
+		$this->assertEquals('2', $individual_date->getWeekDay());
+		$this->assertEquals('23123123', $individual_date->getRoomId());
+
+		$individual_date = $event_date->getIndividualDateContainer()[1];
+		$this->assertEquals('21', $individual_date->getId());
+		$this->assertEquals('3213', $individual_date->getObjGuid());
+		$this->assertEquals('2312', $individual_date->getLockVersion());
+		$this->assertEquals('4576', $individual_date->getPlannedDatesId());
+		$this->assertEquals('2018-01-01', $individual_date->getExecutionDate());
+		$this->assertEquals('8:45', $individual_date->getStartTime());
+		$this->assertEquals('18:00', $individual_date->getEndTime());
+		$this->assertEquals('3', $individual_date->getWeekDay());
+		$this->assertEquals('244423', $individual_date->getRoomId());
+
+		$individual_date = $event_date->getIndividualDateContainer()[2];
+		$this->assertEquals('76544543554', $individual_date->getId());
+		$this->assertEquals('734542345435', $individual_date->getObjGuid());
+		$this->assertEquals('324543345', $individual_date->getLockVersion());
+		$this->assertEquals('22782312', $individual_date->getPlannedDatesId());
+		$this->assertEquals('2019-01-01', $individual_date->getExecutionDate());
+		$this->assertEquals('17:45', $individual_date->getStartTime());
+		$this->assertEquals('17:50', $individual_date->getEndTime());
+		$this->assertEquals('6', $individual_date->getWeekDay());
+		$this->assertEquals('754', $individual_date->getRoomId());
+
+		$this->assertEquals('3', count($event_date->getInstructorContainer()));
+		$instructor = $event_date->getInstructorContainer()[0];
+		$this->assertEquals('6876856', $instructor->getId());
+		$this->assertEquals('576354657456', $instructor->getObjGuid());
+		$this->assertEquals('4324', $instructor->getLockVersion());
+		$this->assertEquals('234452', $instructor->getExaminationSubareaId());
+		$this->assertEquals('56776456', $instructor->getInstructorTaskId());
+		$this->assertEquals('456345', $instructor->getPersonId());
+		$this->assertEquals('454363454', $instructor->getPlanElementChangeId());
+		$this->assertEquals('657345', $instructor->getPlannedDatesId());
+		$this->assertEquals('0', $instructor->getSortOrder());
+		$this->assertEquals('34', $instructor->getTeachingLoadPercentage());
+		$this->assertEquals('4', $instructor->getWeight());
+
+		$instructor = $event_date->getInstructorContainer()[1];
+		$this->assertEquals('66', $instructor->getId());
+		$this->assertEquals('546', $instructor->getObjGuid());
+		$this->assertEquals('44', $instructor->getLockVersion());
+		$this->assertEquals('24452', $instructor->getExaminationSubareaId());
+		$this->assertEquals('567756', $instructor->getInstructorTaskId());
+		$this->assertEquals('45645', $instructor->getPersonId());
+		$this->assertEquals('453454', $instructor->getPlanElementChangeId());
+		$this->assertEquals('6345', $instructor->getPlannedDatesId());
+		$this->assertEquals('1', $instructor->getSortOrder());
+		$this->assertEquals('304', $instructor->getTeachingLoadPercentage());
+		$this->assertEquals('40', $instructor->getWeight());
+
+		$instructor = $event_date->getInstructorContainer()[2];
+		$this->assertEquals('404', $instructor->getId());
+		$this->assertEquals('', $instructor->getObjGuid());
+		$this->assertEquals('', $instructor->getLockVersion());
+		$this->assertEquals('', $instructor->getExaminationSubareaId());
+		$this->assertEquals('', $instructor->getInstructorTaskId());
+		$this->assertEquals('', $instructor->getPersonId());
+		$this->assertEquals('', $instructor->getPlanElementChangeId());
+		$this->assertEquals('', $instructor->getPlannedDatesId());
+		$this->assertEquals('', $instructor->getSortOrder());
+		$this->assertEquals('', $instructor->getTeachingLoadPercentage());
+		$this->assertEquals('', $instructor->getWeight());
+
+		$this->assertEquals('4', count($event_date->getPlanElementCancellationContainer()));
+		$plan_element_cancellation = $event_date->getPlanElementCancellationContainer()[0];
+		$this->assertEquals('31231', $plan_element_cancellation->getId());
+		$this->assertEquals('3245435243', $plan_element_cancellation->getObjGuid());
+		$this->assertEquals('23', $plan_element_cancellation->getLockVersion());
+		$this->assertEquals('2018-11-23', $plan_element_cancellation->getCanceledDate());
+		$this->assertEquals('324', $plan_element_cancellation->getLanguageId());
+		$this->assertEquals('2131', $plan_element_cancellation->getPlannedDatesId());
+		$this->assertEquals('2341', $plan_element_cancellation->getRemark());
+
+		$plan_element_cancellation = $event_date->getPlanElementCancellationContainer()[1];
+		$this->assertEquals('8786', $plan_element_cancellation->getId());
+		$this->assertEquals('324785243', $plan_element_cancellation->getObjGuid());
+		$this->assertEquals('3', $plan_element_cancellation->getLockVersion());
+		$this->assertEquals('2019-11-23', $plan_element_cancellation->getCanceledDate());
+		$this->assertEquals('34', $plan_element_cancellation->getLanguageId());
+		$this->assertEquals('231', $plan_element_cancellation->getPlannedDatesId());
+		$this->assertEquals('231', $plan_element_cancellation->getRemark());
+
+		$plan_element_cancellation = $event_date->getPlanElementCancellationContainer()[2];
+		$this->assertEquals('99931', $plan_element_cancellation->getId());
+		$this->assertEquals('3905243', $plan_element_cancellation->getObjGuid());
+		$this->assertEquals('9', $plan_element_cancellation->getLockVersion());
+		$this->assertEquals('2018-11-20', $plan_element_cancellation->getCanceledDate());
+		$this->assertEquals('356', $plan_element_cancellation->getLanguageId());
+		$this->assertEquals('2671', $plan_element_cancellation->getPlannedDatesId());
+		$this->assertEquals('2381', $plan_element_cancellation->getRemark());
+
+		$plan_element_cancellation = $event_date->getPlanElementCancellationContainer()[3];
+		$this->assertEquals('39031', $plan_element_cancellation->getId());
+		$this->assertEquals('32409035243', $plan_element_cancellation->getObjGuid());
+		$this->assertEquals('2', $plan_element_cancellation->getLockVersion());
+		$this->assertEquals('2018-10-23', $plan_element_cancellation->getCanceledDate());
+		$this->assertEquals('304', $plan_element_cancellation->getLanguageId());
+		$this->assertEquals('21', $plan_element_cancellation->getPlannedDatesId());
+		$this->assertEquals('234', $plan_element_cancellation->getRemark());
+
+		$this->assertEquals('3', count($event_date->getPlanElementChangeContainer()));
+		$plan_element_changed = $event_date->getPlanElementChangeContainer()[0];
+		$this->assertEquals('76874654645', $plan_element_changed->getId());
+		$this->assertEquals('876845654645', $plan_element_changed->getObjGuid());
+		$this->assertEquals('45645', $plan_element_changed->getLockVersion());
+		$this->assertEquals('34', $plan_element_changed->getLanguageId());
+		$this->assertEquals('2017-01-08', $plan_element_changed->getNewDate());
+		$this->assertEquals('2017-01-01', $plan_element_changed->getOldDate());
+		$this->assertEquals('324324', $plan_element_changed->getPlannedDatesId());
+		$this->assertEquals('32423', $plan_element_changed->getRemark());
+		$this->assertEquals('543', $plan_element_changed->getRoomId());
+		$this->assertEquals('08:00', $plan_element_changed->getStartTime());
+		$this->assertEquals('10:00', $plan_element_changed->getEndTime());
+
+		$this->assertEquals('2', count($plan_element_changed->getInstructorContainer()));
+		$instructor = $plan_element_changed->getInstructorContainer()[0];
+		$this->assertEquals('777', $instructor->getId());
+		$this->assertEquals('123435', $instructor->getObjGuid());
+		$this->assertEquals('2312', $instructor->getLockVersion());
+		$this->assertEquals('213124', $instructor->getExaminationSubareaId());
+		$this->assertEquals('324341', $instructor->getInstructorTaskId());
+		$this->assertEquals('213214', $instructor->getPersonId());
+		$this->assertEquals('324312', $instructor->getPlanElementChangeId());
+		$this->assertEquals('213124', $instructor->getPlannedDatesId());
+		$this->assertEquals('1', $instructor->getSortOrder());
+		$this->assertEquals('23', $instructor->getTeachingLoadPercentage());
+		$this->assertEquals('421', $instructor->getWeight());
+		$instructor = $plan_element_changed->getInstructorContainer()[1];
+		$this->assertEquals('774', $instructor->getId());
+		$this->assertEquals('123434', $instructor->getObjGuid());
+		$this->assertEquals('232', $instructor->getLockVersion());
+		$this->assertEquals('212124', $instructor->getExaminationSubareaId());
+		$this->assertEquals('324241', $instructor->getInstructorTaskId());
+		$this->assertEquals('212214', $instructor->getPersonId());
+		$this->assertEquals('32312', $instructor->getPlanElementChangeId());
+		$this->assertEquals('23124', $instructor->getPlannedDatesId());
+		$this->assertEquals('0', $instructor->getSortOrder());
+		$this->assertEquals('13', $instructor->getTeachingLoadPercentage());
+		$this->assertEquals('4', $instructor->getWeight());
+
+		$plan_element_changed = $event_date->getPlanElementChangeContainer()[1];
+		$this->assertEquals('76874234645', $plan_element_changed->getId());
+		$this->assertEquals('876235654645', $plan_element_changed->getObjGuid());
+		$this->assertEquals('45145', $plan_element_changed->getLockVersion());
+		$this->assertEquals('32', $plan_element_changed->getLanguageId());
+		$this->assertEquals('2018-01-08', $plan_element_changed->getNewDate());
+		$this->assertEquals('2016-01-01', $plan_element_changed->getOldDate());
+		$this->assertEquals('3241324', $plan_element_changed->getPlannedDatesId());
+		$this->assertEquals('322423', $plan_element_changed->getRemark());
+		$this->assertEquals('5413', $plan_element_changed->getRoomId());
+		$this->assertEquals('08:30', $plan_element_changed->getStartTime());
+		$this->assertEquals('12:00', $plan_element_changed->getEndTime());
+		$plan_element_changed = $event_date->getPlanElementChangeContainer()[2];
+		$this->assertEquals('764645', $plan_element_changed->getId());
+		$this->assertEquals('8762654645', $plan_element_changed->getObjGuid());
+		$this->assertEquals('445', $plan_element_changed->getLockVersion());
+		$this->assertEquals('2', $plan_element_changed->getLanguageId());
+		$this->assertEquals('2018-01-08', $plan_element_changed->getNewDate());
+		$this->assertEquals('2017-02-01', $plan_element_changed->getOldDate());
+		$this->assertEquals('31324', $plan_element_changed->getPlannedDatesId());
+		$this->assertEquals('3223', $plan_element_changed->getRemark());
+		$this->assertEquals('543', $plan_element_changed->getRoomId());
+		$this->assertEquals('10:30', $plan_element_changed->getStartTime());
+		$this->assertEquals('14:45', $plan_element_changed->getEndTime());
+	}
+
+	public function test_complexUnitParsing_shouldLogCorrectly()
+	{
+		$xml    = file_get_contents('test/fixtures/unit_complex.xml');
+		$parser = new Parser\ParseUnit($this->log, $xml);
+		$unit   = $parser->parse(simplexml_load_string($xml));
+		$this->assertEquals('55', $unit->getId());
+
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 37.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementChange with id 764645.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 3777.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementChange with id 76874234645.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 774.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 777.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementChange with id 76874654645.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementCancellation with id 39031.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementCancellation with id 99931.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementCancellation with id 8786.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementCancellation with id 31231.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 404.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 66.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Instructor with id 6876856.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found IndividualDate with id 76544543554.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found IndividualDate with id 21.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found IndividualDate with id 765464554.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlannedDate with id 423423.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PersonPlanElement with id 23.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PersonPlanElement with id 435643.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found TimeSlot with id 54.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found TimePreference with id 98.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found TimeSlot with id 34.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found TimePreference with id 111.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found TimeSlot with id 765456.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found TimePreference with id 6574.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Room with id 1121.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PreferredInstructor with id 34.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementPreferencePart with id 9896.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Room with id 8989.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Room with id 68.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Room with id 45.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Room with id 23435.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PreferredInstructor with id 34.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PreferredInstructor with id 7668.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElementPreferencePart with id 21321123.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanningPreference with id 23123.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found EventDate with id 23.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found PlanElement with id 123123.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Course with id 12.', $msg);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Found Unit with id 55.', $msg);
+	}
+
+}

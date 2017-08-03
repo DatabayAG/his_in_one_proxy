@@ -1,0 +1,26 @@
+<student_existing>
+	<connectedToSubject>122</connectedToSubject>
+	<degreePrograms70>1232342</degreePrograms70>
+	<eduType>23</eduType>
+	<enrollmentdate>1900-12-21</enrollmentdate>
+	<exchangeprogramId>123</exchangeprogramId>
+	<hasLoanRequest>false</hasLoanRequest>
+	<homeCountryId>0</homeCountryId>
+	<homeDistrictId>23</homeDistrictId>
+	<homeDistrictObjId>444</homeDistrictObjId>
+	<kollegsemester>12</kollegsemester>
+	<leavesemester>15</leavesemester>
+	<orgunitId>45</orgunitId>
+	<orgunitLid>3654775</orgunitLid>
+	<person>Person</person>
+	<practicalsemester>12</practicalsemester>
+	<requestForDisenrollment>false</requestForDisenrollment>
+	<registrationnumber>978765</registrationnumber>
+	<semesterCountryId>21</semesterCountryId>
+	<semesterDistrictId>1</semesterDistrictId>
+	<semesterDistrictObjId>2</semesterDistrictObjId>
+	<studystatusId>3</studystatusId>
+	<termTypeValueId>4</termTypeValueId>
+	<year>1999</year>
+	<studentFunctionlocks>665</studentFunctionlocks>
+</student_existing>

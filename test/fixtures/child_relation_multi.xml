@@ -1,0 +1,11 @@
+<childRelations>
+	<childRelation>
+		<childId>6756876</childId>
+		<parentId>1</parentId>
+	</childRelation>
+	<childRelation>
+		<childId>324532</childId>
+		<parentId>2</parentId>
+	</childRelation>
+</childRelations>
+

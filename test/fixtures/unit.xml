@@ -1,0 +1,291 @@
+<unit>
+	<id>55</id>
+	<objGuid>553123124343245</objGuid>
+	<lockVersion>2</lockVersion>
+	<loadTime>Todo: WHAT?</loadTime>
+	<comment>My little comment</comment>
+	<defaultlanguage>de</defaultlanguage>
+	<defaulttext>My default text.</defaulttext>
+	<elementnr>4</elementnr>
+	<elementtypeId>2</elementtypeId>
+	<lid>213213123</lid>
+	<longtext>My not so looooooong text.</longtext>
+	<shortcomment>Short comment.</shortcomment>
+	<shorttext>My short text.</shorttext>
+	<statusId>22</statusId>
+	<validFrom>2017-02-25</validFrom>
+	<validTo>2018-02-25</validTo>
+	<versionComment>My version comment</versionComment>
+	<versionTag>0.2.2</versionTag>
+	<course>
+		<id>12</id>
+		<objGuid>3243254654234</objGuid>
+		<lockVersion>2</lockVersion>
+		<loadTime>Todo: WHAT?</loadTime>
+		<academicYear>WS 2017</academicYear>
+		<classAttendance>Attendance</classAttendance>
+		<compulsoryRequirement>Course 25</compulsoryRequirement>
+		<contents>Contents of course</contents>
+		<courseAchievement>My little achievement</courseAchievement>
+		<credits>12</credits>
+		<directive>This directive</directive>
+		<eventtypeId>2</eventtypeId>
+		<examinationAchievement>Examination Achievement</examinationAchievement>
+		<externOrganizer>Extern organizer</externOrganizer>
+		<frequencyOfOffervalueId>34</frequencyOfOffervalueId>
+		<grading>Grading</grading>
+		<independentStudy>Maschinenbau</independentStudy>
+		<intendedSemester>4</intendedSemester>
+		<learningTarget>Learning Target</learningTarget>
+		<literature>This to read.</literature>
+		<objectiveQualification>Objective Qualification</objectiveQualification>
+		<recommendation>Recommendation</recommendation>
+		<recommendedRequirement>Recommended requirement</recommendedRequirement>
+		<scheduledGroupSize>4</scheduledGroupSize>
+		<targetGroup>Studenten</targetGroup>
+		<teachingKLanguageId>1</teachingKLanguageId>
+		<teachingMethod>2</teachingMethod>
+		<unitId>23</unitId>
+		<workload>40</workload>
+	</course>
+	<planelements>
+		<!--Zero or more repetitions:-->
+		<planelement>
+			<id>123123</id>
+			<objGuid>2133432534643</objGuid>
+			<lockVersion>12</lockVersion>
+			<loadTime>Todo: WHAT?</loadTime>
+			<attendeeMaximum>10000</attendeeMaximum>
+			<attendeeMinimum>4</attendeeMinimum>
+			<cancelEnd>2018-02-03</cancelEnd>
+			<cancelled>0</cancelled>
+			<defaultlanguage>2</defaultlanguage>
+			<defaulttext>My pretty default text</defaulttext>
+			<eventDate>
+				<id>23</id>
+				<objGuid>213423423412325476897</objGuid>
+				<lockVersion>2</lockVersion>
+				<loadTime>Todo: WHAT?</loadTime>
+				<academicYear>WS 2017</academicYear>
+				<compulsoryRequirement>My compulsoryRequirement</compulsoryRequirement>
+				<contents>My super duper contents</contents>
+				<courseAchievement>This can be achieved</courseAchievement>
+				<credits>8</credits>
+				<examinationAchievement>This can be achieved after examination</examinationAchievement>
+				<externOrganizer>Whoever</externOrganizer>
+				<grading>Noten</grading>
+				<learningTarget>This should be your learning target</learningTarget>
+				<literature>My little literature list</literature>
+				<objectiveQualification>This should be the objective qualification</objectiveQualification>
+				<planelementId>5433</planelementId>
+				<recommendedRequirement>You should have achieved this requirements before</recommendedRequirement>
+				<targetGroup>The target groups is "bla"</targetGroup>
+				<teachingLanguageId>3</teachingLanguageId>
+				<teachingMethod>My teaching method will be unknown to you</teachingMethod>
+				<workload>A bucket full of work</workload>
+			</eventDate>
+			<genderId>1</genderId>
+			<gradeAssessmentStatusId>987</gradeAssessmentStatusId>
+			<hoursPerWeek>40</hoursPerWeek>
+			<longtext>My not so very long text</longtext>
+			<parallelgroupId>323213</parallelgroupId>
+			<planningPreference>
+				<id>23123</id>
+				<objGuid>0894739057430752734</objGuid>
+				<lockVersion>22</lockVersion>
+				<loadTime>Todo: WHAT?</loadTime>
+				<comment>This could be your comment</comment>
+				<fixedTime>90</fixedTime>
+				<ownerPlanelementId>123124</ownerPlanelementId>
+				<partsInARow>5</partsInARow>
+				<preferenceParts>
+					<!--Zero or more repetitions:-->
+					<planelementPreferencePart>
+						<id>21321123</id>
+						<objGuid>1234322314</objGuid>
+						<lockVersion>4</lockVersion>
+						<loadTime>Todo: WHAT?</loadTime>
+						<belongsToPlanelementPreferenceId>4325543</belongsToPlanelementPreferenceId>
+						<preferredInstructors>
+							<!--Zero or more repetitions:-->
+							<instructor>
+								<id>7668</id>
+								<objGuid>4567658567456345</objGuid>
+								<lockVersion>2</lockVersion>
+								<loadTime>Todo: WHAT?</loadTime>
+								<preferredInstructorId>87686</preferredInstructorId>
+								<preferredInstructorForPlanelementPartsId>76876547645</preferredInstructorForPlanelementPartsId>
+								<priority>1</priority>
+							</instructor>
+						</preferredInstructors>
+						<preferredRooms>
+							<!--Zero or more repetitions:-->
+							<room>
+								<id>23435</id>
+								<objGuid>87043563577076</objGuid>
+								<shorttext>Short text</shorttext>
+								<defaulttext>default text</defaulttext>
+								<longtext>Longtext</longtext>
+								<defaultlanguageId>23</defaultlanguageId>
+								<uniquename>My super rooom</uniquename>
+								<description>Description</description>
+								<partOfRoomComposition>1</partOfRoomComposition>
+								<classRoomName>My class room name</classRoomName>
+								<floorId>1000</floorId>
+								<din277RoomuseId>1</din277RoomuseId>
+								<area>3</area>
+								<roomSegmentCount>45</roomSegmentCount>
+							</room>
+						</preferredRooms>
+					</planelementPreferencePart>
+				</preferenceParts>
+				<termTypeValueId>435</termTypeValueId>
+				<timePreferences>
+					<!--Zero or more repetitions:-->
+					<timePreference>
+						<id>6574</id>
+						<objGuid>985786345323442</objGuid>
+						<lockVersion>655</lockVersion>
+						<loadTime>Todo: WHAT?</loadTime>
+						<ownerPersonPreferenceId>563</ownerPersonPreferenceId>
+						<ownerPlanelementPreferenceId>654</ownerPlanelementPreferenceId>
+						<ownerRoomclassId>45634</ownerRoomclassId>
+						<termTypeValueId>4563</termTypeValueId>
+						<timeslot>
+							<id>765456</id>
+							<objGuid>658756345</objGuid>
+							<lockVersion>43</lockVersion>
+							<loadTime>Todo: WHAT?</loadTime>
+							<starttime>10:00</starttime>
+							<endtime>14:00</endtime>
+							<weekdayId>4</weekdayId>
+						</timeslot>
+						<weightingFactor>5</weightingFactor>
+						<year>2017</year>
+					</timePreference>
+				</timePreferences>
+				<year>2017</year>
+			</planningPreference>
+			<registerBegin>2017-06-15</registerBegin>
+			<registerEnd>2017-11-15</registerEnd>
+			<rotation>34</rotation>
+			<shorttext>My short little text.</shorttext>
+			<termSegment>2</termSegment>
+			<termTypeValueId>4</termTypeValueId>
+			<unitId>6756</unitId>
+			<year>2017</year>
+			<personPlanelements>
+				<!--Zero or more repetitions:-->
+				<personPlanelement>
+					<id>435643</id>
+					<objGuid>657456345234123</objGuid>
+					<lockVersion>76</lockVersion>
+					<loadTime>Todo: WHAT?</loadTime>
+					<personId>32423</personId>
+					<planelementId>435435</planelementId>
+					<sortorder>0</sortorder>
+				</personPlanelement>
+			</personPlanelements>
+			<plannedDates>
+				<!--Zero or more repetitions:-->
+				<plannedDate>
+					<id>423423</id>
+					<objGuid>67865745654</objGuid>
+					<lockVersion>23423</lockVersion>
+					<loadTime>Todo: WHAT?</loadTime>
+					<academictimespecificationId>214325432</academictimespecificationId>
+					<enddate>2018-02-22</enddate>
+					<endtime>18:00</endtime>
+					<expectedAttendeesCount>342</expectedAttendeesCount>
+					<individualDates>
+						<!--Zero or more repetitions:-->
+						<individualDate>
+							<id>765464554</id>
+							<objGuid>764572345435</objGuid>
+							<lockVersion>3242345</lockVersion>
+							<loadTime>Todo: WHAT?</loadTime>
+							<plannedDatesId>21312312</plannedDatesId>
+							<executiondate>2017-01-01</executiondate>
+							<starttime>7:45</starttime>
+							<endtime>17:00</endtime>
+							<weekday>2</weekday>
+							<roomId>23123123</roomId>
+						</individualDate>
+					</individualDates>
+					<instructors>
+						<!--Zero or more repetitions:-->
+						<instructor>
+							<id>6876856</id>
+							<objGuid>576354657456</objGuid>
+							<lockVersion>4324</lockVersion>
+							<loadTime>Todo: WHAT?</loadTime>
+							<examinationsubareaId>234452</examinationsubareaId>
+							<instructortaskId>56776456</instructortaskId>
+							<personId>456345</personId>
+							<planelementChangeId>454363454</planelementChangeId>
+							<plannedDatesId>657345</plannedDatesId>
+							<sortorder>0</sortorder>
+							<teachingLoadPercentage>34</teachingLoadPercentage>
+							<weight>4</weight>
+						</instructor>
+					</instructors>
+					<notice>My magic notice</notice>
+					<planelementId>4711</planelementId>
+					<planelementCancellations>
+						<!--Zero or more repetitions:-->
+						<planelementCancellation>
+							<id>31231</id>
+							<objGuid>3245435243</objGuid>
+							<lockVersion>23</lockVersion>
+							<loadTime>Todo: WHAT?</loadTime>
+							<canceledDate>2018-11-23</canceledDate>
+							<languageId>324</languageId>
+							<plannedDatesId>2131</plannedDatesId>
+							<remark>2341</remark>
+						</planelementCancellation>
+					</planelementCancellations>
+					<planelementChanges>
+						<!--Zero or more repetitions:-->
+						<planelementChange>
+							<id>76874654645</id>
+							<objGuid>876845654645</objGuid>
+							<lockVersion>45645</lockVersion>
+							<loadTime>Todo: WHAT?</loadTime>
+							<academictimespecificationId>?</academictimespecificationId>
+							<instructors>
+								<!--Zero or more repetitions:-->
+								<instructor>
+									<id>777</id>
+									<objGuid>123435</objGuid>
+									<lockVersion>2312</lockVersion>
+									<loadTime>Todo: WHAT?</loadTime>
+									<examinationsubareaId>213124</examinationsubareaId>
+									<instructortaskId>324341</instructortaskId>
+									<personId>213214</personId>
+									<planelementChangeId>324312</planelementChangeId>
+									<plannedDatesId>213124</plannedDatesId>
+									<sortorder>1</sortorder>
+									<teachingLoadPercentage>23</teachingLoadPercentage>
+									<weight>421</weight>
+								</instructor>
+							</instructors>
+							<languageId>34</languageId>
+							<newdate>2017-01-08</newdate>
+							<olddate>2017-01-01</olddate>
+							<plannedDatesId>324324</plannedDatesId>
+							<remark>32423</remark>
+							<roomId>543</roomId>
+							<starttime>08:00</starttime>
+							<endtime>10:00</endtime>
+						</planelementChange>
+					</planelementChanges>
+					<rhythmId>5</rhythmId>
+					<roomId>1231453</roomId>
+					<startdate>2016-03-31</startdate>
+					<starttime>09:00</starttime>
+					<weekdayId>5</weekdayId>
+				</plannedDate>
+			</plannedDates>
+		</planelement>
+	</planelements>
+</unit>

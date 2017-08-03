@@ -1,0 +1,23 @@
+<unit>
+	<id>1</id>
+	<objGuid>551d42d9-731f-4c42-83f3-fa2ef20a8564</objGuid>
+	<lockVersion>7</lockVersion>
+	<comment xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	<defaultlanguage>12</defaultlanguage>
+	<defaulttext>HZB</defaulttext>
+	<elementnr>1</elementnr>
+	<elementtypeId>7</elementtypeId>
+	<hoursPerWeek xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	<lid>1</lid>
+	<longtext>HZB</longtext>
+	<shortcomment xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	<shorttext>HZB</shorttext>
+	<statusId>2001</statusId>
+	<validFrom>1900-01-01</validFrom>
+	<validTo>2100-12-31</validTo>
+	<versionComment xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	<versionTag xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+	<unitOrgunits/>
+	<children/>
+	<parents/>
+</unit>

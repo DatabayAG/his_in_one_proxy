@@ -1,0 +1,16 @@
+<room xsi:type="Room" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<id>23435</id>
+	<objGuid>87043563577076</objGuid>
+	<shorttext>Short text</shorttext>
+	<defaulttext>default text</defaulttext>
+	<longtext>Longtext</longtext>
+	<defaultlanguageId>23</defaultlanguageId>
+	<uniquename>My super rooom</uniquename>
+	<description>Description</description>
+	<partOfRoomComposition>1</partOfRoomComposition>
+	<classRoomName>My class room name</classRoomName>
+	<floorId>1000</floorId>
+	<din277RoomuseId>1</din277RoomuseId>
+	<area>3</area>
+	<roomSegmentCount>45</roomSegmentCount>
+</room>

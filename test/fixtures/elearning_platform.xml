@@ -1,0 +1,12 @@
+<elearningplatform>
+	<id>232</id>
+	<shorttext>Bla2</shorttext>
+	<defaulttext>My little platform</defaulttext>
+	<longtext>Loooooooooong platform text</longtext>
+	<uniquename>TotallyUnique2</uniquename>
+	<sortorder>0</sortorder>
+	<defaultlanguage>12</defaultlanguage>
+	<objGuid>454326547637562432</objGuid>
+	<connectioninfo>http://there</connectioninfo>
+	<hiskeyId>45432654763756243</hiskeyId>
+</elearningplatform>
