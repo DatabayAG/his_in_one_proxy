@@ -22,6 +22,7 @@ class Functions
 		self::appendFunction('pw', 'getAllWorkStatus', 'getAllWorkStatus', true);
 		self::appendFunction('pe', 'getAllElearningPlatforms', 'getAllWorkStatus', true);
 		self::appendFunction('pt', 'getAllTermTypes', 'getAllTermTypes', true);
+		self::appendFunction('pr', 'readPerson', 'readPerson by id', true);
 	}
 
 	/**

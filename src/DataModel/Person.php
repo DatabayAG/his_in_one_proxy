@@ -89,6 +89,11 @@ class Person
 	protected $self_registration_status_id;
 
 	/**
+	 * @var string
+	 */
+	protected $updated_at;
+
+	/**
 	 * @return string
 	 */
 	public function getFirstName()
@@ -342,5 +347,21 @@ class Person
 	public function setAcademicDegreeId($academic_degree_id)
 	{
 		$this->academic_degree_id = $academic_degree_id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUpdatedAt()
+	{
+		return $this->updated_at;
+	}
+
+	/**
+	 * @param string $updated_at
+	 */
+	public function setUpdatedAt($updated_at)
+	{
+		$this->updated_at = $updated_at;
 	}
 }

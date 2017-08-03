@@ -78,14 +78,21 @@ class ParsePerson extends SimpleXmlParser
 			{
 				$person->setCountryId($xml->countryId);
 			}
-			if($this->isAttributeValid($xml, 'nationalityId'))
+			if($this->isAttributeValid($xml, 'personinfo'))
 			{
-				$person->setNationalityId($xml->personinfo->nationalityId);
+				if($this->isAttributeValid($xml->personinfo, 'nationalityId'))
+				{
+					$person->setNationalityId($xml->personinfo->nationalityId);
+				}
+				if($this->isAttributeValid($xml->personinfo, 'secondNationalityId'))
+				{
+					$person->setSecondNationalityId($xml->personinfo->secondNationalityId);
+				}
 			}
-			if($this->isAttributeValid($xml, 'secondNationalityId'))
+			if($this->isAttributeValid($xml, 'updatedAt'))
 			{
-				$person->setSecondNationalityId($xml->personinfo->secondNationalityId);
-			}
+				$person->setUpdatedAt($xml->updatedAt);
+			}			
 			if($this->isAttributeValid($xml, 'selfregistrationStatusId'))
 			{
 				$person->setSelfRegistrationStatusId($xml->selfregistrationStatusId);

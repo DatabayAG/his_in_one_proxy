@@ -167,6 +167,14 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	protected function readPerson($param)
+	{
+		$this->startTimer();
+		$obj = DataCache::getInstance()->getPersonService()->readPerson($param);
+		var_dump($obj);
+		$this->endTimer();
+	}
+
 	protected function unknownCommand()
 	{
 		DataCache::getInstance()->getLog()->error(sprintf("Unknown command %s.", $_SERVER['argv'][1]));
