@@ -30,6 +30,11 @@ class DataCacheTest extends TestCaseExtension
 
 	public function test_getTermTypeList_shouldReturnNull()
 	{
+		TestCaseExtension::callMethod(
+			$this->instance,
+			'setTermTypeList',
+			array(null)
+		);
 		$values = $this->instance->getTermTypeList();
 		$this->assertEquals(null, $values);
 	}
@@ -42,6 +47,11 @@ class DataCacheTest extends TestCaseExtension
 
 	public function test_getDefaultLanguageId_shouldReturnNull()
 	{
+		TestCaseExtension::callMethod(
+			$this->instance,
+			'setDefaultLanguageId',
+			array(null)
+		);
 		$values = $this->instance->getDefaultLanguageId();
 		$this->assertEquals(null, $values);
 	}
@@ -85,6 +95,11 @@ class DataCacheTest extends TestCaseExtension
 
 	public function test_getCourseMappingTypeContainer_shouldReturnNull()
 	{
+		TestCaseExtension::callMethod(
+			$this->instance,
+			'setCourseMappingTypeContainer',
+			array(null)
+		);
 		$values = $this->instance->getCourseMappingTypeContainer();
 		$this->assertEquals(null, $values);
 	}

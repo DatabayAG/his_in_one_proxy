@@ -269,6 +269,14 @@ class DataCache
 	}
 
 	/**
+	 * @param $term_type_list
+	 */
+	protected function setTermTypeList($term_type_list)
+	{
+		self::$term_type_values = $term_type_list;
+	}
+
+	/**
 	 * @return WorkStatusContainer
 	 */
 	public function getWorkStatus()
@@ -290,6 +298,14 @@ class DataCache
 	public function getDefaultLanguageId()
 	{
 		return self::$default_lang_id;
+	}
+
+	/**
+	 * @param $default_lang_id
+	 */
+	protected function setDefaultLanguageId($default_lang_id)
+	{
+		self::$default_lang_id = $default_lang_id;
 	}
 
 	/**
@@ -364,6 +380,14 @@ class DataCache
 	public function getCourseMappingTypeContainer()
 	{
 		return self::$course_mapping_types;
+	}
+
+	/**
+	 * @param $course_mapping_types
+	 */
+	protected function setCourseMappingTypeContainer($course_mapping_types)
+	{
+		self::$course_mapping_types = $course_mapping_types;
 	}
 
 	/**

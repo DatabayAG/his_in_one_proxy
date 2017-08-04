@@ -47,17 +47,17 @@ class PHPUnit_Framework_MockObject_Generator
     /**
      * Returns a mock object for the specified class.
      *
-     * @param array|string $type
-     * @param array        $methods
-     * @param array        $arguments
-     * @param string       $mockClassName
-     * @param bool         $callOriginalConstructor
-     * @param bool         $callOriginalClone
-     * @param bool         $callAutoload
-     * @param bool         $cloneArguments
-     * @param bool         $callOriginalMethods
-     * @param object       $proxyTarget
-     * @param bool         $allowMockingUnknownTypes
+     * @param string|string[] $type
+     * @param array           $methods
+     * @param array           $arguments
+     * @param string          $mockClassName
+     * @param bool            $callOriginalConstructor
+     * @param bool            $callOriginalClone
+     * @param bool            $callAutoload
+     * @param bool            $cloneArguments
+     * @param bool            $callOriginalMethods
+     * @param object          $proxyTarget
+     * @param bool            $allowMockingUnknownTypes
      *
      * @return PHPUnit_Framework_MockObject_MockObject
      *
@@ -1078,7 +1078,7 @@ class PHPUnit_Framework_MockObject_Generator
 
             if (!$forCall) {
                 if ($parameter->hasType() && (string) $parameter->getType() !== 'self') {
-                    if (version_compare(PHP_VERSION, '7.1', '>=') && $parameter->allowsNull() && !$parameter->isVariadic()) {
+                    if (version_compare(PHP_VERSION, '7.1', '>=') && $parameter->allowsNull()) {
                         $nullable = '?';
                     }
 

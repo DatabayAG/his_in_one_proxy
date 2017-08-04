@@ -15,7 +15,7 @@ class Functions
 		self::appendFunction('li', 'getLectureById', 'Gets a Lecture by id. Uses id as param.');
 		self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
 		self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
-		self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests.');
+		self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');
 		#self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
 		self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
 		self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);

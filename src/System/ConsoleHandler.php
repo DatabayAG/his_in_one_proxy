@@ -6,11 +6,11 @@ use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue\QueueProcess;
 use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
-use HisInOneProxy\Soap\SoapService\SoapClientService;
+use HisInOneProxy\Soap\SoapService;
 use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
-
+require_once 'libs/composer/vendor/autoload.php';
 class ConsoleHandler
 {
 	/**
@@ -279,27 +279,43 @@ class ConsoleHandler
 			$this->wsdlDownloader($file,  Utils::ensureTrailingSlash(GlobalSettings::getInstance()->getHisServerUrl()) . $file );
 		}
 
+		$this->runUnitTests();
 	}
 	
 	protected function gatherServicesForWsdl()
 	{
-		$rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator('../src/Soap/SoapService/'));
+		$rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator('src/Soap/SoapService/'));
 		$services = array();
 		foreach($rii as $file)
 		{
 			if($file->isFile() && $file->getExtension() === 'php')
 			{
 				$class = str_replace(array('class.', '.php'), '', $file->getBasename());
-				require_once $file;
-				$reflection = new \ReflectionClass($class);
-				if(!$reflection->isAbstract() && !$reflection->isInterface())
+				$reflection = new \ReflectionClass('HisInOneProxy\Soap\SoapService\\'.$class);
+				if(!$reflection->isAbstract() && !$reflection->isInterface() && $reflection->implementsInterface('HisInOneProxy\Soap\SoapService\SoapClientService'))
 				{
-					/** @var $c SoapClientService */
-					$c = new $class;
+					/** @var $c SoapService\SoapClientService */
+					$map = 'HisInOneProxy\Soap\SoapService\\'.$class;
+					$c = new $map;
 					$services[] = $c->getServiceWsdl();
 				}
 			}
 		}
 		return $services;
+	}
+
+	protected function runUnitTests()
+	{
+		$phpunit = new \PHPUnit\TextUI\TestRunner;
+		try
+		{
+			$testsuite    = $phpunit->getTest('test/GlobalTestSuite.php');
+			$phpunit->dorun($testsuite, array('configuration' => 'test/phpunit.xml'));
+		}
+		catch(\PHPUnit\Framework\Exception $e)
+		{
+			print $e->getMessage() . "\n";
+			die ("Unit tests failed.");
+		}
 	}
 }
