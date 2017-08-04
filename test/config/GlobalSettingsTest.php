@@ -244,7 +244,7 @@ class GlobalSettingsTest extends TestCaseExtension
 		$this->assertEquals(true, $this->instance->isSoapDebug());
 	}
 
-	public function test_iisKeepElementInQueue_shouldReturnKeepElementInQueue()
+	public function test_isKeepElementInQueue_shouldReturnKeepElementInQueue()
 	{
 		TestCaseExtension::callMethod(
 			$this->instance,
@@ -261,6 +261,44 @@ class GlobalSettingsTest extends TestCaseExtension
 		);
 
 		$this->assertEquals(true, $this->instance->isKeepElementInQueue());
+	}
+
+	public function test_isPhpunitWithCoverage_shouldReturnPhpunitWithCoverage()
+	{
+		TestCaseExtension::callMethod(
+			$this->instance,
+			'setPhpunitWithCoverage',
+			array('false')
+		);
+
+		$this->assertEquals(false, $this->instance->isPhpunitWithCoverage());
+
+		TestCaseExtension::callMethod(
+			$this->instance,
+			'setPhpunitWithCoverage',
+			array('true')
+		);
+
+		$this->assertEquals(true, $this->instance->isPhpunitWithCoverage());
+	}
+
+	public function test_isDebug_shouldReturnDebug()
+	{
+		TestCaseExtension::callMethod(
+			$this->instance,
+			'setDebug',
+			array('false')
+		);
+
+		$this->assertEquals(false, $this->instance->isDebug());
+
+		TestCaseExtension::callMethod(
+			$this->instance,
+			'setDebug',
+			array('true')
+		);
+
+		$this->assertEquals(true, $this->instance->isDebug());
 	}
 
 	public function test_getSoapCaching_shouldReturnSoapCaching()

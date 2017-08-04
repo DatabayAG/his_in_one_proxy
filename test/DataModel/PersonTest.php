@@ -158,4 +158,10 @@ class PersonTest extends PHPUnit\Framework\TestCase
 		$this->instance->setAcademicDegreeId(656);
 		$this->assertEquals(656, $this->instance->getAcademicDegreeId());
 	}
+
+	public function test_getUpdatedAt_shouldReturnUpdatedAt()
+	{
+		$this->instance->setUpdatedAt('2015-02-28');
+		$this->assertEquals('2015-02-28', $this->instance->getUpdatedAt());
+	}
 }
