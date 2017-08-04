@@ -10,6 +10,7 @@ use HisInOneProxy\Soap\SoapService;
 use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+
 require_once 'libs/composer/vendor/autoload.php';
 class ConsoleHandler
 {
@@ -185,36 +186,6 @@ class ConsoleHandler
 		$this->printHelp();
 	}
 
-	public function printHelp()
-	{
-		echo "Usage: ConsoleHandler.php function [term] [year] [param]\n";
-
-		foreach($this->collection as $func)
-		{
-			$debug = '';
-			if(GlobalSettings::getInstance()->isDebug() && $func->isDebug())
-			{
-				echo "\t\t " . $func->getId() . " => (Debug) " . $func->getComment() . "\n";
-			}
-			else
-			{
-				echo "\t\t " . $func->getId() . " => " . $func->getComment() . "$debug\n";
-			}
-		}
-		exit(1);
-	}
-
-	protected function startTimer()
-	{
-		$this->start_time = microtime(TRUE);
-	}
-
-	protected function endTimer($what = 'Queries')
-	{
-		$end_time = microtime(TRUE);
-		DataCache::getInstance()->getLog()->info(sprintf($what . ' took %s seconds.', round($end_time - $this->start_time, 4)));
-	}
-
 	/**
 	 * @param $func
 	 * @param $param
@@ -309,8 +280,8 @@ class ConsoleHandler
 		$phpunit = new \PHPUnit\TextUI\TestRunner;
 		try
 		{
-			$test_suite		= $phpunit->getTest('test/GlobalTestSuite.php');
-			$config			= $this->getPhpUnitConfig();
+			$test_suite	= $phpunit->getTest('test/GlobalTestSuite.php');
+			$config		= $this->getPhpUnitConfig();
 			$phpunit->dorun($test_suite, $config);
 		}
 		catch(\PHPUnit\Framework\Exception $e)
@@ -343,5 +314,35 @@ class ConsoleHandler
 					 'coverageText' => true,
 					 'coverageTextShowUncoveredFiles' => true,
 					 'coverageTextShowOnlySummary' => true);
+	}
+
+	protected function startTimer()
+	{
+		$this->start_time = microtime(TRUE);
+	}
+
+	protected function endTimer($what = 'Queries')
+	{
+		$end_time = microtime(TRUE);
+		DataCache::getInstance()->getLog()->info(sprintf($what . ' took %s seconds.', round($end_time - $this->start_time, 4)));
+	}
+
+	public function printHelp()
+	{
+		echo "Usage: ConsoleHandler.php function [term] [year] [param]\n";
+
+		foreach($this->collection as $func)
+		{
+			$debug = '';
+			if(GlobalSettings::getInstance()->isDebug() && $func->isDebug())
+			{
+				echo "\t\t " . $func->getId() . " => (Debug) " . $func->getComment() . "\n";
+			}
+			else
+			{
+				echo "\t\t " . $func->getId() . " => " . $func->getComment() . "$debug\n";
+			}
+		}
+		Utils::terminate(0);
 	}
 }

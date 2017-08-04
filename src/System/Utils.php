@@ -35,7 +35,7 @@ class Utils
 	/**
 	 * @param int $code
 	 */
-	protected static function terminate($code = 0)
+	public static function terminate($code = 0)
 	{
 		exit($code);
 	}

@@ -55,8 +55,13 @@ class GlobalSettingsTest extends TestCaseExtension
 						"ssl_validation"     : "false"
 					},
 					"path_to_queue"          : "/tmp/my_path_to_queue",
+					"keep_elements_in_queue" : "true",
 					"path_to_log"          : "/tmp/phpunit.log",
-					"queue_timer"            : "60"
+					"queue_timer"            : "60",
+					"debug"                  : "true",
+					"PHPUnit"                : {
+						"coverage" : "true"
+						}
 				}');
 	}
 
@@ -337,6 +342,7 @@ class GlobalSettingsTest extends TestCaseExtension
 		$this->assertEquals('http://my_his_listener:8080/', $endpoint->getUrlWithPort());
 		$this->assertEquals('user', $endpoint->getUserName());
 		$this->assertEquals('pass', $endpoint->getPassword());
+		$this->assertEquals(true, $this->instance->isPhpunitWithCoverage());
 		unlink($json);
 	}
 }
