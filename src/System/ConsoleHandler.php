@@ -267,9 +267,9 @@ class ConsoleHandler
 
 	public function wsdlHelper()
 	{
-		$wsdls = $this->gatherServicesForWsdl();
+		$wsdl_files = $this->gatherServicesForWsdl();
 
-		foreach($wsdls as $wsdl)
+		foreach($wsdl_files as $wsdl)
 		{
 			$file = 'test/wsdl/'.$wsdl;
 			if(file_exists($file))
@@ -309,13 +309,39 @@ class ConsoleHandler
 		$phpunit = new \PHPUnit\TextUI\TestRunner;
 		try
 		{
-			$testsuite    = $phpunit->getTest('test/GlobalTestSuite.php');
-			$phpunit->dorun($testsuite, array('configuration' => 'test/phpunit.xml'));
+			$test_suite		= $phpunit->getTest('test/GlobalTestSuite.php');
+			$config			= $this->getPhpUnitConfig();
+			$phpunit->dorun($test_suite, $config);
 		}
 		catch(\PHPUnit\Framework\Exception $e)
 		{
 			print $e->getMessage() . "\n";
 			die ("Unit tests failed.");
 		}
+	}
+	
+	protected function getPhpUnitConfig()
+	{
+		if(GlobalSettings::getInstance()->isPhpunitWithCoverage())
+		{
+			return $this->getPhpUnitConfigWithCoverage();
+		}
+		else
+		{
+			return $this->getPhpUnitConfigWithoutCoverage();
+		}
+	}
+
+	protected function getPhpUnitConfigWithoutCoverage()
+	{
+		return array('configuration' => 'test/phpunit.xml');
+	}
+	
+	protected function getPhpUnitConfigWithCoverage()
+	{
+		return array('configuration' => 'test/phpunit.xml',
+					 'coverageText' => true,
+					 'coverageTextShowUncoveredFiles' => true,
+					 'coverageTextShowOnlySummary' => true);
 	}
 }

@@ -105,6 +105,11 @@ class GlobalSettings
 	protected $receiver_memberships;
 
 	/**
+	 * @var boolean
+	 */
+	protected $phpunit_with_coverage;
+	
+	/**
 	 * @param $name
 	 */
 	protected function overWriteDefaultConfigFileName($name)
@@ -183,6 +188,9 @@ class GlobalSettings
 		$this->setPathToLog($this->config->get('path_to_log'));
 		$this->setKeepElementInQueue($this->config->get('keep_elements_in_queue'));
 		$this->setDebug($this->config->get('debug'));
+
+		$a = $this->config->get('PHPUnit.coverage');
+		$this->setPhpunitWithCoverage($this->config->get('PHPUnit.coverage'));
 	}
 
 	/**
@@ -236,7 +244,8 @@ class GlobalSettings
 			"queue_timer"                    => $this->getQueueTimer(),
 			"path_to_log"                    => $this->getPathToLog(),
 			"keep_elements_in_queue"         => $this->isKeepElementInQueue(),
-			"debug"                          => $this->isDebug()
+			"debug"                          => $this->isDebug(),
+			"PHPUnit.coverage"               => $this->isPhpunitWithCoverage()
 		);
 
 		$config = json_encode($config);
@@ -490,5 +499,25 @@ class GlobalSettings
 	public function getReceiverMemberships()
 	{
 		return $this->receiver_memberships;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isPhpunitWithCoverage()
+	{
+		if($this->phpunit_with_coverage === 'true' || $this->phpunit_with_coverage === true)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @param bool $phpunit_with_coverage
+	 */
+	public function setPhpunitWithCoverage($phpunit_with_coverage)
+	{
+		$this->phpunit_with_coverage = $phpunit_with_coverage;
 	}
 }

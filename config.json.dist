@@ -23,5 +23,8 @@
 	"path_to_log"            : "",
 	"keep_elements_in_queue" : "",
 	"queue_timer"            : "",
-	"debug"                  : ""
+	"debug"                  : "",
+	"PHPUnit"                : {
+			"coverage" : "true"
+	}
 }

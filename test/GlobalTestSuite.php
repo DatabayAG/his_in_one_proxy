@@ -20,7 +20,9 @@ class GlobalTestSuite extends \PHPUnit\Framework\TestSuite
 	 */
 	public static function suite()
 	{
+		$unit_tests = \HisInOneProxy\Config\GlobalSettings::getInstance()->isPhpunitWithCoverage();
 		\HisInOneProxy\Config\GlobalSettings::getInstance()->readCustomConfig('test/php_unit_config.json');
+		\HisInOneProxy\Config\GlobalSettings::getInstance()->setPhpunitWithCoverage($unit_tests);
 		$suite = new GlobalTestSuite();
 		self::addTestSuiteFiles($suite);
 		return $suite;

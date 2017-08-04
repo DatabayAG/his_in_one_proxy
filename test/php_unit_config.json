@@ -22,5 +22,8 @@
 	"path_to_log"            : "/tmp/phpunit.log",
 	"keep_elements_in_queue" : "true",
 	"queue_timer"            : "1",
-	"debug"                  : "true"
+	"debug"                  : "true",
+	"PHPUnit"                : {
+			"coverage" : ""
+	}
 }
