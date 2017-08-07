@@ -520,4 +520,16 @@ class GlobalSettings
 	{
 		$this->phpunit_with_coverage = $phpunit_with_coverage;
 	}
+	
+	protected $calls_counter = 0;
+	
+	public function incrementCallsCounter()
+	{
+		$this->calls_counter ++;
+	}
+
+	public function getCallsCounter()
+	{
+		return $this->calls_counter;
+	}
 }

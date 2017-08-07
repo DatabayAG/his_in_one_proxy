@@ -323,13 +323,17 @@ class ConsoleHandler
 
 	protected function startTimer()
 	{
-		$this->start_time = microtime(TRUE);
+		$this->start_time = microtime(true);
 	}
 
 	protected function endTimer($what = 'Queries')
 	{
-		$end_time = microtime(TRUE);
-		DataCache::getInstance()->getLog()->info(sprintf($what . ' took %s seconds.', round($end_time - $this->start_time, 4)));
+		$end_time = microtime(true);
+		DataCache::getInstance()->getLog()->info(sprintf($what . ' took %s seconds for %s soap calls.', 
+			round($end_time - $this->start_time, 4), 
+			GlobalSettings::getInstance()->getCallsCounter()
+			)
+		);
 	}
 
 	public function printHelp()

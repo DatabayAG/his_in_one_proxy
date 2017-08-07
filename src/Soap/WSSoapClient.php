@@ -87,7 +87,7 @@ class WSSoapClient extends \SoapClient
 			{
 				$this->__setSoapHeaders($this->generateWSSecurityHeader());
 			}
-
+			GlobalSettings::getInstance()->incrementCallsCounter();
 			return parent::__soapCall($function_name, $arguments, $options, $input_headers, $output_headers);
 		#}
 		#catch(\Exception $e){

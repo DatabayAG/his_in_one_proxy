@@ -21,7 +21,7 @@ class Functions
 		self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
 		self::appendFunction('gg', 'getAllParallelGroups', 'Gets all parallel group types.', true);
 		self::appendFunction('gw', 'getAllWorkStatus', 'Gets all work status types.', true);
-		self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all work status types.', true);
+		self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.', true);
 		self::appendFunction('gt', 'getAllTermTypes', 'Gets all term types.', true);
 		self::appendFunction('rp', 'readPerson', 'Reads person by id.', true);
 	}
