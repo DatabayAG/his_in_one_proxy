@@ -6,7 +6,7 @@
 		"password"           : "Password for HisInOne Server",
 		"url"                : "URL for HisInOneServer with 'qisserver/services2/'",
 		"soap_caching"       : "SOAP Chaching active(1) or inactive (0)",
-		"soap_debug"         : "SOAP Debug (true/false) if true all request xml get dumpt to shell",
+		"soap_debug"         : "SOAP Debug (true/false) if true all response xml gets dumpt to shell",
 		"endpoint"           : {
 			"register_listener"  : "Listener active (true/false)",
 			"listener_url"       : "URL/IP for listener",
