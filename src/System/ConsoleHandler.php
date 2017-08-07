@@ -333,16 +333,29 @@ class ConsoleHandler
 
 		foreach($this->collection as $func)
 		{
-			$debug = '';
 			if(GlobalSettings::getInstance()->isDebug() && $func->isDebug())
 			{
-				echo "\t\t " . $func->getId() . " => (Debug) " . $func->getComment() . "\n";
+				$this->printHelpLine($func, true);
 			}
 			else
 			{
-				echo "\t\t " . $func->getId() . " => " . $func->getComment() . "$debug\n";
+				$this->printHelpLine($func);
 			}
 		}
 		Utils::terminate(0);
+	}
+
+	/**
+	 * @param \HisInOneProxy\System\Console\FunctionObject $func
+	 * @param $debug
+	 */
+	protected function printHelpLine($func, $debug = false)
+	{
+		$string = '';
+		if($debug)
+		{
+			$string = '(Debug)';
+		}
+		echo "\t\t " . $func->getId() . " => $string " . $func->getComment() . "\n";
 	}
 }
