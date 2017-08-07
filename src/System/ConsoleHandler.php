@@ -7,6 +7,7 @@ use HisInOneProxy\Queue\QueueProcess;
 use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\Soap\SoapService;
+use HisInOneProxy\System\Console\FunctionObject;
 use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -35,7 +36,7 @@ class ConsoleHandler
 	protected $term_id;
 
 	/**
-	 * @var array
+	 * @var FunctionObject[]
 	 */
 	protected $collection;
 
