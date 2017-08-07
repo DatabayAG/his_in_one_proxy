@@ -5,7 +5,7 @@
 		"username"           : "Username for HisInOne Server",
 		"password"           : "Password for HisInOne Server",
 		"url"                : "URL for HisInOneServer with 'qisserver/services2/'",
-		"soap_caching"       : "SOAP Chaching active(1) or inactive (0)",
+		"soap_caching"       : "SOAP Caching active(1) or inactive (0)",
 		"soap_debug"         : "SOAP Debug (true/false) if true all response xml gets dumpt to shell",
 		"endpoint"           : {
 			"register_listener"  : "Listener active (true/false)",
@@ -16,9 +16,9 @@
 		}
 	},
 	"ECS" : {
-		"auth_id"            : "AUTH id for ecs server.",
-		"receiver_memberships": "Memebership overwrite",
-		"url"                : "URL to ecs server.",
+		"auth_id"            : "AUTH id for ecs server",
+		"receiver_memberships": "Membership overwrite",
+		"url"                : "URL to ecs server",
 		"ssl_validation"     : "SSL validation (true/false)"
 	},
 	"path_to_queue"          : "Path to queue from his_in_one_proxy",
