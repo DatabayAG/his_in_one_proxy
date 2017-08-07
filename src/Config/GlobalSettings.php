@@ -108,6 +108,11 @@ class GlobalSettings
 	 * @var boolean
 	 */
 	protected $phpunit_with_coverage;
+
+	/**
+	 * @var int
+	 */
+	protected $soap_calls_counter = 0;
 	
 	/**
 	 * @param $name
@@ -520,16 +525,17 @@ class GlobalSettings
 	{
 		$this->phpunit_with_coverage = $phpunit_with_coverage;
 	}
-	
-	protected $calls_counter = 0;
-	
+
 	public function incrementCallsCounter()
 	{
-		$this->calls_counter ++;
+		$this->soap_calls_counter++;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getCallsCounter()
 	{
-		return $this->calls_counter;
+		return $this->soap_calls_counter;
 	}
 }
