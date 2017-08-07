@@ -53,6 +53,11 @@ class ConsoleHandler
 		$formatter     = new LineFormatter($output);
 		$streamHandler->setFormatter($formatter);
 		$log->getLogger()->pushHandler($streamHandler);
+		
+		if(GlobalSettings::getInstance()->getHisServerUrl() == '/')
+		{
+			Utils::LogToShellAndExit('No his server url found.');
+		}
 
 		self::$conductor = new Conductor($term, $year, $log);
 		$this->year      = $year;
