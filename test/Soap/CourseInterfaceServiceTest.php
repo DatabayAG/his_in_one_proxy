@@ -97,7 +97,7 @@ class CourseInterfaceServiceTest extends TestCaseExtension
 		$soap_client = new Soap\CourseInterfaceService($this->log, $this->soap_client_router);
 		$value = $soap_client->readUnit(1999);
 		$this->assertInstanceOf('\HisInOneProxy\DataModel\Unit', $value);
-		$this->assertEquals(213213123, $value->getLid());
+		$this->assertEquals('213213123', $value->getLid());
 	}
 
 	public function test_getCourseOfStudiesForUnit_shouldLogError()

@@ -8,7 +8,7 @@ use HisInOneProxy\Exceptions;
 
 class Unit
 {
-	use Traits\Comment, Traits\DefaultLanguage, Traits\LockVersion, Traits\ObjGuid, Traits\Text, Traits\Valid, Traits\Version;
+	use Traits\Comment, Traits\DefaultLanguage, Traits\Lid, Traits\LockVersion, Traits\ObjGuid, Traits\Text, Traits\Valid, Traits\Version;
 
 	/**
 	 * @var string
@@ -19,11 +19,6 @@ class Unit
 	 * @var int
 	 */
 	protected $element_type_id;
-
-	/**
-	 * @var int
-	 */
-	protected $lid;
 
 	/**
 	 * @var int
@@ -85,22 +80,6 @@ class Unit
 	public function setElementTypeId($element_type_id)
 	{
 		$this->element_type_id = (int) $element_type_id;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getLid()
-	{
-		return $this->lid;
-	}
-
-	/**
-	 * @param int $lid
-	 */
-	public function setLid($lid)
-	{
-		$this->lid = (int) $lid;
 	}
 
 	/**

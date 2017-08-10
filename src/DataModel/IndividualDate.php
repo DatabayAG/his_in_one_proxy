@@ -6,7 +6,7 @@ use HisInOneProxy\DataModel\Traits;
 
 class IndividualDate
 {
-	use Traits\LockVersion, Traits\ObjGuid, Traits\PlannedDatesId, Traits\RoomId, Traits\StartEndTime, Traits\WeekDay;
+	use Traits\Appointment, Traits\LockVersion, Traits\ObjGuid, Traits\PlannedDatesId, Traits\RoomId;
 
 	/**
 	 * @var int

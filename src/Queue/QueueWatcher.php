@@ -100,15 +100,14 @@ class QueueWatcher
 			$cmd       = $message->cmd;
 			$data      = $message->data;
 			$unix_time = $message->unix_time;
-			if(isset($message->reciever))
+			if(isset($message->receiver))
 			{
-				$receiver  = $message->reciever;
+				$receiver  = $message->receiver;
 			}
 			else
 			{
 				$receiver  = '';
 			}
-
 
 			if($this->jobCanBeProcessed($unix_time, $file_name, $queue_name))
 			{

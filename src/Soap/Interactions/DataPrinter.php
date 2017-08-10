@@ -7,10 +7,6 @@ use HisInOneProxy\Log\Log;
 
 class DataPrinter
 {
-	/**
-	 * @var int
-	 */
-	public $units_counter = 0;
 
 	/**
 	 * @var int
@@ -215,7 +211,6 @@ class DataPrinter
 			{
 				if($child instanceof DataModel\Unit)
 				{
-					$this->units_counter++;
 					$this->gatherMissingDetailFromCourseCatalog($child);
 				}
 				else if(array_key_exists($child->getChildId(), DataCache::getInstance()->getUnitCache()))

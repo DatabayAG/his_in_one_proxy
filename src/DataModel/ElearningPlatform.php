@@ -6,7 +6,7 @@ use HisInOneProxy\DataModel\Traits;
 
 class ElearningPlatform
 {
-	use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\Text, Traits\UniqueName;
+	use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText;
 
 	/**
 	 * @var string

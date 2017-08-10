@@ -97,6 +97,7 @@ class WSSoapClient extends \SoapClient
 
 	public function __doRequest($request, $location, $action, $version, $one_way = 0)
 	{
+
 		$result = parent::__doRequest($request, $location, $action, $version, $one_way);
 		$result = str_replace('<his:childOrgUnit>', '<his:orgunit>', $result);
 		$result = str_replace('</his:childOrgUnit>', '</his:orgunit>', $result);

@@ -6,17 +6,7 @@ use HisInOneProxy\DataModel\Traits;
 
 class OrgUnit
 {
-	use Traits\LanguageId, Traits\ParentId, Traits\SortingOrder, Traits\Text, Traits\Valid, Traits\UniqueName;
-
-	/**
-	 * @var int
-	 */
-	protected $id;
-
-	/**
-	 * @var int
-	 */
-	protected $lid;
+	use Traits\Id, Traits\LanguageId, Traits\Lid, Traits\ParentId, Traits\SortingOrder, Traits\Valid, Traits\UniqueNameAndText;
 
 	/**
 	 * @var string
@@ -53,21 +43,6 @@ class OrgUnit
 	 */
 	protected $address_container = array();
 
-	/**
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * @param int $id
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
 
 	/**
 	 * @return OrgUnit[]
@@ -113,22 +88,6 @@ class OrgUnit
 		{
 			$this->container = $org_unit->container;
 		}
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getLid()
-	{
-		return $this->lid;
-	}
-
-	/**
-	 * @param int $lid
-	 */
-	public function setLid($lid)
-	{
-		$this->lid = $lid;
 	}
 
 	/**

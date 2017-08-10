@@ -6,7 +6,7 @@ use HisInOneProxy\DataModel\Traits;
 
 class Room
 {
-	use Traits\Text, Traits\ObjGuid, Traits\UniqueName;
+	use Traits\ObjGuid, Traits\UniqueNameAndText;
 
 	/**
 	 * @var int

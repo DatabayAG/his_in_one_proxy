@@ -7,8 +7,8 @@ use HisInOneProxy\Exceptions;
 
 class PlanElement
 {
-	use Traits\AcademicYear, Traits\Contents, Traits\Credits, Traits\DefaultLanguage, Traits\GenderId, Traits\Literature;
-	use Traits\LockVersion, Traits\ObjGuid, Traits\TermTypeValueId, Traits\Text, Traits\UnitId, Traits\Workload, Traits\Year;
+	use Traits\AcademicYear, Traits\Contents, Traits\Credits, Traits\DefaultLanguage, Traits\GenderId, Traits\Literature,
+	Traits\LockVersion, Traits\ObjGuid, Traits\TermTypeValueId, Traits\Text, Traits\UnitId, Traits\Workload, Traits\Year;
 
 	/**
 	 * @var int

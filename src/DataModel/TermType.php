@@ -7,7 +7,7 @@ use HisInOneProxy\DataModel\Traits;
 class TermType
 {
 
-	use Traits\LanguageId, Traits\SortingOrder, Traits\ObjGuid, Traits\TermNumber, Traits\Text, Traits\UniqueName;
+	use Traits\LanguageId, Traits\SortingOrder, Traits\ObjGuid, Traits\TermNumber, Traits\UniqueNameAndText;
 
 	/**
 	 * @var int

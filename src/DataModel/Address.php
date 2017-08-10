@@ -6,7 +6,7 @@ use HisInOneProxy\DataModel\Traits;
 
 class Address
 {
-	use Traits\ObjGuid, Traits\SortingOrder, Traits\Valid;
+	use Traits\ObjGuid, Traits\SortingOrder, Traits\UpdatedAt, Traits\Valid;
 
 	/**
 	 * @var string
@@ -67,11 +67,6 @@ class Address
 	 * @var
 	 */
 	protected $created_at;
-
-	/**
-	 * @var
-	 */
-	protected $updated_at;
 
 	/**
 	 * @var string
@@ -268,22 +263,6 @@ class Address
 	public function setCreatedAt($created_at)
 	{
 		$this->created_at = $created_at;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getUpdatedAt()
-	{
-		return $this->updated_at;
-	}
-
-	/**
-	 * @param mixed $updated_at
-	 */
-	public function setUpdatedAt($updated_at)
-	{
-		$this->updated_at = $updated_at;
 	}
 
 	/**

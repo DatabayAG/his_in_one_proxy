@@ -6,7 +6,7 @@ use HisInOneProxy\DataModel\Traits;
 
 class Person
 {
-	use Traits\GenderId, Traits\ObjGuid, Traits\SortingOrder, Traits\Text;
+	use Traits\GenderId, Traits\ObjGuid, Traits\SortingOrder, Traits\Text, Traits\UpdatedAt;
 
 	/**
 	 * @var string
@@ -87,11 +87,6 @@ class Person
 	 * @var int
 	 */
 	protected $self_registration_status_id;
-
-	/**
-	 * @var string
-	 */
-	protected $updated_at;
 
 	/**
 	 * @return string
@@ -349,19 +344,4 @@ class Person
 		$this->academic_degree_id = $academic_degree_id;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getUpdatedAt()
-	{
-		return $this->updated_at;
-	}
-
-	/**
-	 * @param string $updated_at
-	 */
-	public function setUpdatedAt($updated_at)
-	{
-		$this->updated_at = $updated_at;
-	}
 }

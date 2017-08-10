@@ -115,7 +115,7 @@ class Conductor
 			$catalog_leaf = $service->getCourseCatalogLeaf($term_id);
 			$this->data_printer->printCourseCatalog($catalog_leaf);
 
-			$this->log->info($this->data_printer->units_counter . ' Nodes found - '. $this->data_printer->depth . ' Max Depth.');
+			$this->log->info($this->data_printer->depth . ' Max Depth.');
 			if($catalog_leaf != null && $catalog_leaf->getId() != null )
 			{
 				$this->log->debug(sprintf('Found catalog leaf with id %s.', $catalog_leaf->getId()));

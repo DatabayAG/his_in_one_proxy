@@ -5,17 +5,7 @@ use HisInOneProxy\DataModel\Traits;
 
 class CourseOfStudy
 {
-	use Traits\DefaultLanguage, Traits\OrgUnitId, Traits\Text, Traits\UniqueName;
-
-	/**
-	 * @var int
-	 */
-	protected $id;
-
-	/**
-	 * @var int
-	 */
-	protected $lid;
+	use Traits\Id, Traits\DefaultLanguage, Traits\Lid, Traits\OrgUnitId, Traits\UniqueNameAndText;
 
 	/**
 	 * @var int
@@ -181,38 +171,6 @@ class CourseOfStudy
 	 * @var int
 	 */
 	protected $enrollment_id;
-
-	/**
-	 * @return int
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * @param int $id
-	 */
-	public function setId($id)
-	{
-		$this->id = $id;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getLid()
-	{
-		return $this->lid;
-	}
-
-	/**
-	 * @param int $lid
-	 */
-	public function setLid($lid)
-	{
-		$this->lid = $lid;
-	}
 
 	/**
 	 * @return int
