@@ -255,6 +255,9 @@ class DataCache
 		return self::$term_service;
 	}
 
+	/**
+	 * @param Log $log
+	 */
 	public function setLog($log)
 	{
 		self::$log = $log;

@@ -167,6 +167,39 @@ class ConsoleHandler
 		var_dump($obj);
 		$this->endTimer();
 	}
+	
+	protected function getCurrentTerm()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getTermService()->getCurrentTerm($lng);
+		var_dump($obj);
+		$this->endTimer();
+	}
+
+	protected function getDefaultLanguageId()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		var_dump($lng);
+		$this->endTimer();
+	}
+
+	protected function readStudentWithCoursesOfStudyByPersonId($param)
+	{
+		$this->startTimer();
+		$obj = DataCache::getInstance()->getStudentService()->readStudentWithCoursesOfStudyByPersonId($param);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getCourseOfStudyById($param)
+	{
+		$this->startTimer();
+		$obj = DataCache::getInstance()->getCourseOfStudyService()->getCourseOfStudyById($param);
+		print_r($obj);
+		$this->endTimer();
+	}
 
 	protected function getAllTermTypes()
 	{
