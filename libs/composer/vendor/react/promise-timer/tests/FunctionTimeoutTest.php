@@ -16,6 +16,15 @@ class FunctionTimerTest extends TestCase
         $this->expectPromiseResolved($promise);
     }
 
+    public function testResolvedExpiredWillResolveRightAway()
+    {
+        $promise = Promise\resolve();
+
+        $promise = Timer\timeout($promise, -1, $this->loop);
+
+        $this->expectPromiseResolved($promise);
+    }
+
     public function testResolvedWillNotStartTimer()
     {
         $promise = Promise\resolve();
@@ -53,7 +62,7 @@ class FunctionTimerTest extends TestCase
 
     public function testPendingWillRejectOnTimeout()
     {
-        $promise = $this->getMock('React\Promise\PromiseInterface');
+        $promise = $this->getMockBuilder('React\Promise\PromiseInterface')->getMock();
 
         $promise = Timer\timeout($promise, 0.01, $this->loop);
 
@@ -64,7 +73,7 @@ class FunctionTimerTest extends TestCase
 
     public function testPendingCancellableWillBeCancelledOnTimeout()
     {
-        $promise = $this->getMock('React\Promise\CancellablePromiseInterface');
+        $promise = $this->getMockBuilder('React\Promise\CancellablePromiseInterface')->getMock();
         $promise->expects($this->once())->method('cancel');
 
         Timer\timeout($promise, 0.01, $this->loop);
@@ -76,9 +85,9 @@ class FunctionTimerTest extends TestCase
     {
         $promise = new \React\Promise\Promise(function () { });
 
-        $loop = $this->getMock('React\EventLoop\LoopInterface');
+        $loop = $this->getMockBuilder('React\EventLoop\LoopInterface')->getMock();
 
-        $timer = $this->getMock('React\EventLoop\Timer\TimerInterface');
+        $timer = $this->getMockBuilder('React\EventLoop\Timer\TimerInterface')->getMock();
         $loop->expects($this->once())->method('addTimer')->will($this->returnValue($timer));
         $loop->expects($this->never())->method('cancelTimer');
 
@@ -87,6 +96,30 @@ class FunctionTimerTest extends TestCase
         $timeout->cancel();
 
         $this->expectPromisePending($timeout);
+    }
+
+    public function testResolvedPromiseWillNotStartTimer()
+    {
+        $promise = new \React\Promise\Promise(function ($resolve) { $resolve(true); });
+
+        $loop = $this->getMockBuilder('React\EventLoop\LoopInterface')->getMock();
+        $loop->expects($this->never())->method('addTimer');
+
+        $timeout = Timer\timeout($promise, 0.01, $loop);
+
+        $this->expectPromiseResolved($timeout);
+    }
+
+    public function testRejectedPromiseWillNotStartTimer()
+    {
+        $promise = Promise\reject(new \RuntimeException());
+
+        $loop = $this->getMockBuilder('React\EventLoop\LoopInterface')->getMock();
+        $loop->expects($this->never())->method('addTimer');
+
+        $timeout = Timer\timeout($promise, 0.01, $loop);
+
+        $this->expectPromiseRejected($timeout);
     }
 
     public function testCancelTimeoutWillCancelGivenPromise()

@@ -17,6 +17,7 @@ A trivial implementation of timeouts for `Promise`s, built on top of [React PHP]
     * [Reject cancellation](#reject-cancellation)
   * [TimeoutException](#timeoutexception)
 * [Install](#install)
+* [Tests](#tests)
 * [License](#license)
 
 ## Usage
@@ -48,6 +49,14 @@ It returns a new `Promise` with the following resolution behavior:
 * If the input `$promise` resolves before `$time` seconds, resolve the resulting promise with its fulfillment value.
 * If the input `$promise` rejects before `$time` seconds, reject the resulting promise with its rejection value.
 * If the input `$promise` does not settle before `$time` seconds, *cancel* the operation and reject the resulting promise with a [`TimeoutException`](#timeoutexception).
+
+Internally, the given `$time` value will be used to start a timer that will
+*cancel* the pending operation once it triggers.
+This implies that if you pass a really small (or negative) value, it will still
+start a timer and will thus trigger at the earliest possible time in the future.
+
+If the input `$promise` is already settled, then the resulting promise will
+resolve or reject immediately without starting a timer at all.
 
 A common use case for handling only resolved values looks like this:
 
@@ -268,6 +277,11 @@ Timer\resolve(1.5, $loop)->then(function ($time) {
 });
 ```
 
+Internally, the given `$time` value will be used to start a timer that will
+resolve the promise once it triggers.
+This implies that if you pass a really small (or negative) value, it will still
+start a timer and will thus trigger at the earliest possible time in the future.
+
 #### Resolve cancellation
 
 You can explicitly `cancel()` the resulting timer promise at any time:
@@ -290,6 +304,11 @@ Timer\reject(2.0, $loop)->then(null, function (TimeoutException $e) {
     echo 'Rejected after ' . $e->getTimeout() . ' seconds ' . PHP_EOL;
 });
 ```
+
+Internally, the given `$time` value will be used to start a timer that will
+reject the promise once it triggers.
+This implies that if you pass a really small (or negative) value, it will still
+start a timer and will thus trigger at the earliest possible time in the future.
 
 This function complements the [`resolve()`](#resolve) function
 and can be used as a basic building block for higher-level promise consumers.
@@ -320,10 +339,25 @@ The recommended way to install this library is [through Composer](http://getcomp
 This will install the latest supported version:
 
 ```bash
-$ composer require react/promise-timer:^1.1.1
+$ composer require react/promise-timer:^1.2
 ```
 
 More details and upgrade guides can be found in the [CHANGELOG](CHANGELOG.md).
+
+## Tests
+
+To run the test suite, you first need to clone this repo and then install all
+dependencies [through Composer](http://getcomposer.org):
+
+```bash
+$ composer install
+```
+
+To run the test suite, go to the project root and run:
+
+```bash
+$ php vendor/bin/phpunit
+```
 
 ## License
 

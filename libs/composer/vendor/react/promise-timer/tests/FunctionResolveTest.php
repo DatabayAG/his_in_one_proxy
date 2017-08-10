@@ -13,6 +13,13 @@ class FunctionResolveTest extends TestCase
         $this->expectPromisePending($promise);
     }
 
+    public function testPromiseExpiredIsPendingWithoutRunningLoop()
+    {
+        $promise = Timer\resolve(-1, $this->loop);
+
+        $this->expectPromisePending($promise);
+    }
+
     public function testPromiseWillBeResolvedOnTimeout()
     {
         $promise = Timer\resolve(0.01, $this->loop);
@@ -22,9 +29,18 @@ class FunctionResolveTest extends TestCase
         $this->expectPromiseResolved($promise);
     }
 
+    public function testPromiseExpiredWillBeResolvedOnTimeout()
+    {
+        $promise = Timer\resolve(-1, $this->loop);
+
+        $this->loop->run();
+
+        $this->expectPromiseResolved($promise);
+    }
+
     public function testWillStartLoopTimer()
     {
-        $loop = $this->getMock('React\EventLoop\LoopInterface');
+        $loop = $this->getMockBuilder('React\EventLoop\LoopInterface')->getMock();
         $loop->expects($this->once())->method('addTimer')->with($this->equalTo(0.01));
 
         Timer\resolve(0.01, $loop);
@@ -32,9 +48,9 @@ class FunctionResolveTest extends TestCase
 
     public function testCancellingPromiseWillCancelLoopTimer()
     {
-        $loop = $this->getMock('React\EventLoop\LoopInterface');
+        $loop = $this->getMockBuilder('React\EventLoop\LoopInterface')->getMock();
 
-        $timer = $this->getMock('React\EventLoop\Timer\TimerInterface');
+        $timer = $this->getMockBuilder('React\EventLoop\Timer\TimerInterface')->getMock();
         $loop->expects($this->once())->method('addTimer')->will($this->returnValue($timer));
 
         $promise = Timer\resolve(0.01, $loop);
