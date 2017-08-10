@@ -43,7 +43,7 @@ class Functions
 	{
 		if(array_key_exists($id, self::$collection))
 		{
-			Utils::LogToShellAndExit(sprintf('Short "%s" handle already in use for "%s".', $id, self::$collection[$id]->getFunction()));
+			#Utils::LogToShellAndExit(sprintf('Short "%s" handle already in use for "%s".', $id, self::$collection[$id]->getFunction()));
 		}
 		$func = new FunctionObject();
 		$func->setId($id);
