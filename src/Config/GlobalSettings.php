@@ -5,6 +5,7 @@ namespace HisInOneProxy\Config;
 require_once __DIR__ . '/../Log/LogConfig.php';
 
 use HisInOneProxy\DataModel\Endpoint;
+use HisInOneProxy\Log\LogLevel;
 use HisInOneProxy\System\Utils;
 use Noodlehaus\Config;
 
@@ -194,7 +195,6 @@ class GlobalSettings
 		$this->setKeepElementInQueue($this->config->get('keep_elements_in_queue'));
 		$this->setDebug($this->config->get('debug'));
 
-		$a = $this->config->get('PHPUnit.coverage');
 		$this->setPhpunitWithCoverage($this->config->get('PHPUnit.coverage'));
 	}
 

@@ -68,7 +68,8 @@ class HisSystemResponse
 	 */
 	public function setEventType($event_type)
 	{
-		if(in_array(strtolower($event_type), self::$event_types))
+		$event_type = strtolower($event_type);
+		if(in_array($event_type, self::$event_types))
 		{
 			$this->event_type = $event_type;
 		}
