@@ -42,7 +42,6 @@ class CourseOfStudy
 	 */
 	protected $course_specialization_lid;
 
-
 	/**
 	 * @var int
 	 */

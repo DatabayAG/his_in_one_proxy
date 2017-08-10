@@ -6,22 +6,14 @@ use HisInOneProxy\DataModel\Traits;
 
 class Course
 {
-	use Traits\AcademicYear, Traits\Contents, Traits\Credits, Traits\Literature, Traits\LockVersion, Traits\ObjGuid, Traits\UnitId, Traits\Workload;
+	use Traits\AcademicYear, Traits\Achievements, Traits\CompulsoryRequirement, Traits\Contents, Traits\Credits, Traits\ExternOrganizer,
+		Traits\Grading, Traits\Literature, Traits\LearningTarget, Traits\LockVersion, Traits\ObjectiveQualification, 
+		Traits\ObjGuid, Traits\RecommendedRequirement, Traits\TargetGroup, Traits\TeachingMethod, Traits\UnitId, Traits\Workload;
 
 	/**
 	 * @var string
 	 */
 	protected $class_attendance;
-
-	/**
-	 * @var string
-	 */
-	protected $compulsory_requirement;
-
-	/**
-	 * @var string
-	 */
-	protected $course_achievement;
 
 	/**
 	 * @var string
@@ -34,24 +26,9 @@ class Course
 	protected $event_type_id;
 
 	/**
-	 * @var string
-	 */
-	protected $examination_achievement;
-
-	/**
-	 * @var string
-	 */
-	protected $extern_organizer;
-
-	/**
 	 * @var int
 	 */
 	protected $frequency_of_offer_value_id;
-
-	/**
-	 * @var string
-	 */
-	protected $grading;
 
 	/**
 	 * @var string
@@ -66,22 +43,7 @@ class Course
 	/**
 	 * @var string
 	 */
-	protected $learning_target;
-
-	/**
-	 * @var string
-	 */
-	protected $objective_qualification;
-
-	/**
-	 * @var string
-	 */
 	protected $recommendation;
-
-	/**
-	 * @var string
-	 */
-	protected $recommended_requirement;
 
 	/**
 	 * @var int
@@ -89,19 +51,9 @@ class Course
 	protected $scheduled_group_size;
 
 	/**
-	 * @var string
-	 */
-	protected $target_group;
-
-	/**
 	 * @var int
 	 */
 	protected $teaching_k_language_id;
-
-	/**
-	 * @var string
-	 */
-	protected $teaching_method;
 
 	/**
 	 * @return string
@@ -117,38 +69,6 @@ class Course
 	public function setClassAttendance($class_attendance)
 	{
 		$this->class_attendance = $class_attendance;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCompulsoryRequirement()
-	{
-		return $this->compulsory_requirement;
-	}
-
-	/**
-	 * @param string $compulsory_requirement
-	 */
-	public function setCompulsoryRequirement($compulsory_requirement)
-	{
-		$this->compulsory_requirement = $compulsory_requirement;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCourseAchievement()
-	{
-		return $this->course_achievement;
-	}
-
-	/**
-	 * @param string $course_achievement
-	 */
-	public function setCourseAchievement($course_achievement)
-	{
-		$this->course_achievement = $course_achievement;
 	}
 
 	/**
@@ -184,38 +104,6 @@ class Course
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getExaminationAchievement()
-	{
-		return $this->examination_achievement;
-	}
-
-	/**
-	 * @param string $examination_achievement
-	 */
-	public function setExaminationAchievement($examination_achievement)
-	{
-		$this->examination_achievement = $examination_achievement;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getExternOrganizer()
-	{
-		return $this->extern_organizer;
-	}
-
-	/**
-	 * @param string $extern_organizer
-	 */
-	public function setExternOrganizer($extern_organizer)
-	{
-		$this->extern_organizer = $extern_organizer;
-	}
-
-	/**
 	 * @return int
 	 */
 	public function getFrequencyOfOfferValueId()
@@ -229,22 +117,6 @@ class Course
 	public function setFrequencyOfOfferValueId($frequency_of_offer_value_id)
 	{
 		$this->frequency_of_offer_value_id = $frequency_of_offer_value_id;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getGrading()
-	{
-		return $this->grading;
-	}
-
-	/**
-	 * @param string $grading
-	 */
-	public function setGrading($grading)
-	{
-		$this->grading = $grading;
 	}
 
 	/**
@@ -282,38 +154,6 @@ class Course
 	/**
 	 * @return string
 	 */
-	public function getLearningTarget()
-	{
-		return $this->learning_target;
-	}
-
-	/**
-	 * @param string $learning_target
-	 */
-	public function setLearningTarget($learning_target)
-	{
-		$this->learning_target = $learning_target;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getObjectiveQualification()
-	{
-		return $this->objective_qualification;
-	}
-
-	/**
-	 * @param string $objective_qualification
-	 */
-	public function setObjectiveQualification($objective_qualification)
-	{
-		$this->objective_qualification = $objective_qualification;
-	}
-
-	/**
-	 * @return string
-	 */
 	public function getRecommendation()
 	{
 		return $this->recommendation;
@@ -325,22 +165,6 @@ class Course
 	public function setRecommendation($recommendation)
 	{
 		$this->recommendation = $recommendation;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getRecommendedRequirement()
-	{
-		return $this->recommended_requirement;
-	}
-
-	/**
-	 * @param string $recommended_requirement
-	 */
-	public function setRecommendedRequirement($recommended_requirement)
-	{
-		$this->recommended_requirement = $recommended_requirement;
 	}
 
 	/**
@@ -360,22 +184,6 @@ class Course
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getTargetGroup()
-	{
-		return $this->target_group;
-	}
-
-	/**
-	 * @param string $target_group
-	 */
-	public function setTargetGroup($target_group)
-	{
-		$this->target_group = $target_group;
-	}
-
-	/**
 	 * @return int
 	 */
 	public function getTeachingKLanguageId()
@@ -389,22 +197,6 @@ class Course
 	public function setTeachingKLanguageId($teaching_k_language_id)
 	{
 		$this->teaching_k_language_id = $teaching_k_language_id;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getTeachingMethod()
-	{
-		return $this->teaching_method;
-	}
-
-	/**
-	 * @param string $teaching_method
-	 */
-	public function setTeachingMethod($teaching_method)
-	{
-		$this->teaching_method = $teaching_method;
 	}
 
 }
