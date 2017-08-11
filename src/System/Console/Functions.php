@@ -13,23 +13,26 @@ class Functions
 
 	protected static function addFunctions()
 	{
-		self::appendFunction('lc', 'getLectures', 'Gets all lectures and add them to queue.');
-		self::appendFunction('li', 'getLectureById', 'Gets a Lecture by id. Uses id as param.');
-		self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
-		self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
-		self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');
-		#self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
-		self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
-		self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
-		self::appendFunction('gg', 'getAllParallelGroups', 'Gets all parallel group types.', true);
-		self::appendFunction('gw', 'getAllWorkStatus', 'Gets all work status types.', true);
-		self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.', true);
-		self::appendFunction('gt', 'getAllTermTypes', 'Gets all term types.', true);
-		self::appendFunction('dl', 'getDefaultLanguageId', 'Gets default language id.', true);
-		self::appendFunction('ct', 'getCurrentTerm', 'Gets current term.', true);
-		self::appendFunction('rs', 'readStudentWithCoursesOfStudyByPersonId', 'Read student with course of study by person id', true);
-		self::appendFunction('ci', 'getCourseOfStudyById', 'Get course of study by id.', true);
-		self::appendFunction('rp', 'readPerson', 'Reads person by id.', true);
+		if(count(self::$collection) == 0)
+		{
+			self::appendFunction('lc', 'getLectures', 'Gets all lectures and add them to queue.');
+			self::appendFunction('li', 'getLectureById', 'Gets a Lecture by id. Uses id as param.');
+			self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
+			self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
+			self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');
+			#self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
+			self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
+			self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
+			self::appendFunction('gg', 'getAllParallelGroups', 'Gets all parallel group types.', true);
+			self::appendFunction('gw', 'getAllWorkStatus', 'Gets all work status types.', true);
+			self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.', true);
+			self::appendFunction('gt', 'getAllTermTypes', 'Gets all term types.', true);
+			self::appendFunction('dl', 'getDefaultLanguageId', 'Gets default language id.', true);
+			self::appendFunction('ct', 'getCurrentTerm', 'Gets current term.', true);
+			self::appendFunction('rs', 'readStudentWithCoursesOfStudyByPersonId', 'Read student with course of study by person id', true);
+			self::appendFunction('ci', 'getCourseOfStudyById', 'Get course of study by id.', true);
+			self::appendFunction('rp', 'readPerson', 'Reads person by id.', true);
+		}
 	}
 
 	/**
@@ -43,7 +46,7 @@ class Functions
 	{
 		if(array_key_exists($id, self::$collection))
 		{
-			#Utils::LogToShellAndExit(sprintf('Short "%s" handle already in use for "%s".', $id, self::$collection[$id]->getFunction()));
+			Utils::LogToShellAndExit(sprintf('Short "%s" handle already in use for "%s".', $id, self::$collection[$id]->getFunction()));
 		}
 		$func = new FunctionObject();
 		$func->setId($id);
