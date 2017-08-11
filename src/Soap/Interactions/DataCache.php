@@ -11,6 +11,7 @@ use HisInOneProxy\DataModel\Container\WorkStatusContainer;
 use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
+use HisInOneProxy\Soap\AccountService;
 use HisInOneProxy\Soap\CourseCatalogService;
 use HisInOneProxy\Soap\CourseInterfaceService;
 use HisInOneProxy\Soap\CourseOfStudyService;
@@ -122,6 +123,11 @@ class DataCache
 	protected static $course_service;
 
 	/**
+	 * @var AccountService
+	 */
+	protected static $account_service;
+
+	/**
 	 * @var
 	 */
 	protected static $default_lang_id;
@@ -199,6 +205,7 @@ class DataCache
 		self::$term_service             = new TermService(self::$log, self::$router);
 		self::$unit_service             = new UnitService(self::$log, self::$router);
 		self::$value_service            = new ValueService(self::$log, self::$router);
+		self::$account_service          = new AccountService(self::$log, self::$router);
 	}
 
 	protected static function readDefaultLanguage()
@@ -447,6 +454,14 @@ class DataCache
 	public function getCourseCatalogService()
 	{
 		return self::$course_catalog_service;
+	}
+	
+	/**
+	 * @return AccountService
+	 */
+	public function getAccountService()
+	{
+		return self::$account_service;
 	}
 
 	/**

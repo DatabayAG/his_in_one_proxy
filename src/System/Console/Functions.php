@@ -32,6 +32,7 @@ class Functions
 			self::appendFunction('rs', 'readStudentWithCoursesOfStudyByPersonId', 'Read student with course of study by person id', true);
 			self::appendFunction('ci', 'getCourseOfStudyById', 'Get course of study by id.', true);
 			self::appendFunction('rp', 'readPerson', 'Reads person by id.', true);
+			self::appendFunction('ra', 'readAccount', 'Reads account by id.', true);
 		}
 	}
 

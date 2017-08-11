@@ -8,7 +8,7 @@ use HisInOneProxy\Log\Log;
 class SoapServiceRouter
 {
 
-	const SERVICES_TO_INITIALIZE = 13;
+	const SERVICES_TO_INITIALIZE = 14;
 
 	/**
 	 * @var int
@@ -84,6 +84,12 @@ class SoapServiceRouter
 	 * @var WSSoapClient
 	 */
 	protected $soap_client_system_event_abonnenment_service;
+
+	/**
+	 * @var WSSoapClient
+	 */
+	protected $soap_client_account_service;
+
 
 	/**
 	 * SoapServiceRouter constructor.
@@ -449,6 +455,30 @@ class SoapServiceRouter
 	public function setSoapClientTermService($soap_client_term_service)
 	{
 		$this->soap_client_term_service = $soap_client_term_service;
+	}
+
+	/**
+	 * @return WSSoapClient|null
+	 */
+	public function getSoapClientAccountService()
+	{
+		if($this->soap_client_account_service !== null)
+		{
+			return $this->soap_client_account_service;
+		}
+		else
+		{
+			$this->log->emergency('Account service not initialised!');
+		}
+		return null;
+	}
+
+	/**
+	 * @param WSSoapClient $soap_client_account_service
+	 */
+	public function setSoapClientAccountService($soap_client_account_service)
+	{
+		$this->soap_client_account_service = $soap_client_account_service;
 	}
 
 	/**

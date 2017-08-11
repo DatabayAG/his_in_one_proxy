@@ -209,6 +209,7 @@ class JsonBuilder
 		{
 			$person				= new \stdClass();
 			$person->personID	= $element->getPersonId();
+			#$person->personID	= DataCache::getInstance()->getPersonDetails($element->getPersonId());
 			$person->role		= DataCache::STUDENT;
 			if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement'))
 			{

@@ -106,6 +106,13 @@ class ConsoleHandler
 		self::$conductor->getCourseCatalog();
 		$this->endTimer();
 	}
+	
+	protected function readAccount($param)
+	{
+		$this->startTimer();
+		DataCache::getInstance()->getAccountService()->readAccount($param);
+		$this->endTimer();
+	}
 
 	protected function getRootIdOfTerm()
 	{
