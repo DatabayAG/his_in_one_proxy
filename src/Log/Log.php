@@ -8,6 +8,10 @@ use HisInOneProxy\Config\GlobalSettings;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
+/**
+ * Class Log
+ * @package HisInOneProxy\Log
+ */
 class Log
 {
 	private $logger = null;

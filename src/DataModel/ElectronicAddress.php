@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel;
-
+/**
+ * Class ElectronicAddress
+ * @package HisInOneProxy\DataModel
+ */
 class ElectronicAddress extends Address
 {
 

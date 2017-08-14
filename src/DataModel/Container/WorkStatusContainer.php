@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel\Container;
 use HisInOneProxy\DataModel\WorkStatus;
 use InvalidArgumentException;
 
+/**
+ * Class WorkStatusContainer
+ * @package HisInOneProxy\DataModel\Container
+ */
 class WorkStatusContainer
 {
 	/**

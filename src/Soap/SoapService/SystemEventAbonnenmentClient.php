@@ -4,6 +4,10 @@ namespace HisInOneProxy\Soap\SoapService;
 
 use HisInOneProxy\Soap;
 
+/**
+ * Class SystemEventAbonnenmentClient
+ * @package HisInOneProxy\Soap\SoapService
+ */
 class SystemEventAbonnenmentClient implements SoapClientService
 {
 	/**

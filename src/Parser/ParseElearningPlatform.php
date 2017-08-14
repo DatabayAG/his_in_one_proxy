@@ -4,8 +4,16 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel;
 
+/**
+ * Class ParseElearningPlatform
+ * @package HisInOneProxy\Parser
+ */
 class ParseElearningPlatform extends SimpleXmlParser
 {
+	/**
+	 * @param $xml
+	 * @return DataModel\Container\ElearningPlatformContainer
+	 */
 	public function parse($xml)
 	{
 		$container = new DataModel\Container\ElearningPlatformContainer();

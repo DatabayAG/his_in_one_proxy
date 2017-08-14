@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class ElearningPlatform
+ * @package HisInOneProxy\DataModel
+ */
 class ElearningPlatform
 {
 	use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText;

@@ -4,6 +4,10 @@ namespace HisInOneProxy\Soap\SoapService;
 
 use HisInOneProxy\Config\GlobalSettings;
 
+/**
+ * Class ConfigClient
+ * @package HisInOneProxy\Soap\SoapService
+ */
 class ConfigClient
 {
 	/**

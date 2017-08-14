@@ -4,6 +4,10 @@ namespace HisInOneProxy\Soap\SoapService;
 
 use HisInOneProxy\Soap;
 
+/**
+ * Class CourseClient
+ * @package HisInOneProxy\Soap\SoapService
+ */
 class CourseClient extends ConfigClient implements SoapClientService
 {
 	/**

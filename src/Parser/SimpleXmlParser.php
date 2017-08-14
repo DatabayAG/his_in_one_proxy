@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\Log\Log;
 
+/**
+ * Class SimpleXmlParser
+ * @package HisInOneProxy\Parser
+ */
 class SimpleXmlParser
 {
 

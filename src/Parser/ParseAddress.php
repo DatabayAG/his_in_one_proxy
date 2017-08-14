@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel\Address;
 
+/**
+ * Class ParseAddress
+ * @package HisInOneProxy\Parser
+ */
 class ParseAddress extends SimpleXmlParser
 {
 	/**

@@ -8,6 +8,10 @@ use HisInOneProxy\Soap\SoapService\ConfigClient;
 use HisInOneProxy\System\Utils;
 use Noodlehaus\Exception;
 
+/**
+ * Class WSSoapClient
+ * @package HisInOneProxy\Soap
+ */
 class WSSoapClient extends \SoapClient
 {
 	private $OASIS = 'http://docs.oasis-open.org/wss/2004/01';
@@ -95,6 +99,14 @@ class WSSoapClient extends \SoapClient
 		#}
 	}
 
+	/**
+	 * @param string $request
+	 * @param string $location
+	 * @param string $action
+	 * @param int    $version
+	 * @param int    $one_way
+	 * @return mixed|string
+	 */
 	public function __doRequest($request, $location, $action, $version, $one_way = 0)
 	{
 

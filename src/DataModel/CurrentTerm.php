@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class CurrentTerm
+ * @package HisInOneProxy\DataModel
+ */
 class CurrentTerm
 {
 

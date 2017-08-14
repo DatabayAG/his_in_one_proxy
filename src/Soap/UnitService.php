@@ -4,6 +4,10 @@ namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Parser;
 
+/**
+ * Class UnitService
+ * @package HisInOneProxy\Soap
+ */
 class UnitService extends SoapService
 {
 	

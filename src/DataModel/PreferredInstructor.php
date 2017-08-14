@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class PreferredInstructor
+ * @package HisInOneProxy\DataModel
+ */
 class PreferredInstructor
 {
 	use Traits\LockVersion, Traits\ObjGuid;

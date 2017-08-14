@@ -5,6 +5,10 @@ namespace HisInOneProxy\Queue;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\System\ProcessHandling;
 
+/**
+ * Class QueueProcess
+ * @package HisInOneProxy\Queue
+ */
 class QueueProcess
 {
 	/**
@@ -27,6 +31,9 @@ class QueueProcess
 	 */
 	protected $process_id;
 
+	/**
+	 * QueueProcess constructor.
+	 */
 	public function __construct()
 	{
 		$this->log = DataCache::getInstance()->getLog();

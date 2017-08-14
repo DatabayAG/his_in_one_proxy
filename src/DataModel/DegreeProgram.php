@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class DegreeProgram
+ * @package HisInOneProxy\DataModel
+ */
 class DegreeProgram
 {
 	use Traits\GenderId;

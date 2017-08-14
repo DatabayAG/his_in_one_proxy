@@ -9,6 +9,10 @@ use HisInOneProxy\Queue\QueueConstants;
 use HisInOneProxy\Queue\SimpleQueue;
 use HisInOneProxy\Soap\SoapServiceRouter;
 
+/**
+ * Class Conductor
+ * @package HisInOneProxy\Soap\Interactions
+ */
 class Conductor
 {
 
@@ -160,6 +164,9 @@ class Conductor
 		}
 	}
 
+	/**
+	 * @param $unit_id
+	 */
 	public function getLectureByUnitIdForTerm($unit_id)
 	{
 		$services           = DataCache::getInstance();
@@ -355,7 +362,10 @@ class Conductor
 			$queue->push(QueueConstants::SERVICE_QUEUE, json_encode($plan_element), QueueConstants::PUBLISH_MEMBERS_TO_ECS, $e_learning_id);
 		}
 	}
-	
+
+	/**
+	 * @return bool
+	 */
 	public function getInstitutionsAndOrgUnits()
 	{
 		$org_unit_service = DataCache::getInstance()->getOrgUnitService();
@@ -387,17 +397,26 @@ class Conductor
 		var_dump(DataCache::getInstance()->getCourseMappingTypeContainer()->translateIdToDefaultText(4));
 	}
 
+	/**
+	 * @return \HisInOneProxy\DataModel\CurrentTerm|null
+	 */
 	protected function getCurrentTerm()
 	{
 		$term_service = DataCache::getInstance()->getTermService();
 		return $term_service->getCurrentTerm();
 	}
-	
+
+	/**
+	 * @return int|null
+	 */
 	public function getTerm()
 	{
 		return $this->term_id;
 	}
-	
+
+	/**
+	 * @return int|null
+	 */
 	public function getYear()
 	{
 		return $this->year;

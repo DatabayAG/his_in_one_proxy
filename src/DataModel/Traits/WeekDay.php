@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait WeekDay
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait WeekDay
 {
 	/**

@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class ExamRelation
+ * @package HisInOneProxy\DataModel
+ */
 class ExamRelation
 {
 

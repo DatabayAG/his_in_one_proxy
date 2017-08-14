@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait ObjectiveQualification
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait ObjectiveQualification
 {
 

@@ -5,6 +5,10 @@ namespace HisInOneProxy\Parser;
 use HisInOneProxy\DataModel;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class ParseUnit
+ * @package HisInOneProxy\Parser
+ */
 class ParseUnit extends SimpleXmlParser
 {
 	/**

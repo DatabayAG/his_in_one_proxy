@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel\Container;
 use HisInOneProxy\DataModel\ElearningPlatform;
 use InvalidArgumentException;
 
+/**
+ * Class ElearningPlatformContainer
+ * @package HisInOneProxy\DataModel\Container
+ */
 class ElearningPlatformContainer
 {
 	/**

@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel\Container;
 use HisInOneProxy\DataModel\CourseMappingType;
 use InvalidArgumentException;
 
+/**
+ * Class CourseMappingTypeContainer
+ * @package HisInOneProxy\DataModel\Container
+ */
 class CourseMappingTypeContainer
 {
 	/**

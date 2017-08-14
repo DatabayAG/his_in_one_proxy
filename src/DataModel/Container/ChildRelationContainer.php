@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel\Container;
 use HisInOneProxy\DataModel\ChildRelation;
 use InvalidArgumentException;
 
+/**
+ * Class ChildRelationContainer
+ * @package HisInOneProxy\DataModel\Container
+ */
 class ChildRelationContainer
 {
 	/**

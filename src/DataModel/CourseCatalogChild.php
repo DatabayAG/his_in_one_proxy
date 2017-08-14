@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class CourseCatalogChild
+ * @package HisInOneProxy\DataModel
+ */
 class CourseCatalogChild
 {
 	use Traits\SortingOrder;

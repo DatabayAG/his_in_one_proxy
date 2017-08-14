@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait LockVersion
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait LockVersion
 {
 	/**

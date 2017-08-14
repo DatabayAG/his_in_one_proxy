@@ -9,6 +9,10 @@ use HisInOneProxy\Log\LogLevel;
 use HisInOneProxy\System\Utils;
 use Noodlehaus\Config;
 
+/**
+ * Class GlobalSettings
+ * @package HisInOneProxy\Config
+ */
 class GlobalSettings
 {
 	use LogConfig;
@@ -472,7 +476,10 @@ class GlobalSettings
 	{
 		$this->keep_element_in_queue = $keep_element_in_queue;
 	}
-	
+
+	/**
+	 * @return Endpoint
+	 */
 	public function getEndPoint()
 	{
 		return $this->end_point;

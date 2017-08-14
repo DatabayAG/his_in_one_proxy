@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class HisSystemResponse
+ * @package HisInOneProxy\DataModel
+ */
 class HisSystemResponse
 {
 	protected static $event_types = array('create', 'update', 'delete');

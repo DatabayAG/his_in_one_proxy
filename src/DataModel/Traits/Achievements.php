@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait Achievements
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait Achievements
 {
 

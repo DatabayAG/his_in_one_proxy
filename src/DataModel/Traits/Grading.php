@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait Grading
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait Grading
 {
 	/**

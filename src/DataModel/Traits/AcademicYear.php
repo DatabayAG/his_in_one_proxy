@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait AcademicYear
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait AcademicYear
 {
 

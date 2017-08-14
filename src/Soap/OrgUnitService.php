@@ -5,6 +5,10 @@ namespace HisInOneProxy\Soap;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
 
+/**
+ * Class OrgUnitService
+ * @package HisInOneProxy\Soap
+ */
 class OrgUnitService extends SoapService
 {
 

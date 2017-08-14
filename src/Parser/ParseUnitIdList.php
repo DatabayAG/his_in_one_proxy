@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel\Container\UnitIdList;
 
+/**
+ * Class ParseUnitIdList
+ * @package HisInOneProxy\Parser
+ */
 class ParseUnitIdList extends SimpleXmlParser
 {
 	/**

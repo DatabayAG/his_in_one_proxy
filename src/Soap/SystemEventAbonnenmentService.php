@@ -6,6 +6,10 @@ use HisInOneProxy\DataModel\Endpoint;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class SystemEventAbonnenmentService
+ * @package HisInOneProxy\Soap
+ */
 class SystemEventAbonnenmentService extends SoapService
 {
 

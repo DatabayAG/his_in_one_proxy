@@ -7,9 +7,16 @@ use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class GuzzleWrapper
+ * @package HisInOneProxy\REST
+ */
 class GuzzleWrapper
 {
-	
+	/**
+	 * GuzzleWrapper constructor.
+	 * @param $receivers
+	 */
 	function __construct($receivers)
 	{
 		$this->receivers = $receivers;

@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait Workload
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait Workload
 {
 

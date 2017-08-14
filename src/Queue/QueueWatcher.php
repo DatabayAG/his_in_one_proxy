@@ -9,6 +9,10 @@ use HisInOneProxy\Queue;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use React\EventLoop;
 
+/**
+ * Class QueueWatcher
+ * @package HisInOneProxy\Queue
+ */
 class QueueWatcher
 {
 	/**

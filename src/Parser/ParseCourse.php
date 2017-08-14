@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel;
 
+/**
+ * Class ParseCourse
+ * @package HisInOneProxy\Parser
+ */
 class ParseCourse extends SimpleXmlParser
 {
 

@@ -1,10 +1,15 @@
 <?php
 
 namespace HisInOneProxy\Queue;
+
 use HisInOneProxy\REST\EcsCommunication;
 use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class QueueService
+ * @package HisInOneProxy\Queue
+ */
 class QueueService
 {
 

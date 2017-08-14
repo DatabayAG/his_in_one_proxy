@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait StartEndTime
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait StartEndTime
 {
 

@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel\CurrentTerm;
 
+/**
+ * Class ParseCurrentTerm
+ * @package HisInOneProxy\Parser
+ */
 class ParseCurrentTerm extends SimpleXmlParser
 {
 	/**

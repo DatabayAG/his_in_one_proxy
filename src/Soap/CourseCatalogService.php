@@ -7,6 +7,10 @@ use HisInOneProxy\DataModel\CourseCatalogChild;
 use HisInOneProxy\DataModel\CourseCatalogLeaf;
 use HisInOneProxy\Parser;
 
+/**
+ * Class CourseCatalogService
+ * @package HisInOneProxy\Soap
+ */
 class CourseCatalogService extends SoapService
 {
 	const COURSE_CATALOG = 'coursecatalog';

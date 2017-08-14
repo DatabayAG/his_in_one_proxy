@@ -6,6 +6,10 @@ use HisInOneProxy\DataModel\Address;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
 
+/**
+ * Class AddressService
+ * @package HisInOneProxy\Soap
+ */
 class AddressService extends SoapService
 {
 

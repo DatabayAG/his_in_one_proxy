@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel\Container;
 use HisInOneProxy\DataModel\ParallelGroupValue;
 use Psr\Log\InvalidArgumentException;
 
+/**
+ * Class ParallelGroupValuesContainer
+ * @package HisInOneProxy\DataModel\Container
+ */
 class ParallelGroupValuesContainer
 {
 	protected $parallel_group_value_container;

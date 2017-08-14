@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
 
+/**
+ * Class PlanElement
+ * @package HisInOneProxy\DataModel
+ */
 class PlanElement
 {
 	use Traits\AcademicYear, Traits\Achievements, Traits\CompulsoryRequirement,  Traits\Contents, Traits\Credits, Traits\DefaultLanguage, 

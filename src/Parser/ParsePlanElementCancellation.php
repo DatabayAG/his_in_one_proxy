@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel;
 
+/**
+ * Class ParsePlanElementCancellation
+ * @package HisInOneProxy\Parser
+ */
 class ParsePlanElementCancellation extends SimpleXmlParser
 {
 

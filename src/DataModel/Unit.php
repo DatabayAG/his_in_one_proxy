@@ -6,6 +6,10 @@ use HisInOneProxy\DataModel\Container\ChildRelationContainer;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
 
+/**
+ * Class Unit
+ * @package HisInOneProxy\DataModel
+ */
 class Unit
 {
 	use Traits\Comment, Traits\DefaultLanguage, Traits\Lid, Traits\LockVersion, Traits\ObjGuid, Traits\Text, Traits\Valid, Traits\Version;

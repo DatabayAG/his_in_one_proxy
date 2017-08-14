@@ -5,6 +5,10 @@ namespace HisInOneProxy\REST;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class EcsCommunication
+ * @package HisInOneProxy\REST
+ */
 class EcsCommunication
 {
 	/**
@@ -17,6 +21,10 @@ class EcsCommunication
 	 */
 	protected $resources;
 
+	/**
+	 * EcsCommunication constructor.
+	 * @param $receiver
+	 */
 	function __construct($receiver)
 	{
 		$this->client = new GuzzleWrapper(GlobalSettings::getInstance()->getReceiverMemberships());

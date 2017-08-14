@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\Queue;
-
+/**
+ * Class QueueConstants
+ * @package HisInOneProxy\Queue
+ */
 class QueueConstants
 {
 

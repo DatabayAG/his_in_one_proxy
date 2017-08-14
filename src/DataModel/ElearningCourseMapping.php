@@ -3,6 +3,10 @@
 namespace HisInOneProxy\DataModel;
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class ElearningCourseMapping
+ * @package HisInOneProxy\DataModel
+ */
 class ElearningCourseMapping
 {
 

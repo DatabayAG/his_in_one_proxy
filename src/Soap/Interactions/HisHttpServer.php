@@ -12,6 +12,10 @@ use React\EventLoop\Factory;
 use React\Http\Server;
 use React\Promise\Promise;
 
+/**
+ * Class HisHttpServer
+ * @package HisInOneProxy\Soap\Interactions
+ */
 class HisHttpServer
 {
 	/**

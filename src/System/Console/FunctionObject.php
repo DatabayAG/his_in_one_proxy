@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\System\Console;
-
+/**
+ * Class FunctionObject
+ * @package HisInOneProxy\System\Console
+ */
 class FunctionObject
 {
 	/**
@@ -87,6 +90,4 @@ class FunctionObject
 	{
 		$this->debug = $debug;
 	}
-	
-	
 }

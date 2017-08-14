@@ -4,8 +4,16 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel;
 
+/**
+ * Class ParseCourseMappingType
+ * @package HisInOneProxy\Parser
+ */
 class ParseCourseMappingType extends SimpleXmlParser
 {
+	/**
+	 * @param $xml
+	 * @return DataModel\Container\CourseMappingTypeContainer
+	 */
 	public function parse($xml)
 	{
 		$container = new DataModel\Container\CourseMappingTypeContainer();

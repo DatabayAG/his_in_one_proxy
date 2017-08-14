@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\REST;
-
+/**
+ * Class EcsResources
+ * @package HisInOneProxy\REST
+ */
 class EcsResources
 {
 	/**

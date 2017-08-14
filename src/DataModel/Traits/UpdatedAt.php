@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait UpdatedAt
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait UpdatedAt
 {
 

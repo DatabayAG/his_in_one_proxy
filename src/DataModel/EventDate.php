@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class EventDate
+ * @package HisInOneProxy\DataModel
+ */
 class EventDate
 {
 	use Traits\AcademicYear, Traits\Achievements, Traits\CompulsoryRequirement, Traits\Contents, Traits\Credits, Traits\ExternOrganizer, 

@@ -8,6 +8,10 @@ use HisInOneProxy\Soap\Interactions\DataCache;
 
 require_once './libs/composer/vendor/autoload.php';
 
+/**
+ * Class SimpleQueue
+ * @package HisInOneProxy\Queue
+ */
 class SimpleQueue
 {
 
@@ -240,7 +244,10 @@ class SimpleQueue
 		rename($queue_dir.DIRECTORY_SEPARATOR.$file.'.done', $queue_dir.DIRECTORY_SEPARATOR.$file);
 		$this->log->debug(sprintf('Re-added entry %s to queue %s.', $file, $queue_name));
 	}
-	
+
+	/**
+	 * @param $keep
+	 */
 	protected function keepElements($keep)
 	{
 		$this->keep_elements = $keep;

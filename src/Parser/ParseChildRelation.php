@@ -5,6 +5,10 @@ namespace HisInOneProxy\Parser;
 use HisInOneProxy\DataModel\ChildRelation;
 use HisInOneProxy\DataModel\Container\ChildRelationContainer;
 
+/**
+ * Class ParseChildRelation
+ * @package HisInOneProxy\Parser
+ */
 class ParseChildRelation extends SimpleXmlParser
 {
 	/**

@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel;
-
+/**
+ * Class ChildRelation
+ * @package HisInOneProxy\DataModel
+ */
 class ChildRelation
 {
 	/**

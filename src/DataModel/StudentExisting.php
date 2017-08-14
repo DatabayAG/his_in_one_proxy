@@ -1,8 +1,13 @@
 <?php
 
 namespace HisInOneProxy\DataModel;
+
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class StudentExisting
+ * @package HisInOneProxy\DataModel
+ */
 class StudentExisting
 {
 	use Traits\OrgUnitId, Traits\TermTypeValueId, Traits\Year;

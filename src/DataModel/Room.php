@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class Room
+ * @package HisInOneProxy\DataModel
+ */
 class Room
 {
 	use Traits\ObjGuid, Traits\UniqueNameAndText;

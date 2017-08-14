@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait TeachingLanguageId
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait TeachingLanguageId
 {
 

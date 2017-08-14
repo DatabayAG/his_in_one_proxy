@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\System;
-
+/**
+ * Class Utils
+ * @package HisInOneProxy\System
+ */
 class Utils
 {
 	/**

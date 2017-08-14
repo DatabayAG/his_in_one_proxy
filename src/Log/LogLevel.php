@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\Log;
-
+/**
+ * Class LogLevel
+ * @package HisInOneProxy\Log
+ */
 class LogLevel
 {
 	const DEBUG = 100;

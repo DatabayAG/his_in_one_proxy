@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel\Container\TermTypeList;
 
+/**
+ * Class ParseTermTypeList
+ * @package HisInOneProxy\Parser
+ */
 class ParseTermTypeList extends SimpleXmlParser
 {
 	/**

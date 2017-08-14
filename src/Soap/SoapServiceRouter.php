@@ -5,6 +5,10 @@ namespace HisInOneProxy\Soap;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Log\Log;
 
+/**
+ * Class SoapServiceRouter
+ * @package HisInOneProxy\Soap
+ */
 class SoapServiceRouter
 {
 
@@ -380,6 +384,9 @@ class SoapServiceRouter
 		$this->soap_client_course_of_study_service = $soap_client_course_of_study_service;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getUrl()
 	{
 		return GlobalSettings::getInstance()->getHisServerUrl();

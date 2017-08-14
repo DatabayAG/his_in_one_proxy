@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
 
+/**
+ * Class PlanElementChange
+ * @package HisInOneProxy\DataModel
+ */
 class PlanElementChange
 {
 	use Traits\LanguageId, Traits\LockVersion, Traits\ObjGuid, Traits\PlannedDatesId, Traits\RoomId, Traits\StartEndTime;

@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel\Container;
 
 use HisInOneProxy\DataModel\TermType;
 
+/**
+ * Class TermTypeList
+ * @package HisInOneProxy\DataModel\Container
+ */
 class TermTypeList
 {
 	/**
@@ -38,6 +42,9 @@ class TermTypeList
 		$this->term_type_container[] = $term_type;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getSizeOfContainer()
 	{
 		return count($this->term_type_container);

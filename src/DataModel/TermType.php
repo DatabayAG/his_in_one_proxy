@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class TermType
+ * @package HisInOneProxy\DataModel
+ */
 class TermType
 {
 

@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait TeachingMethod
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait TeachingMethod
 {
 

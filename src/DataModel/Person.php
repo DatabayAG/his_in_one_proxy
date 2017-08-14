@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class Person
+ * @package HisInOneProxy\DataModel
+ */
 class Person
 {
 	use Traits\GenderId, Traits\ObjGuid, Traits\SortingOrder, Traits\Text, Traits\UpdatedAt;

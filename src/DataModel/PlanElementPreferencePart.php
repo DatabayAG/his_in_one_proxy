@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
 
+/**
+ * Class PlanElementPreferencePart
+ * @package HisInOneProxy\DataModel
+ */
 class PlanElementPreferencePart
 {
 	use Traits\LockVersion, Traits\ObjGuid;

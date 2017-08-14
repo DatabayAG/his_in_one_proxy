@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class OrgUnit
+ * @package HisInOneProxy\DataModel
+ */
 class OrgUnit
 {
 	use Traits\Id, Traits\LanguageId, Traits\Lid, Traits\ParentId, Traits\SortingOrder, Traits\Valid, Traits\UniqueNameAndText;

@@ -13,6 +13,11 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 
 require_once 'libs/composer/vendor/autoload.php';
+
+/**
+ * Class ConsoleHandler
+ * @package HisInOneProxy\System
+ */
 class ConsoleHandler
 {
 	/**
@@ -106,7 +111,10 @@ class ConsoleHandler
 		self::$conductor->getCourseCatalog();
 		$this->endTimer();
 	}
-	
+
+	/**
+	 * @param $param
+	 */
 	protected function readAccount($param)
 	{
 		$this->startTimer();
@@ -192,6 +200,9 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	/**
+	 * @param $param
+	 */
 	protected function readStudentWithCoursesOfStudyByPersonId($param)
 	{
 		$this->startTimer();
@@ -200,6 +211,9 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	/**
+	 * @param $param
+	 */
 	protected function getCourseOfStudyById($param)
 	{
 		$this->startTimer();
@@ -217,6 +231,9 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	/**
+	 * @param $param
+	 */
 	protected function readPerson($param)
 	{
 		$this->startTimer();
@@ -258,7 +275,10 @@ class ConsoleHandler
 		}
 	}
 
-
+	/**
+	 * @param $file
+	 * @param $url
+	 */
 	protected function wsdlDownloader($file, $url)
 	{
 		$ch = curl_init();
@@ -298,7 +318,10 @@ class ConsoleHandler
 
 		$this->runUnitTests();
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	protected function gatherServicesForWsdl()
 	{
 		$rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator('src/Soap/SoapService/'));
@@ -336,7 +359,10 @@ class ConsoleHandler
 			die ("Unit tests failed.");
 		}
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	protected function getPhpUnitConfig()
 	{
 		if(GlobalSettings::getInstance()->isPhpunitWithCoverage())
@@ -349,11 +375,17 @@ class ConsoleHandler
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getPhpUnitConfigWithoutCoverage()
 	{
 		return array('configuration' => 'test/phpunit.xml');
 	}
-	
+
+	/**
+	 * @return array
+	 */
 	protected function getPhpUnitConfigWithCoverage()
 	{
 		return array('configuration' => 'test/phpunit.xml',
@@ -367,6 +399,9 @@ class ConsoleHandler
 		$this->start_time = microtime(true);
 	}
 
+	/**
+	 * @param string $what
+	 */
 	protected function endTimer($what = 'Queries')
 	{
 		$end_time = microtime(true);

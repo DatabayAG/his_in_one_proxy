@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel;
 
+/**
+ * Class ParseParallelGroupValues
+ * @package HisInOneProxy\Parser
+ */
 class ParseParallelGroupValues extends SimpleXmlParser
 {
 	/**

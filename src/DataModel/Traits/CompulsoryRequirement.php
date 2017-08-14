@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait CompulsoryRequirement
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait CompulsoryRequirement
 {
 

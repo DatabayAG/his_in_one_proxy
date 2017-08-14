@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel\Container;
 
 use HisInOneProxy\DataModel\HisSystemResponse;
 
+/**
+ * Class HisSystemResponseContainer
+ * @package HisInOneProxy\DataModel\Container
+ */
 class HisSystemResponseContainer
 {
 	/**
@@ -38,6 +42,9 @@ class HisSystemResponseContainer
 		$this->system_response_container[] = $system_response;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getSizeOfContainer()
 	{
 		return count($this->system_response_container);

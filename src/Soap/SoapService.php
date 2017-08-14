@@ -3,6 +3,10 @@ namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Log\Log;
 
+/**
+ * Class SoapService
+ * @package HisInOneProxy\Soap
+ */
 class SoapService
 {
 	/**

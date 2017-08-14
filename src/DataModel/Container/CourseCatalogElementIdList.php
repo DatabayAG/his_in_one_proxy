@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Container;
-
+/**
+ * Class CourseCatalogElementIdList
+ * @package HisInOneProxy\DataModel\Container
+ */
 class CourseCatalogElementIdList
 {
 	/**
@@ -29,6 +32,9 @@ class CourseCatalogElementIdList
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getSizeOfContainer()
 	{
 		return count($this->course_catalog_element_id_container);

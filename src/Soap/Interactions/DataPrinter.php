@@ -5,6 +5,10 @@ namespace HisInOneProxy\Soap\Interactions;
 use HisInOneProxy\DataModel;
 use HisInOneProxy\Log\Log;
 
+/**
+ * Class DataPrinter
+ * @package HisInOneProxy\Soap\Interactions
+ */
 class DataPrinter
 {
 

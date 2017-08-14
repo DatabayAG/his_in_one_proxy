@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\System\Utils;
 
+/**
+ * Class Endpoint
+ * @package HisInOneProxy\DataModel
+ */
 class Endpoint
 {
 
@@ -113,6 +117,9 @@ class Endpoint
 		$this->port = $port;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getUrlWithPort()
 	{
 		return Utils::ensureTrailingSlash($this->getEndPointUrl() .':' . $this->getPort());

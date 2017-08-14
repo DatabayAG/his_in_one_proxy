@@ -9,6 +9,10 @@ use HisInOneProxy\Log;
 use HisInOneProxy\Parser;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class CourseInterfaceService
+ * @package HisInOneProxy\Soap
+ */
 class CourseInterfaceService extends SoapService
 {
 	/**

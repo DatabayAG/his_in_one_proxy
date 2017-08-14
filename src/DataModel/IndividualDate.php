@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class IndividualDate
+ * @package HisInOneProxy\DataModel
+ */
 class IndividualDate
 {
 	use Traits\Appointment, Traits\LockVersion, Traits\ObjGuid, Traits\PlannedDatesId, Traits\RoomId;

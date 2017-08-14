@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class Instructor
+ * @package HisInOneProxy\DataModel
+ */
 class Instructor
 {
 	use Traits\LockVersion, Traits\ObjGuid, Traits\PersonId, Traits\PlannedDatesId, Traits\SortingOrder;

@@ -3,6 +3,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class CourseOfStudy
+ * @package HisInOneProxy\DataModel
+ */
 class CourseOfStudy
 {
 	use Traits\Id, Traits\DefaultLanguage, Traits\Lid, Traits\OrgUnitId, Traits\UniqueNameAndText;

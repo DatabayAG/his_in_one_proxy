@@ -4,6 +4,10 @@ namespace HisInOneProxy\System\Console;
 
 use HisInOneProxy\System\Utils;
 
+/**
+ * Class Functions
+ * @package HisInOneProxy\System\Console
+ */
 class Functions
 {
 	/**

@@ -4,6 +4,10 @@ namespace HisInOneProxy\Parser;
 
 use HisInOneProxy\DataModel;
 
+/**
+ * Class ParseTimeSlot
+ * @package HisInOneProxy\Parser
+ */
 class ParseTimeSlot extends SimpleXmlParser
 {
 

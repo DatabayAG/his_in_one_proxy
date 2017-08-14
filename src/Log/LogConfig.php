@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\Config;
-
+/**
+ * Trait LogConfig
+ * @package HisInOneProxy\Config
+ */
 trait LogConfig
 {
 	/**

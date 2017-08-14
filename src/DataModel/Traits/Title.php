@@ -2,7 +2,10 @@
 
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait Title
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait Title
 {
 

@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel\Container;
 use HisInOneProxy\DataModel\ExamRelation;
 use HisInOneProxy\Exceptions;
 
+/**
+ * Class ExamRelationContainer
+ * @package HisInOneProxy\DataModel\Container
+ */
 class ExamRelationContainer
 {
 

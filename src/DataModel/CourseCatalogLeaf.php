@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class CourseCatalogLeaf
+ * @package HisInOneProxy\DataModel
+ */
 class CourseCatalogLeaf
 {
 

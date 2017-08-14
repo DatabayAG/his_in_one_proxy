@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait TargetGroup
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait TargetGroup
 {
 

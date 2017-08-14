@@ -6,6 +6,10 @@ use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Soap\DataCache;
 use HisInOneProxy\System\ProcessHandling;
 
+/**
+ * Class HisHttpServerProcess
+ * @package HisInOneProxy\Soap\Interactions
+ */
 class HisHttpServerProcess
 {
 	const HIS_SERVER_PID = 'pid/server.pid';
@@ -17,6 +21,9 @@ class HisHttpServerProcess
 	
 	protected $process;
 
+	/**
+	 * HisHttpServerProcess constructor.
+	 */
 	public function __construct()
 	{
 		$this->log = DataCache::getInstance()->getLog();

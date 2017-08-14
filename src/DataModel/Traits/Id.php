@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait Id
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait Id
 {
 	/**

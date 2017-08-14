@@ -24,6 +24,10 @@ use HisInOneProxy\Soap\TermService;
 use HisInOneProxy\Soap\UnitService;
 use HisInOneProxy\Soap\ValueService;
 
+/**
+ * Class DataCache
+ * @package HisInOneProxy\Soap\Interactions
+ */
 class DataCache
 {
 
@@ -174,6 +178,9 @@ class DataCache
 		return self::$instance;
 	}
 
+	/**
+	 * @return DataCache
+	 */
 	protected static function init()
 	{
 		self::$log = new Log();
@@ -505,6 +512,9 @@ class DataCache
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	public function readPersonDetailsToCache()
 	{
 		foreach(self::$person_cache as $person_id)

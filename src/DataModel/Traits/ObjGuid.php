@@ -1,7 +1,10 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
-
+/**
+ * Trait ObjGuid
+ * @package HisInOneProxy\DataModel\Traits
+ */
 trait ObjGuid
 {
 	use Id;

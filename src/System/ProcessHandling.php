@@ -4,6 +4,10 @@ namespace HisInOneProxy\System;
 
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class ProcessHandling
+ * @package HisInOneProxy\System
+ */
 class ProcessHandling
 {
 	/**
@@ -11,6 +15,9 @@ class ProcessHandling
 	 */
 	protected $log;
 
+	/**
+	 * ProcessHandling constructor.
+	 */
 	public function __construct()
 	{
 		$this->log = DataCache::getInstance()->getLog();

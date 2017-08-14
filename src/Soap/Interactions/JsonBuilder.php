@@ -10,6 +10,10 @@ use HisInOneProxy\DataModel\OrgUnit;
 use HisInOneProxy\DataModel\PersonPlanElement;
 use HisInOneProxy\DataModel\Unit;
 
+/**
+ * Class JsonBuilder
+ * @package HisInOneProxy\Soap\Interactions
+ */
 class JsonBuilder
 {
 	/**

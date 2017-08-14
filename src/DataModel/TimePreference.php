@@ -5,6 +5,10 @@ namespace HisInOneProxy\DataModel;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
 
+/**
+ * Class TimePreference
+ * @package HisInOneProxy\DataModel
+ */
 class TimePreference
 {
 	use Traits\LockVersion, Traits\ObjGuid, Traits\TermTypeValueId, Traits\Year;

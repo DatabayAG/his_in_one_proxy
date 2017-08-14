@@ -4,6 +4,10 @@ namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Traits;
 
+/**
+ * Class PlanElementCancellation
+ * @package HisInOneProxy\DataModel
+ */
 class PlanElementCancellation
 {
 	use Traits\LanguageId, Traits\LockVersion, Traits\ObjGuid, Traits\PlannedDatesId;
