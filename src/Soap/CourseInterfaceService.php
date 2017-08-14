@@ -2,7 +2,6 @@
 
 namespace HisInOneProxy\Soap;
 
-use HisInOneProxy\DataModel\PersonPlanElement;
 use HisInOneProxy\DataModel\PlanElement;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log;

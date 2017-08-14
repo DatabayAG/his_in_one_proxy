@@ -3,10 +3,7 @@
 namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Config\GlobalSettings;
-use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\Soap\SoapService\ConfigClient;
-use HisInOneProxy\System\Utils;
-use Noodlehaus\Exception;
 
 /**
  * Class WSSoapClient

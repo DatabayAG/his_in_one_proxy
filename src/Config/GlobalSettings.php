@@ -5,7 +5,6 @@ namespace HisInOneProxy\Config;
 require_once __DIR__ . '/../Log/LogConfig.php';
 
 use HisInOneProxy\DataModel\Endpoint;
-use HisInOneProxy\Log\LogLevel;
 use HisInOneProxy\System\Utils;
 use Noodlehaus\Config;
 

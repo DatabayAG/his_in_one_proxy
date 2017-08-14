@@ -2,9 +2,7 @@
 
 namespace HisInOneProxy\Soap;
 
-use HisInOneProxy\DataModel\Address;
 use HisInOneProxy\Log\Log;
-use HisInOneProxy\Parser;
 
 /**
  * Class AccountService

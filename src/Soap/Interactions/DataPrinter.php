@@ -257,7 +257,6 @@ class DataPrinter
 
 					#if($parent_id == $parent || $parent_id == null)
 					{
-						$this->units_counter++;
 						$this->printUnitDetailFromCourseCatalog2($child, $child->getId(), $level);
 					}
 				}

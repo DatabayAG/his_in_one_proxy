@@ -3,7 +3,6 @@
 namespace HisInOneProxy\Soap\Interactions;
 
 use HisInOneProxy\Config\GlobalSettings;
-use HisInOneProxy\Soap\DataCache;
 use HisInOneProxy\System\ProcessHandling;
 
 /**
