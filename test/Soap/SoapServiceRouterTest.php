@@ -91,7 +91,7 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
 		$this->soap_client_router->setServiceNumber(20);
 		$this->soap_client_router->initialiseClientServices();
-		$this->assertEquals('Emergency: Not all Soap Services where initialised! Only 13 from 20 where initialised!', array_pop($this->collectedMessages));
+		$this->assertEquals('Emergency: Not all Soap Services where initialised! Only 14 from 20 where initialised!', array_pop($this->collectedMessages));
 		$this->assertInstanceOf('HisInOneProxy\Soap\WSSoapClient', $this->soap_client_router->getSoapClientCourseService());
 		$this->assertInstanceOf('HisInOneProxy\Soap\WSSoapClient', $this->soap_client_router->getSoapClientTermService());
 	}
