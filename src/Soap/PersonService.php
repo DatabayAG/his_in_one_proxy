@@ -4,6 +4,7 @@ namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
+use HisInOneProxy\Soap\Interactions\DataCache;
 
 /**
  * Class PersonService
@@ -35,6 +36,7 @@ class PersonService extends SoapService
 			if(isset($response->person) && $response->person != null && $response->person != '')
 			{
 				$person = $parser->parse($response->person);
+				$person->setEAddresses(DataCache::getInstance()->getAddressService()->readEAddressesForPerson($person_id));
 				return $person;
 			}
 		}

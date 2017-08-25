@@ -144,6 +144,64 @@ class DataPrinterTest extends TestCaseExtension
 		$this->assertEquals($msg, 'Debug: |* ExamRelation: 1, 2, 232');
 	}
 
+	public function test_printPersonEAddress_shouldPrintPersonEAddress()
+	{
+		$this->readWorkStatus();
+		$this->collectedMessages = array();
+		$eadresstype = new \HisInOneProxy\DataModel\ElectronicAddress();
+		$eadresstype->setId(1);
+		$eadresstype->setObjGuid(1);
+		$eadresstype->setSortOrder(2);
+		$eadresstype->setEAddressTypeId(232);
+		$eadresstype->setEAddress('holla');
+		$type = new \HisInOneProxy\DataModel\EAddressType();
+		$type->setId(232);
+		$type->setDefaultText('test');
+
+		$this->callMethod(DataCache::getInstance(), 'setEAddressTypes', array(array('232' => $type)));
+
+		$this->instance->printPersonEAddress(array($eadresstype), 0);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals($msg, 'Debug: |* eAddress: Id (1), objGuid (1), SortOrder (2), AddressType (232), AddressTypeReadable (test), Address (holla)');
+	}
+
+	//Todo: fix this test
+	/*public function test_printPersonAccounts_shouldPrintPersonAccounts()
+	{
+		$this->readWorkStatus();
+		$this->collectedMessages = array();
+		$ca = new \HisInOneProxy\DataModel\CompleteAccount();
+		$ca->setId(1);
+		$ca->setPersonId(1);
+		$ca->setIsLdapAccount(2);
+		$ca->setAuthInfo(232);
+		$ca->setUserName('holla');
+		$ca->setExternalSystemId(4);
+		$ca->setPurposeId(2);
+
+		$this->instance->printPersonAccounts(array($ca), 0);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals($msg, 'Debug: |* Account: Id (1), PersonId (1), Username (holla), Ldap (2), AuthId (), AuthInfo (232), ExternalId (4), Purpose (2)');
+	}*/
+
+	public function test_printCourseCatalog_shouldPrintCourseCatalog()
+	{
+		$this->collectedMessages = array();
+		$cf = new \HisInOneProxy\DataModel\CourseCatalogLeaf();
+		$cf->setId(1);
+		$cf->setTitle('Root');
+
+		$co = new \HisInOneProxy\DataModel\CourseCatalogChild();
+		$co->setCourseCatalogId(2);
+		$co->setType('Child I');
+
+		$cf->appendChild($co);
+
+		$this->instance->printCourseCatalog($cf, 0);
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals($msg, 'Debug: |- Root Id: (1)');
+	}
+
 	public function test_printPersonPlanElementContainer_shouldPrintPersonPlanElementContainer()
 	{
 		$this->readPersonDetails();

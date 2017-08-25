@@ -98,6 +98,91 @@ class DataPrinter
 			$this->log->debug(sprintf($tabs . '|* Person: %s, %s, role: %s', $person->getPersonId(), $person->getPlanElementId(), $role));
 			$per = DataCache::getInstance()->getPersonDetails($person->getPersonId());
 			$this->log->debug(sprintf($tabs . "\t|* Person: %s, %s, %s", $per->getFirstName(), $per->getSurName(), $per->getTitleId()));
+			$this->printPersonAccounts(DataCache::getInstance()->getAccountsForPersonId($person->getPersonId()), $level + 2);
+			$this->printPersonEAddress($per->getEAddresses(), $level + 3);
+		}
+	}
+
+	/**
+	 * @param DataModel\Person $person
+	 * @param $level
+	 */
+	public function printPerson($person, $level)
+	{
+		if($person instanceof DataModel\Person)
+		{
+			$tabs = $this->buildTabs($level);
+			$per = DataCache::getInstance()->getPersonDetails($person->getId());
+			$this->log->debug(sprintf($tabs . "\t|* Person: %s, %s, %s", $per->getFirstName(), $per->getSurName(), $per->getTitleId()));
+			$this->printPersonAccounts(DataCache::getInstance()->getAccountsForPersonId($person->getId()), $level + 2);
+			$this->printPersonEAddress($per->getEAddresses(), $level + 3);
+		}
+	}
+
+	/**
+	 * @param DataModel\Person[] $persons
+	 * @param $level
+	 */
+	public function printMultiplePersons($persons, $level)
+	{
+		foreach($persons as $person)
+		{
+			$this->printPerson($person, $level);
+		}
+	}
+
+	/**
+	 * @param array $ea_list
+	 * @param $level
+	 */
+	public function printPersonEAddress($ea_list, $level)
+	{
+		$tabs = $this->buildTabs($level);
+		if(is_array($ea_list))
+		{
+			foreach($ea_list as $ea)
+			{
+				/** @var $ea DataModel\ElectronicAddress */
+				$this->log->debug(sprintf($tabs . '|* eAddress: Id (%s), objGuid (%s), SortOrder (%s), AddressType (%s), AddressTypeReadable (%s), Address (%s)',
+					$ea->getid(),
+					$ea->getObjGuid(),
+					$ea->getSortOrder(),
+					$ea->getEAddressTypeId(),
+					DataCache::getInstance()->resolveEAddressTypeById($ea->getEAddressTypeId()),
+					$ea->getEAddress()
+				));
+			}
+		}
+	}
+
+	/**
+	 * @param array $account_list
+	 * @param $level
+	 */
+	public function printPersonAccounts($account_list, $level)
+	{
+		$tabs = $this->buildTabs($level);
+		if(is_array($account_list))
+		{
+			foreach($account_list as $account)
+			{
+				/** @var $account DataModel\CompleteAccount */
+				$this->log->debug(sprintf($tabs . '|* Account: Id (%s), PersonId (%s), Username (%s), Ldap (%s), AuthId (%s), AuthInfo (%s), ExternalId (%s)',
+					$account->getid(),
+					$account->getPersonId(),
+					$account->getUserName(),
+					$account->isLdapAccount(),
+					$account->getAccountAuthId(),
+					$account->getAuthInfo(),
+					$account->getExternalSystemId(),
+					$account->getPurposeId(),
+					DataCache::getInstance()->resolvePurposeTypeById($account->getPurposeId())
+				));
+				$this->log->debug(sprintf($tabs . "\n" . '|* Purpose: %s (%s)',
+					DataCache::getInstance()->resolvePurposeTypeById($account->getPurposeId()),
+					$account->getPurposeId()
+				));
+			}
 		}
 	}
 

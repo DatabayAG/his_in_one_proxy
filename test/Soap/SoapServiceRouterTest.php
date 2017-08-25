@@ -83,6 +83,10 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router->getSoapSystemEventAbonnenmentClient();
 		$this->assertEquals('Emergency: System Event service not initialised!', array_pop($this->collectedMessages));
 
+		$this->soap_client_router->setSoapClientAccountService(null);
+		$this->soap_client_router->getSoapClientAccountService();
+		$this->assertEquals('Emergency: Account service not initialised!', array_pop($this->collectedMessages));
+
 	}
 
 	public function test_ConstructNeedsAllServices2_shouldLogErrors()

@@ -11,7 +11,6 @@ class GlobalTestSuite extends \PHPUnit\Framework\TestSuite
 	const BLACKLIST = array(
 		'Client.php',
 		'GlobalTestSuite.php',
-		'SimpleXmlTest.php',
 		'TestCaseExtension.php'
 	);
 

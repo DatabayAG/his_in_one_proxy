@@ -176,6 +176,18 @@ class DataCacheTest extends TestCaseExtension
 		$this->assertInstanceOf('HisInOneProxy\Soap\TermService', $instance);
 	}
 
+	public function test_getAccountService_shouldReturnInstance()
+	{
+		$instance = $this->instance->getAccountService();
+		$this->assertInstanceOf('HisInOneProxy\Soap\AccountService', $instance);
+	}
+
+	public function test_resolveEAddressTypeById_shouldNull()
+	{
+		$instance = $this->instance->resolveEAddressTypeById(34234123);
+		$this->assertNull($instance);
+	}
+
 	public function test_appendPersonIdToCache_shouldReturnInstance()
 	{
 		$this->assertEquals(null, $this->instance->getPersonDetails(4));

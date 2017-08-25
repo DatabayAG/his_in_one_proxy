@@ -1,0 +1,24 @@
+<completeAccounts60>
+	<completeAccount60>
+		<id>13</id>
+		<personId>43</personId>
+		<username>4711abc</username>
+		<accountauthId>21</accountauthId>
+		<authinfo>Whatever</authinfo>
+		<externalsystemId>47112</externalsystemId>
+		<isLdapAccount>0</isLdapAccount>
+		<orgunitLid>23325436234</orgunitLid>
+		<purposeId>41</purposeId>
+	</completeAccount60>
+	<completeAccount60>
+		<id>132</id>
+		<personId>432</personId>
+		<username>4711abc2</username>
+		<accountauthId>212</accountauthId>
+		<authinfo>Whatever2</authinfo>
+		<externalsystemId>471122</externalsystemId>
+		<isLdapAccount>1</isLdapAccount>
+		<orgunitLid>233254362342</orgunitLid>
+		<purposeId>412</purposeId>
+	</completeAccount60>
+</completeAccounts60>

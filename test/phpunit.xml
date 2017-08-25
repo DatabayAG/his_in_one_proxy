@@ -7,7 +7,7 @@
 		<const name="PHPUNIT_HisInOneProxy_TEST_SUITE" value="true"/>
 	</php>
 	<filter>
-		<whitelist processUncoveredFilesFromWhitelist="true">
+		<whitelist processUncoveredFilesFromWhitelist="true" >
 			<directory suffix=".php">../src</directory>
 			<exclude>
 				<directory suffix=".php">../src/Exceptions</directory>

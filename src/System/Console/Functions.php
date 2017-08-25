@@ -37,6 +37,8 @@ class Functions
 			self::appendFunction('ci', 'getCourseOfStudyById', 'Get course of study by id.', true);
 			self::appendFunction('rp', 'readPerson', 'Reads person by id.', true);
 			self::appendFunction('ra', 'readAccount', 'Reads account by id.', true);
+			self::appendFunction('sa', 'searchAccountForPerson61', 'Reads accounts by person id.', true);
+			self::appendFunction('ea', 'readEAddressesForPerson', 'Reads electronic addresses by person id.', true);
 		}
 	}
 
@@ -66,7 +68,11 @@ class Functions
 	 */
 	public static function getFunctions()
 	{
-		self::addFunctions();
+		if(count(self::$collection) === 0)
+		{
+			self::addFunctions();
+		}
+
 		return self::$collection;
 	}
 }

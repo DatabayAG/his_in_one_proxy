@@ -50,6 +50,34 @@ class ValueService extends SoapService
 
 	/**
 	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\EAddressType[]|null
+	 */
+	public function getAllEAddresstypes($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllEAddresstypes', $params);
+			$parser		= new Parser\ParseEAddressType($this->log);
+			if(isset($response->listOfEAddresstypes))
+			{
+				$ea_address_types = $parser->parse($response);
+				return $ea_address_types;
+			}
+			else
+			{
+				$this->log->error('No list of term types object found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
 	 * @return \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer|null
 	 */
 	public function getAllParallelGroups($lang)
@@ -178,6 +206,35 @@ class ValueService extends SoapService
 			else
 			{
 				$this->log->error('No list of work status object found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Purpose[]|null
+	 */
+	public function getAllPurposes($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllPurposes', $params);
+			
+			$parser = new Parser\ParsePurposeList($this->log);
+			if(isset($response->listOfPurposes))
+			{
+				$purpose_list = $parser->parse($response);
+				return $purpose_list;
+			}
+			else
+			{
+				$this->log->error('No list of purposes found in response!');
 			}
 		}
 		catch(\SoapFault $exception)

@@ -2,10 +2,12 @@
 namespace HisInOneProxy\System;
 
 use HisInOneProxy\Config\GlobalSettings;
+use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue\QueueProcess;
 use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use HisInOneProxy\Soap\Interactions\DataPrinter;
 use HisInOneProxy\Soap\SoapService;
 use HisInOneProxy\System\Console\FunctionObject;
 use HisInOneProxy\System\Console\Functions;
@@ -46,6 +48,11 @@ class ConsoleHandler
 	protected $collection;
 
 	/**
+	 * @var DataPrinter
+	 */
+	protected $printer;
+
+	/**
 	 * ConsoleHandler constructor.
 	 * @param null $term
 	 * @param null $year
@@ -59,7 +66,7 @@ class ConsoleHandler
 		$formatter     = new LineFormatter($output);
 		$streamHandler->setFormatter($formatter);
 		$log->getLogger()->pushHandler($streamHandler);
-		
+
 		if(GlobalSettings::getInstance()->getHisServerUrl() == '/')
 		{
 			Utils::LogToShellAndExit('No his server url found.');
@@ -69,6 +76,7 @@ class ConsoleHandler
 		$this->year      = $year;
 		$this->term_id   = $term;
 
+		$this->printer  = new DataPrinter();
 		$this->collection = Functions::getFunctions();
 		$this->endTimer('Initialisation');
 	}
@@ -109,16 +117,6 @@ class ConsoleHandler
 	{
 		$this->startTimer();
 		self::$conductor->getCourseCatalog();
-		$this->endTimer();
-	}
-
-	/**
-	 * @param $param
-	 */
-	protected function readAccount($param)
-	{
-		$this->startTimer();
-		DataCache::getInstance()->getAccountService()->readAccount($param);
 		$this->endTimer();
 	}
 
@@ -231,14 +229,67 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	protected function readEAddressesForPerson($param)
+	{
+		// 1109
+		$this->startTimer();
+		$obj = DataCache::getInstance()->getAddressService()->readEAddressesForPerson($param);
+		$this->printer->printPersonEAddress($obj, 1);
+		$this->endTimer();
+	}
+
+	/**
+	 * 
+	 */
+	protected function readPersonRange()
+	{
+		$this->startTimer();
+		$persons = array();
+		for($i = 0; $i < 2600; $i++)
+		{
+			$param = $i;
+			$obj = DataCache::getInstance()->getPersonService()->readPerson($param);
+			if($obj != null && $obj instanceof Person)
+			{
+				DataCache::getInstance()->appendPersonIdToCache($param);
+				$persons[] = $obj;
+				echo "$i\n";
+			}
+		}
+		DataCache::getInstance()->readPersonDetailsToCache();
+		echo "Details done.\n";
+		DataCache::getInstance()->readAccountsForPersons();
+		echo "Accounts done.\n";
+		$this->printer->printMultiplePersons($persons, 1);
+		$this->endTimer();
+	}
+
 	/**
 	 * @param $param
 	 */
 	protected function readPerson($param)
 	{
+		$this->readPersonRange();
 		$this->startTimer();
 		$obj = DataCache::getInstance()->getPersonService()->readPerson($param);
-		var_dump($obj);
+		if($obj != null && $obj instanceof Person)
+		{
+			DataCache::getInstance()->appendPersonIdToCache($param);
+			DataCache::getInstance()->readPersonDetailsToCache();
+			DataCache::getInstance()->readAccountsForPersons();
+			$this->printer->printPerson($obj, 1);
+		}
+		$this->endTimer();
+	}
+
+	/**
+	 * @param $param
+	 */
+	protected function searchAccountForPerson61($param)
+	{
+		$this->startTimer();
+		$obj = DataCache::getInstance()->getAccountService()->searchAccountForPerson61($param);
+		print_r($obj);
 		$this->endTimer();
 	}
 
@@ -414,7 +465,7 @@ class ConsoleHandler
 
 	public function printHelp()
 	{
-		echo "Usage: ConsoleHandler.php function [term] [year] [param]\n";
+		echo "Usage: php cmd.php function [term] [year] [param]\n";
 
 		foreach($this->collection as $func)
 		{

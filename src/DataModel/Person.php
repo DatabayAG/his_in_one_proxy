@@ -93,6 +93,11 @@ class Person
 	protected $self_registration_status_id;
 
 	/**
+	 * @var array
+	 */
+	protected $e_addresses;
+
+	/**
 	 * @return string
 	 */
 	public function getFirstName()
@@ -348,4 +353,19 @@ class Person
 		$this->academic_degree_id = $academic_degree_id;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getEAddresses()
+	{
+		return $this->e_addresses;
+	}
+
+	/**
+	 * @param array $e_addresses
+	 */
+	public function setEAddresses($e_addresses)
+	{
+		$this->e_addresses = $e_addresses;
+	}
 }

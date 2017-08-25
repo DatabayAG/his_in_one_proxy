@@ -1,0 +1,16 @@
+<eAdresses>
+	<eAddress>
+		<id>23435</id>
+		<addresstagId>3434</addresstagId>
+		<sortorder>0</sortorder>
+		<validTo>22-11-2019</validTo>
+		<validFrom>22-11-2014</validFrom>
+		<personId>34</personId>
+		<orgunitLid>45345234</orgunitLid>
+		<buildingId>1</buildingId>
+		<createdAt>22-11-1920</createdAt>
+		<updatedAt>22-11-2015</updatedAt>
+		<eaddresstypeId>E-Mail</eaddresstypeId>
+		<eaddress>asdas@asdas.org</eaddress>
+	</eAddress>
+</eAdresses>

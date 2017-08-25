@@ -347,6 +347,7 @@ class Conductor
 	protected function finishHandlingUnits($units)
 	{
 		DataCache::getInstance()->readPersonDetailsToCache();
+		DataCache::getInstance()->readAccountsForPersons();
 		$this->data_printer->printUnits($units);
 		$builder = new JsonBuilder();
 		$courses = $builder::convertUnitsToArray($units);

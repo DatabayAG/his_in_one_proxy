@@ -8,10 +8,12 @@ use HisInOneProxy\DataModel\Container\ElearningPlatformContainer;
 use HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer;
 use HisInOneProxy\DataModel\Container\TermTypeList;
 use HisInOneProxy\DataModel\Container\WorkStatusContainer;
+use HisInOneProxy\DataModel\EAddressType;
 use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\AccountService;
+use HisInOneProxy\Soap\AddressService;
 use HisInOneProxy\Soap\CourseCatalogService;
 use HisInOneProxy\Soap\CourseInterfaceService;
 use HisInOneProxy\Soap\CourseOfStudyService;
@@ -102,6 +104,11 @@ class DataCache
 	protected static $student_service;
 
 	/**
+	 * @var AddressService
+	 */
+	protected static $address_service;
+
+	/**
 	 * @var PersonService
 	 */
 	protected static $person_service;
@@ -164,6 +171,21 @@ class DataCache
 	protected $child_relation_map = array();
 
 	/**
+	 * @var array
+	 */
+	protected $accounts = array();
+
+	/**
+	 * @var array
+	 */
+	protected static $e_address_type_list = array();
+
+	/**
+	 * @var array
+	 */
+	protected static $purposes_list = array();
+
+	/**
 	 * @return self
 	 */
 	public static function getInstance()
@@ -192,6 +214,8 @@ class DataCache
 		self::readElearningPlatforms();
 		self::readCourseMappingTypes();
 		self::readWorkStatus();
+		self::readEAddressTypes();
+		self::readAllPurposes();
 		return new DataCache();
 	}
 
@@ -213,6 +237,7 @@ class DataCache
 		self::$unit_service             = new UnitService(self::$log, self::$router);
 		self::$value_service            = new ValueService(self::$log, self::$router);
 		self::$account_service          = new AccountService(self::$log, self::$router);
+		self::$address_service          = new AddressService(self::$log, self::$router);
 	}
 
 	protected static function readDefaultLanguage()
@@ -243,6 +268,16 @@ class DataCache
 	protected static function readWorkStatus()
 	{
 		self::$work_status = self::$value_service->getAllWorkStatus(self::$default_lang_id);
+	}
+
+	protected static function readEAddressTypes()
+	{
+		self::$e_address_type_list = self::$value_service->getAllEAddresstypes(self::$default_lang_id);
+	}
+
+	protected static function readAllPurposes()
+	{
+		self::$purposes_list = self::$value_service->getAllPurposes(self::$default_lang_id);
 	}
 
 	/**
@@ -502,6 +537,40 @@ class DataCache
 	}
 
 	/**
+	 * @param $id
+	 * @return string  | null
+	 */
+	public function resolveEAddressTypeById($id)
+	{
+		if(array_key_exists($id, self::$e_address_type_list))
+		{
+			return self::$e_address_type_list[$id]->getDefaultText();
+		}
+		return null;
+	}
+
+	/**
+	 * @param $id
+	 * @return string  | null
+	 */
+	public function resolvePurposeTypeById($id)
+	{
+		if(array_key_exists($id, self::$purposes_list))
+		{
+			return self::$purposes_list[$id]->getDefaultText();
+		}
+		return null;
+	}
+
+	/**
+	 * @param EAddressType[] $e_address_types
+	 */
+	protected function setEAddressTypes($e_address_types)
+	{
+		self::$e_address_type_list = $e_address_types;
+	}
+
+	/**
 	 * @param Person $person
 	 */
 	public function addPersonDetails($person)
@@ -525,6 +594,29 @@ class DataCache
 			}
 		}
 		return self::$person_cache;
+	}
+
+	public function readAccountsForPersons()
+	{
+		foreach(self::$person_cache as $person)
+		{
+			if($person instanceof Person)
+			{
+				$this->accounts[trim($person->getId())] = self::getAccountService()->searchAccountForPerson61($person->getId());
+			}
+		}
+	}
+
+	/**
+	 * @param $id
+	 * @return array
+	 */
+	public function getAccountsForPersonId($id)
+	{
+		if(array_key_exists($id, $this->accounts))
+		{
+			return $this->accounts[$id];
+		}
 	}
 
 	/**
@@ -560,6 +652,14 @@ class DataCache
 	public function getStudentService()
 	{
 		return self::$student_service;
+	}
+
+	/**
+	 * @return AddressService
+	 */
+	public static function getAddressService()
+	{
+		return self::$address_service;
 	}
 
 	/**

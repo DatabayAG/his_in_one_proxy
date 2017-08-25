@@ -32,9 +32,9 @@ class SimpleXmlParser
 	 */
 	public function isAttributeValid($xml, $attribute)
 	{
-		return $this->doesAttributeExist($xml, $attribute)
+		return ($this->doesAttributeExist($xml, $attribute)
 			&& $this->isAttributeNotNull($xml, $attribute)
-			&& $this->isAttributeNotEmpty($xml, $attribute);
+			&& $this->isAttributeNotEmpty($xml, $attribute));
 	}
 
 	/**
@@ -52,8 +52,11 @@ class SimpleXmlParser
 	 * @param $attribute
 	 * @return bool
 	 */
-	public function isAttributeNotNull($xml, $attribute)
+	protected function isAttributeNotNull($xml, $attribute)
 	{
+		$a =  $xml->{$attribute} != null;
+		$a1=  $xml->{$attribute} != 'null';
+		$a1=  $xml->{$attribute};
 		return $xml->{$attribute} != null;
 	}
 
@@ -62,7 +65,7 @@ class SimpleXmlParser
 	 * @param $attribute
 	 * @return bool
 	 */
-	public function isAttributeNotEmpty($xml, $attribute)
+	protected function isAttributeNotEmpty($xml, $attribute)
 	{
 		return $xml->{$attribute} != '';
 	}
@@ -85,8 +88,8 @@ class SimpleXmlParser
 	 */
 	public function isAttributeValidAsContainer($xml, $attribute)
 	{
-		return $this->doesAttributeExist($xml, $attribute)
-			&& $this->isAttributeNotNull($xml, $attribute);
+		return ($this->doesAttributeExist($xml, $attribute)
+			&& $this->isAttributeNotNull($xml, $attribute));
 	}
 
 	/**
@@ -96,7 +99,7 @@ class SimpleXmlParser
 	 */
 	public function doesExactlyOneElementExists($xml, $attribute)
 	{
-		return $this->isAttributeValidAsContainer($xml, $attribute)
-			&& count($xml->{$attribute}) == 1;
+		return ($this->isAttributeValidAsContainer($xml, $attribute)
+			&& count($xml->{$attribute}) == 1);
 	}
 }

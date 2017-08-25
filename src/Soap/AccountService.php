@@ -3,6 +3,7 @@
 namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Log\Log;
+use HisInOneProxy\Parser\ParseAccounts;
 
 /**
  * Class AccountService
@@ -12,7 +13,7 @@ class AccountService extends SoapService
 {
 
 	/**
-	 * AddressService constructor.
+	 * AccountService constructor.
 	 * @param Log $log
 	 * @param SoapServiceRouter $soap_service_router
 	 */
@@ -22,15 +23,17 @@ class AccountService extends SoapService
 	}
 
 	/**
-	 * @param $account_id
-	 * @return mixed
+	 * @param $person_id
+	 * @return \HisInOneProxy\DataModel\CompleteAccount[]|null
 	 */
-	public function readAccount($account_id)
+	public function searchAccountForPerson61($person_id)
 	{
-		$params = array(array('accountId' => $account_id));
+		$params = array(array('personId' => $person_id));
 		try{
-			$response = $this->soap_service_router->getSoapClientAccountService()->__soapCall('readAccount', $params);
-			print_r($response);
+			$response = $this->soap_service_router->getSoapClientAccountService()->__soapCall('searchAccountForPerson61', $params);
+			$parser = new ParseAccounts($this->log);
+			$account_list = $parser->parse($response);
+			return $account_list;
 		}
 		catch(\SoapFault $exception)
 		{

@@ -45,4 +45,26 @@ class AddressService extends SoapService
 		return null;
 	}
 
+	/**
+	 * @param $person_id
+	 * @return \HisInOneProxy\DataModel\ElectronicAddress[]|null
+	 */
+	public function readEAddressesForPerson($person_id)
+	{
+		// 'Person', 'Orgunit', 'Room', 'Building'
+		$params = array(array('id' => $person_id, 'objekttype' => 'Person'));
+		try{
+			$response = $this->soap_service_router->getSoapClientAddressService()->__soapCall('readEAddresses', $params);
+			$parser = new Parser\ParseElectronicAddress($this->log);
+			$eaddresses = $parser->parse($response);
+
+			return $eaddresses;
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
 }
