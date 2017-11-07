@@ -120,10 +120,10 @@ class CourseCatalogServiceTest extends TestCaseExtension
 	{
 		$this->soap_client_router->getSoapClientCourseCatalog()->expects($this->any())
 								 ->method('__soapCall')
-								 ->willReturn(simplexml_load_string('<resp>' . file_get_contents('test/fixtures/visible_children.xml') . '</resp>'));
+								 ->willReturn(simplexml_load_string(file_get_contents('test/fixtures/course_catalog_element_id_list.xml')));
 		$soap_client = new Soap\CourseCatalogService($this->log, $this->soap_client_router);
 		$value = $soap_client->getCourseCatalogElementIdsForPlanElement(4444);
-		$this->assertEquals(1, count($value));
+		$this->assertEquals(2, $value->getSizeOfContainer());
 	}
 
 }
