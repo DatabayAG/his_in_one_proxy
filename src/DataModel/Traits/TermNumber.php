@@ -10,21 +10,21 @@ trait TermNumber
 	/**
 	 * @var int
 	 */
-	protected $term_umber;
+	protected $term_number;
 
 	/**
 	 * @return int
 	 */
 	public function getTermNumber()
 	{
-		return $this->term_umber;
+		return $this->term_number;
 	}
 
 	/**
-	 * @param int $term_umber
+	 * @param int term_number
 	 */
-	public function setTermNumber($term_umber)
+	public function setTermNumber($term_number)
 	{
-		$this->term_umber = $term_umber;
+		$this->term_number = $term_number;
 	}
 }
