@@ -3,6 +3,9 @@ require_once './libs/composer/vendor/autoload.php';
 
 use  HisInOneProxy\DataModel;
 
+/**
+ * Class ChildRelationTest
+ */
 class ChildRelationTest extends PHPUnit\Framework\TestCase
 {
 

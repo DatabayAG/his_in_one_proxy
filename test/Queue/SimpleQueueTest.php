@@ -4,6 +4,9 @@ include_once './libs/composer/vendor/autoload.php';
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class SimpleQueueTest
+ */
 class SimpleQueueTest extends TestCaseExtension
 {
 	

@@ -4,6 +4,9 @@ include_once './libs/composer/vendor/autoload.php';
 use HisInOneProxy\Log;
 use Monolog\Handler\StreamHandler;
 
+/**
+ * Class LogTest
+ */
 class LogTest extends PHPUnit\Framework\TestCase
 {
 	/**

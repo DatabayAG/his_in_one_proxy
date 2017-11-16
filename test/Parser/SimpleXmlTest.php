@@ -5,6 +5,9 @@ use HisInOneProxy\Parser;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class SimpleXmlTest
+ */
 class SimpleXmlTest extends TestCaseExtension
 {
 	/**

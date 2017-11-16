@@ -6,6 +6,9 @@ use HisInOneProxy\Soap;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class PersonServiceTest
+ */
 class PersonServiceTest extends TestCaseExtension
 {
 	/**
@@ -27,7 +30,7 @@ class PersonServiceTest extends TestCaseExtension
 								 ->will($this->throwException(new SoapFault('Server', 'Something horrible happened to this person.')));
 		$soap_client = new Soap\PersonService($this->log, $this->soap_client_router );
 		$soap_client->readPerson(1999);
-		$this->assertEquals('Error: Something horrible happened to this person.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: Something horrible happened to this person.', array_pop($this->collectedMessages));
 	}
 
 	public function test_readPerson_shouldReturnValue()

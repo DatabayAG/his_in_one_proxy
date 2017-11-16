@@ -5,6 +5,9 @@ use  HisInOneProxy\Config;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class GlobalSettingsTest
+ */
 class GlobalSettingsTest extends TestCaseExtension
 {
 

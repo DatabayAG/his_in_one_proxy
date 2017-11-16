@@ -3,6 +3,9 @@ require_once './libs/composer/vendor/autoload.php';
 
 use  HisInOneProxy\DataModel;
 
+/**
+ * Class UnitTest
+ */
 class UnitTest extends PHPUnit\Framework\TestCase
 {
 
@@ -108,8 +111,8 @@ class UnitTest extends PHPUnit\Framework\TestCase
 
 	public function test_getOrgUnitsContainer2_shouldReturnOrgUnitsContainer()
 	{
-		$this->instance->setOrgUnitsContainer(array(new DataModel\OrgUnit()));
-		$this->assertEquals(1, $this->instance->getSizeOfOrgUnitContainer());
+		$this->instance->setOrgUnitsContainer(new DataModel\OrgUnit());
+		$this->assertEquals(1, count($this->instance->getOrgUnitsContainer()));
 	}
 
 	/**
@@ -161,7 +164,7 @@ class UnitTest extends PHPUnit\Framework\TestCase
 
 	public function test_getCourseMappingContainer_shouldReturnCourseMappingContainer()
 	{
-		$this->instance->appendCourseMappingContainer(array(new DataModel\OrgUnit()));
+		$this->instance->appendCourseMappingContainer(new DataModel\OrgUnit());
 		$this->assertEquals(1, count($this->instance->getCourseMappingContainer()));
 		$this->assertEquals(1, $this->instance->getSizeOfCourseMappingContainer());
 	}
@@ -178,7 +181,7 @@ class UnitTest extends PHPUnit\Framework\TestCase
 		$this->instance->setChildContainer($container);
 		$this->assertEquals(2, count($this->instance->getChildContainer()));
 		$this->instance->setChildContainer(null);
-		$this->assertNull($this->instance->getChildContainer());
+		$this->assertEquals(0, count($this->instance->getChildContainer()));
 	}
 
 	public function test_replaceChildInContainer_shouldReplaceChildContainer()

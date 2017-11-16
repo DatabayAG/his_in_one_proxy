@@ -7,6 +7,9 @@ use HisInOneProxy\Soap;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class ConfigClientTest
+ */
 class ConfigClientTest extends TestCaseExtension
 {
 

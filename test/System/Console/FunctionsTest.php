@@ -1,6 +1,9 @@
 <?php
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class FunctionsTest
+ */
 class FunctionsTest extends TestCaseExtension
 {
 

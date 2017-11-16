@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class EcsResourcesTest
+ */
 class EcsResourcesTest extends PHPUnit\Framework\TestCase
 {
 

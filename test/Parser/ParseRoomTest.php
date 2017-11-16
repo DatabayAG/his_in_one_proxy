@@ -6,6 +6,9 @@ use  HisInOneProxy\Parser;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class ParseRoomTest
+ */
 class ParseRoomTest extends TestCaseExtension
 {
 	protected function setUp()

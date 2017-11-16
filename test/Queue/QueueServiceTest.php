@@ -2,6 +2,9 @@
 
 use \HisInOneProxy\Queue\QueueService;
 
+/**
+ * Class QueueServiceTest
+ */
 class QueueServiceTest extends PHPUnit\Framework\TestCase
 {
 

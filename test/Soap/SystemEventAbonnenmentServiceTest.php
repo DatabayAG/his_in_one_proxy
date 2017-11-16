@@ -6,6 +6,9 @@ use HisInOneProxy\Soap;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class SystemEventAbonnenmentServiceTest
+ */
 class SystemEventAbonnenmentServiceTest extends TestCaseExtension
 {
 
@@ -33,7 +36,7 @@ class SystemEventAbonnenmentServiceTest extends TestCaseExtension
 		$end->setPort(9090);
 		$end->setWebServiceMethod('mySuperMethod');
 		$soap_client->register('person', $end);
-		$this->assertEquals('Error: Some horrible event happened.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: Some horrible event happened.', array_pop($this->collectedMessages));
 	}
 
 	public function test_readRoom_shouldReturnValue()
@@ -58,7 +61,7 @@ class SystemEventAbonnenmentServiceTest extends TestCaseExtension
 								 ->will($this->throwException(new SoapFault('Server', 'Some horrible event happened.')));
 		$soap_client = new Soap\SystemEventAbonnenmentService($this->log, $this->soap_client_router );
 		$soap_client->quitRegistration('person');
-		$this->assertEquals('Error: Some horrible event happened.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: Some horrible event happened.', array_pop($this->collectedMessages));
 	}
 
 	public function test_quitRegistration_shouldReturnValue()

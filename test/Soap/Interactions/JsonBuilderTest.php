@@ -7,6 +7,9 @@ use HisInOneProxy\Soap;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class JsonBuilderTest
+ */
 class JsonBuilderTest extends TestCaseExtension
 {
 	/**
@@ -43,7 +46,7 @@ class JsonBuilderTest extends TestCaseExtension
 		);
 
 		$expected = '[]';
-		$this->assertEquals($expected,json_encode($nodes));
+		$this->assertEqualClearedString($expected,json_encode($nodes));
 	}
 
 	public function test_recursiveAppendOrgUnits_shouldReturnStdClass()
@@ -60,7 +63,7 @@ class JsonBuilderTest extends TestCaseExtension
 		);
 
 		$expected = '[{"id":3,"title":"child","parent":2,"nodes":[[]]},{"id":4,"title":"child 2","parent":2,"nodes":[[]]}]';
-		$this->assertEquals($expected,json_encode($nodes));
+		$this->assertEqualClearedString($expected,json_encode($nodes));
 	}
 
 	public function test_convertEmptyOrgUnitsToJson_shouldReturnStdClass()
@@ -75,7 +78,7 @@ class JsonBuilderTest extends TestCaseExtension
 		);
 
 		$expected = '[{"rootID":null,"directoryTreeTitle":null,"parent":"","term":"","nodes":[]}]';
-		$this->assertEquals($expected, json_encode($nodes));
+		$this->assertEqualClearedString($expected, json_encode($nodes));
 	}
 
 	public function test_convertOrgUnitsToJson_shouldReturnStdClass()
@@ -92,7 +95,7 @@ class JsonBuilderTest extends TestCaseExtension
 		);
 
 		$expected = '[{"rootID":2,"directoryTreeTitle":"long_text","parent":"","term":"","nodes":[{"id":3,"title":"child","parent":2,"nodes":[[]]},{"id":4,"title":"child 2","parent":2,"nodes":[[]]}]}]';
-		$this->assertEquals($expected,json_encode($nodes));
+		$this->assertEqualClearedString($expected,json_encode($nodes));
 	}
 
 	public function test_buildPersonContainer_shouldCreateElement()
@@ -117,7 +120,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$nodes = $builder->getPersonPlanElements();
 		$expected = '[{"lectureID":44,"members":[{"personID":4,"role":2},{"personID":5,"role":0}]}]' ;
 
-		$this->assertEquals($expected,json_encode($nodes));
+		$this->assertEqualClearedString($expected,json_encode($nodes));
 	}
 
 	public function test_addMappingToArray_shouldAddMapping()
@@ -143,7 +146,7 @@ class JsonBuilderTest extends TestCaseExtension
 
 		$node = $builder->getElearningSystemStringFromPlanElementId(3);
 		$this->assertEquals('', $node);
-		$this->assertEquals('Error: No e-learning system found for plan element id (3), this should not be possible.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: No e-learning system found for plan element id (3), this should not be possible.', array_pop($this->collectedMessages));
 	}
 
 	public function test_appendMapping_shouldAppendMapping()
@@ -198,7 +201,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$this->assertEquals('[{"id":1,"title":"My Text"},{"id":2,"title":"My Text 2"},{"id":3,"title":"My Text 3"}]', json_encode($org_units));
+		$this->assertEqualClearedString('[{"id":1,"title":"My Text"},{"id":2,"title":"My Text 2"},{"id":3,"title":"My Text 3"}]', json_encode($org_units));
 	}
 
 	public function test_appendLinks_shouldReturnLinks()
@@ -216,7 +219,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$this->assertEquals('[{"title":"","href":""}]', json_encode($links));
+		$this->assertEqualClearedString('[{"title":"","href":""}]', json_encode($links));
 	}
 
 	public function test_appendTargetAudience_shouldReturnTargetAudience()
@@ -234,7 +237,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$this->assertEquals('[]', json_encode($audience));
+		$this->assertEqualClearedString('[]', json_encode($audience));
 	}
 
 	public function test_appendAllocations_shouldReturnAllocations()
@@ -252,7 +255,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$this->assertEquals('[{"parentID":"","order":""}]', json_encode($allocation));
+		$this->assertEqualClearedString('[{"parentID":"","order":""}]', json_encode($allocation));
 	}
 
 	public function test_appendDegreeProgrammes_shouldReturnDegreeProgrammes()
@@ -270,7 +273,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$this->assertEquals('[{"id":"","title":"","courseUnitYearOfStudy":"","from":"","to":""}]', json_encode($program));
+		$this->assertEqualClearedString('[{"id":"","title":"","courseUnitYearOfStudy":"","from":"","to":""}]', json_encode($program));
 	}
 
 	public function test_appendNodesWithEmptyLeaf_shouldReturnNodes()
@@ -284,7 +287,7 @@ class JsonBuilderTest extends TestCaseExtension
 			'appendNodes',
 			array($leaf)
 		);
-		$this->assertEquals('[]', json_encode($nodes));
+		$this->assertEqualClearedString('[]', json_encode($nodes));
 
 	}
 
@@ -304,7 +307,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($leaf)
 		);
 
-		$this->assertEquals('[{"id":1,"title":"My type","nodes":[[]]}]', json_encode($nodes));
+		$this->assertEqualClearedString('[{"id":1,"title":"My type","nodes":[[]]}]', json_encode($nodes));
 	}
 
 	public function test_appendGroupsWithEmptyUnit_shouldReturnRow()
@@ -320,7 +323,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($unit, $row)
 		);
 		$exp = '{"groups":[]}';
-		$this->assertEquals($exp, json_encode($row));
+		$this->assertEqualClearedString($exp, json_encode($row));
 	}
 
 	public function test_appendGroups_shouldReturnRow()
@@ -352,7 +355,7 @@ class JsonBuilderTest extends TestCaseExtension
 		);
 
 		$exp = '{"groups":[{"id":1,"title":"My group value.","maxParticipants":12,"hours":40,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":40,"recommendedReading":"My power book.","prerequisites":"You should have done this."}';
-		$this->assertEquals($exp, json_encode($row));
+		$this->assertEqualClearedString($exp, json_encode($row));
 	}
 
 	public function test_convertCourseCatalogToJson_shouldReturnArray()
@@ -370,7 +373,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($cc)
 		);
 
-		$this->assertEquals('[{"rootID":1,"directoryTreeTitle":"My Root node","term":"","nodes":[]}]', json_encode($nodes));
+		$this->assertEqualClearedString('[{"rootID":1,"directoryTreeTitle":"My Root node","term":"","nodes":[]}]', json_encode($nodes));
 	}
 
 	public function test_convertUnitsToJson_shouldReturnArray()
@@ -407,7 +410,7 @@ class JsonBuilderTest extends TestCaseExtension
 		);
 
 		$exp = '[{"workload":23,"lectureID":"4000","elearning_sys_string":"1","term_type":null,"term":2017,"groupScenario":2,"abstract":"My long text.","comment1":"My comment for this unit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":1,"title":"My short text","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[]}]';
-		$this->assertEquals($exp, json_encode($nodes));
+		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 
 	public function test_convertEmptyUnitsToJson_shouldReturnArray()
@@ -425,7 +428,7 @@ class JsonBuilderTest extends TestCaseExtension
 		);
 
 		$exp = '[{"lectureID":"","elearning_sys_string":"","abstract":null,"comment1":null,"courseID":null,"lectureAssessmentType":"","number":"","organisation":"","status":null,"study_courses":null,"termID":"","lectureType":null,"title":null,"url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[]}]';
-		$this->assertEquals($exp, json_encode($nodes));
+		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 
 	public function test_convertUnitsToJson2_shouldReturnArray()
@@ -475,6 +478,6 @@ class JsonBuilderTest extends TestCaseExtension
 		);
 
 		$exp = '[{"workload":23,"lectureID":"3","elearning_sys_string":"1","term_type":null,"term":2017,"groupScenario":2,"abstract":"My long text.","comment1":"My comment for this unit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":1,"title":"My short text","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":"My group value.","maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
-		$this->assertEquals($exp, json_encode($nodes));
+		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 }

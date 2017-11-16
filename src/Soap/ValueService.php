@@ -22,118 +22,6 @@ class ValueService extends SoapService
 
 	/**
 	 * @param $lang
-	 * @return \HisInOneProxy\DataModel\Container\TermTypeList|null
-	 */
-	public function getAllTermTypes($lang)
-	{
-		$params = array(array('lang' => $lang));
-		try
-		{
-			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllTermTypes', $params);
-			$parser		= new Parser\ParseTermTypeList($this->log);
-			if(isset($response->listOfTermTypes))
-			{
-				$term_types = $parser->parse($response->listOfTermTypes);
-				return $term_types;
-			}
-			else
-			{
-				$this->log->error('No list of term types object found in response!');
-			}
-		}
-		catch(\SoapFault $exception)
-		{
-			$this->log->error($exception->getMessage());
-		}
-		return null;
-	}
-
-	/**
-	 * @param $lang
-	 * @return \HisInOneProxy\DataModel\EAddressType[]|null
-	 */
-	public function getAllEAddresstypes($lang)
-	{
-		$params = array(array('lang' => $lang));
-		try
-		{
-			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllEAddresstypes', $params);
-			$parser		= new Parser\ParseEAddressType($this->log);
-			if(isset($response->listOfEAddresstypes))
-			{
-				$ea_address_types = $parser->parse($response);
-				return $ea_address_types;
-			}
-			else
-			{
-				$this->log->error('No list of term types object found in response!');
-			}
-		}
-		catch(\SoapFault $exception)
-		{
-			$this->log->error($exception->getMessage());
-		}
-		return null;
-	}
-
-	/**
-	 * @param $lang
-	 * @return \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer|null
-	 */
-	public function getAllParallelGroups($lang)
-	{
-		$params = array(array('lang' => $lang));
-		try
-		{
-			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllParallelgroups', $params);
-			$parser   = new Parser\ParseParallelGroupValues($this->log);
-			if(isset($response->listOfParallelgroups))
-			{
-				$group_values = $parser->parse($response->listOfParallelgroups);
-				return $group_values;
-			}
-			else
-			{
-				$this->log->error('No list of term types object found in response!');
-			}
-		}
-		catch(\SoapFault $exception)
-		{
-			$this->log->error($exception->getMessage());
-		}
-		return null;
-	}
-
-	/**
-	 * @param $lang
-	 * @return \HisInOneProxy\DataModel\Container\ElearningPlatformContainer|null
-	 */
-	public function getAllElearningPlatforms($lang)
-	{
-		$params = array(array('lang' => $lang));
-		try
-		{
-			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllElearningPlatforms', $params);
-			$parser   = new Parser\ParseElearningPlatform($this->log);
-			if(isset($response->listOfElearningPlatforms))
-			{
-				$plattforms = $parser->parse($response->listOfElearningPlatforms);
-				return $plattforms;
-			}
-			else
-			{
-				$this->log->error('No elearning plattform object found in response!');
-			}
-		}
-		catch(\SoapFault $exception)
-		{
-			$this->log->error($exception->getMessage());
-		}
-		return null;
-	}
-
-	/**
-	 * @param $lang
 	 * @return \HisInOneProxy\DataModel\Container\CourseMappingTypeContainer|null
 	 */
 	public function getAllCourseMappingTypes($lang)
@@ -176,6 +64,304 @@ class ValueService extends SoapService
 			}
 			else
 			{
+				$this->log->error('No default languages value found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\EAddressType[]|null
+	 */
+	public function getAllEAddressTypes($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllEAddresstypes', $params);
+			$parser		= new Parser\ParseEAddressType($this->log);
+			if(isset($response->listOfEAddresstypes))
+			{
+				$ea_address_types = $parser->parse($response);
+				return $ea_address_types;
+			}
+			else
+			{
+				$this->log->error('No list of EAddresstype types object found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\EAddressTag[]|null
+	 */
+	public function getAllEAddressTags($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllEAddressTags', $params);
+			$parser		= new Parser\ParseEAddressTag($this->log);
+			if(isset($response->listOfEAddresstags))
+			{
+				$ea_address_types = $parser->parse($response);
+				return $ea_address_types;
+			}
+			else
+			{
+				$this->log->error('No list of EAddressTag object found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Container\ElearningPlatformContainer|null
+	 */
+	public function getAllElearningPlatforms($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllElearningPlatforms', $params);
+			$parser   = new Parser\ParseElearningPlatform($this->log);
+			if(isset($response->listOfElearningPlatforms))
+			{
+				$plattforms = $parser->parse($response->listOfElearningPlatforms);
+				return $plattforms;
+			}
+			else
+			{
+				$this->log->error('No elearning plattform object found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+	 */
+	public function getAllExternalSystems($lang)
+	{
+		return $this->getDefaultObjectType($lang, 'getAllExternalsystems', 'listOfExternalsystems', 'externalsystemvalue');
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\FieldOfStudy[]|null
+	 */
+	public function getAllFieldOfStudies($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllFieldOfStudies', $params);
+			$parser = new Parser\ParseFieldOfStudy($this->log);
+			if(isset($response->listOfFieldOfStudies))
+			{
+				$field_of_study_list = $parser->parse($response);
+				return $field_of_study_list;
+			}
+			else
+			{
+				$this->log->error('No list of field of studies found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Gender[]|null
+	 */
+	public function getAllGenders($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllGenders', $params);
+			$parser = new Parser\ParseGenders($this->log);
+			if(isset($response->listOfGenders))
+			{
+				$gender_list = $parser->parse($response);
+				return $gender_list;
+			}
+			else
+			{
+				$this->log->error('No list of genders found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Language[]|null
+	 */
+	public function getAllLanguages($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllLanguages', $params);
+			$parser = new Parser\ParseLanguages($this->log);
+			if(isset($response->listOfLanguages))
+			{
+				$language_list = $parser->parse($response);
+				return $language_list;
+			}
+			else
+			{
+				$this->log->error('No list of languages found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+	 */
+	public function getAllMajorFieldOfStudies($lang)
+	{
+		return $this->getDefaultObjectType($lang, 'getAllMajorFieldOfStudies', 'listOfMajorFieldOfStudies', 'majorfieldofstudy');
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+	 */
+	public function getAllOrgUnitAttributes($lang)
+	{
+		return $this->getDefaultObjectType($lang, 'getAllOrgunitAttributes', 'listOfOrgunitAttributes', 'orgunitattributevalue');
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+	 */
+	public function getAllOrgUnitTypes($lang)
+	{
+		return $this->getDefaultObjectType($lang, 'getAllOrgunittypes', 'listOfOrgunittypes', 'orgunittypevalue');
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer|null
+	 */
+	public function getAllParallelGroups($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllParallelgroups', $params);
+			$parser   = new Parser\ParseParallelGroupValues($this->log);
+			if(isset($response->listOfParallelgroups))
+			{
+				$group_values = $parser->parse($response->listOfParallelgroups);
+				return $group_values;
+			}
+			else
+			{
+				$this->log->error('No list of ParallelGroup object found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+	 */
+	public function getAllPersonGroupCategories($lang)
+	{
+		return $this->getDefaultObjectType($lang, 'getAllPersonGroupCategories', 'listOfPersonGroupCategories', 'persongroupcategoryvalue');
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Purpose[]|null
+	 */
+	public function getAllPurposes($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllPurposes', $params);
+
+			$parser = new Parser\ParsePurposeList($this->log);
+			if(isset($response->listOfPurposes))
+			{
+				$purpose_list = $parser->parse($response);
+				return $purpose_list;
+			}
+			else
+			{
+				$this->log->error('No list of purposes found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Container\TermTypeList|null
+	 */
+	public function getAllTermTypes($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllTermTypes', $params);
+			$parser		= new Parser\ParseTermTypeList($this->log);
+			if(isset($response->listOfTermTypes))
+			{
+				$term_types = $parser->parse($response->listOfTermTypes);
+				return $term_types;
+			}
+			else
+			{
 				$this->log->error('No list of term types object found in response!');
 			}
 		}
@@ -185,6 +371,7 @@ class ValueService extends SoapService
 		}
 		return null;
 	}
+	
 
 	/**
 	 * @param $lang
@@ -217,24 +404,29 @@ class ValueService extends SoapService
 
 	/**
 	 * @param $lang
-	 * @return \HisInOneProxy\DataModel\Purpose[]|null
+	 * @param $soap_function
+	 * @param $list_attribute
+	 * @param $attribute
+	 * @return \HisInOneProxy\DataModel\DefaultObject[]|null
 	 */
-	public function getAllPurposes($lang)
+	protected function getDefaultObjectType($lang, $soap_function, $list_attribute, $attribute)
 	{
 		$params = array(array('lang' => $lang));
 		try
 		{
-			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllPurposes', $params);
-			
-			$parser = new Parser\ParsePurposeList($this->log);
-			if(isset($response->listOfPurposes))
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall($soap_function, $params);
+			$parser = new Parser\ParseDefaultObject($this->log);
+
+			if(isset($response->{$list_attribute}))
 			{
-				$purpose_list = $parser->parse($response);
-				return $purpose_list;
+				$parser->setListValue($list_attribute);
+				$parser->setTagValue($attribute);
+				$default_object_list = $parser->parse($response);
+				return $default_object_list;
 			}
 			else
 			{
-				$this->log->error('No list of purposes found in response!');
+				$this->log->error('No list of default object found in response!');
 			}
 		}
 		catch(\SoapFault $exception)

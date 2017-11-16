@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ * Class GuzzleWrapperTest
+ */
 class GuzzleWrapperTest extends PHPUnit\Framework\TestCase
 {
 

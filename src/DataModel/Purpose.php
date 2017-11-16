@@ -7,7 +7,7 @@ use HisInOneProxy\DataModel\Traits;
 class Purpose
 {
 
-	use Traits\DefaultLanguage, Traits\HisKeyId, Traits\ObjGuid, Traits\SortingOrder, Traits\Text, Traits\UniqueName;
+	use Traits\DefaultObject;
 
 	/**
 	 * @var string

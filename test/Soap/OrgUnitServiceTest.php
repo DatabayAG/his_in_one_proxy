@@ -6,6 +6,9 @@ use HisInOneProxy\Soap;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class OrgUnitServiceTest
+ */
 class OrgUnitServiceTest extends TestCaseExtension
 {
 	/**
@@ -27,7 +30,7 @@ class OrgUnitServiceTest extends TestCaseExtension
 								 ->will($this->throwException(new SoapFault('Server', 'Something horrible happened in the unit.')));
 		$soap_client = new Soap\OrgUnitService($this->log, $this->soap_client_router );
 		$soap_client->readOrgUnit(1999, '12-12-1254');
-		$this->assertEquals('Error: Something horrible happened in the unit.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: Something horrible happened in the unit.', array_pop($this->collectedMessages));
 	}
 
 

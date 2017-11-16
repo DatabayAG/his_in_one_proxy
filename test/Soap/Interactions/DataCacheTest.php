@@ -3,6 +3,9 @@
 require_once 'test/TestCaseExtension.php';
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class DataCacheTest
+ */
 class DataCacheTest extends TestCaseExtension
 {
 
@@ -106,7 +109,7 @@ class DataCacheTest extends TestCaseExtension
 
 	public function test_getPersonDetails_shouldReturnNull()
 	{
-		$values = $this->instance->getPersonDetails(1);
+		$values = $this->instance->getPersonDetails(76436563245);
 		$this->assertEquals(null, $values);
 	}
 

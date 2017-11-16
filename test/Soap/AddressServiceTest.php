@@ -6,6 +6,9 @@ use HisInOneProxy\Soap;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class AddressServiceTest
+ */
 class AddressServiceTest extends TestCaseExtension
 {
 
@@ -29,7 +32,7 @@ class AddressServiceTest extends TestCaseExtension
 								 ->will($this->throwException(new SoapFault('Server', 'Something horrible happened in the room.')));
 		$soap_client = new Soap\AddressService($this->log, $this->soap_client_router );
 		$soap_client->readPostAddresses(1999);
-		$this->assertEquals('Error: Something horrible happened in the room.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: Something horrible happened in the room.', array_pop($this->collectedMessages));
 	}
 
 	public function test_readRoom_shouldReturnValue()

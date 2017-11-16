@@ -2,6 +2,9 @@
 
 include_once './libs/composer/vendor/autoload.php';
 
+/**
+ * Class TestCaseExtension
+ */
 class TestCaseExtension extends \PHPUnit\Framework\TestCase
 {
 	/**
@@ -9,6 +12,9 @@ class TestCaseExtension extends \PHPUnit\Framework\TestCase
 	 */
 	protected $log;
 
+	/**
+	 * @var array
+	 */
 	protected $collectedMessages = array();
 
 	protected function setUp()
@@ -57,10 +63,43 @@ class TestCaseExtension extends \PHPUnit\Framework\TestCase
 		\HisInOneProxy\Soap\Interactions\DataCache::getInstance()->setLog($this->log);
 	}
 
-	public static function callMethod($obj, $name, array $args) {
+	/**
+	 * @param       $obj
+	 * @param       $name
+	 * @param array $args
+	 * @return mixed
+	 */
+	public static function callMethod($obj, $name, array $args) 
+	{
 		$class = new \ReflectionClass($obj);
 		$method = $class->getMethod($name);
 		$method->setAccessible(true);
 		return $method->invokeArgs($obj, $args);
+	}
+	
+	public function setHiddenProperty($obj, $property, $value)
+	{
+		$refObject   = new ReflectionObject( $obj );
+		$refProperty = $refObject->getProperty( $property );
+		$refProperty->setAccessible( true );
+		$refProperty->setValue(null, $value);
+	}
+
+	/**
+	 * @param string $str1
+	 * @param string $str2
+	 */
+	public function assertEqualClearedString($str1, $str2)
+	{
+		$this->assertEquals($this->clearString($str1), $this->clearString($str2));
+	}
+
+	/**
+	 * @param $str
+	 * @return string
+	 */
+	protected function clearString($str)
+	{
+		return preg_replace('/[\n\t\s+]/', '', $str);
 	}
 }

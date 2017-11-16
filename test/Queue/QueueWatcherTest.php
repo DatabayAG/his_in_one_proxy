@@ -5,6 +5,9 @@ include_once './libs/composer/vendor/autoload.php';
 require_once 'test/TestCaseExtension.php';
 use HisInOneProxy\Soap\Interactions\DataCache;
 
+/**
+ * Class QueueWatcherTest
+ */
 class QueueWatcherTest extends TestCaseExtension
 {
 	/**

@@ -6,6 +6,9 @@ use HisInOneProxy\Soap;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class CourseOfStudyServiceTest
+ */
 class CourseOfStudyServiceTest extends TestCaseExtension
 {
 	/**
@@ -27,7 +30,7 @@ class CourseOfStudyServiceTest extends TestCaseExtension
 								 ->will($this->throwException(new SoapFault('Server', 'Something horrible happened to the course of study.')));
 		$soap_client = new Soap\CourseOfStudyService($this->log, $this->soap_client_router );
 		$soap_client->getCourseOfStudyById(1999);
-		$this->assertEquals('Error: Something horrible happened to the course of study.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: Something horrible happened to the course of study.', array_pop($this->collectedMessages));
 	}
 
 

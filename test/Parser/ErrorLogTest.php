@@ -6,6 +6,9 @@ use  HisInOneProxy\Parser;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class ErrorLogTest
+ */
 class ErrorLogTest extends TestCaseExtension
 {
 	protected function setUp()
@@ -19,7 +22,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParseUnit($this->log);
 		$parser->parse($xml);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for Unit, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for Unit, skipping!', $msg);
 	}
 
 	public function test_simpleCourseIncompleteParsing_shouldReturnLogWarning()
@@ -28,7 +31,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParseCourse($this->log);
 		$parser->parse($xml);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for Course, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for Course, skipping!', $msg);
 	}
 
 	public function test_simplePlanElementIncompleteParsing_shouldReturnLogWarning()
@@ -37,7 +40,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePlanElements($this->log);
 		$parser->parse(simplexml_load_string( $xml ), new \HisInOneProxy\DataModel\Unit());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for PlanElement, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for PlanElement, skipping!', $msg);
 	}
 
 	public function test_simplePreferredInstructorIncompleteParsing_shouldReturnLogWarning()
@@ -46,7 +49,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePreferredInstructors($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanElementPreferencePart());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for PreferredInstructor, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for PreferredInstructor, skipping!', $msg);
 	}
 
 	public function test_simplePlanElementPreferencePartIncompleteParsing_shouldReturnLogWarning()
@@ -55,7 +58,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePlanElementPreferenceParts($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanningPreference());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for PlanElementPreferencePart, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for PlanElementPreferencePart, skipping!', $msg);
 	}
 
 	public function test_simplePlanningPreferenceIncompleteParsing_shouldReturnLogWarning()
@@ -64,7 +67,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePlanningPreference($this->log);
 		$parser->parse($xml);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for PlanningPreference, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for PlanningPreference, skipping!', $msg);
 	}
 
 	public function test_simpleRoomIncompleteParsing_shouldReturnLogWarning()
@@ -73,7 +76,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePreferredRooms($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanElementPreferencePart());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for Room, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for Room, skipping!', $msg);
 	}
 
 	public function test_simpleEventDateIncompleteParsing_shouldReturnLogWarning()
@@ -82,7 +85,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParseEventDate($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanElement());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for EventDate, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for EventDate, skipping!', $msg);
 	}
 
 	public function test_simplePlannedDateIncompleteParsing_shouldReturnLogWarning()
@@ -91,7 +94,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePlannedDate($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanElement());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for PlannedDate, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for PlannedDate, skipping!', $msg);
 	}
 
 	public function test_simplePersonPlanElementIncompleteParsing_shouldReturnLogWarning()
@@ -100,7 +103,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePersonPlanElement($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanElement());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for PersonPlanElement, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for PersonPlanElement, skipping!', $msg);
 	}
 
 	public function test_simpleIndividualDateIncompleteParsing_shouldReturnLogWarning()
@@ -109,7 +112,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParseIndividualDates($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlannedDate());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for IndividualDate, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for IndividualDate, skipping!', $msg);
 	}
 
 	public function test_simpleInstructorIncompleteParsing_shouldReturnLogWarning()
@@ -118,7 +121,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParseInstructors($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlannedDate());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for Instructor, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for Instructor, skipping!', $msg);
 	}
 
 	public function test_simplePlanElementCancellationIncompleteParsing_shouldReturnLogWarning()
@@ -127,7 +130,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePlanElementCancellation($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlannedDate());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for PlanElementCancellation, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for PlanElementCancellation, skipping!', $msg);
 	}
 
 	public function test_simplePlanElementChangeIncompleteParsing_shouldReturnLogWarning()
@@ -136,7 +139,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParsePlanElementChanges($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlannedDate());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for PlanElementChange, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for PlanElementChange, skipping!', $msg);
 	}
 
 	public function test_simpleTimePreferencesIncompleteParsing_shouldReturnLogWarning()
@@ -145,7 +148,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParseTimePreferences($this->log);
 		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanningPreference());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for TimePreference, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for TimePreference, skipping!', $msg);
 	}
 
 	public function test_simpleTimeSlotIncompleteParsing_shouldReturnLogWarning()
@@ -154,7 +157,7 @@ class ErrorLogTest extends TestCaseExtension
 		$parser = new Parser\ParseTimeSlot($this->log);
 		$parser->parse(simplexml_load_string($xml));
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Warning: No id given for TimeSlot, skipping!', $msg);
+		$this->assertEqualClearedString('Warning: No id given for TimeSlot, skipping!', $msg);
 	}
 
 }

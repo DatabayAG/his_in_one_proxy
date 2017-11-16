@@ -6,6 +6,9 @@ use  HisInOneProxy\Parser;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class ParseCourseCatalogElementIdListTest
+ */
 class ParseCourseCatalogElementIdListTest extends TestCaseExtension
 {
 	protected function setUp()

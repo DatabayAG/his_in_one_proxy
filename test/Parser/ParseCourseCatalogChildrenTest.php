@@ -6,6 +6,9 @@ require_once 'test/TestCaseExtension.php';
 
 use HisInOneProxy\Parser;
 
+/**
+ * Class ParseCourseCatalogChildrenTest
+ */
 class ParseCourseCatalogChildrenTest extends TestCaseExtension
 {
 	protected function setUp()

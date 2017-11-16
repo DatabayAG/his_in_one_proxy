@@ -6,6 +6,9 @@ use HisInOneProxy\Parser;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class ParseEAddressTest
+ */
 class ParseEAddressTest  extends TestCaseExtension{
 
 	/**

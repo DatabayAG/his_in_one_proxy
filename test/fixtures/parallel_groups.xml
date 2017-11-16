@@ -1,0 +1,17 @@
+<listOfParallelgroups>
+	<parallelgroupvalue>
+		<id>23412</id>
+		<uniquename>MyName</uniquename>
+		<shorttext>f</shorttext>
+		<defaulttext>My Name</defaulttext>
+		<longtext>My Long Name</longtext>
+		<sortorder>0</sortorder>
+		<defaultlanguage>12</defaultlanguage>
+		<objGuid>43523534643523432</objGuid>
+		<hiskeyId>31</hiskeyId>
+		<lettersalutation>Sehr geehrte Frau</lettersalutation>
+		<formOfAddress>Herr</formOfAddress>
+		<astat>2</astat>
+		<astatGuestAuditor>324532</astatGuestAuditor>
+	</parallelgroupvalue>
+</listOfParallelgroups>

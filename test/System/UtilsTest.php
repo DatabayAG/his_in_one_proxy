@@ -3,6 +3,9 @@ require_once 'test/TestCaseExtension.php';
 
 use HisInOneProxy\System;
 
+/**
+ * Class UtilsTest
+ */
 class UtilsTest extends TestCaseExtension
 {
 	public function test_ensureNoTrailingSlash_shouldReturnValue()

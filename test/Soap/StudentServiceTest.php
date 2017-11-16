@@ -6,6 +6,9 @@ use HisInOneProxy\Soap;
 
 require_once 'test/TestCaseExtension.php';
 
+/**
+ * Class StudentServiceTest
+ */
 class StudentServiceTest extends TestCaseExtension
 {
 

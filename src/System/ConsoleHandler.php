@@ -159,7 +159,97 @@ class ConsoleHandler
 		$this->startTimer();
 		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getValueService()->getAllParallelGroups($lng);
-		var_dump($obj);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllGenders()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllGenders($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllLanguages()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllLanguages($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllEAddressTypes()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllEAddressTypes($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllFieldOfStudies()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllFieldOfStudies($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllEAddressTags()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllEAddressTags($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllExternalSystems()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllExternalSystems($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllMajorFieldOfStudies()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllMajorFieldOfStudies($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllOrgunitAttributes()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllOrgUnitAttributes($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllOrgUnitTypes()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllOrgUnitTypes($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
+	protected function getAllPersonGroupCategories()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllPersonGroupCategories($lng);
+		print_r($obj);
 		$this->endTimer();
 	}
 
@@ -168,7 +258,7 @@ class ConsoleHandler
 		$this->startTimer();
 		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getValueService()->getAllWorkStatus($lng);
-		var_dump($obj);
+		print_r($obj);
 		$this->endTimer();
 	}
 
@@ -177,7 +267,7 @@ class ConsoleHandler
 		$this->startTimer();
 		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getValueService()->getAllElearningPlatforms($lng);
-		var_dump($obj);
+		print_r($obj);
 		$this->endTimer();
 	}
 	
@@ -186,7 +276,7 @@ class ConsoleHandler
 		$this->startTimer();
 		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getTermService()->getCurrentTerm($lng);
-		var_dump($obj);
+		print_r($obj);
 		$this->endTimer();
 	}
 
@@ -225,7 +315,7 @@ class ConsoleHandler
 		$this->startTimer();
 		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getValueService()->getAllTermTypes($lng);
-		var_dump($obj);
+		print_r($obj);
 		$this->endTimer();
 	}
 
@@ -269,7 +359,7 @@ class ConsoleHandler
 	 */
 	protected function readPerson($param)
 	{
-		$this->readPersonRange();
+		#$this->readPersonRange();
 		$this->startTimer();
 		$obj = DataCache::getInstance()->getPersonService()->readPerson($param);
 		if($obj != null && $obj instanceof Person)

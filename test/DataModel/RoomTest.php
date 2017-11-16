@@ -3,6 +3,9 @@ require_once './libs/composer/vendor/autoload.php';
 
 use  HisInOneProxy\DataModel;
 
+/**
+ * Class RoomTest
+ */
 class RoomTest extends PHPUnit\Framework\TestCase
 {
 

@@ -3,6 +3,9 @@ require_once './libs/composer/vendor/autoload.php';
 
 use  HisInOneProxy\DataModel;
 
+/**
+ * Class OrgUnitTest
+ */
 class OrgUnitTest extends PHPUnit\Framework\TestCase
 {
 

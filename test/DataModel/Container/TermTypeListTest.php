@@ -3,6 +3,9 @@ require_once './libs/composer/vendor/autoload.php';
 
 use  HisInOneProxy\DataModel;
 
+/**
+ * Class TermTypeListTest
+ */
 class TermTypeListTest extends PHPUnit\Framework\TestCase
 {
 

@@ -3,6 +3,9 @@ include_once './libs/composer/vendor/autoload.php';
 
 use  HisInOneProxy\Log;
 
+/**
+ * Class LogLevelTest
+ */
 class LogLevelTest extends PHPUnit\Framework\TestCase
 {
 

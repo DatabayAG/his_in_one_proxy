@@ -272,7 +272,7 @@ class DataCache
 
 	protected static function readEAddressTypes()
 	{
-		self::$e_address_type_list = self::$value_service->getAllEAddresstypes(self::$default_lang_id);
+		self::$e_address_type_list = self::$value_service->getAllEAddressTypes(self::$default_lang_id);
 	}
 
 	protected static function readAllPurposes()
