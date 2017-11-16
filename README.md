@@ -1,4 +1,4 @@
-# HISinOne Prox
+# HISinOne Proxy
 If the Unittest with coverage segfaults remove the opcache extension!
 
 ## Config description
