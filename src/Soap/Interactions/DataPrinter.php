@@ -204,7 +204,7 @@ class DataPrinter
 
 	/**
 	 * @param DataModel\OrgUnit $obj
-	 * @param DataModel\CourseOfStudy $course_of_studies
+	 * @param DataModel\CourseOfStudy | array $course_of_studies
 	 * @param int $level
 	 */
 	public function printOrgUnit($obj, $course_of_studies, $level = 0)
@@ -242,7 +242,7 @@ class DataPrinter
 	}
 
 	/**
-	 * @param DataModel\CourseCatalogLeaf $leaf
+	 * @param DataModel\CourseCatalogLeaf | DataModel\CourseCatalogChild $leaf
 	 * @param int $level
 	 */
 	public function printCourseCatalog($leaf, $level = 0)
@@ -356,7 +356,7 @@ class DataPrinter
 
 	/**
 	 * @param DataModel\OrgUnit $obj
-	 * @param array $course_of_studies
+	 * @param array | DataModel\CourseOfStudy $course_of_studies
 	 * @param $tabs
 	 */
 	public function printOrgUnitDetail($obj, $course_of_studies, $tabs)

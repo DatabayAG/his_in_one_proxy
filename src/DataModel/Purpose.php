@@ -17,7 +17,7 @@ class Purpose
 	/**
 	 * @return string
 	 */
-	public function getObjectType(): string
+	public function getObjectType()
 	{
 		return $this->object_type;
 	}
@@ -25,7 +25,7 @@ class Purpose
 	/**
 	 * @param string $object_type
 	 */
-	public function setObjectType(string $object_type)
+	public function setObjectType($object_type)
 	{
 		$this->object_type = $object_type;
 	}

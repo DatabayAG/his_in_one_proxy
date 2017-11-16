@@ -13,6 +13,7 @@ use HisInOneProxy\System\Console\FunctionObject;
 use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use PHPUnit\TextUI\TestRunner;
 
 require_once 'libs/composer/vendor/autoload.php';
 
@@ -487,14 +488,14 @@ class ConsoleHandler
 
 	protected function runUnitTests()
 	{
-		$phpunit = new \PHPUnit\TextUI\TestRunner;
+		$phpunit = new TestRunner;
 		try
 		{
 			$test_suite	= $phpunit->getTest('test/GlobalTestSuite.php');
 			$config		= $this->getPhpUnitConfig();
 			$phpunit->dorun($test_suite, $config);
 		}
-		catch(\PHPUnit\Framework\Exception $e)
+		catch(\Exception $e)
 		{
 			print $e->getMessage() . "\n";
 			die ("Unit tests failed.");

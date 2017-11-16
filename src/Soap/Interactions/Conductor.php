@@ -112,6 +112,7 @@ class Conductor
 		$term_type_value_id = $this->term_id;
 		$service = DataCache::getInstance()->getCourseCatalogService();
 		$term_id = $service->getRootIdOfTerm($year, $term_type_value_id);
+		$catalog_leaf = null;
 
 		if($term_id != null && $term_id != '')
 		{
