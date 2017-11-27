@@ -14,10 +14,14 @@
 		}
 	},
 	"ECS" : {
-		"auth_id"            : "",
+		"auth_id"             : "",
+		"password"            : "",
 		"receiver_memberships": "1",
-		"url"                : "",
-		"ssl_validation"     : ""
+		"url"                 : "",
+		"ssl_validation"      : ""
+	},
+		"HIStoECSMapping": {
+			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS"
 	},
 	"path_to_queue"          : "",
 	"path_to_log"            : "",
