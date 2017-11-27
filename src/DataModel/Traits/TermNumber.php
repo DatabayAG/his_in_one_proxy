@@ -21,7 +21,7 @@ trait TermNumber
 	}
 
 	/**
-	 * @param int term_number
+	 * @param int $term_number
 	 */
 	public function setTermNumber($term_number)
 	{

@@ -51,7 +51,7 @@ class ElearningCourseMapping
 	 */
 	public function setELearningSystemId($e_learning_system_id)
 	{
-		$this->e_learning_system_id = $e_learning_system_id;
+		$this->e_learning_system_id = HisToEcsIdMapping::getEcsIdFromHisId($e_learning_system_id);
 	}
 
 }

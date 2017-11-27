@@ -329,6 +329,11 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+
+	public function readAccount($id)
+	{
+		var_dump(DataCache::getInstance()->getAccountService()->searchAccountForPerson61($id));
+	}
 	/**
 	 * 
 	 */

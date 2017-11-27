@@ -44,7 +44,7 @@ class GuzzleWrapper
 					'X-EcsReceiverMemberships' => $this->receivers,
 					//'X-EcsReceiverCommunities' => 2,
 					'X-EcsAuthId'              => GlobalSettings::getInstance()->getEcsAuthId(),
-					//'X-EcsPassword'            => 'homer',
+					'X-EcsPassword'            => GlobalSettings::getInstance()->getEcsPassword(),
 					'Content-Type'             => 'application/json'
 				]
 

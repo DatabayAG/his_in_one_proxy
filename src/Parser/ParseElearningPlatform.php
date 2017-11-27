@@ -24,9 +24,18 @@ class ParseElearningPlatform extends SimpleXmlParser
 				$platform = new DataModel\ElearningPlatform();
 				if(isset($value->id) && $value->id != null && $value->id != '')
 				{
-					$platform->setId($value->id);
-					$this->log->info(sprintf('Found elearning plattfomr mapping with id %s.', $platform->getId()));
+					$this->log->info(sprintf('Found elearning plattform mapping with id %s, tying to find the ecs corresponding id.', $value->id));
 
+					$ecs_id = DataModel\HisToEcsIdMapping::getEcsIdFromHisId($value->id);
+					if($ecs_id != null)
+					{
+						$platform->setId($ecs_id);
+						$this->log->info(sprintf('Found corresponding ecs plattform id %s.', $ecs_id));
+					}
+					else
+					{
+						$this->log->error(sprintf('No corresponding ecs id found!'));
+					}
 					if($this->isAttributeValid($value, 'uniquename'))
 					{
 						$platform->setUniqueName($value->uniquename);

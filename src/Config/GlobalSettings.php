@@ -5,6 +5,7 @@ namespace HisInOneProxy\Config;
 require_once __DIR__ . '/../Log/LogConfig.php';
 
 use HisInOneProxy\DataModel\Endpoint;
+use HisInOneProxy\DataModel\HisToEcsIdMapping;
 use HisInOneProxy\System\Utils;
 use Noodlehaus\Config;
 
@@ -52,6 +53,16 @@ class GlobalSettings
 	 * @var string
 	 */
 	protected $ecs_auth_id;
+
+	/**
+	 * @var string
+	 */
+	protected $ecs_password;
+
+	/**
+	 * @var array
+	 */
+	protected $his_to_ecs_system_id_mapping;
 
 	/**
 	 * @var string
@@ -153,8 +164,7 @@ class GlobalSettings
 			}
 			else
 			{
-
-				Utils::LogToShellAndExit('No valid config found, content of file is not valid json structure.');
+				Utils::LogToShellAndExit(sprintf('No valid config found, content of file is not valid json structure. (%s)', \json_last_error_msg()));
 			}
 		}
 		else
@@ -189,6 +199,7 @@ class GlobalSettings
 
 		$this->setEcsServerUrl($this->config->get('ECS.url'));
 		$this->setEcsAuthId($this->config->get('ECS.auth_id'));
+		$this->setEcsPassword($this->config->get('ECS.password'));
 		$this->setValidateSsl($this->config->get('ECS.ssl_validation'));
 		$this->receiver_memberships = $this->config->get('ECS.receiver_memberships');
 
@@ -198,6 +209,7 @@ class GlobalSettings
 		$this->setKeepElementInQueue($this->config->get('keep_elements_in_queue'));
 		$this->setDebug($this->config->get('debug'));
 
+		$this->his_to_ecs_system_id_mapping = new HisToEcsIdMapping($this->config->get('HIStoECSMapping'));
 		$this->setPhpunitWithCoverage($this->config->get('PHPUnit.coverage'));
 	}
 
@@ -246,6 +258,7 @@ class GlobalSettings
 			"HIS.soap_debug"                 => $this->isSoapDebug(),
 			"HIS.soap_caching"               => $this->isSoapCaching(),
 			"ECS.auth_id"                    => $this->getEcsAuthId(),
+			"ECS.password"                   => $this->getEcsPassword(),
 			"ECS.url"                        => $this->getEcsServerUrl(),
 			"ECS.ssl_validation"             => $this->getValidateSsl(),
 			"path_to_queue"                  => $this->getPathToQueue(),
@@ -342,6 +355,22 @@ class GlobalSettings
 	protected function setEcsAuthId($ecs_auth_id)
 	{
 		$this->ecs_auth_id = $ecs_auth_id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEcsPassword()
+	{
+		return $this->ecs_password;
+	}
+
+	/**
+	 * @param string $ecs_password
+	 */
+	public function setEcsPassword($ecs_password)
+	{
+		$this->ecs_password = $ecs_password;
 	}
 
 	/**
