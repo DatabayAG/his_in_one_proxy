@@ -38,7 +38,7 @@ class EcsCommunication
 	public function publishCourseToEcs($json)
 	{
 		try{
-			$response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCoursePath(), ['json' => $json]);
+			$response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCoursePath(), ['json' => $json, 'auth' => [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()] ]);
 			$resource_id = $this->client->getLocationHeader($response);
 			#$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . '/campusconnect/course_urls/' . $resource_id, ['json' => $json]);
 
@@ -59,7 +59,7 @@ class EcsCommunication
 	public function publishMembersToEcs($json)
 	{
 		try{
-			$response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getMembersUrlPath(), ['json' => $json]);
+			$response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getMembersUrlPath(), ['json' => $json, 'auth' => [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()] ]);
 			if($this->client->getStatusCode($response) == HttpStatusCode::CREATED)
 			{
 				return true;
@@ -77,7 +77,7 @@ class EcsCommunication
 	public function publishCourseCatalogToEcs($json)
 	{
 		try{
-			$response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseCatalogUrlPath(), ['json' => $json]);
+			$response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseCatalogUrlPath(), ['json' => $json, 'auth' => [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()] ]);
 			if($this->client->getStatusCode($response) == HttpStatusCode::CREATED)
 			{
 				return true;
@@ -94,7 +94,7 @@ class EcsCommunication
 	 */
 	public function getCourseIds($path, $course_urls)
 	{
-		$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCoursePath() . $path, []);
+		$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCoursePath() . $path, [ 'auth' => [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()] ]);
 		$content = $this->client->getContent($response);
 		$json = json_decode($content);
 		$id = null;
@@ -130,7 +130,7 @@ class EcsCommunication
 		#$a = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseUrlPath() . 250, []);
 		#$b = $a->getBody()->getContents();
 		#exit();
-		$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseUrlPath(), []);
+		$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseUrlPath(), ['auth' => [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()] ]);
 		if($this->client->getStatusCode($response) == HttpStatusCode::OK)
 		{
 			$content = $this->client->getContent($response);
@@ -141,7 +141,7 @@ class EcsCommunication
 				{
 					if($path != "")
 					{
-						$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getPlainPath() . $path, []);
+						$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getPlainPath() . $path, ['auth' => [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()] ]);
 						$content = json_decode($this->client->getContent($response));
 						if(isset($content->ecs_course_url) && $content->ecs_course_url != '')
 						{
