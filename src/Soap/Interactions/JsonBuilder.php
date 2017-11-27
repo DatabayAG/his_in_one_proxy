@@ -96,7 +96,7 @@ class JsonBuilder
 		$row->study_courses			= $unit->getLid();
 		$row->termID				= '';
 		$row->lectureType			= $unit->getElementTypeId();
-		$row->title					= $unit->getShortText();
+		$row->title					= $unit->getLongText();
 		$row->url					= '';
 	}
 
