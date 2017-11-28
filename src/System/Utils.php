@@ -38,7 +38,7 @@ class Utils
 	/**
 	 * @param int $code
 	 */
-	public static function terminate($code = 0)
+	public static function terminate($code = 1)
 	{
 		exit($code);
 	}

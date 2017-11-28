@@ -22,6 +22,11 @@ class GlobalTestSuite extends \PHPUnit\Framework\TestSuite
 		$unit_tests = \HisInOneProxy\Config\GlobalSettings::getInstance()->isPhpunitWithCoverage();
 		\HisInOneProxy\Config\GlobalSettings::getInstance()->readCustomConfig('test/php_unit_config.json');
 		\HisInOneProxy\Config\GlobalSettings::getInstance()->setPhpunitWithCoverage($unit_tests);
+		$map = new \HisInOneProxy\DataModel\HisToEcsIdMapping(\HisInOneProxy\Config\GlobalSettings::getInstance()->returnConfig());
+		$map->appendMapping("1",2);
+		$map->appendMapping("2",3);
+		$map->appendMapping("4",5);
+		$map->appendMapping("232",55);
 		$suite = new GlobalTestSuite();
 		self::addTestSuiteFiles($suite);
 		return $suite;

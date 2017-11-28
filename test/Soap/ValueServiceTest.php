@@ -21,11 +21,6 @@ class ValueServiceTest extends TestCaseExtension
 		parent::setUp();
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
 		$this->soap_client_router->setSoapClientValueService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'ValueService.wsdl'));
-		$map = new \HisInOneProxy\DataModel\HisToEcsIdMapping(\HisInOneProxy\Config\GlobalSettings::getInstance()->returnConfig());
-		$map->appendMapping("1",2);
-		$map->appendMapping("2",3);
-		$map->appendMapping("4",5);
-		$map->appendMapping("232",55);
 	}
 
 	protected function initEmptySoapClientService()
