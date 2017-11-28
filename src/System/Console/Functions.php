@@ -23,14 +23,14 @@ class Functions
 			self::appendFunction('li', 'getLectureById', 'Gets a Lecture by id. Uses id as param.');
 			self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
 			self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
+			self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.');
 			self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');
 			self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
 			self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
 			self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
 			self::appendFunction('gg', 'getAllGenders', 'Gets all gender types.', true);
 			self::appendFunction('gp', 'getAllParallelGroups', 'Gets all parallel group types.', true);
-			self::appendFunction('gw', 'getAllWorkStatus', 'Gets all work status types.', true);
-			self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.', true);
+			self::appendFunction('gw', 'getAllWorkStatus', 'Gets all work status types.', false);
 			self::appendFunction('gt', 'getAllTermTypes', 'Gets all term types.', true);
 			self::appendFunction('gl', 'getAllLanguages', 'Gets all language types.', true);
 			self::appendFunction('ga', 'getAllEAddressTags', 'Gets all eaddress tags.', true);

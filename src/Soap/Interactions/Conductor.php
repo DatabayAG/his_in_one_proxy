@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Soap\Interactions;
 
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Container\UnitIdList;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
@@ -71,9 +72,17 @@ class Conductor
 
 		if($term == null || $year == null)
 		{
-			$term_value		= $this->getCurrentTerm();
-			$this->term_id	= $term_value->getTermNumber();
-			$this->year		= $term_value->getYear();
+			if(GlobalSettings::getInstance()->getActualTermId() == null || GlobalSettings::getInstance()->getActualTermYear() == null)
+			{
+				$term_value		= $this->getCurrentTerm();
+				$this->term_id	= $term_value->getTermNumber();
+				$this->year		= $term_value->getYear();
+			}
+			else
+			{
+				$this->term_id	= GlobalSettings::getInstance()->getActualTermId();
+				$this->year		= GlobalSettings::getInstance()->getActualTermYear();
+			}
 		}
 		else
 		{

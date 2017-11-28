@@ -128,6 +128,16 @@ class GlobalSettings
 	 * @var int
 	 */
 	protected $soap_calls_counter = 0;
+
+	/**
+	 * @var int
+	 */
+	protected $actual_term_id;
+
+	/**
+	 * @var int
+	 */
+	protected $actual_term_year;
 	
 	/**
 	 * @param $name
@@ -189,6 +199,8 @@ class GlobalSettings
 		$this->setHisPassword($this->config->get('HIS.password'));
 		$this->setSoapDebug($this->config->get('HIS.soap_debug'));
 		$this->setSoapCaching($this->config->get('HIS.soap_caching'));
+		$this->setActualTermId($this->config->get('HIS.actual_term_id'));
+		$this->setActualTermYear($this->config->get('HIS.actual_term_year'));
 
 		$this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
 		$this->end_point = new Endpoint();
@@ -257,6 +269,8 @@ class GlobalSettings
 			"HIS.endpoint.password"          => $this->end_point->getPassword(),
 			"HIS.soap_debug"                 => $this->isSoapDebug(),
 			"HIS.soap_caching"               => $this->isSoapCaching(),
+			"HIS.actual_term_id"             => $this->getActualTermId(),
+			"HIS.actual_term_year"           => $this->getActualTermYear(),
 			"ECS.auth_id"                    => $this->getEcsAuthId(),
 			"ECS.password"                   => $this->getEcsPassword(),
 			"ECS.url"                        => $this->getEcsServerUrl(),
@@ -572,5 +586,37 @@ class GlobalSettings
 	public function getCallsCounter()
 	{
 		return $this->soap_calls_counter;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getActualTermId()
+	{
+		return $this->actual_term_id;
+	}
+
+	/**
+	 * @param int $actual_term_id
+	 */
+	public function setActualTermId($actual_term_id)
+	{
+		$this->actual_term_id = $actual_term_id;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getActualTermYear()
+	{
+		return $this->actual_term_year;
+	}
+
+	/**
+	 * @param int $actual_term_year
+	 */
+	public function setActualTermYear($actual_term_year)
+	{
+		$this->actual_term_year = $actual_term_year;
 	}
 }

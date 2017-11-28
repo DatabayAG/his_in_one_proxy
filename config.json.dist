@@ -5,6 +5,8 @@
 		"url"                : "test/wsdl",
 		"soap_caching"       : "0",
 		"soap_debug"         : "false",
+		"actual_ter_id"      : null,
+		"actual_term_year"   : null,
 		"endpoint"           : {
 			"register_listener"  : "true",
 			"listener_url"       : "",

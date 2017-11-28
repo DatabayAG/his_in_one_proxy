@@ -34,7 +34,7 @@ class QueueService
 	 */
 	public static function get_institutions_and_org_units($json = null, $receiver = null)
 	{
-		$service = new Conductor(DataCache::getInstance()->getLog());
+		$service = new Conductor(null, null, DataCache::getInstance()->getLog());
 		if($service->getInstitutionsAndOrgUnits())
 		{
 			return true;

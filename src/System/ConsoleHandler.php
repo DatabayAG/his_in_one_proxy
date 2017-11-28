@@ -565,29 +565,23 @@ class ConsoleHandler
 
 		foreach($this->collection as $func)
 		{
-			if(GlobalSettings::getInstance()->isDebug() && $func->isDebug())
-			{
-				$this->printHelpLine($func, true);
-			}
-			else
-			{
-				$this->printHelpLine($func);
-			}
+			$this->printHelpLine($func);
 		}
 		Utils::terminate(0);
 	}
 
 	/**
 	 * @param \HisInOneProxy\System\Console\FunctionObject $func
-	 * @param $debug
 	 */
-	protected function printHelpLine($func, $debug = false)
+	protected function printHelpLine($func)
 	{
-		$string = '';
-		if($debug)
+		if($func->isDebug() == true && GlobalSettings::getInstance()->isDebug())
 		{
-			$string = '(Debug)';
+			echo "\t\t " . $func->getId() . " => (Debug) " . $func->getComment() . "\n";
 		}
-		echo "\t\t " . $func->getId() . " => $string " . $func->getComment() . "\n";
+		else if($func->isDebug() == false)
+		{
+			echo "\t\t " . $func->getId() . " => " . $func->getComment() . "\n";
+		}
 	}
 }
