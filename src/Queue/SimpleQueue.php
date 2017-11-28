@@ -142,7 +142,8 @@ class SimpleQueue
 		$queue_dir	= $this->getQueueDirectory(QueueConstants::SERVICE_QUEUE);
 		$it			= new \GlobIterator($queue_dir . DIRECTORY_SEPARATOR.'*.job.done', \FilesystemIterator::KEY_AS_FILENAME);
 		$files		= array_keys(iterator_to_array($it));
-		$yesterday	= time() - 86400;
+		$sec_a_day	= 86400;
+		$yesterday	= time() - $sec_a_day;
 		natsort($files);
 
 		if ($files)
@@ -159,7 +160,7 @@ class SimpleQueue
 			}
 		}
 
-		$this->push(QueueConstants::MAINTENANCE_QUEUE, array(), QueueConstants::CLEAN_UP_STALE_JOBS, '', time() + 86000);
+		$this->push(QueueConstants::MAINTENANCE_QUEUE, array(), QueueConstants::CLEAN_UP_STALE_JOBS, '', time() + $sec_a_day);
 	}
 
 	/**

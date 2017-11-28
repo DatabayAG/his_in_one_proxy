@@ -132,23 +132,6 @@ class GlobalSettingsTest extends TestCaseExtension
 		unlink('my_tmp_phpunit_config.json');
 	}
 
-	public function test_Save_shouldReturnSave()
-	{
-		TestCaseExtension::callMethod(
-			$this->instance,
-			'overWriteDefaultConfigFileName',
-			array('my_tmp_phpunit_config.json')
-		);
-
-		TestCaseExtension::callMethod(
-			$this->instance,
-			'save',
-			array()
-		);
-		$this->assertEquals(true, file_exists('my_tmp_phpunit_config.json'));
-		unlink('my_tmp_phpunit_config.json');
-	}
-
 	public function test_readValues2_shouldReturnReadValues()
 	{
 		TestCaseExtension::callMethod(

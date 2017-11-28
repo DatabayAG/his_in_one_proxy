@@ -120,8 +120,3 @@ class HisHttpServer
 		$this->loop->run();
 	}
 }
-if(!defined('PHPUNIT'))
-{
-	$server = new HisHttpServer();
-	$server->run();
-}

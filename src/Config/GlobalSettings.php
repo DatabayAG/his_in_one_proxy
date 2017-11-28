@@ -256,7 +256,7 @@ class GlobalSettings
 		$this->setValues();
 	}
 
-	public function save()
+	public function returnConfig()
 	{
 		$config = array(
 			"HIS.username"                   => $this->getHisUserName(),
@@ -284,7 +284,7 @@ class GlobalSettings
 		);
 
 		$config = json_encode($config);
-		file_put_contents($this->getConfigFileName(), $config);
+		return $config;
 	}
 
 	/**

@@ -38,13 +38,22 @@ class HisToEcsIdMapping
 
 	/**
 	 * @param $his_id
+	 * @param $ecs_id
+	 */
+	public function appendMapping($his_id, $ecs_id)
+	{
+		self::$mapping["$his_id"] = $ecs_id;
+	}
+
+	/**
+	 * @param $his_id
 	 * @return mixed
 	 */
 	public static function getEcsIdFromHisId($his_id)
 	{
 		if(array_key_exists($his_id, self::$mapping))
 		{
-			return self::$mapping[$his_id];
+			return self::$mapping["$his_id"];
 		}
 		else
 		{

@@ -21,6 +21,11 @@ class ValueServiceTest extends TestCaseExtension
 		parent::setUp();
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
 		$this->soap_client_router->setSoapClientValueService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'ValueService.wsdl'));
+		$map = new \HisInOneProxy\DataModel\HisToEcsIdMapping(\HisInOneProxy\Config\GlobalSettings::getInstance()->returnConfig());
+		$map->appendMapping("1",2);
+		$map->appendMapping("2",3);
+		$map->appendMapping("4",5);
+		$map->appendMapping("232",55);
 	}
 
 	protected function initEmptySoapClientService()
@@ -77,7 +82,7 @@ class ValueServiceTest extends TestCaseExtension
 								 ->willReturn(simplexml_load_string('<resp><listOfElearningPlatforms>'.file_get_contents('test/fixtures/elearning_platform.xml').'</listOfElearningPlatforms></resp>'));
 		$soap_client = new Soap\ValueService($this->log, $this->soap_client_router);
 		$value = $soap_client->getAllElearningPlatforms(12);
-		$this->assertEquals('My little platform', $value->translateIdToDefaultText('232'));
+		$this->assertEquals('My little platform', $value->translateIdToDefaultText('55'));
 	}
 
 	public function test_getAllCourseMappingTypes_shouldReturnValue()

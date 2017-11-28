@@ -73,6 +73,10 @@ class HisHttpServerProcess
 	 */
 	public function startHisServer()
 	{
+		if($this->isServerStillActive())
+		{
+			$this->killServerProcess();
+		}
 		return $this->process->startProcess('php src/Soap/HisHttpServer.php', self::HIS_SERVER_PID);
 	}
 

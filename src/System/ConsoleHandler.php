@@ -8,6 +8,7 @@ use HisInOneProxy\Queue\QueueProcess;
 use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\Soap\Interactions\DataPrinter;
+use HisInOneProxy\Soap\Interactions\HisHttpServer;
 use HisInOneProxy\Soap\SoapService;
 use HisInOneProxy\System\Console\FunctionObject;
 use HisInOneProxy\System\Console\Functions;
@@ -118,6 +119,16 @@ class ConsoleHandler
 	{
 		$this->startTimer();
 		self::$conductor->getCourseCatalog();
+		$this->endTimer();
+	}
+
+	protected function startHisListener()
+	{
+		$this->startTimer();
+		$server = new HisHttpServer();
+		$server->run();
+		#$server = new HisHttpServerProcess();
+		#$server->startHisServer();
 		$this->endTimer();
 	}
 

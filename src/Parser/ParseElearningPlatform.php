@@ -26,7 +26,7 @@ class ParseElearningPlatform extends SimpleXmlParser
 				{
 					$this->log->info(sprintf('Found elearning plattform mapping with id %s, tying to find the ecs corresponding id.', $value->id));
 
-					$ecs_id = DataModel\HisToEcsIdMapping::getEcsIdFromHisId($value->id);
+					$ecs_id = DataModel\HisToEcsIdMapping::getEcsIdFromHisId((string)$value->id);
 					if($ecs_id != null)
 					{
 						$platform->setId($ecs_id);

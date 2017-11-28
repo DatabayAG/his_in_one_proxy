@@ -28,16 +28,16 @@ class ParseElearningPlatformTest  extends TestCaseExtension{
 
 		$cont = $this->instance->parse(simplexml_load_string('<res>' . $xml . '</res>'));
 		$platform = $cont->getElearningPlatformContainer();
-		$this->assertEquals('232', $platform['232']->getId());
-		$this->assertEquals('Bla2',  $platform['232']->getShortText());
-		$this->assertEquals('My little platform',  $platform['232']->getDefaultText());
-		$this->assertEquals('Loooooooooong platform text',  $platform['232']->getLongText());
-		$this->assertEquals('TotallyUnique2',  $platform['232']->getUniqueName());
-		$this->assertEquals('0',  $platform['232']->getSortOrder());
-		$this->assertEquals('12',  $platform['232']->getLanguageId());
-		$this->assertEquals('454326547637562432',  $platform['232']->getObjGuid());
-		$this->assertEquals('http://there',  $platform['232']->getConnectionInfo());
-		$this->assertEquals('45432654763756243',  $platform['232']->getHisKeyId());
+		$this->assertEquals('55', $platform['55']->getId());
+		$this->assertEquals('Bla2',  $platform['55']->getShortText());
+		$this->assertEquals('My little platform',  $platform['55']->getDefaultText());
+		$this->assertEquals('Loooooooooong platform text',  $platform['55']->getLongText());
+		$this->assertEquals('TotallyUnique2',  $platform['55']->getUniqueName());
+		$this->assertEquals('0',  $platform['55']->getSortOrder());
+		$this->assertEquals('12',  $platform['55']->getLanguageId());
+		$this->assertEquals('454326547637562432',  $platform['55']->getObjGuid());
+		$this->assertEquals('http://there',  $platform['55']->getConnectionInfo());
+		$this->assertEquals('45432654763756243',  $platform['55']->getHisKeyId());
 
 
 	}

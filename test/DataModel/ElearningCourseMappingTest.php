@@ -44,7 +44,7 @@ class ElearningCourseMappingTest extends PHPUnit\Framework\TestCase
 	public function test_getELearningSystemId_shouldReturnOrder()
 	{
 		$this->instance->setELearningSystemId(4);
-		$this->assertEquals(4, $this->instance->getELearningSystemId());
+		$this->assertEquals(5, $this->instance->getELearningSystemId());
 	}
 
 	public function test_getYear_shouldReturnOrder()

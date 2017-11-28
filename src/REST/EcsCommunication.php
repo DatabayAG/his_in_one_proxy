@@ -40,7 +40,6 @@ class EcsCommunication
 		try{
 			$response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCoursePath(), ['json' => $json, 'auth' => [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()] ]);
 			$resource_id = $this->client->getLocationHeader($response);
-			#$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . '/campusconnect/course_urls/' . $resource_id, ['json' => $json]);
 
 			if($this->client->getStatusCode($response) == HttpStatusCode::CREATED)
 			{
@@ -127,9 +126,6 @@ class EcsCommunication
 
 	public function getCoursesUrls()
 	{
-		#$a = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseUrlPath() . 250, []);
-		#$b = $a->getBody()->getContents();
-		#exit();
 		$response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseUrlPath(), ['auth' => [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()] ]);
 		if($this->client->getStatusCode($response) == HttpStatusCode::OK)
 		{

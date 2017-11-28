@@ -26,6 +26,7 @@ class Functions
 			self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.');
 			self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');
 			self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
+			self::appendFunction('se', 'startHisListener', 'Starts his listener which listens to the system events from his server.');
 			self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
 			self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
 			self::appendFunction('gg', 'getAllGenders', 'Gets all gender types.', true);
