@@ -45,7 +45,7 @@ class DataCacheTest extends TestCaseExtension
 	public function test_getWorkStatus_shouldReturnNull()
 	{
 		$values = DataCache::getInstance()->getWorkStatus();
-		$this->assertNotEquals(null, $values);
+		$this->assertEquals(null, $values);
 	}
 
 	public function test_getDefaultLanguageId_shouldReturnNull()
@@ -93,7 +93,7 @@ class DataCacheTest extends TestCaseExtension
 	public function test_getElearningPlatformContainer_shouldReturnNull()
 	{
 		$values = $this->instance->getElearningPlatformContainer();
-		$this->assertNotEquals(null, $values);
+		$this->assertEquals(null, $values);
 	}
 
 	public function test_getCourseMappingTypeContainer_shouldReturnNull()

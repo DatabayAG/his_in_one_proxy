@@ -39,7 +39,7 @@ class DataPrinter
 		$tabs = $this->buildTabs($level);
 		foreach($units as $unit)
 		{
-			$this->log->debug(sprintf($tabs . '|* Unit: %s, %s', $unit->getShortText(), $unit->getLongText()));
+			$this->log->debug(sprintf($tabs . '|* Unit: %s, %s', $unit->getDefaultText(), $unit->getLongText()));
 			$this->log->debug(sprintf($tabs . "\t|- %s, %s, %s, %s", $unit->getId(), $unit->getLid(), $unit->getStatusId(), $unit->getElementNr()));
 			$this->printCourseMapping($unit->getCourseMappingContainer(), $level + 2);
 			$this->printPlanElementContainer($unit->getPlanElementContainer(), $level + 2);
