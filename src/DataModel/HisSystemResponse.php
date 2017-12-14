@@ -79,7 +79,10 @@ class HisSystemResponse
 		}
 		else
 		{
-			DataCache::getInstance()->getLog()->warning(sprintf('Got illegal event type (%s) for object id (%s).', $event_type, $this->getObjectId()));
+			if(!PHPUNIT)
+			{
+				DataCache::getInstance()->getLog()->warning(sprintf('Got illegal event type (%s) for object id (%s).', $event_type, $this->getObjectId()));
+			}
 		}
 	}
 }

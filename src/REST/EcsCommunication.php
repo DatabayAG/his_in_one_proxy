@@ -46,7 +46,7 @@ class EcsCommunication
 				return true;
 			}
 		}catch(\Exception $e){
-			DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e));
+			DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e->getMessage()));
 		}
 		return false;
 	}
@@ -64,7 +64,7 @@ class EcsCommunication
 				return true;
 			}
 		}catch(\Exception $e){
-			DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e));
+			DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e->getMessage()));
 		}
 		return false;
 	}
@@ -82,7 +82,7 @@ class EcsCommunication
 				return true;
 			}
 		}catch(\Exception $e){
-			DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e));
+			DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e->getMessage()));
 		}
 		return false;
 	}
