@@ -34,9 +34,9 @@ class DataCache
 {
 
 
-	const STUDENT = 0;
-	const COURSE_ADMINISTRATOR = 2;
-	const TUTOR = 1;
+	const STUDENT = 1;
+	const COURSE_ADMINISTRATOR = 0;
+	const TUTOR = 2;
 
 	/**
 	 * @var ParallelGroupValuesContainer
