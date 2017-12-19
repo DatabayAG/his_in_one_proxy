@@ -47,7 +47,7 @@ class HisToEcsIdMapping
 
 	/**
 	 * @param $his_ids
-	 * @return mixed
+	 * @return string
 	 */
 	public static function getEcsIdFromHisId($his_ids)
 	{
