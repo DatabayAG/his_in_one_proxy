@@ -46,10 +46,35 @@ class HisToEcsIdMapping
 	}
 
 	/**
-	 * @param $his_id
+	 * @param $his_ids
 	 * @return mixed
 	 */
-	public static function getEcsIdFromHisId($his_id)
+	public static function getEcsIdFromHisId($his_ids)
+	{
+		$string_id = '';
+
+		if(strlen($his_ids) > 0)
+		{
+			$his_ids = preg_split('/,/', $his_ids);
+		}
+		if(count($his_ids) > 0)
+		{
+			foreach($his_ids as $his_id)
+			{
+				$string_id .= self::getHisIdFromMapping($his_id) . ',';
+			}
+			$string_id = rtrim($string_id, ',');
+		}
+		else
+		{
+			$string_id = self::getHisIdFromMapping($his_ids);
+		}
+		
+
+		return $string_id;
+	}
+	
+	protected static function getHisIdFromMapping($his_id)
 	{
 		if(array_key_exists($his_id, self::$mapping))
 		{
