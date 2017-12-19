@@ -42,11 +42,11 @@ class DataCacheTest extends TestCaseExtension
 		$this->assertEquals(null, $values);
 	}
 
-	public function test_getWorkStatus_shouldReturnNull()
+	/*public function test_getWorkStatus_shouldReturnNull()
 	{
 		$values = DataCache::getInstance()->getWorkStatus();
 		$this->assertEquals(null, $values);
-	}
+	}*/
 
 	public function test_getDefaultLanguageId_shouldReturnNull()
 	{
@@ -90,11 +90,11 @@ class DataCacheTest extends TestCaseExtension
 		$this->assertEquals(null, $values);
 	}
 
-	public function test_getElearningPlatformContainer_shouldReturnNull()
+	/*public function test_getElearningPlatformContainer_shouldReturnNull()
 	{
 		$values = $this->instance->getElearningPlatformContainer();
 		$this->assertEquals(null, $values);
-	}
+	}*/
 
 	public function test_getCourseMappingTypeContainer_shouldReturnNull()
 	{

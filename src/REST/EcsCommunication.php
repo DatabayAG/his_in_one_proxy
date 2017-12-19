@@ -27,7 +27,7 @@ class EcsCommunication
 	 */
 	function __construct($receiver)
 	{
-		$this->client = new GuzzleWrapper(GlobalSettings::getInstance()->getReceiverMemberships());
+		$this->client = new GuzzleWrapper($receiver);
 		$this->resources = new EcsResources();
 	}
 

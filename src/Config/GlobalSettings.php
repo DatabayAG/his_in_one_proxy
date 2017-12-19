@@ -115,11 +115,6 @@ class GlobalSettings
 	protected $debug;
 
 	/**
-	 * @var string
-	 */
-	protected $receiver_memberships;
-
-	/**
 	 * @var boolean
 	 */
 	protected $phpunit_with_coverage;
@@ -213,7 +208,6 @@ class GlobalSettings
 		$this->setEcsAuthId($this->config->get('ECS.auth_id'));
 		$this->setEcsPassword($this->config->get('ECS.password'));
 		$this->setValidateSsl($this->config->get('ECS.ssl_validation'));
-		$this->receiver_memberships = $this->config->get('ECS.receiver_memberships');
 
 		$this->setPathToQueue($this->config->get('path_to_queue'));
 		$this->setQueueTimer($this->config->get('queue_timer'));
@@ -545,14 +539,6 @@ class GlobalSettings
 	public function setDebug($debug)
 	{
 		$this->debug = $debug;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getReceiverMemberships()
-	{
-		return $this->receiver_memberships;
 	}
 
 	/**

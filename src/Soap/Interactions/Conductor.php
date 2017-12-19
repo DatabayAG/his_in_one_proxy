@@ -187,6 +187,7 @@ class Conductor
 		$unit_list->appendUnitId($unit_id);
 
 		$units = $this->startHandlingUnitList($unit_list, $cos_map, $cos_already);
+		print_r($units);
 		$this->finishHandlingUnits($units);
 	}
 
