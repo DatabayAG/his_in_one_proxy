@@ -118,7 +118,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($persons)
 		);
 		$nodes = $builder->getPersonPlanElements();
-		$expected = '[{"lectureID":44,"members":[{"personID":4,"role":2},{"personID":5,"role":0}]}]' ;
+		$expected = '[{"lectureID":44,"members":[{"personID":4,"role":0},{"personID":5,"role":1}]}]' ;
 
 		$this->assertEqualClearedString($expected,json_encode($nodes));
 	}

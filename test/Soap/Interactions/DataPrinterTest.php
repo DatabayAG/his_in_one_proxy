@@ -295,7 +295,7 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug: 	|* Person: Hulla, Sure, 23');
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString($msg, 'Debug: |* Person: 13423, 5, role: 2');
+		$this->assertEqualClearedString($msg, 'Debug: |* Person: 13423, 5, role: 0');
 	}
 	
 	public function test_printCatalogDetail_shouldPrintCatalogDetail()
