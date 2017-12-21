@@ -57,6 +57,8 @@ class ParsePlanElements extends SimpleXmlParser
 				}
 				if($this->isAttributeValid($value, 'defaulttext'))
 				{
+					//Todo: change this to a more dynamic approach
+					$plan_element->setShortText($value->defaulttext);
 					$plan_element->setDefaultText($value->defaulttext);
 				}
 				if($this->isAttributeValid($value, 'genderId'))
@@ -93,7 +95,7 @@ class ParsePlanElements extends SimpleXmlParser
 				}
 				if($this->isAttributeValid($value, 'shorttext'))
 				{
-					$plan_element->setShortText($value->shorttext);
+					#$plan_element->setShortText($value->shorttext);
 				}
 				if($this->isAttributeValid($value, 'termSegment'))
 				{
