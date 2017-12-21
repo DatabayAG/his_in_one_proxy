@@ -58,7 +58,6 @@ class Functions
 	 * @param      $function
 	 * @param      $comment
 	 * @param bool $debug
-	 * @throws \Exception
 	 */
 	protected static function appendFunction($id, $function, $comment, $debug = false)
 	{
