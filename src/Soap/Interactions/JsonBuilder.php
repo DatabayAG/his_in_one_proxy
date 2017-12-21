@@ -185,7 +185,7 @@ class JsonBuilder
 			$group->title			= DataCache::getInstance()
 												->getParallelGroupValues()
 												->getGroupValueById($element->getParallelGroupId())
-												->getLongText();
+												->getDefaultText();
 			$group->maxParticipants = $element->getAttendeeMaximum();
 			$group->hours			= $element->getHoursPerWeek();
 			$lecturer				= new \stdClass();
