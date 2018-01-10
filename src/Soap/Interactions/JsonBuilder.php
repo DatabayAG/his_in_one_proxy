@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Soap\Interactions;
 
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\CourseCatalogChild;
 use HisInOneProxy\DataModel\CourseCatalogLeaf;
 use HisInOneProxy\DataModel\ElearningCourseMapping;
@@ -96,7 +97,15 @@ class JsonBuilder
 		$row->study_courses			= $unit->getLid();
 		$row->termID				= '';
 		$row->lectureType			= $unit->getElementTypeId();
-		$row->title					= $unit->getLongText();
+		$plan_element_cont 			= $unit->getPlanElementContainer();
+		if(count($plan_element_cont) == 1)
+		{
+			$row->title					= $plan_element_cont[0]->getDefaultText();
+		}
+		else
+		{
+			$row->title					= $unit->getDefaultText();
+		}
 		$row->url					= '';
 	}
 
@@ -212,14 +221,21 @@ class JsonBuilder
 		foreach($persons as $element)
 		{
 			$person				= new \stdClass();
-			$person->personID	= $element->getPersonId();
-			#$person->personID	= DataCache::getInstance()->getPersonDetails($element->getPersonId());
+			//$person->personID	= $element->getPersonId();
+			$accounts			= DataCache::getInstance()->getAccountsForPersonId($element->getPersonId());
 			$person->role		= DataCache::STUDENT;
 			if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement'))
 			{
 				$person->role	= DataCache::COURSE_ADMINISTRATOR;
 			}
-			$person_element[] = $person;
+			if($accounts > 0)
+			{
+				foreach($accounts as $account)
+				{
+					$person->personID = $account->getUserName();
+					$person_element[] = $person;
+				}
+			}
 			$lecture = $element->getPlanElementId();
 		}
 
