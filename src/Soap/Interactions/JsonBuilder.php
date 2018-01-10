@@ -220,18 +220,19 @@ class JsonBuilder
 		$lecture = null;
 		foreach($persons as $element)
 		{
-			$person				= new \stdClass();
 			//$person->personID	= $element->getPersonId();
 			$accounts			= DataCache::getInstance()->getAccountsForPersonId($element->getPersonId());
-			$person->role		= DataCache::STUDENT;
-			if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement'))
-			{
-				$person->role	= DataCache::COURSE_ADMINISTRATOR;
-			}
+
 			if($accounts > 0)
 			{
 				foreach($accounts as $account)
 				{
+					$person				= new \stdClass();
+					$person->role		= DataCache::STUDENT;
+					if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement'))
+					{
+						$person->role	= DataCache::COURSE_ADMINISTRATOR;
+					}
 					$person->personID = $account->getUserName();
 					$person_element[] = $person;
 				}
