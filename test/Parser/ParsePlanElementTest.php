@@ -56,7 +56,7 @@ class ParsePlanElementTest extends TestCaseExtension
 		$this->assertEquals('10.01.2017', $plan->getRegisterBegin());
 		$this->assertEquals('22.01.2017', $plan->getRegisterEnd());
 		$this->assertEquals('1', $plan->getRotation());
-		$this->assertEquals('Def text', $plan->getShortText());
+		#$this->assertEquals('Def text',  $plan->getShortText());
 		$this->assertEquals('3', $plan->getTermSegment());
 		$this->assertEquals('4', $plan->getTermTypeValueId());
 		$this->assertEquals('12', $plan->getUnitId());

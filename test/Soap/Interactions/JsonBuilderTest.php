@@ -118,7 +118,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($persons)
 		);
 		$nodes = $builder->getPersonPlanElements();
-		$expected = '[{"lectureID":44,"members":[{"personID":4,"role":0},{"personID":5,"role":1}]}]' ;
+		$expected = '[{"lectureID":44,"members":[]}]' ;
 
 		$this->assertEqualClearedString($expected,json_encode($nodes));
 	}
@@ -344,6 +344,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$value = new \HisInOneProxy\DataModel\ParallelGroupValue();
 		$value->setId(1);
 		$value->setLongText('My group value.');
+		$value->setDefaultText('My group value.');
 		$container = new \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer();
 		$container->appendParallelGroupValue($value);
 		DataCache::getInstance()->setParallelGroupValues($container);
@@ -384,6 +385,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$container = array();
 		$unit = new \HisInOneProxy\DataModel\Unit();
 		$unit->setLongText('My long text.');
+		$unit->setDefaultText('My long text.');
 		$unit->setComment('My comment for this unit.');
 		$unit->setLid(4000);
 		$unit->setStatusId(2);
@@ -438,8 +440,8 @@ class JsonBuilderTest extends TestCaseExtension
 
 		$container = array();
 		$unit = new \HisInOneProxy\DataModel\Unit();
-		$unit->setLongText('My long text.');
 		$unit->setComment('My comment for this unit.');
+		$unit->setLongText('My long text.');
 		$unit->setLid(4000);
 		$unit->setStatusId(2);
 		$unit->setElementTypeId(1);
@@ -460,11 +462,12 @@ class JsonBuilderTest extends TestCaseExtension
 		$plan = new \HisInOneProxy\DataModel\PlanElement();
 		$plan->setId(3);
 		$plan->setParallelGroupId(1);
+		$plan->setDefaultText('My long text.');
 		$unit->appendPlanElement($plan);
 
 		$value = new \HisInOneProxy\DataModel\ParallelGroupValue();
 		$value->setId(1);
-		$value->setLongText('My group value.');
+		$value->setDefaultText('My group value.');
 		$container2 = new \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer();
 		$container2->appendParallelGroupValue($value);
 		DataCache::getInstance()->setParallelGroupValues($container2);
