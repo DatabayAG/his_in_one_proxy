@@ -223,7 +223,7 @@ class JsonBuilder
 			//$person->personID	= $element->getPersonId();
 			$accounts			= DataCache::getInstance()->getAccountsForPersonId($element->getPersonId());
 
-			if($accounts > 0)
+			if(count($accounts) > 0)
 			{
 				/**
 				 * @var \HisInOneProxy\DataModel\CompleteAccount $account
