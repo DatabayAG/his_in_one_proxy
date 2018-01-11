@@ -225,6 +225,9 @@ class JsonBuilder
 
 			if($accounts > 0)
 			{
+				/**
+				 * @var \HisInOneProxy\DataModel\CompleteAccount $account
+				 */
 				foreach($accounts as $account)
 				{
 					$person				= new \stdClass();
