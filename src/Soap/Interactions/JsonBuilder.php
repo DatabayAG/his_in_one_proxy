@@ -236,6 +236,14 @@ class JsonBuilder
 						$person->role	= DataCache::COURSE_ADMINISTRATOR;
 					}
 					$person->personID = $account->getUserName();
+					$person->personIDtype = 'ecs_loginUID';
+					// possible personIDtype values:
+					//   ecs_PersonalUniqueCode
+					//   ecs_ePPN
+					//   ecs_login
+					//   ecs_loginUID
+					//   ecs_uid
+					//   ecs_email
 					$person_element[] = $person;
 				}
 			}
