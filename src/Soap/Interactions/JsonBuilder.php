@@ -220,8 +220,7 @@ class JsonBuilder
 		$lecture = null;
 		foreach($persons as $element)
 		{
-			//$person->personID	= $element->getPersonId();
-			$accounts			= DataCache::getInstance()->getAccountsForPersonId($element->getPersonId());
+			$accounts = DataCache::getInstance()->getAccountsForPersonId($element->getPersonId());
 
 			if(count($accounts) > 0)
 			{
