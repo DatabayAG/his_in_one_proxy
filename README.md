@@ -32,13 +32,14 @@ If the Unittest with coverage segfaults remove the opcache extension!
 	},
 		"HIStoECSMapping": {
 			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS (MembershipID (mid) Community)"
-	},
+			Use "php cmd.php gx" to get the course Elearning Id from your HIS installation
 		"HIStoECSCourseMapping" : {
 			"COURSE_TYPE_ID_HIS" : "COURSE_TYPE_ID_ECS"
 			// 0 = No parallel groups ("base scenario") AND parallel group scenario 1, ie. just a course (see PDF)
 			// 1 = Parallel group scenario 2, ie. a course with groups
 			// 2 = Parallel group scenario 3, ie. a course for every group
 			// 3 = Parallel group scenario 4, ie. a course with groups for every group lecturer
+			Use "php cmd.php cm" to get the course Mapping Id from your HIS installation
 		},
 	"path_to_queue"          : "Path to queue from his_in_one_proxy",
 	"path_to_log"            : "Path to logfile from his_in_one_proxy",
