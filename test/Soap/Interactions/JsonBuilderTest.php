@@ -398,7 +398,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$mapping = array();
 		$e_learning = new \HisInOneProxy\DataModel\ElearningCourseMapping();
 		$e_learning->setELearningSystemId(1);
-		$e_learning->setCourseMappingTypeId(2);
+		$e_learning->setCourseMappingTypeId(22);
 		$e_learning->setYear(2017);
 		$mapping[] = $e_learning;
 		
@@ -411,7 +411,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$exp = '[{"workload":23,"lectureID":"4000","elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":2,"abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":1,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[]}]';
+		$exp = '[{"workload":23,"lectureID":"4000","elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":0,"abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":1,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[]}]';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 
@@ -480,7 +480,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 
-		$exp = '[{"workload":23,"lectureID":"3","elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":2,"abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":1,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":"Mygroupvalue.","maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
+		$exp = '[{"workload":23,"lectureID":"3","elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":1,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":"Mygroupvalue.","maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 }

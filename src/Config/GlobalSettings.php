@@ -5,6 +5,7 @@ namespace HisInOneProxy\Config;
 require_once __DIR__ . '/../Log/LogConfig.php';
 
 use HisInOneProxy\DataModel\Endpoint;
+use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\HisToEcsIdMapping;
 use HisInOneProxy\System\Utils;
 use Noodlehaus\Config;
@@ -52,6 +53,11 @@ class GlobalSettings
 	/**
 	 * @var string
 	 */
+	protected $person_id_type;
+
+	/**
+	 * @var string
+	 */
 	protected $ecs_auth_id;
 
 	/**
@@ -63,6 +69,11 @@ class GlobalSettings
 	 * @var array
 	 */
 	protected $his_to_ecs_system_id_mapping;
+
+	/**
+	 * @var array
+	 */
+	protected $his_to_ecs_system_course_id_mapping;
 
 	/**
 	 * @var string
@@ -196,6 +207,7 @@ class GlobalSettings
 		$this->setSoapCaching($this->config->get('HIS.soap_caching'));
 		$this->setActualTermId($this->config->get('HIS.actual_term_id'));
 		$this->setActualTermYear($this->config->get('HIS.actual_term_year'));
+		$this->setPersonIdType($this->config->get('HIS.person_id_type'));
 
 		$this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
 		$this->end_point = new Endpoint();
@@ -216,6 +228,7 @@ class GlobalSettings
 		$this->setDebug($this->config->get('debug'));
 
 		$this->his_to_ecs_system_id_mapping = new HisToEcsIdMapping($this->config->get('HIStoECSMapping'));
+		$this->his_to_ecs_system_course_id_mapping = new HisToEcsCourseIdMapping($this->config->get('HIStoECSCourseMapping'));
 		$this->setPhpunitWithCoverage($this->config->get('PHPUnit.coverage'));
 	}
 
@@ -261,6 +274,7 @@ class GlobalSettings
 			"HIS.endpoint.listener_port"     => $this->end_point->getPort(),
 			"HIS.endpoint.username"          => $this->end_point->getUserName(),
 			"HIS.endpoint.password"          => $this->end_point->getPassword(),
+			"HIS.person_id_type"             => $this->getPersonIdType(),
 			"HIS.soap_debug"                 => $this->isSoapDebug(),
 			"HIS.soap_caching"               => $this->isSoapCaching(),
 			"HIS.actual_term_id"             => $this->getActualTermId(),
@@ -604,5 +618,21 @@ class GlobalSettings
 	public function setActualTermYear($actual_term_year)
 	{
 		$this->actual_term_year = $actual_term_year;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPersonIdType()
+	{
+		return $this->person_id_type;
+	}
+
+	/**
+	 * @param string $person_id_type
+	 */
+	public function setPersonIdType($person_id_type)
+	{
+		$this->person_id_type = $person_id_type;
 	}
 }

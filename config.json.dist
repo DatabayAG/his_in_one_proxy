@@ -13,17 +13,20 @@
 			"listener_port"      : "",
 			"username"           : "",
 			"password"           : ""
-		}
+		},
+		"person_id_type" : "ecs_loginUID"
 	},
 	"ECS" : {
 		"auth_id"             : "",
 		"password"            : "",
 		"url"                 : "",
 		"ssl_validation"      : ""
-	},
+		},
 		"HIStoECSMapping": {
 			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS (MembershipID (mid) Community)"
-	},
+		},
+		"HIStoECSCourseMapping" : {
+		},
 	"path_to_queue"          : "",
 	"path_to_log"            : "",
 	"keep_elements_in_queue" : "",

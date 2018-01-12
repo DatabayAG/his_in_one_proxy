@@ -7,6 +7,7 @@ use HisInOneProxy\DataModel\CourseCatalogChild;
 use HisInOneProxy\DataModel\CourseCatalogLeaf;
 use HisInOneProxy\DataModel\ElearningCourseMapping;
 use HisInOneProxy\DataModel\ExamRelation;
+use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\OrgUnit;
 use HisInOneProxy\DataModel\PersonPlanElement;
 use HisInOneProxy\DataModel\Unit;
@@ -162,7 +163,7 @@ class JsonBuilder
 		{
 			$row->term_type		= $mapping[0]->getTermTypeValueId();
 			$row->term			= $mapping[0]->getYear();
-			$row->groupScenario	= $mapping[0]->getCourseMappingTypeId();
+			$row->groupScenario	=  HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($mapping[0]->getCourseMappingTypeId());
 
 			foreach($mapping as $map)
 			{
@@ -233,17 +234,11 @@ class JsonBuilder
 					$person->role		= DataCache::STUDENT;
 					if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement'))
 					{
-						$person->role	= DataCache::COURSE_ADMINISTRATOR;
+						$person->role = DataCache::COURSE_ADMINISTRATOR;
 					}
 					$person->personID = $account->getUserName();
-					$person->personIDtype = 'ecs_loginUID';
-					// possible personIDtype values:
-					//   ecs_PersonalUniqueCode
-					//   ecs_ePPN
-					//   ecs_login
-					//   ecs_loginUID
-					//   ecs_uid
-					//   ecs_email
+					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
+					
 					$person_element[] = $person;
 				}
 			}

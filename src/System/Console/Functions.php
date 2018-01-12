@@ -42,6 +42,7 @@ class Functions
 			self::appendFunction('go', 'getAllOrgunitAttributes', 'Gets all org unit attributes types.', true);
 			self::appendFunction('gs', 'getAllOrgUnitTypes', 'Gets all org unit types.', true);
 			self::appendFunction('gc', 'getAllPersonGroupCategories', 'Gets all person group types.', true);
+			self::appendFunction('cm', 'getAllCourseMappingTypes', 'Gets all course mapping types.', true);
 			self::appendFunction('dl', 'getDefaultLanguageId', 'Gets default language id.', true);
 			self::appendFunction('ct', 'getCurrentTerm', 'Gets current term.', true);
 			self::appendFunction('rs', 'readStudentWithCoursesOfStudyByPersonId', 'Read student with course of study by person id', true);

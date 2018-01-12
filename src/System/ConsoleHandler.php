@@ -108,6 +108,18 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	/**
+	 * 
+	 */
+	protected function getAllCourseMappingTypes()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllCourseMappingTypes($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
 	protected function getInstitutions()
 	{
 		$this->startTimer();
