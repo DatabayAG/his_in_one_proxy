@@ -232,7 +232,7 @@ class JsonBuilder
 				{
 					$person				= new \stdClass();
 					$person->role		= DataCache::STUDENT;
-					if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement'))
+					if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement') || is_a($element, 'HisInOneProxy\DataModel\PersonExternals'))
 					{
 						$person->role = DataCache::COURSE_ADMINISTRATOR;
 					}

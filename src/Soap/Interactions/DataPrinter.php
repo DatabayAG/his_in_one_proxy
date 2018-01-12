@@ -91,7 +91,7 @@ class DataPrinter
 		foreach($person_plan_element_container as $person)
 		{
 			$role = DataCache::STUDENT;
-			if(is_a($person, 'HisInOneProxy\DataModel\PersonPlanElement'))
+			if(is_a($person, 'HisInOneProxy\DataModel\PersonPlanElement') || is_a($person, 'HisInOneProxy\DataModel\PersonExternals'))
 			{
 				$role = DataCache::COURSE_ADMINISTRATOR;
 			}

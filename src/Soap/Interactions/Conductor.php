@@ -238,6 +238,7 @@ class Conductor
 		if($unit->getId() != null)
 		{
 			$services->getCourseInterfaceService()->getCombinationForCourse($unit, $term_type_value_id, $year);
+
 			if($unit->getSizeOfCourseMappingContainer() >= 1 && $unit->getCourseMappingContainer()[0]->getELearningSystemId() != null)
 			{
 				$this->log->debug(sprintf('Read modules for unit %s.', $unit->getId()));

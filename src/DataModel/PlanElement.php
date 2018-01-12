@@ -77,6 +77,11 @@ class PlanElement
 	protected $person_plan_element_container = array();
 
 	/**
+	 * @var PersonExternals[]
+	 */
+	protected $person_externals_container = array();
+
+	/**
 	 * @var EventDate[]
 	 */
 	protected $event_date_container = array();
@@ -284,6 +289,29 @@ class PlanElement
 			is_a($person_plan_element, '\HisInOneProxy\DataModel\ExamRelation'))
 		{
 			$this->person_plan_element_container[] = $person_plan_element;
+		}
+		else
+		{
+			throw new Exceptions\InvalidPersonPlanElement();
+		}
+	}
+
+	/**
+	 * @return PersonExternals[]
+	 */
+	public function getPersonExternalsContainer()
+	{
+		return $this->person_externals_container;
+	}
+
+	/**
+	 * @param \HisInOneProxy\DataModel\PersonExternals
+	 */
+	public function appendPersonExternalsElement($person_external)
+	{
+		if(is_a($person_external, '\HisInOneProxy\DataModel\PersonExternals'))
+		{
+			$this->person_plan_element_container[] = $person_external;
 		}
 		else
 		{

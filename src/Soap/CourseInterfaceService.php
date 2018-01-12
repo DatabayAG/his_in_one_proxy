@@ -192,6 +192,29 @@ class CourseInterfaceService extends SoapService
 
 	/**
 	 * @param $unit_id
+	 * @param $plan_element
+	 * @param $term_type_id
+	 * @param $term_year
+	 * @return null
+	 */
+	public function getPersonExternalForCourse($unit_id, $plan_element, $term_type_id, $term_year)
+	{
+		$params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $term_year));
+		try{
+			$response = $this->soap_course_interface->__soapCall('getPersonExternalForCourse', $params);
+			$person_plan_elements	= new Parser\ParsePersonExternals($this->log);
+			$person_plan_elements->parse($response, $plan_element);
+			return $plan_element;
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $unit_id
 	 * @param $term_type_id
 	 * @param $year
 	 * @return bool
@@ -238,6 +261,7 @@ class CourseInterfaceService extends SoapService
 					$catalog_element_ids = DataCache::getInstance()->getCourseCatalogService()->getCourseCatalogElementIdsForPlanElement($plan_element->getId());
 					print_r($catalog_element_ids);
 					$this->getPersonResponsibleForPlanElement($plan_element->getId(), $plan_element);
+					$this->getPersonExternalForCourse($unit->getId(), $plan_element, $term_type_id, $term_year);
 					$this->getPersonResponsibleForUnit($unit->getId(), $plan_element, $term_type_id, $term_year);
 					$this->readPersonExamPlanEnrollmentsForUnit($plan_element, $unit->getId(), $term_type_id, $term_year);
 				}
