@@ -27,7 +27,6 @@ class Functions
 			self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');
 			self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
 			self::appendFunction('se', 'startHisListener', 'Starts his listener which listens to the system events from his server.');
-			self::appendFunction('gx', 'getAllExternalSystems', 'Gets all external system types.');
 			self::appendFunction('cm', 'getAllCourseMappingTypes', 'Gets all course mapping types.');
 			self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
 			self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
