@@ -156,7 +156,7 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 		|-  Org-Lid: () Id: ()', $msg);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString('Debug: 		|* Mapping: eSystemId:  (), MappingId: 2', $msg);
+		$this->assertEqualClearedString('Debug: 		|* Mapping: eSystemId:  (), MappingId: 1', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
@@ -164,7 +164,7 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 		|-  Org-Lid: () Id: ()', $msg);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString( 'Debug: 		|* Mapping: eSystemId:  (), MappingId: 2', $msg);
+		$this->assertEqualClearedString( 'Debug: 		|* Mapping: eSystemId:  (), MappingId: 1', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
