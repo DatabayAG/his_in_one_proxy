@@ -34,6 +34,7 @@ If the Unittest with coverage segfaults remove the opcache extension!
 			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS (MembershipID (mid) Community)"
 	},
 		"HIStoECSCourseMapping" : {
+			"COURSE_TYPE_ID_HIS" : "COURSE_TYPE_ID_ECS"
 			// 0 = No parallel groups ("base scenario") AND parallel group scenario 1, ie. just a course (see PDF)
 			// 1 = Parallel group scenario 2, ie. a course with groups
 			// 2 = Parallel group scenario 3, ie. a course for every group

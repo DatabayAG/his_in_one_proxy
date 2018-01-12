@@ -26,6 +26,7 @@
 			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS (MembershipID (mid) Community)"
 		},
 		"HIStoECSCourseMapping" : {
+			"COURSE_TYPE_ID_HIS" : "COURSE_TYPE_ID_ECS"
 		},
 	"path_to_queue"          : "",
 	"path_to_log"            : "",
