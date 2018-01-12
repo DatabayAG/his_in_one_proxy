@@ -101,11 +101,11 @@ class JsonBuilder
 		$plan_element_cont 			= $unit->getPlanElementContainer();
 		if(count($plan_element_cont) == 1)
 		{
-			$row->title					= $plan_element_cont[0]->getDefaultText();
+			$row->title				= $plan_element_cont[0]->getDefaultText();
 		}
 		else
 		{
-			$row->title					= $unit->getDefaultText();
+			$row->title				= $unit->getDefaultText();
 		}
 		$row->url					= '';
 	}
@@ -163,7 +163,7 @@ class JsonBuilder
 		{
 			$row->term_type		= $mapping[0]->getTermTypeValueId();
 			$row->term			= $mapping[0]->getYear();
-			$row->groupScenario	=  HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($mapping[0]->getCourseMappingTypeId());
+			$row->groupScenario	= HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($mapping[0]->getCourseMappingTypeId());
 
 			foreach($mapping as $map)
 			{
@@ -250,7 +250,7 @@ class JsonBuilder
 			$element						= new \stdClass();
 			$element->lectureID 			= $lecture;
 			$element->members				= $person_element;
-			self::$person_plan_elements[] = $element;
+			self::$person_plan_elements[]	= $element;
 		}
 
 	}

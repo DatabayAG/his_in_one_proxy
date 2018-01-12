@@ -197,8 +197,8 @@ class DataPrinter
 		{
 			$this->log->debug(sprintf($tabs . '|* Mapping: eSystemId: %s (%s), MappingId: %s', 
 															$courseMapping->getELearningSystemId(), 
-															DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText($courseMapping->getELearningSystemId()), 
-															$courseMapping->getCourseMappingTypeId()));
+															DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText($courseMapping->getELearningSystemId()),
+															DataModel\HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($courseMapping->getCourseMappingTypeId())));
 		}
 	}
 
