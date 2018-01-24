@@ -38,7 +38,11 @@ class ParsePlanElements extends SimpleXmlParser
 		}
 		return false;
 	}
-	
+
+	/**
+	 * @param $value
+	 * @param DataModel\Unit $unit
+	 */
 	protected function parseElement($value, $unit)
 	{
 		if($this->isAttributeValid($value, 'id'))
