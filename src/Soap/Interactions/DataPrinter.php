@@ -54,9 +54,9 @@ class DataPrinter
 	public function printPlanElementContainer($plan_element_container, $unit, $level)
 	{
 		$tabs = $this->buildTabs($level);
-		$this->printCourseMapping($unit->getCourseMappingContainer(), $level);
 		foreach($plan_element_container as $plan_element)
 		{
+			$this->printCourseMapping($unit->getCourseMappingContainer(), $level);
 			$this->log->debug(sprintf($tabs . '|* PlanElement: %s, %s, %s', $plan_element->getShortText(), $plan_element->getLongText(), $plan_element->getId()));
 			$this->log->debug(sprintf($tabs ."\t|- ". 'Attendee Min: %s, Attendee Max:%s', $plan_element->getAttendeeMinimum(), $plan_element->getAttendeeMaximum()));
 			$this->log->debug(sprintf($tabs ."\t|- ". 'Cancelled: %s, Credits:%s', $plan_element->getCancelled(), $plan_element->getCredits()));
