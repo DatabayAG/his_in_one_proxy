@@ -1,5 +1,4 @@
 	<planelements>
-
 			<id>234</id>
 			<objGuid>324-234-23-4325</objGuid>
 			<lockVersion>2</lockVersion>
@@ -26,5 +25,4 @@
 			<planningPreference></planningPreference>
 			<personPlanelements></personPlanelements>
 			<plannedDates></plannedDates>
-
 	</planelements>

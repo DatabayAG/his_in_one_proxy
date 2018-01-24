@@ -32,13 +32,14 @@ class ParsePlanElementTest extends TestCaseExtension
 		$this->assertEquals('Warning: No id given for PlanElement, skipping!', $msg);
 	}
 
-	public function test_simpleParsePlanElements_shouldReturnValue()
+	public function test_simpleParsePlanElement_shouldReturnValue()
 	{
 		$xml    = file_get_contents('test/fixtures/plan_element.xml');
 		$parser =  new Parser\ParsePlanElements($this->log);
 		$unit = new \HisInOneProxy\DataModel\Unit();
 		$parser->parse(simplexml_load_string('<res>'.$xml.'</res>'), $unit);
 		$plan = $unit->getPlanElementContainer()[0];
+
 		$this->assertEquals('234', $plan->getId());
 		$this->assertEquals('324-234-23-4325', $plan->getObjGuid());
 		$this->assertEquals('2', $plan->getLockVersion());
@@ -61,6 +62,17 @@ class ParsePlanElementTest extends TestCaseExtension
 		$this->assertEquals('4', $plan->getTermTypeValueId());
 		$this->assertEquals('12', $plan->getUnitId());
 		$this->assertEquals('2017', $plan->getYear());
+	}
+
+	public function test_simpleParsePlanElements_shouldReturnValue()
+	{
+		$xml    = file_get_contents('test/fixtures/plan_elements.xml');
+		$parser =  new Parser\ParsePlanElements($this->log);
+		$unit = new \HisInOneProxy\DataModel\Unit();
+		$parser->parse(simplexml_load_string('<res>'.$xml.'</res>'), $unit);
+
+		$this->assertEquals('221321334', $unit->getPlanElementContainer()[0]->getId());
+		$this->assertEquals('23561', $unit->getPlanElementContainer()[1]->getId());
 	}
 
 
