@@ -10,6 +10,7 @@ use HisInOneProxy\DataModel\ExamRelation;
 use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\OrgUnit;
 use HisInOneProxy\DataModel\PersonPlanElement;
+use HisInOneProxy\DataModel\PlanElement;
 use HisInOneProxy\DataModel\Unit;
 
 /**
@@ -207,19 +208,20 @@ class JsonBuilder
 			$row->hoursPerWeek		= $element->getHoursPerWeek();
 			$row->recommendedReading =$element->getLiterature();
 			$row->prerequisites		= $element->getRecommendedRequirement();
-			self::buildPersonContainer($element->getPersonPlanElementContainer());
+			self::buildPersonContainer($element, $unit->getId());
 		}
 		return $row;
 	}
 
 	/**
-	 * @param PersonPlanElement[] | ExamRelation[] $persons
+	 * @param $plan_element PlanElement
+	 * @param $unit_id
 	 */
-	protected static function buildPersonContainer($persons)
+	protected static function buildPersonContainer($plan_element, $unit_id)
 	{
 		$person_element = array();
 		$lecture = null;
-		foreach($persons as $element)
+		foreach($plan_element->getPersonPlanElementContainer() as $element)
 		{
 			$accounts = DataCache::getInstance()->getAccountsForPersonId($element->getPersonId());
 
@@ -248,8 +250,10 @@ class JsonBuilder
 		if($lecture != null)
 		{
 			$element						= new \stdClass();
-			$element->lectureID 			= $lecture;
+			$element->lectureID 			= $unit_id;
 			$element->members				= $person_element;
+			$element->groups				= new \stdClass();
+			$element->groups->num			= $plan_element->getId();
 			self::$person_plan_elements[]	= $element;
 		}
 
