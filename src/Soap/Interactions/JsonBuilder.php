@@ -242,9 +242,10 @@ class JsonBuilder
 					}
 					$person->personID = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
 					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
-					$person->groups				= new \stdClass();
-					$person->groups->num		= $plan_element->getId();
-					$person->groups->role		= $role;
+					$groups				= new \stdClass();
+					$groups->num		= $plan_element->getId();
+					$groups->role		= $role;
+					$person->groups		= array($groups);
 					
 					$person_element[] = $person;
 				}
