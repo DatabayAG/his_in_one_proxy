@@ -23,6 +23,7 @@ If the Unittest with coverage segfaults remove the opcache extension!
 		//   ecs_loginUID
 		//   ecs_uid
 		//   ecs_email
+		"login_suffix" : "" // String which should be appended to login name
 	},
 	"ECS" : {
 		"auth_id"            : "AUTH id for ecs server",

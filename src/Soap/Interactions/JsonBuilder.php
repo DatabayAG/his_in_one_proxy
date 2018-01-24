@@ -236,7 +236,7 @@ class JsonBuilder
 					{
 						$person->role = DataCache::COURSE_ADMINISTRATOR;
 					}
-					$person->personID = $account->getUserName();
+					$person->personID = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
 					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
 					
 					$person_element[] = $person;

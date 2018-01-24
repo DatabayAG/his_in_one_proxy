@@ -144,6 +144,11 @@ class GlobalSettings
 	 * @var int
 	 */
 	protected $actual_term_year;
+
+	/**
+	 * @var string
+	 */
+	protected $login_suffix;
 	
 	/**
 	 * @param $name
@@ -208,6 +213,7 @@ class GlobalSettings
 		$this->setActualTermId($this->config->get('HIS.actual_term_id'));
 		$this->setActualTermYear($this->config->get('HIS.actual_term_year'));
 		$this->setPersonIdType($this->config->get('HIS.person_id_type'));
+		$this->setLoginSuffix($this->config->get('HIS.login_suffix'));
 
 		$this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
 		$this->end_point = new Endpoint();
@@ -275,6 +281,7 @@ class GlobalSettings
 			"HIS.endpoint.username"          => $this->end_point->getUserName(),
 			"HIS.endpoint.password"          => $this->end_point->getPassword(),
 			"HIS.person_id_type"             => $this->getPersonIdType(),
+			"HIS.login_suffix"               => $this->getLoginSuffix(),
 			"HIS.soap_debug"                 => $this->isSoapDebug(),
 			"HIS.soap_caching"               => $this->isSoapCaching(),
 			"HIS.actual_term_id"             => $this->getActualTermId(),
@@ -634,5 +641,21 @@ class GlobalSettings
 	public function setPersonIdType($person_id_type)
 	{
 		$this->person_id_type = $person_id_type;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getLoginSuffix()
+	{
+		return $this->login_suffix;
+	}
+
+	/**
+	 * @param string $login_suffix
+	 */
+	public function setLoginSuffix($login_suffix)
+	{
+		$this->login_suffix = $login_suffix;
 	}
 }

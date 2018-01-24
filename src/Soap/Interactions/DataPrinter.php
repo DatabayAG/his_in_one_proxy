@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Soap\Interactions;
 
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel;
 use HisInOneProxy\Log\Log;
 
@@ -170,7 +171,7 @@ class DataPrinter
 				$this->log->debug(sprintf($tabs . '|* Account: Id (%s), PersonId (%s), Username (%s), Ldap (%s), AuthId (%s), AuthInfo (%s), ExternalId (%s)',
 					$account->getid(),
 					$account->getPersonId(),
-					$account->getUserName(),
+					$account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix(),
 					$account->isLdapAccount(),
 					$account->getAccountAuthId(),
 					$account->getAuthInfo(),

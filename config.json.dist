@@ -14,7 +14,8 @@
 			"username"           : "",
 			"password"           : ""
 		},
-		"person_id_type" : "ecs_loginUID"
+		"person_id_type" : "ecs_loginUID",
+		"login_suffix" : ""
 	},
 	"ECS" : {
 		"auth_id"             : "",

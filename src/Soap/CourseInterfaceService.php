@@ -251,7 +251,6 @@ class CourseInterfaceService extends SoapService
 			$response					= $this->soap_course_interface->__soapCall('readPlanElementsForUnit', $params);
 			$course_of_study_id_list	= new Parser\ParsePlanElements(new Log\Log());
 			$plan_element_found			= $course_of_study_id_list->parse($response, $unit);
-
 			if($plan_element_found)
 			{
 				foreach($unit->getPlanElementContainer() as $plan_element)
@@ -259,7 +258,6 @@ class CourseInterfaceService extends SoapService
 					//get a room
 					
 					$catalog_element_ids = DataCache::getInstance()->getCourseCatalogService()->getCourseCatalogElementIdsForPlanElement($plan_element->getId());
-					print_r($catalog_element_ids);
 					$this->getPersonResponsibleForPlanElement($plan_element->getId(), $plan_element);
 					$this->getPersonExternalForCourse($unit->getId(), $plan_element, $term_type_id, $term_year);
 					$this->getPersonResponsibleForUnit($unit->getId(), $plan_element, $term_type_id, $term_year);
