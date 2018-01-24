@@ -33,6 +33,7 @@ class AccountService extends SoapService
 			$response = $this->soap_service_router->getSoapClientAccountService()->__soapCall('searchAccountForPerson61', $params);
 			$parser = new ParseAccounts($this->log);
 			$account_list = $parser->parse($response);
+			var_dump($response);
 			return $account_list;
 		}
 		catch(\SoapFault $exception)
