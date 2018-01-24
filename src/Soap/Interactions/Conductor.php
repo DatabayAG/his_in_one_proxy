@@ -367,11 +367,13 @@ class Conductor
 		foreach($courses as $course)
 		{
 			$queue->push(QueueConstants::SERVICE_QUEUE, json_encode($course), QueueConstants::PUBLISH_COURSE_TO_ECS, $course->elearning_sys_string);
+			$e_learning_id=  $course->elearning_sys_string;
 		}
 		$persons = $builder::getPersonPlanElements();
+		
 		foreach($persons as $plan_element)
 		{
-			$e_learning_id = $builder->getElearningSystemStringFromPlanElementId($plan_element->lectureID);
+			//$e_learning_id = $builder->getElearningSystemStringFromPlanElementId($plan_element->lectureID);
 			$queue->push(QueueConstants::SERVICE_QUEUE, json_encode($plan_element), QueueConstants::PUBLISH_MEMBERS_TO_ECS, $e_learning_id);
 		}
 	}
