@@ -234,12 +234,17 @@ class JsonBuilder
 				{
 					$person				= new \stdClass();
 					$person->role		= DataCache::STUDENT;
+					$role				= DataCache::STUDENT;
 					if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement') || is_a($element, 'HisInOneProxy\DataModel\PersonExternals'))
 					{
 						$person->role = DataCache::COURSE_ADMINISTRATOR;
+						$role = DataCache::COURSE_ADMINISTRATOR;
 					}
 					$person->personID = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
 					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
+					$person->groups				= new \stdClass();
+					$person->groups->num		= $plan_element->getId();
+					$person->groups->role		= $role;
 					
 					$person_element[] = $person;
 				}
@@ -252,8 +257,6 @@ class JsonBuilder
 			$element						= new \stdClass();
 			$element->lectureID 			= $unit_id;
 			$element->members				= $person_element;
-			$element->groups				= new \stdClass();
-			$element->groups->num			= $plan_element->getId();
 			self::$person_plan_elements[]	= $element;
 		}
 
