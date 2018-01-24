@@ -267,7 +267,7 @@ class JsonBuilder
 			$org_unit			= new \stdClass();
 			$org_unit->id		= $org->getLid();
 			$org_unit->title	= $org->getDefaultText();
-			$org_units[] = $org_unit;
+			$org_units[]		= $org_unit;
 		}
 		return $org_units;
 	}
