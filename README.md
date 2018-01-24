@@ -50,3 +50,8 @@ If the Unittest with coverage segfaults remove the opcache extension!
 	"PHPUnit"                : {
 			"coverage" : "PHPUnit coverage when running unittest (true/false)"
 	}
+
+Ilias Course Mapping => const PARALLEL_ONE_COURSE = 0;
+                        const PARALLEL_GROUPS_IN_COURSE = 1;
+                        const PARALLEL_ALL_COURSES = 2;
+                        const PARALLEL_COURSES_FOR_LECTURERS = 3;
