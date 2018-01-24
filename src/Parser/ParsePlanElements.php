@@ -18,7 +18,7 @@ class ParsePlanElements extends SimpleXmlParser
 	 */
 	public function parse($xml, $unit)
 	{
-
+		var_dump($xml);
 		foreach($xml->planelements as $value)
 		{
 			$plan_element = new DataModel\PlanElement();
