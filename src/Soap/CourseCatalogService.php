@@ -161,6 +161,7 @@ class CourseCatalogService extends SoapService
 		$params = array(array('planelementId' => $plan_element_id));
 		try{
 			$response	= $this->soap_client_course_catalog->__soapCall('getCourseCatalogElementIdsForPlanelement', $params);
+			var_dump($response);
 			$parser		= new Parser\ParseCourseCatalogElementIdList($this->log);
 			$children	= $parser->parse($response);
 			return $children;
