@@ -42,8 +42,7 @@ class DataPrinter
 		{
 			$this->log->debug(sprintf($tabs . '|* Unit: %s, %s', $unit->getDefaultText(), $unit->getLongText()));
 			$this->log->debug(sprintf($tabs . "\t|- %s, %s, %s, %s", $unit->getId(), $unit->getLid(), $unit->getStatusId(), $unit->getElementNr()));
-			$this->printCourseMapping($unit->getCourseMappingContainer(), $level + 2);
-			$this->printPlanElementContainer($unit->getPlanElementContainer(), $level + 2);
+			$this->printPlanElementContainer($unit->getPlanElementContainer(), $unit,$level + 2);
 			$this->printOrgUnitForUnit($unit->getOrgUnitsContainer(), $level + 2);
 		}
 	}
@@ -52,9 +51,10 @@ class DataPrinter
 	 * @param DataModel\PlanElement[] $plan_element_container
 	 * @param $level
 	 */
-	public function printPlanElementContainer($plan_element_container, $level)
+	public function printPlanElementContainer($plan_element_container, $unit, $level)
 	{
 		$tabs = $this->buildTabs($level);
+		$this->printCourseMapping($unit->getCourseMappingContainer(), $level);
 		foreach($plan_element_container as $plan_element)
 		{
 			$this->log->debug(sprintf($tabs . '|* PlanElement: %s, %s, %s', $plan_element->getShortText(), $plan_element->getLongText(), $plan_element->getId()));
