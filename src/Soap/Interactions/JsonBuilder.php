@@ -52,7 +52,7 @@ class JsonBuilder
 				$row->workload			= $course->getWorkload();
 			}
 
-			$row->lectureID				= $plan_element_id;
+			$row->lectureID				= $unit->getId();
 			$row						= self::appendMapping($mapping, $row);
 			self::addMappingToArray($plan_element_id, $row->elearning_sys_string);
 			self::addSimpleTypes($row, $unit);
