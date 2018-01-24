@@ -22,11 +22,10 @@ class ParsePlanElements extends SimpleXmlParser
 		{
 			if(is_array($value))
 			{
-				foreach($value as $sub_value)
+				foreach($value as $planElement)
 				{
-					$this->parseElement($sub_value, $unit);
+					$this->parseElement($planElement, $unit);
 				}
-				$this->parseElement($value, $unit);
 			}
 			else
 			{
