@@ -251,6 +251,7 @@ class CourseInterfaceService extends SoapService
 			$response					= $this->soap_course_interface->__soapCall('readPlanElementsForUnit', $params);
 			$course_of_study_id_list	= new Parser\ParsePlanElements(new Log\Log());
 			$plan_element_found			= $course_of_study_id_list->parse($response, $unit);
+			var_dump($response);
 			if($plan_element_found)
 			{
 				foreach($unit->getPlanElementContainer() as $plan_element)
