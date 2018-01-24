@@ -21,6 +21,7 @@ class ParsePlanElements extends SimpleXmlParser
 		var_dump($xml);
 		foreach($xml->planelements as $value)
 		{
+			var_dump($value);
 			$plan_element = new DataModel\PlanElement();
 
 			if($this->isAttributeValid($value, 'id'))
