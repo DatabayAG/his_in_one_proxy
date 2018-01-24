@@ -20,9 +20,9 @@ class ParsePlanElements extends SimpleXmlParser
 	{
 		foreach($xml->planelements as $value)
 		{
-			if(is_array($xml))
+			if(is_array($value))
 			{
-				foreach($xml as $sub_value)
+				foreach($value as $sub_value)
 				{
 					$this->parseElement($sub_value, $unit);
 				}
