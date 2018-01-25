@@ -30,6 +30,11 @@ class JsonBuilder
 	public static $mapping_e_learning_id_to_lecture_id = array();
 
 	/**
+	 * @var array 
+	 */
+	protected static $course_user_groups_map = array();
+
+	/**
 	 * @param Unit[] $units
 	 * @return array
 	 */
@@ -123,6 +128,57 @@ class JsonBuilder
 		$row->organisationalUnits	= self::addOrgUnits($unit->getOrgUnitsContainer());
 		$row->targetAudiences		= self::addTargetAudience($unit);
 		self::appendGroups($unit, $row, $course_id);
+		self::buildMembers();
+	}
+
+	/**
+	 * 
+	 */
+	public static function buildMembers()
+	{
+		$skip = false;
+		$element = null;
+		foreach(self::$course_user_groups_map as $course_id => $course)
+		{
+			$element = new \stdClass();
+			foreach($course as $user_name => $user)
+			{
+				$person          = new \stdClass();
+				$group_container = array();
+				foreach($user as $group_id => $group)
+				{
+					if(in_array($group['blocked'], GlobalSettings::getInstance()->getBlockedIds()))
+					{
+						DataCache::getInstance()->getLog()->debug(sprintf('Account with name (%s) will be ignored, since it is not active, blocked id(%s)!', $account->getUserName(), $account->getBlockedId()));
+						$skip = true;
+						continue;
+					}
+	
+					$person->personID     = $user_name . GlobalSettings::getInstance()->getLoginSuffix();
+					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
+					$group_element        = new \stdClass();
+					$group_element->num   = $group_id;
+					$group_element->role  = $group['role'];
+					$group_container[] = $group_element;
+				}
+				$person->groups   = $group_container;
+				if( ! $skip)
+				{
+					$person_element[] = $person;
+				}
+
+			}
+			if($course_id != null)
+			{
+				$element->lectureID 			= $course_id;
+				$element->members				= $person_element;
+			}
+		}
+		if($element !== null)
+		{
+			self::$person_plan_elements = $element;
+		}
+
 	}
 	
 	/**
@@ -189,13 +245,9 @@ class JsonBuilder
 	protected static function appendGroups($unit, $row, $course_id)
 	{
 		$row->groups  = array();
-		$group_ids = array();
+		$collection  = array();
 		$plan_element = $unit->getPlanElementContainer();
 
-		foreach($plan_element as $element)
-		{
-			$group_ids[] = $element->getId();
-		}
 		foreach($plan_element as $element)
 		{
 			$group					= new \stdClass();
@@ -215,7 +267,7 @@ class JsonBuilder
 			$row->hoursPerWeek		= $element->getHoursPerWeek();
 			$row->recommendedReading= $element->getLiterature();
 			$row->prerequisites		= $element->getRecommendedRequirement();
-			self::buildPersonContainer($element, $unit->getId(), $course_id, $group_ids);
+			self::analysePersonContainer($element, $unit->getId(), $course_id);
 		}
 		return $row;
 	}
@@ -225,9 +277,8 @@ class JsonBuilder
 	 * @param $unit_id
 	 * @param $course_id
 	 */
-	protected static function buildPersonContainer($plan_element, $unit_id, $course_id, $group_ids)
+	protected static function analysePersonContainer($plan_element, $unit_id, $course_id)
 	{
-		$person_element = array();
 		$lecture = null;
 		foreach($plan_element->getPersonPlanElementContainer() as $element)
 		{
@@ -249,35 +300,11 @@ class JsonBuilder
 					}
 					$person->role		= $role;
 
-					$person->personID = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
-					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
-					$group_container = array();
-					foreach($group_ids as $group)
-					{
-						$group_element			= new \stdClass();
-						$group_element->num		= $group;
-						$group_element->role	= $role;
-						$group_container[] = $group_element;
-					}
-
-					$person->groups = $group_container;
-					if(in_array($account->getBlockedId(), GlobalSettings::getInstance()->getBlockedIds()))
-					{
-						DataCache::getInstance()->getLog()->debug(sprintf('Account with name (%s) will be ignored, since it is not active, blocked id(%s)!', $account->getUserName(), $account->getBlockedId()));
-						continue;
-					}
-					$person_element[] = $person;
+					$usr_name = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
+					self::$course_user_groups_map[$course_id][$usr_name][$element->getPlanElementId()] = array('role' => $role, 'blocked' => $account->getBlockedId());
 				}
 			}
-			$lecture = $element->getPlanElementId();
-		}
-
-		if($lecture != null)
-		{
-			$element						= new \stdClass();
-			$element->lectureID 			= $course_id;
-			$element->members				= $person_element;
-			self::$person_plan_elements[]	= $element;
+			
 		}
 	}
 

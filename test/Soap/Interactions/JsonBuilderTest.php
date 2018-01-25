@@ -98,7 +98,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$this->assertEqualClearedString($expected,json_encode($nodes));
 	}
 
-	public function test_buildPersonContainer_shouldCreateElement()
+	public function test_analysePersonContainer_shouldAnalyseElement()
 	{
 
 		$persons = array();
@@ -113,11 +113,12 @@ class JsonBuilderTest extends TestCaseExtension
 
 		$this->callMethod(
 			$builder,
-			'buildPersonContainer',
-			array($plan_element, 1, 1, array())
+			'analysePersonContainer',
+			array($plan_element, 1, 1)
 		);
+		$builder::buildMembers();
 		$nodes = $builder->getPersonPlanElements();
-		$expected = '[{"lectureID":1,"members":[]}]' ;
+		$expected = '[]' ;
 
 		$this->assertEqualClearedString($expected,json_encode($nodes));
 	}
@@ -568,7 +569,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 		$nodes = $builder->getPersonPlanElements();
-		$exp = '[{"lectureID":1232,"members":[{"role":0,"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0},{"num":9,"role":0},{"num":4,"role":0},{"num":13,"role":0}]}]}]';
+		$exp = '{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0},{"num":9,"role":0}]}]}';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 
@@ -601,11 +602,12 @@ class JsonBuilderTest extends TestCaseExtension
 		$person_plan = new \HisInOneProxy\DataModel\PersonPlanElement();
 		$person_plan->setPersonId(22);
 		$person_plan->setPlanElementId(3);
+		$plan->appendPersonPlanElement($person_plan);
 		$account = new \HisInOneProxy\DataModel\CompleteAccount();
 		$account->setBlockedId(1);
 		$account->setUserName('x2345');
 		$account->setId(22);
-		$plan->appendPersonPlanElement($person_plan);
+
 
 		DataCache::getInstance()->addPersonDetailsToCache($person);
 		DataCache::getInstance()->addAccountsForPerson($person, array($account));
@@ -614,6 +616,10 @@ class JsonBuilderTest extends TestCaseExtension
 		$plan->setId(9);
 		$plan->setParallelGroupId(56);
 		$unit->appendPlanElement($plan);
+		$person_plan = new \HisInOneProxy\DataModel\PersonPlanElement();
+		$person_plan->setPersonId(22);
+		$person_plan->setPlanElementId(9);
+		$plan->appendPersonPlanElement($person_plan);
 		$plan2 = new \HisInOneProxy\DataModel\PlanElement();
 		$plan2->setId(4);
 		$plan2->setParallelGroupId(56);
