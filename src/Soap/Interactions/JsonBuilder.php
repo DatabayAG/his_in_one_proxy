@@ -259,7 +259,7 @@ class JsonBuilder
 						$group_element->role	= $role;
 						$group_container[] = $group_element;
 					}
-					
+
 					$person->groups = $group_container;
 					if(in_array($account->getBlockedId(), GlobalSettings::getInstance()->getBlockedIds()))
 					{

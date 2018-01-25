@@ -579,14 +579,7 @@ class JsonBuilderTest extends TestCaseExtension
 	{
 		$container = array();
 		$unit      = new \HisInOneProxy\DataModel\Unit();
-		$unit->setComment('My comment for this unit.');
-		$unit->setLongText('My long text.');
-		$unit->setLid(4000);
-		$unit->setStatusId(2);
-		$unit->setElementTypeId(19);
-		$unit->setShortText('My short text');
 		$cour = new \HisInOneProxy\DataModel\Course();
-		$cour->setWorkload(23);
 		$cour->setId(1232);
 		$unit->appendCourse($cour);
 
@@ -602,7 +595,6 @@ class JsonBuilderTest extends TestCaseExtension
 		$plan = new \HisInOneProxy\DataModel\PlanElement();
 		$plan->setId(3);
 		$plan->setParallelGroupId(56);
-		$plan->setDefaultText('My long text.');
 		$unit->appendPlanElement($plan);
 		$person = new \HisInOneProxy\DataModel\Person();
 		$person->setId(22);
@@ -621,17 +613,14 @@ class JsonBuilderTest extends TestCaseExtension
 		$plan = new \HisInOneProxy\DataModel\PlanElement();
 		$plan->setId(9);
 		$plan->setParallelGroupId(56);
-		$plan->setDefaultText('My long text 1.');
 		$unit->appendPlanElement($plan);
 		$plan2 = new \HisInOneProxy\DataModel\PlanElement();
 		$plan2->setId(4);
 		$plan2->setParallelGroupId(56);
-		$plan2->setDefaultText('My long text 2.');
 		$unit->appendPlanElement($plan2);
 		$plan3 = new \HisInOneProxy\DataModel\PlanElement();
 		$plan3->setId(13);
 		$plan3->setParallelGroupId(56);
-		$plan3->setDefaultText('My long text.');
 		$unit->appendPlanElement($plan3);
 
 		$value = new \HisInOneProxy\DataModel\ParallelGroupValue();
