@@ -189,8 +189,13 @@ class JsonBuilder
 	protected static function appendGroups($unit, $row, $course_id)
 	{
 		$row->groups  = array();
+		$group_ids = array();
 		$plan_element = $unit->getPlanElementContainer();
 
+		foreach($plan_element as $element)
+		{
+			$group_ids[] = $element->getId();
+		}
 		foreach($plan_element as $element)
 		{
 			$group					= new \stdClass();
@@ -208,9 +213,9 @@ class JsonBuilder
 			$group->datesAndVenues	= '';
 			$row->groups[]			= $group;
 			$row->hoursPerWeek		= $element->getHoursPerWeek();
-			$row->recommendedReading =$element->getLiterature();
+			$row->recommendedReading= $element->getLiterature();
 			$row->prerequisites		= $element->getRecommendedRequirement();
-			self::buildPersonContainer($element, $unit->getId(), $course_id);
+			self::buildPersonContainer($element, $unit->getId(), $course_id, $group_ids);
 		}
 		return $row;
 	}
@@ -220,7 +225,7 @@ class JsonBuilder
 	 * @param $unit_id
 	 * @param $course_id
 	 */
-	protected static function buildPersonContainer($plan_element, $unit_id, $course_id)
+	protected static function buildPersonContainer($plan_element, $unit_id, $course_id, $group_ids)
 	{
 		$person_element = array();
 		$lecture = null;
@@ -246,10 +251,16 @@ class JsonBuilder
 
 					$person->personID = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
 					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
-					$groups				= new \stdClass();
-					$groups->num		= $plan_element->getId();
-					$groups->role		= $role;
-					$person->groups		= array($groups);
+					$group_container = array();
+					foreach($group_ids as $group)
+					{
+						$group_element			= new \stdClass();
+						$group_element->num		= $group;
+						$group_element->role	= $role;
+						$group_container[] = $group_element;
+					}
+					
+					$person->groups = $group_container;
 					if(in_array($account->getBlockedId(), GlobalSettings::getInstance()->getBlockedIds()))
 					{
 						DataCache::getInstance()->getLog()->debug(sprintf('Account with name (%s) will be ignored, since it is not active, blocked id(%s)!', $account->getUserName(), $account->getBlockedId()));
