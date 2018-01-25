@@ -106,10 +106,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$person->setPersonId(4);
 		$person->setPlanElementId(44);
 		$persons[] = $person;
-		$person_two = new \HisInOneProxy\DataModel\ExamRelation();
-		$person_two->setPersonId(5);
-		$person_two->setPlanElementId(44);
-		$persons[] = $person_two;
+
 		$builder = new Interactions\JsonBuilder();
 		$plan_element = new \HisInOneProxy\DataModel\PlanElement();
 		$plan_element->appendPersonPlanElement($person);
