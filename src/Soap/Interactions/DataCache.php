@@ -3,6 +3,7 @@
 namespace HisInOneProxy\Soap\Interactions;
 
 use HisInOneProxy\DataModel\ChildRelation;
+use HisInOneProxy\DataModel\CompleteAccount;
 use HisInOneProxy\DataModel\Container\CourseMappingTypeContainer;
 use HisInOneProxy\DataModel\Container\ElearningPlatformContainer;
 use HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer;
@@ -565,7 +566,7 @@ class DataCache
 	/**
 	 * @param EAddressType[] $e_address_types
 	 */
-	protected function setEAddressTypes($e_address_types)
+	public function setEAddressTypes($e_address_types)
 	{
 		self::$e_address_type_list = $e_address_types;
 	}
@@ -596,6 +597,17 @@ class DataCache
 		return self::$person_cache;
 	}
 
+	/**
+	 * @param Person $person
+	 */
+	public function addPersonDetailsToCache($person)
+	{
+		if($person instanceof Person)
+		{
+			self::$person_cache[trim($person->getId())] = $person;
+		}
+	}
+
 	public function readAccountsForPersons()
 	{
 		foreach(self::$person_cache as $person)
@@ -604,6 +616,18 @@ class DataCache
 			{
 				$this->accounts[trim($person->getId())] = self::getAccountService()->searchAccountForPerson61($person->getId());
 			}
+		}
+	}
+
+	/**
+	 * @param $person
+	 * @param $accounts
+	 */
+	public function addAccountsForPerson($person, $accounts)
+	{
+		if($person instanceof Person)
+		{
+			$this->accounts[trim($person->getId())] = $accounts;
 		}
 	}
 

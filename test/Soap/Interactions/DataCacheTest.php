@@ -187,8 +187,12 @@ class DataCacheTest extends TestCaseExtension
 
 	public function test_resolveEAddressTypeById_shouldNull()
 	{
-		$instance = $this->instance->resolveEAddressTypeById(34234123);
-		$this->assertNull($instance);
+		$e_address = new \HisInOneProxy\DataModel\EAddressType();
+		$e_address->setId(1);
+		$e_address->setDefaultText('Text');
+		$this->instance->setEAddressTypes(array( "1" => $e_address));
+		$instance = $this->instance->resolveEAddressTypeById(1);
+		$this->assertNotNull($instance);
 	}
 
 	public function test_appendPersonIdToCache_shouldReturnInstance()

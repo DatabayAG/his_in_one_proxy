@@ -484,4 +484,164 @@ class JsonBuilderTest extends TestCaseExtension
 		$exp = '[{"workload":23,"lectureID":null,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":1,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":null,"maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
+
+
+	public function test_convertComplexObject_shouldReturnArray()
+	{
+
+		$builder = new Interactions\JsonBuilder();
+
+		$container = array();
+		$unit = new \HisInOneProxy\DataModel\Unit();
+		$unit->setComment('My comment for this unit.');
+		$unit->setLongText('My long text.');
+		$unit->setLid(4000);
+		$unit->setStatusId(2);
+		$unit->setElementTypeId(1);
+		$unit->setShortText('My short text');
+		$cour = new \HisInOneProxy\DataModel\Course();
+		$cour->setWorkload(23);
+		$cour->setId(1232);
+		$unit->appendCourse($cour);
+
+		$mapping = array();
+		$e_learning = new \HisInOneProxy\DataModel\ElearningCourseMapping();
+		$e_learning->setELearningSystemId(1);
+		$e_learning->setCourseMappingTypeId(2);
+		$e_learning->setYear(2017);
+		$mapping[] = $e_learning;
+
+		$unit->appendCourseMappingContainer($mapping);
+
+		$plan = new \HisInOneProxy\DataModel\PlanElement();
+		$plan->setId(3);
+		$plan->setParallelGroupId(1);
+		$plan->setDefaultText('My long text.');
+		$unit->appendPlanElement($plan);
+		$person = new \HisInOneProxy\DataModel\PersonPlanElement();
+		$person->setPersonId(22);
+
+		$account = new \HisInOneProxy\DataModel\CompleteAccount();
+		$account->setBlockedId(1);
+		$account->setUserName('x2345');
+		$account->setId(22);
+		$plan->appendPersonPlanElement($person);
+		
+		$plan2 = new \HisInOneProxy\DataModel\PlanElement();
+		$plan2->setId(4);
+		$plan2->setParallelGroupId(1);
+		$plan2->setDefaultText('My long text 2.');
+		$unit->appendPlanElement($plan2);
+
+		$value = new \HisInOneProxy\DataModel\ParallelGroupValue();
+		$value->setId(1);
+		$value->setDefaultText('My group value.');
+		$container2 = new \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer();
+		$container2->appendParallelGroupValue($value);
+		DataCache::getInstance()->setParallelGroupValues($container2);
+
+		$row = new stdClass();
+		$container[] = $unit;
+		$nodes = $this->callMethod(
+			$builder,
+			'convertUnitsToArray',
+			array($container, $row)
+		);
+
+		$exp = '[{"workload":23,"lectureID":1232,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":1,"title":null,"url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":null,"maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""},{"id":4,"title":null,"maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
+		$this->assertEqualClearedString($exp, json_encode($nodes));
+	}
+
+	public function test_convertComplexMembersObject_shouldReturnArray()
+	{
+
+		$builder = new Interactions\JsonBuilder();
+
+		list($container, $unit) = $this->initializeUnitObject();
+		$builder::resetPersonPlanElement();
+		$row = new stdClass();
+		$container[] = $unit;
+
+		$this->callMethod(
+			$builder,
+			'convertUnitsToArray',
+			array($container, $row)
+		);
+		$nodes = $builder->getPersonPlanElements();
+		$exp = '[{"lectureID":1232,"members":[{"role":0,"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0}]}]}]';
+		$this->assertEqualClearedString($exp, json_encode($nodes));
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function initializeUnitObject()
+	{
+		$container = array();
+		$unit      = new \HisInOneProxy\DataModel\Unit();
+		$unit->setComment('My comment for this unit.');
+		$unit->setLongText('My long text.');
+		$unit->setLid(4000);
+		$unit->setStatusId(2);
+		$unit->setElementTypeId(19);
+		$unit->setShortText('My short text');
+		$cour = new \HisInOneProxy\DataModel\Course();
+		$cour->setWorkload(23);
+		$cour->setId(1232);
+		$unit->appendCourse($cour);
+
+		$mapping    = array();
+		$e_learning = new \HisInOneProxy\DataModel\ElearningCourseMapping();
+		$e_learning->setELearningSystemId(1);
+		$e_learning->setCourseMappingTypeId(2);
+		$e_learning->setYear(2017);
+		$mapping[] = $e_learning;
+
+		$unit->appendCourseMappingContainer($mapping);
+
+		$plan = new \HisInOneProxy\DataModel\PlanElement();
+		$plan->setId(3);
+		$plan->setParallelGroupId(56);
+		$plan->setDefaultText('My long text.');
+		$unit->appendPlanElement($plan);
+		$person = new \HisInOneProxy\DataModel\Person();
+		$person->setId(22);
+		$person_plan = new \HisInOneProxy\DataModel\PersonPlanElement();
+		$person_plan->setPersonId(22);
+		$person_plan->setPlanElementId(3);
+		$account = new \HisInOneProxy\DataModel\CompleteAccount();
+		$account->setBlockedId(1);
+		$account->setUserName('x2345');
+		$account->setId(22);
+		$plan->appendPersonPlanElement($person_plan);
+
+		DataCache::getInstance()->addPersonDetailsToCache($person);
+		DataCache::getInstance()->addAccountsForPerson($person, array($account));
+
+		$plan = new \HisInOneProxy\DataModel\PlanElement();
+		$plan->setId(9);
+		$plan->setParallelGroupId(56);
+		$plan->setDefaultText('My long text 1.');
+		$unit->appendPlanElement($plan);
+		$plan2 = new \HisInOneProxy\DataModel\PlanElement();
+		$plan2->setId(4);
+		$plan2->setParallelGroupId(56);
+		$plan2->setDefaultText('My long text 2.');
+		$unit->appendPlanElement($plan2);
+		$plan3 = new \HisInOneProxy\DataModel\PlanElement();
+		$plan3->setId(13);
+		$plan3->setParallelGroupId(56);
+		$plan3->setDefaultText('My long text.');
+		$unit->appendPlanElement($plan3);
+
+		$value = new \HisInOneProxy\DataModel\ParallelGroupValue();
+		$value->setId(56);
+		$value->setDefaultText('My group value.');
+		$container2 = new \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer();
+		$container2->appendParallelGroupValue($value);
+		DataCache::getInstance()->setParallelGroupValues($container2);
+
+		return array($container, $unit);
+	}
+
 }

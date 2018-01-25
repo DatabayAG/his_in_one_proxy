@@ -681,4 +681,36 @@ class GlobalSettings
 	{
 		$this->blocked_ids = $blocked_ids;
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getHisToEcsSystemIdMapping()
+	{
+		return $this->his_to_ecs_system_id_mapping;
+	}
+
+	/**
+	 * @param array $his_to_ecs_system_id_mapping
+	 */
+	public function setHisToEcsSystemIdMapping($his_to_ecs_system_id_mapping)
+	{
+		$this->his_to_ecs_system_id_mapping = $his_to_ecs_system_id_mapping;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getHisToEcsSystemCourseIdMapping()
+	{
+		return $this->his_to_ecs_system_course_id_mapping;
+	}
+
+	/**
+	 * @param array $his_to_ecs_system_course_id_mapping
+	 */
+	public function setHisToEcsSystemCourseIdMapping($his_to_ecs_system_course_id_mapping)
+	{
+		$this->his_to_ecs_system_course_id_mapping = $his_to_ecs_system_course_id_mapping;
+	}
 }

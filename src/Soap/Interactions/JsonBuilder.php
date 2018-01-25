@@ -235,14 +235,15 @@ class JsonBuilder
 				 */
 				foreach($accounts as $account)
 				{
+
 					$person				= new \stdClass();
-					$person->role		= DataCache::STUDENT;
 					$role				= DataCache::STUDENT;
 					if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement') || is_a($element, 'HisInOneProxy\DataModel\PersonExternals'))
 					{
-						$person->role = DataCache::COURSE_ADMINISTRATOR;
 						$role = DataCache::COURSE_ADMINISTRATOR;
 					}
+					$person->role		= $role;
+
 					$person->personID = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
 					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
 					$groups				= new \stdClass();
@@ -267,7 +268,6 @@ class JsonBuilder
 			$element->members				= $person_element;
 			self::$person_plan_elements[]	= $element;
 		}
-
 	}
 
 	/**
@@ -361,6 +361,14 @@ class JsonBuilder
 	public static function getPersonPlanElements()
 	{
 		return self::$person_plan_elements;
+	}
+
+	/**
+	 * 
+	 */
+	public static function resetPersonPlanElement()
+	{
+		self::$person_plan_elements = array();
 	}
 
 	/**
