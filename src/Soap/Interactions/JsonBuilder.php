@@ -249,7 +249,11 @@ class JsonBuilder
 					$groups->num		= $plan_element->getId();
 					$groups->role		= $role;
 					$person->groups		= array($groups);
-					
+					if(in_array($account->getBlockedId(), GlobalSettings::getInstance()->getBlockedIds()))
+					{
+						DataCache::getInstance()->getLog()->debug(sprintf('Account with name (%s) will be ignored, since it is not active, blocked id(%s)!', $account->getUserName(), $account->getBlockedId()));
+						continue;
+					}
 					$person_element[] = $person;
 				}
 			}

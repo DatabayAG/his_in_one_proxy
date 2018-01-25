@@ -404,6 +404,33 @@ class ValueService extends SoapService
 
 	/**
 	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Container\WorkStatusContainer|null
+	 */
+	public function getAllBlockeds($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllBlockeds', $params);
+
+			if(isset($response->listOfBlockeds))
+			{
+				print_r($response);
+			}
+			else
+			{
+				$this->log->error('No list of blocked ids found in response!');
+			}
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * @param $lang
 	 * @param $soap_function
 	 * @param $list_attribute
 	 * @param $attribute

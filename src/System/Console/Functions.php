@@ -24,6 +24,7 @@ class Functions
 			self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
 			self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
 			self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.');
+			self::appendFunction('gb', 'getAllBlockeds', 'Gets all blocked id states.');
 			self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');
 			self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
 			self::appendFunction('se', 'startHisListener', 'Starts his listener which listens to the system events from his server.');

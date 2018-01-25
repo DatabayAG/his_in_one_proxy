@@ -15,7 +15,8 @@
 			"password"           : ""
 		},
 		"person_id_type" : "ecs_loginUID",
-		"login_suffix" : ""
+		"login_suffix" : "",
+		"blocked_ids" : []
 	},
 	"ECS" : {
 		"auth_id"             : "",

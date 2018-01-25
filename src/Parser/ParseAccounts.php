@@ -78,6 +78,10 @@ class ParseAccounts extends SimpleXmlParser
 		{
 			$account->setPurposeId($xml->purposeId);
 		}
+		if($this->isAttributeValid($xml, 'blockedId'))
+		{
+			$account->setBlockedId($xml->blockedId);
+		}
 		return $account;
 	}
 }

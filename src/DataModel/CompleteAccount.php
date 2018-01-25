@@ -58,6 +58,11 @@ class CompleteAccount
 	protected $org_unit_lid;
 
 	/**
+	 * @var int
+	 */
+	protected $blocked_id;
+
+	/**
 	 * @return string
 	 */
 	public function getPersonId()
@@ -199,5 +204,21 @@ class CompleteAccount
 	public function setOrgUnitLid($org_unit_lid)
 	{
 		$this->org_unit_lid = $org_unit_lid;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getBlockedId()
+	{
+		return $this->blocked_id;
+	}
+
+	/**
+	 * @param int $blocked_id
+	 */
+	public function setBlockedId($blocked_id)
+	{
+		$this->blocked_id = $blocked_id;
 	}
 }

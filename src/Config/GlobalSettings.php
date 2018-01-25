@@ -149,6 +149,11 @@ class GlobalSettings
 	 * @var string
 	 */
 	protected $login_suffix;
+
+	/**
+	 * @var array
+	 */
+	protected $blocked_ids = array();
 	
 	/**
 	 * @param $name
@@ -214,6 +219,7 @@ class GlobalSettings
 		$this->setActualTermYear($this->config->get('HIS.actual_term_year'));
 		$this->setPersonIdType($this->config->get('HIS.person_id_type'));
 		$this->setLoginSuffix($this->config->get('HIS.login_suffix'));
+		$this->setBlockedIds($this->config->get('HIS.blocked_ids'));
 
 		$this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
 		$this->end_point = new Endpoint();
@@ -286,6 +292,7 @@ class GlobalSettings
 			"HIS.soap_caching"               => $this->isSoapCaching(),
 			"HIS.actual_term_id"             => $this->getActualTermId(),
 			"HIS.actual_term_year"           => $this->getActualTermYear(),
+			"HIS.blocked_ids     "           => $this->getBlockedIds(),
 			"ECS.auth_id"                    => $this->getEcsAuthId(),
 			"ECS.password"                   => $this->getEcsPassword(),
 			"ECS.url"                        => $this->getEcsServerUrl(),
@@ -657,5 +664,21 @@ class GlobalSettings
 	public function setLoginSuffix($login_suffix)
 	{
 		$this->login_suffix = $login_suffix;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getBlockedIds()
+	{
+		return $this->blocked_ids;
+	}
+
+	/**
+	 * @param array $blocked_ids
+	 */
+	public function setBlockedIds($blocked_ids)
+	{
+		$this->blocked_ids = $blocked_ids;
 	}
 }

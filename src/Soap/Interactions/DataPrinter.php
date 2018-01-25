@@ -168,10 +168,11 @@ class DataPrinter
 			foreach($account_list as $account)
 			{
 				/** @var $account DataModel\CompleteAccount */
-				$this->log->debug(sprintf($tabs . '|* Account: Id (%s), PersonId (%s), Username (%s), Ldap (%s), AuthId (%s), AuthInfo (%s), ExternalId (%s)',
+				$this->log->debug(sprintf($tabs . '|* Account: Id (%s), PersonId (%s), Username (%s), BlockedId(%s), Ldap (%s), AuthId (%s), AuthInfo (%s), ExternalId (%s)',
 					$account->getid(),
 					$account->getPersonId(),
 					$account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix(),
+					$account->getBlockedId(),
 					$account->isLdapAccount(),
 					$account->getAccountAuthId(),
 					$account->getAuthInfo(),
@@ -179,6 +180,12 @@ class DataPrinter
 					$account->getPurposeId(),
 					DataCache::getInstance()->resolvePurposeTypeById($account->getPurposeId())
 				));
+
+				if(in_array($account->getBlockedId(), GlobalSettings::getInstance()->getBlockedIds()))
+				{
+					$this->log->debug(sprintf($tabs . "\n" . '|* Account will be ignored, since it is not active!'));
+				}
+
 				$this->log->debug(sprintf($tabs . "\n" . '|* Purpose: %s (%s)',
 					DataCache::getInstance()->resolvePurposeTypeById($account->getPurposeId()),
 					$account->getPurposeId()

@@ -134,6 +134,14 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	protected function getAllBlockeds()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		DataCache::getInstance()->getValueService()->getAllBlockeds($lng);
+		$this->endTimer();
+	}
+
 	protected function startHisListener()
 	{
 		$this->startTimer();
