@@ -53,11 +53,11 @@ class JsonBuilder
 				$row->workload			= $course->getWorkload();
 			}
 
-			$row->lectureID				= $unit->getId();
+			$row->lectureID				= $course->getId();
 			$row						= self::appendMapping($mapping, $row);
 			self::addMappingToArray($plan_element_id, $row->elearning_sys_string);
 			self::addSimpleTypes($row, $unit);
-			self::addComplexTypes($row, $unit);
+			self::addComplexTypes($row, $unit, $course->getId());
 
 			$array[] = $row;
 		}
@@ -114,14 +114,15 @@ class JsonBuilder
 	/**
 	 * @param $row
 	 * @param Unit $unit
+	 * @param $course_id
 	 */
-	protected static function addComplexTypes($row, $unit)
+	protected static function addComplexTypes($row, $unit, $course_id)
 	{
 		$row->allocations			= self::addAllocations($unit);
 		$row->degreeProgrammes		= self::addDegreeProgrammes($unit);
 		$row->organisationalUnits	= self::addOrgUnits($unit->getOrgUnitsContainer());
 		$row->targetAudiences		= self::addTargetAudience($unit);
-		self::appendGroups($unit, $row);
+		self::appendGroups($unit, $row, $course_id);
 	}
 	
 	/**
@@ -182,9 +183,10 @@ class JsonBuilder
 	/**
 	 * @param Unit $unit
 	 * @param $row
+	 * @param $course_id
 	 * @return mixed
 	 */
-	protected static function appendGroups($unit, $row)
+	protected static function appendGroups($unit, $row, $course_id)
 	{
 		$row->groups  = array();
 		$plan_element = $unit->getPlanElementContainer();
@@ -208,7 +210,7 @@ class JsonBuilder
 			$row->hoursPerWeek		= $element->getHoursPerWeek();
 			$row->recommendedReading =$element->getLiterature();
 			$row->prerequisites		= $element->getRecommendedRequirement();
-			self::buildPersonContainer($element, $unit->getId());
+			self::buildPersonContainer($element, $unit->getId(), $course_id);
 		}
 		return $row;
 	}
@@ -216,8 +218,9 @@ class JsonBuilder
 	/**
 	 * @param $plan_element PlanElement
 	 * @param $unit_id
+	 * @param $course_id
 	 */
-	protected static function buildPersonContainer($plan_element, $unit_id)
+	protected static function buildPersonContainer($plan_element, $unit_id, $course_id)
 	{
 		$person_element = array();
 		$lecture = null;
@@ -256,7 +259,7 @@ class JsonBuilder
 		if($lecture != null)
 		{
 			$element						= new \stdClass();
-			$element->lectureID 			= $unit_id;
+			$element->lectureID 			= $course_id;
 			$element->members				= $person_element;
 			self::$person_plan_elements[]	= $element;
 		}
