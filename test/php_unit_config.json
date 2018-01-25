@@ -11,7 +11,10 @@
 			"listener_port"      : "8080",
 			"username"           : "user",
 			"password"           : "pass"
-		}
+		},
+		"person_id_type" : "",
+		"login_suffix" : "",
+		"blocked_ids" : []
 	},
 	"ECS" : {
 		"auth_id"            : "",

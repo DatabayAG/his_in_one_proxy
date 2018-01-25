@@ -156,15 +156,11 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 		|-  Org-Lid: () Id: ()', $msg);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString('Debug: 		|* Mapping: eSystemId:  (), MappingId: 1', $msg);
-		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: |* Unit: , ', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 		|-  Org-Lid: () Id: ()', $msg);
-		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString( 'Debug: 		|* Mapping: eSystemId:  (), MappingId: 1', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
@@ -234,7 +230,7 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug: |* Purpose: Unittest (2)');
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString($msg, 'Debug: |* Account: Id (1), PersonId (43), Username (holla), Ldap (2), AuthId (), AuthInfo (232), ExternalId (4)');
+		$this->assertEqualClearedString($msg, 'Debug: |* Account: Id (1), PersonId (43), Username (holla), BlockedId(), Ldap (2), AuthId (), AuthInfo (232), ExternalId (4)');
 	}
 
 	public function test_printPerson_shouldPrintPerson()
@@ -350,7 +346,7 @@ class DataPrinterTest extends TestCaseExtension
 		$plan->setHoursPerWeek(40);
 		$plan->setParallelGroupId(1);
 
-		$this->instance->printPlanElementContainer(array($plan), 0);
+		$this->instance->printPlanElementContainer(array($plan), new \HisInOneProxy\DataModel\Unit(), 0);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug: 	|- Hours: 40, ParallelGroupId:1 => LongTest');
 		$msg = array_pop($this->collectedMessages);
