@@ -608,7 +608,6 @@ class JsonBuilderTest extends TestCaseExtension
 		$account->setUserName('x2345');
 		$account->setId(22);
 
-
 		DataCache::getInstance()->addPersonDetailsToCache($person);
 		DataCache::getInstance()->addAccountsForPerson($person, array($account));
 
