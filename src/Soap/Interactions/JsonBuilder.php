@@ -136,8 +136,9 @@ class JsonBuilder
 	 */
 	public static function buildMembers()
 	{
-		$skip = false;
-		$element = null;
+		$skip			= false;
+		$element		= null;
+		$person_element	= null;
 		foreach(self::$course_user_groups_map as $course_id => $course)
 		{
 			$element = new \stdClass();
@@ -159,19 +160,19 @@ class JsonBuilder
 					$group_element        = new \stdClass();
 					$group_element->num   = $group_id;
 					$group_element->role  = $group['role'];
-					$group_container[] = $group_element;
+					$group_container[]    = $group_element;
 				}
 				$person->groups   = $group_container;
 				if( ! $skip)
 				{
 					$person_element[] = $person;
 				}
-
 			}
-			if($course_id != null)
+
+			if($course_id !== null && $person_element !== null)
 			{
-				$element->lectureID 			= $course_id;
-				$element->members				= $person_element;
+				$element->lectureID = $course_id;
+				$element->members	= $person_element;
 			}
 		}
 		if($element !== null)
@@ -304,7 +305,6 @@ class JsonBuilder
 					self::$course_user_groups_map[$course_id][$usr_name][$element->getPlanElementId()] = array('role' => $role, 'blocked' => $account->getBlockedId());
 				}
 			}
-			
 		}
 	}
 

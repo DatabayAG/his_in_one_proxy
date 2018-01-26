@@ -368,8 +368,8 @@ class Conductor
 		{
 			$queue->push(QueueConstants::SERVICE_QUEUE, json_encode($course), QueueConstants::PUBLISH_COURSE_TO_ECS, $course->elearning_sys_string);
 		}
+
 		$persons = $builder::getPersonPlanElements();
-		
 		foreach($persons as $plan_element)
 		{
 			$e_learning_id = $builder->getElearningSystemStringFromPlanElementId($plan_element->lectureID);
