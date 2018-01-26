@@ -572,6 +572,43 @@ class JsonBuilderTest extends TestCaseExtension
 		$exp = '{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0},{"num":9,"role":0},{"num":4,"role":0}]}]}';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
+	
+	public function test_convertComplexMultiMembersObject_shouldReturnArray()
+	{
+
+		$builder = new Interactions\JsonBuilder();
+
+		list($container, $unit) = $this->initializeUnitObject();
+		$builder::resetPersonPlanElement();
+		$row = new stdClass();
+
+		$plan = new \HisInOneProxy\DataModel\PlanElement();
+		$plan->setId(3);
+		$plan->setParallelGroupId(56);
+		$unit->appendPlanElement($plan);
+		$person = new \HisInOneProxy\DataModel\Person();
+		$person->setId(32);
+		$person_plan = new \HisInOneProxy\DataModel\ExamRelation();
+		$person_plan->setPersonId(32);
+		$person_plan->setPlanElementId(3);
+		$plan->appendPersonPlanElement($person_plan);
+		$account = new \HisInOneProxy\DataModel\CompleteAccount();
+		$account->setBlockedId(1);
+		$account->setUserName('y1234');
+		$account->setId(32);
+
+		DataCache::getInstance()->addPersonDetailsToCache($person);
+		DataCache::getInstance()->addAccountsForPerson($person, array($account));
+		$container[] = $unit;
+		$this->callMethod(
+			$builder,
+			'convertUnitsToArray',
+			array($container, $row)
+		);
+		$nodes = $builder->getPersonPlanElements();
+		$exp = '{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0},{"num":9,"role":0},{"num":4,"role":0}]},{"personID":"y1234","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":1}]}]}';
+		$this->assertEqualClearedString($exp, json_encode($nodes));
+	}
 
 	/**
 	 * @return array
