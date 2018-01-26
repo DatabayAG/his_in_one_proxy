@@ -569,7 +569,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 		$nodes = $builder->getPersonPlanElements();
-		$exp = '{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0},{"num":9,"role":0}]}]}';
+		$exp = '{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0},{"num":9,"role":0},{"num":4,"role":0}]}]}';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 
@@ -624,6 +624,10 @@ class JsonBuilderTest extends TestCaseExtension
 		$plan2->setParallelGroupId(56);
 		$unit->appendPlanElement($plan2);
 		$plan3 = new \HisInOneProxy\DataModel\PlanElement();
+		$person_plan = new \HisInOneProxy\DataModel\PersonPlanElement();
+		$person_plan->setPersonId(22);
+		$person_plan->setPlanElementId(4);
+		$plan->appendPersonPlanElement($person_plan);
 		$plan3->setId(13);
 		$plan3->setParallelGroupId(56);
 		$unit->appendPlanElement($plan3);
