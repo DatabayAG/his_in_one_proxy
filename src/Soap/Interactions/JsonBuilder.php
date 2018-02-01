@@ -161,7 +161,7 @@ class JsonBuilder
 					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
 					$person->role		  = $user['role'];
 					$group_element        = new \stdClass();
-					$group_element->num   = $group_id;
+					$group_element->id    = $group_id;
 					$group_element->role  = $group['role'];
 					$group_container[]    = $group_element;
 				}
