@@ -370,10 +370,11 @@ class Conductor
 		}
 
 		$persons = $builder::getPersonPlanElements();
-		foreach($persons as $plan_element)
+		print_r($persons);
+		foreach($persons as $lecture_id => $plan_elements)
 		{
-			$e_learning_id = $builder->getElearningSystemStringFromPlanElementId($plan_element->lectureID);
-			$queue->push(QueueConstants::SERVICE_QUEUE, json_encode($plan_element), QueueConstants::PUBLISH_MEMBERS_TO_ECS, $e_learning_id);
+			$e_learning_id = $builder->getElearningSystemStringFromPlanElementId($lecture_id);
+			$queue->push(QueueConstants::SERVICE_QUEUE, json_encode($plan_elements), QueueConstants::PUBLISH_MEMBERS_TO_ECS, $e_learning_id);
 		}
 	}
 

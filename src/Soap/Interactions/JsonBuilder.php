@@ -60,7 +60,7 @@ class JsonBuilder
 
 			$row->lectureID				= $course->getId();
 			$row						= self::appendMapping($mapping, $row);
-			self::addMappingToArray($plan_element_id, $row->elearning_sys_string);
+			self::addMappingToArray($course->getId(), $row->elearning_sys_string);
 			self::addSimpleTypes($row, $unit);
 			self::addComplexTypes($row, $unit, $course->getId());
 
@@ -138,14 +138,16 @@ class JsonBuilder
 	{
 		$skip			= false;
 		$element		= null;
-		$person_element	= null;
+
 		foreach(self::$course_user_groups_map as $course_id => $course)
 		{
-			$element = new \stdClass();
+			$person_element  = null;
 			foreach($course as $user_name => $user)
 			{
+				$element         = new \stdClass();
 				$person          = new \stdClass();
 				$group_container = array();
+
 				foreach($user as $group_id => $group)
 				{
 					if(in_array($group['blocked'], GlobalSettings::getInstance()->getBlockedIds()))
@@ -174,12 +176,14 @@ class JsonBuilder
 				$element->lectureID = $course_id;
 				$element->members	= $person_element;
 			}
-		}
-		if($element !== null)
-		{
-			self::$person_plan_elements = $element;
+
+			if($element !== null)
+			{
+				self::$person_plan_elements[$course_id] = $element;
+			}
 		}
 
+	$a= 0;
 	}
 	
 	/**
