@@ -147,6 +147,7 @@ class JsonBuilder
 				$element         = new \stdClass();
 				$person          = new \stdClass();
 				$group_container = array();
+				$user = current($user);
 
 				foreach($user as $group_id => $group)
 				{
@@ -159,6 +160,7 @@ class JsonBuilder
 	
 					$person->personID     = $user_name . GlobalSettings::getInstance()->getLoginSuffix();
 					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
+					$person->role		  = $user['role'];
 					$group_element        = new \stdClass();
 					$group_element->num   = $group_id;
 					$group_element->role  = "${group['role']}";
