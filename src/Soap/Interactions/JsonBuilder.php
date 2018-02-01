@@ -163,6 +163,7 @@ class JsonBuilder
 					$group_element        = new \stdClass();
 					$group_element->id    = $group_id;
 					$group_element->role  = $group['role'];
+					$group_element->num   = $group['num'];
 					$group_container[]    = $group_element;
 				}
 				$person->groups   = $group_container;
@@ -307,7 +308,7 @@ class JsonBuilder
 					$person->role		= $role;
 
 					$usr_name = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
-					self::$course_user_groups_map[$course_id][$usr_name][$element->getPlanElementId()] = array('role' => $role, 'blocked' => $account->getBlockedId());
+					self::$course_user_groups_map[$course_id][$usr_name][$element->getPlanElementId()] = array('role' => $role, 'blocked' => $account->getBlockedId(), 'num' => $element->getSortOrder());
 				}
 			}
 		}
