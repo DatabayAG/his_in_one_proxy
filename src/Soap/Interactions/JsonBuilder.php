@@ -270,6 +270,7 @@ class JsonBuilder
 			#$lecturer->lastName	= 'dieWaldFee';
 			$group->lectureres		= array($lecturer);
 			$group->datesAndVenues	= '';
+			$group->num				= $element->getParallelGroupId();
 			$row->groups[]			= $group;
 			$row->hoursPerWeek		= $element->getHoursPerWeek();
 			$row->recommendedReading= $element->getLiterature();
