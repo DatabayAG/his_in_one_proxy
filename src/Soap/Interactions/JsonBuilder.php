@@ -35,6 +35,11 @@ class JsonBuilder
 	protected static $course_user_groups_map = array();
 
 	/**
+	 * @var array 
+	 */
+	protected static $course_group_num = array();
+
+	/**
 	 * @param Unit[] $units
 	 * @return array
 	 */
@@ -156,14 +161,14 @@ class JsonBuilder
 						$skip = true;
 						continue;
 					}
-					$user = current($user);
+					$user_element = current($user);
 					$person->personID     = $user_name . GlobalSettings::getInstance()->getLoginSuffix();
 					$person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
-					$person->role		  = $user['role'];
+					$person->role		  = $user_element['role'];
 					$group_element        = new \stdClass();
 					$group_element->id    = $group_id;
 					$group_element->role  = $group['role'];
-					$group_element->num   = $group['num'];
+					$group_element->num   = self::getCourseGroupNum($course_id, $group_id);
 					$group_container[]    = $group_element;
 				}
 				$person->groups   = $group_container;
@@ -185,9 +190,38 @@ class JsonBuilder
 			}
 		}
 
-	$a= 0;
 	}
-	
+
+	/**
+	 * @param $course_id
+	 * @param $group_id
+	 * @return int
+	 */
+	protected static function getCourseGroupNum($course_id, $group_id)
+	{
+		if(array_key_exists($course_id, self::$course_group_num))
+		{
+			if(array_key_exists($group_id, self::$course_group_num[$course_id]))
+			{
+				return self::$course_group_num[$course_id][$group_id];
+			}
+			else
+			{
+				$counter = self::$course_group_num[$course_id]['counter'];
+				$counter++;
+				self::$course_group_num[$course_id][$group_id] = $counter;
+				self::$course_group_num[$course_id]['counter'] = $counter;
+				return $counter;
+			}
+		}
+		else
+		{
+			self::$course_group_num[$course_id][$group_id] = 0;
+			self::$course_group_num[$course_id]['counter'] = 0;
+			return 0;
+		}
+	}
+
 	/**
 	 * @param $plan_element_id
 	 * @param $e_learning_sys_string
@@ -270,7 +304,6 @@ class JsonBuilder
 			#$lecturer->lastName	= 'dieWaldFee';
 			$group->lectureres		= array($lecturer);
 			$group->datesAndVenues	= '';
-			$group->num				= $element->getParallelGroupId();
 			$row->groups[]			= $group;
 			$row->hoursPerWeek		= $element->getHoursPerWeek();
 			$row->recommendedReading= $element->getLiterature();
@@ -309,7 +342,7 @@ class JsonBuilder
 					$person->role		= $role;
 
 					$usr_name = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
-					self::$course_user_groups_map[$course_id][$usr_name][$element->getPlanElementId()] = array('role' => $role, 'blocked' => $account->getBlockedId(), 'num' => $element->getSortOrder());
+					self::$course_user_groups_map[$course_id][$usr_name][$element->getPlanElementId()] = array('role' => $role, 'blocked' => $account->getBlockedId());
 				}
 			}
 		}

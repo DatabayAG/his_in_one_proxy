@@ -569,7 +569,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 		$nodes = $builder->getPersonPlanElements();
-		$exp = '{"1232":{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0},{"num":9,"role":0},{"num":4,"role":0}]}]}}';
+		$exp = '{"1232":{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","role":0,"groups":[{"id":3,"role":0,"num":0},{"id":9,"role":0,"num":1},{"id":4,"role":0,"num":2}]}]}}';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 	
@@ -606,7 +606,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 		$nodes = $builder->getPersonPlanElements();
-		$exp = '{"1232":{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":0},{"num":9,"role":0},{"num":4,"role":0}]},{"personID":"y1234","personIDtype":"ecs_loginUID","groups":[{"num":3,"role":1}]}]}}';
+		$exp = '{"1232":{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","role":0,"groups":[{"id":3,"role":0,"num":0},{"id":9,"role":0,"num":1},{"id":4,"role":0,"num":2}]},{"personID":"y1234","personIDtype":"ecs_loginUID","role":1,"groups":[{"id":3,"role":1,"num":0}]}]}}';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 
