@@ -255,6 +255,7 @@ class Conductor
 
 				$services->incrementRelevantForExport();
 			}
+			var_dump($unit);
 			return $unit;
 		}
 		return null;
