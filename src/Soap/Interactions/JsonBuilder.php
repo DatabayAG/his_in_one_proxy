@@ -108,7 +108,7 @@ class JsonBuilder
 		$row->status				= $unit->getStatusId();
 		$row->study_courses			= $unit->getLid();
 		$row->termID				= '';
-		$row->lectureType			= $unit->getElementTypeId();
+		$row->lectureType			= $unit->getEventTypeId();
 		$plan_element_cont 			= $unit->getPlanElementContainer();
 		if(count($plan_element_cont) == 1)
 		{

@@ -31,6 +31,10 @@ class ParseUnit extends SimpleXmlParser
 			{
 				$unit->setLockVersion($xml->lockVersion);
 			}
+			if($this->isAttributeValid($xml, 'eventtypeId'))
+			{
+				$unit->setEventTypeId($xml->eventtypeId);
+			}
 			if($this->isAttributeValid($xml, 'comment'))
 			{
 				$unit->setComment($xml->comment);

@@ -30,6 +30,11 @@ class Unit
 	protected $status_id;
 
 	/**
+	 * @var int
+	 */
+	protected $event_type_id;
+
+	/**
 	 * @var Course[]
 	 */
 	protected $course_container = array();
@@ -248,6 +253,22 @@ class Unit
 	public function replaceChildInContainer($id, $child)
 	{
 		$this->child_container->replaceChildInContainer($id, $child);
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEventTypeId()
+	{
+		return $this->event_type_id;
+	}
+
+	/**
+	 * @param int $event_type_id
+	 */
+	public function setEventTypeId($event_type_id)
+	{
+		$this->event_type_id = $event_type_id;
 	}
 
 }
