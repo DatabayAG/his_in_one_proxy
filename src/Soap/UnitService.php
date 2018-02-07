@@ -36,6 +36,7 @@ class UnitService extends SoapService
 			$parser		= new Parser\ParseUnit($this->log);
 			if(isset($response->unit))
 			{
+				var_dump($response->unit);
 				$unit = $parser->parse($response->unit);
 				return $unit;
 			}
