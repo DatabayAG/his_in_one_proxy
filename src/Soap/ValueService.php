@@ -371,6 +371,25 @@ class ValueService extends SoapService
 		}
 		return null;
 	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Container\TermTypeList|null
+	 */
+	public function getAllElementtypes($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllElementtypes', $params);
+			return $response;
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
 	
 
 	/**
