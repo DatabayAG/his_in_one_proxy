@@ -306,6 +306,7 @@ class Conductor
 		$services           = DataCache::getInstance();
 		$this->log->debug(sprintf('Read details for module %s.', $module->getLid()));
 		$org_units = array();
+		$this->log->debug(sprintf('Size of org unit container %s.', $module->getSizeOfOrgUnitContainer()));
 		if($module->getSizeOfOrgUnitContainer() > 0)
 		{
 			foreach($module->getOrgUnitsContainer() as $org_unit)
@@ -313,6 +314,7 @@ class Conductor
 				if(!array_key_exists($org_unit->getLid(), $org_units))
 				{
 					$org_units[$org_unit->getLid()] = $services->getOrgUnitService()->readOrgUnit($org_unit->getLid());
+					$this->log->debug(sprintf('Reed details for orgunit lid %s.', $org_unit->getLid()));
 				}
 			}
 		}
