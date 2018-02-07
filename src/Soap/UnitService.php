@@ -34,7 +34,6 @@ class UnitService extends SoapService
 		try{
 			$response	= $this->soap_unit->__soapCall('readUnit81', $params);
 			$parser		= new Parser\ParseUnit($this->log);
-			var_dump($response);
 			if(isset($response->unit))
 			{
 				
