@@ -400,7 +400,7 @@ class ValueService extends SoapService
 		$params = array(array('lang' => $lang));
 		try
 		{
-			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllGrouptypes', $params);
+			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllUnitrelationtypes', $params);
 			return $response;
 		}
 		catch(\SoapFault $exception)
