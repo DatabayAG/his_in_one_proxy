@@ -66,7 +66,7 @@ class JsonBuilder
 			$row->lectureID				= $course->getId();
 			$row						= self::appendMapping($mapping, $row);
 			self::addMappingToArray($course->getId(), $row->elearning_sys_string);
-			self::addSimpleTypes($row, $unit);
+			self::addSimpleTypes($row, $unit, $course->getEventTypeId());
 			self::addComplexTypes($row, $unit, $course->getId());
 
 			$array[] = $row;
@@ -97,7 +97,7 @@ class JsonBuilder
 	 * @param $row
 	 * @param Unit $unit
 	 */
-	protected static function addSimpleTypes($row, $unit)
+	protected static function addSimpleTypes($row, $unit, $event_type_id)
 	{
 		$row->abstract				= $unit->getLongText();
 		$row->comment1				= $unit->getComment();
@@ -108,7 +108,7 @@ class JsonBuilder
 		$row->status				= $unit->getStatusId();
 		$row->study_courses			= $unit->getLid();
 		$row->termID				= '';
-		$row->lectureType			= $unit->getEventTypeId();
+		$row->lectureType			= $event_type_id;
 		$plan_element_cont 			= $unit->getPlanElementContainer();
 		if(count($plan_element_cont) == 1)
 		{
