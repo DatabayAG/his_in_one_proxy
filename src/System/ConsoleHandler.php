@@ -213,6 +213,15 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	protected function getAllCourseOfStudyTypes()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllCourseOfStudyTypes($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
+
 	protected function getAllLanguages()
 	{
 		$this->startTimer();

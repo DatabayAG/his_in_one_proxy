@@ -390,6 +390,25 @@ class ValueService extends SoapService
 		}
 		return null;
 	}
+
+	/**
+	 * @param $lang
+	 * @return \HisInOneProxy\DataModel\Container\TermTypeList|null
+	 */
+	public function getAllCourseOfStudyTypes($lang)
+	{
+		$params = array(array('lang' => $lang));
+		try
+		{
+			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllCourseOfStudyTypes', $params);
+			return $response;
+		}
+		catch(\SoapFault $exception)
+		{
+			$this->log->error($exception->getMessage());
+		}
+		return null;
+	}
 	
 
 	/**
