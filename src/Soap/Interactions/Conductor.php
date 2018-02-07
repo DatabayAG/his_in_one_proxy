@@ -314,7 +314,7 @@ class Conductor
 				if(!array_key_exists($org_unit->getLid(), $org_units))
 				{
 					$org_units[$org_unit->getLid()] = $services->getOrgUnitService()->readOrgUnit($org_unit->getLid());
-					$this->log->debug(sprintf('Reed details for orgunit lid %s.', $org_unit->getLid()));
+					$this->log->debug(sprintf('Read details for orgunit lid %s.', $org_unit->getLid()));
 				}
 			}
 		}
