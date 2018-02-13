@@ -416,22 +416,26 @@ class JsonBuilder
 	}
 
 	/**
-	 * @param $container
+	 * @param Unit $container
 	 * @return array
 	 */
 	protected static function addDegreeProgrammes($container)
 	{
 		$programs = array();
-		foreach($container as $prog)
+		if(is_array($container->getCourseOfStudies()))
 		{
-			$program						= new \stdClass();
-			$program->id					= '';
-			$program->title					= '';
-			$program->courseUnitYearOfStudy = '';
-			$program->from					= '';
-			$program->to					= '';
-			$programs[] = $program;
+			foreach($container->getCourseOfStudies() as $prog)
+			{
+				$program						= new \stdClass();
+				$program->id					= $prog->getLid();
+				$program->title					= $prog->getDefaultText();
+				$program->courseUnitYearOfStudy = '';
+				$program->from					= $prog->getValidFrom();
+				$program->to					= $prog->getValidTo();
+				$programs[] = $program;
+			}
 		}
+
 		return $programs;
 	}
 
