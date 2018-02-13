@@ -107,7 +107,7 @@ class Conductor
 		{
 			$this->course_of_studies_org[$course_of_study->getOrgUnitLid()] = $course_of_study;
 			$this->course_of_studies[$course_of_study->getLid()]            = $course_of_study;
-			$cos_already[$cos_lid]                                          = $cos_lid;
+			$cos_already[$cos_lid]                                          = $course_of_study;
 		}
 		return $cos_already;
 	}
@@ -351,6 +351,7 @@ class Conductor
 					$this->log->warning(sprintf('Course of study with id %s was not found in map.', $course_id));
 				}
 			}
+			$unit->setCourseOfStudies($cos_already);
 		}
 	}
 

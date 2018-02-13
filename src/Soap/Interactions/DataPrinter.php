@@ -44,6 +44,7 @@ class DataPrinter
 			$this->log->debug(sprintf($tabs . "\t|- %s, %s, %s, %s", $unit->getId(), $unit->getLid(), $unit->getStatusId(), $unit->getElementNr()));
 			$this->printPlanElementContainer($unit->getPlanElementContainer(), $unit,$level + 2);
 			$this->printOrgUnitForUnit($unit->getOrgUnitsContainer(), $level + 2);
+			$this->printCourseOfStudy($unit->getCourseOfStudies(), $level + 2);
 		}
 	}
 
@@ -251,6 +252,26 @@ class DataPrinter
 	}
 
 	/**
+	 * @param     $obj
+	 * @param int $level
+	 */
+	public function printCourseOfStudy($obj, $level = 0)
+	{
+		$tabs = $this->buildTabs($level);
+		if (is_array($obj))
+		{
+			foreach($obj as $x)
+			{
+				$this->printCourseOfStudyDetail($x, $tabs);
+			}
+		}
+		else
+		{
+			$this->printCourseOfStudyDetail($obj, $tabs);
+		}
+	}
+
+	/**
 	 * @param DataModel\CourseCatalogLeaf | DataModel\CourseCatalogChild $leaf
 	 * @param int $level
 	 */
@@ -394,6 +415,15 @@ class DataPrinter
 			$obj = DataCache::getInstance()->resolveOrgUnitByLid($obj->getLid());
 		}
 		$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' Org-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
+	}
+
+	/**
+	 * @param DataModel\OrgUnit $obj
+	 * @param $tabs
+	 */
+	public function printCourseOfStudyDetail($obj, $tabs)
+	{
+		$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' CourseOfStudy-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
 	}
 
 	/**

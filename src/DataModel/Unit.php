@@ -55,6 +55,11 @@ class Unit
 	protected $child_container;
 
 	/**
+	 * @var CourseOfStudy[]
+	 */
+	protected $course_of_studies;
+	
+	/**
 	 * @return string
 	 */
 	public function getElementNr()
@@ -248,6 +253,22 @@ class Unit
 	public function replaceChildInContainer($id, $child)
 	{
 		$this->child_container->replaceChildInContainer($id, $child);
+	}
+
+	/**
+	 * @return CourseOfStudy[]
+	 */
+	public function getCourseOfStudies()
+	{
+		return $this->course_of_studies;
+	}
+
+	/**
+	 * @param CourseOfStudy[] $course_of_studies
+	 */
+	public function setCourseOfStudies($course_of_studies)
+	{
+		$this->course_of_studies = $course_of_studies;
 	}
 
 }
