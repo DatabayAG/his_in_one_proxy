@@ -52,7 +52,7 @@ class Functions
 			self::appendFunction('sa', 'searchAccountForPerson61', 'Reads accounts by person id.', true);
 			self::appendFunction('ea', 'readEAddressesForPerson', 'Reads electronic addresses by person id.', true);
 			self::appendFunction('et', 'getAllElementtypes', 'Reads element types.', true);
-			self::appendFunction('cs', 'getAllGrouptypes', 'Reads course of study types.', true);
+			self::appendFunction('cs', 'getAllEventtypes', 'Reads all event types.', true);
 		}
 	}
 

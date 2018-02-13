@@ -3,6 +3,7 @@
 namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Parser;
+use HisInOneProxy\Soap\Interactions\DataCache;
 
 /**
  * Class ValueService
@@ -393,15 +394,24 @@ class ValueService extends SoapService
 
 	/**
 	 * @param $lang
-	 * @return \HisInOneProxy\DataModel\Container\TermTypeList|null
+	 * @return \HisInOneProxy\DataModel\EventType[]|null
 	 */
-	public function getAllGrouptypes($lang)
+	public function getAllEventtypes($lang)
 	{
 		$params = array(array('lang' => $lang));
 		try
 		{
 			$response	= $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllEventtypes', $params);
-			return $response;
+			$parser = new Parser\ParseEventType($this->log);
+			if(isset($response->listOfEventtypes))
+			{
+				$event_types = $parser->parse($response);
+				return $event_types;
+			}
+			else
+			{
+				$this->log->error('No list of work status object found in response!');
+			}
 		}
 		catch(\SoapFault $exception)
 		{

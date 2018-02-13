@@ -96,6 +96,7 @@ class JsonBuilder
 	/**
 	 * @param $row
 	 * @param Unit $unit
+	 * @param $event_type_id
 	 */
 	protected static function addSimpleTypes($row, $unit, $event_type_id)
 	{
@@ -108,7 +109,7 @@ class JsonBuilder
 		$row->status				= $unit->getStatusId();
 		$row->study_courses			= $unit->getLid();
 		$row->termID				= '';
-		$row->lectureType			= $event_type_id;
+		$row->lectureType			=  DataCache::getInstance()->resolveEventTypeById($event_type_id);
 		$plan_element_cont 			= $unit->getPlanElementContainer();
 		if(count($plan_element_cont) == 1)
 		{

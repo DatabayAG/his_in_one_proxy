@@ -58,11 +58,16 @@ class DataCache
 	 * @var WorkStatusContainer
 	 */
 	protected static $work_status;
-	
+
 	/**
 	 * @var TermTypeList
 	 */
 	protected static $term_type_values;
+
+	/**
+	 * @var array
+	 */
+	protected static $event_type_list;
 
 	/**
 	 * @var SoapServiceRouter
@@ -217,6 +222,7 @@ class DataCache
 		self::readWorkStatus();
 		self::readEAddressTypes();
 		self::readAllPurposes();
+		self::readAllEventTypes();
 		return new DataCache();
 	}
 
@@ -279,6 +285,11 @@ class DataCache
 	protected static function readAllPurposes()
 	{
 		self::$purposes_list = self::$value_service->getAllPurposes(self::$default_lang_id);
+	}
+
+	protected static function readAllEventTypes()
+	{
+		self::$event_type_list = self::$value_service->getAllEventTypes(self::$default_lang_id);
 	}
 
 	/**
@@ -559,6 +570,19 @@ class DataCache
 		if(array_key_exists($id, self::$purposes_list))
 		{
 			return self::$purposes_list[$id]->getDefaultText();
+		}
+		return null;
+	}
+
+	/**
+	 * @param $id
+	 * @return string  | null
+	 */
+	public function resolveEventTypeById($id)
+	{
+		if(array_key_exists($id, self::$event_type_list))
+		{
+			return self::$event_type_list[$id]->getDefaultText();
 		}
 		return null;
 	}
