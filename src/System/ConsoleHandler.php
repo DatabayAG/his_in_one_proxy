@@ -127,7 +127,7 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
-	protected function getCourseCatalog()
+	protected function getCourseCataloggetCourseCatalog()
 	{
 		$this->startTimer();
 		self::$conductor->getCourseCatalog();

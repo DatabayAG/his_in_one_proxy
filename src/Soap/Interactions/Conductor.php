@@ -187,7 +187,6 @@ class Conductor
 		$unit_list->appendUnitId($unit_id);
 
 		$units = $this->startHandlingUnitList($unit_list, $cos_map, $cos_already);
-		print_r($units);
 		$this->finishHandlingUnits($units);
 	}
 
@@ -255,7 +254,6 @@ class Conductor
 
 				$services->incrementRelevantForExport();
 			}
-			var_dump($unit);
 			return $unit;
 		}
 		return null;
@@ -373,7 +371,6 @@ class Conductor
 		}
 
 		$persons = $builder::getPersonPlanElements();
-		print_r($persons);
 		foreach($persons as $lecture_id => $plan_elements)
 		{
 			$e_learning_id = $builder->getElearningSystemStringFromPlanElementId($lecture_id);

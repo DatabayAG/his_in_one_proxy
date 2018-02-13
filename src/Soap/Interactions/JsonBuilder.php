@@ -358,9 +358,10 @@ class JsonBuilder
 		$org_units = array();
 		foreach($container as $org)
 		{
+			$org_details = DataCache::getInstance()->resolveOrgUnitByLid($org->getLid());
 			$org_unit			= new \stdClass();
 			$org_unit->id		= $org->getLid();
-			$org_unit->title	= $org->getDefaultText();
+			$org_unit->title	= $org_details->getDefaultText();
 			$org_units[]		= $org_unit;
 		}
 		return $org_units;

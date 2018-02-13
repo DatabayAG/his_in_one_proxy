@@ -10,6 +10,7 @@ use HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer;
 use HisInOneProxy\DataModel\Container\TermTypeList;
 use HisInOneProxy\DataModel\Container\WorkStatusContainer;
 use HisInOneProxy\DataModel\EAddressType;
+use HisInOneProxy\DataModel\OrgUnit;
 use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
@@ -158,6 +159,11 @@ class DataCache
 	 * @var []
 	 */
 	protected static $person_cache = array();
+
+	/**
+	 * @var []
+	 */
+	protected static $org_unit_cache = array();
 
 	/**
 	 * @var []
@@ -585,6 +591,23 @@ class DataCache
 			return self::$event_type_list[$id]->getDefaultText();
 		}
 		return null;
+	}
+
+	/**
+	 * @param $l_id
+	 * @return OrgUnit
+	 */
+	public function resolveOrgUnitByLid($l_id)
+	{
+		if(array_key_exists($l_id, self::$org_unit_cache))
+		{
+			return self::$org_unit_cache[$l_id];
+		}
+		else
+		{
+			self::$org_unit_cache[$l_id] = self::$org_unit_service->readOrgUnit($l_id);
+			return self::$org_unit_cache[$l_id];
+		}
 	}
 
 	/**
