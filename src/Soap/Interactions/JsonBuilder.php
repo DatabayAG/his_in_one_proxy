@@ -33,6 +33,10 @@ class JsonBuilder
 	 * @var array 
 	 */
 	protected static $course_user_groups_map = array();
+	/**
+	 * @var array 
+	 */
+	protected static $course_lectures= array();
 
 	/**
 	 * @var array 
@@ -287,11 +291,11 @@ class JsonBuilder
 	protected static function appendGroups($unit, $row, $course_id)
 	{
 		$row->groups  = array();
-		$collection  = array();
 		$plan_element = $unit->getPlanElementContainer();
 
 		foreach($plan_element as $element)
 		{
+			self::analysePersonContainer($element, $unit->getId(), $course_id);
 			$group					= new \stdClass();
 			$group->id				= $element->getId();
 			$group->title			= DataCache::getInstance()
@@ -300,16 +304,15 @@ class JsonBuilder
 												->getLongText();
 			$group->maxParticipants = $element->getAttendeeMaximum();
 			$group->hours			= $element->getHoursPerWeek();
-			$lecturer				= new \stdClass();
-			#$lecturer->firstName	= 'holla';
-			#$lecturer->lastName	= 'dieWaldFee';
-			$group->lectureres		= array($lecturer);
+			if(array_key_exists($course_id, self::$course_lectures) && array_key_exists($element->getId(), self::$course_lectures[$course_id]))
+			{
+				$group->lectureres		= self::$course_lectures[$course_id][$element->getId()];
+			}
 			$group->datesAndVenues	= '';
 			$row->groups[]			= $group;
 			$row->hoursPerWeek		= $element->getHoursPerWeek();
 			$row->recommendedReading= $element->getLiterature();
 			$row->prerequisites		= $element->getRecommendedRequirement();
-			self::analysePersonContainer($element, $unit->getId(), $course_id);
 		}
 		return $row;
 	}
@@ -344,6 +347,14 @@ class JsonBuilder
 
 					$usr_name = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
 					self::$course_user_groups_map[$course_id][$usr_name][$element->getPlanElementId()] = array('role' => $role, 'blocked' => $account->getBlockedId());
+					if($role === DataCache::COURSE_ADMINISTRATOR)
+					{
+						$lecturer				= new \stdClass();
+						$person = DataCache::getInstance()->getPersonById($element->getPersonId());
+						$lecturer->firstName = $person->getFirstName();
+						$lecturer->lastName  = $person->getSurName();
+						self::$course_lectures[$course_id][$element->getPlanElementId()] = $lecturer;
+					}
 				}
 			}
 		}

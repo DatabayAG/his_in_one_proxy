@@ -645,6 +645,22 @@ class DataCache
 	}
 
 	/**
+	 * @param $person_id
+	 * @return Person
+	 */
+	public function getPersonById($person_id)
+	{
+		if(array_key_exists($person_id, self::$person_cache))
+		{
+			if( ! is_a(self::$person_cache[$person_id], 'HisInOneProxy\DataModel\Person'))
+			{
+				self::$person_cache[trim($person_id)] = self::getPersonService()->readPerson($person_id);
+			}
+		}
+		return self::$person_cache[trim($person_id)];
+	}
+
+	/**
 	 * @param Person $person
 	 */
 	public function addPersonDetailsToCache($person)
