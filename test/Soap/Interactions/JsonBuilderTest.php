@@ -201,7 +201,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$this->assertEqualClearedString('[{"id":1,"title":"My Text"},{"id":2,"title":"My Text 2"},{"id":3,"title":"My Text 3"}]', json_encode($org_units));
+		$this->assertEqualClearedString('[{"id":1,"title":null},{"id":2,"title":null},{"id":3,"title":null}]', json_encode($org_units));
 	}
 
 	public function test_appendLinks_shouldReturnLinks()
@@ -263,17 +263,21 @@ class JsonBuilderTest extends TestCaseExtension
 
 		$builder = new Interactions\JsonBuilder();
 
-		$container = array();
-		$prog = new stdClass();
-		$container[] = $prog;
+		$unit = new \HisInOneProxy\DataModel\Unit();
+		$unit->setId(23123);
+		$cos = new \HisInOneProxy\DataModel\CourseOfStudy();
+		$cos->setId(324);
+		$cos->setLid(234234);
+		$cos->setDefaultText('default text');
+		$unit->setCourseOfStudies(array($cos));
 
 		$program = $this->callMethod(
 			$builder,
 			'addDegreeProgrammes',
-			array($container)
+			array($unit)
 		);
 
-		$this->assertEqualClearedString('[{"id":"","title":"","courseUnitYearOfStudy":"","from":"","to":""}]', json_encode($program));
+		$this->assertEqualClearedString('[{"id":234234,"title":"defaulttext","courseUnitYearOfStudy":null,"from":null,"to":null}]', json_encode($program));
 	}
 
 	public function test_appendNodesWithEmptyLeaf_shouldReturnNodes()
@@ -355,7 +359,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($unit, $row, 1)
 		);
 
-		$exp = '{"groups":[{"id":1,"title":"My group value.","maxParticipants":12,"hours":40,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":40,"recommendedReading":"My power book.","prerequisites":"You should have done this."}';
+		$exp = '{"groups":[{"id":1,"title":"Mygroupvalue.","maxParticipants":12,"hours":40,"datesAndVenues":""}],"hoursPerWeek":40,"recommendedReading":"Mypowerbook.","prerequisites":"Youshouldhavedonethis."}';
 		$this->assertEqualClearedString($exp, json_encode($row));
 	}
 
@@ -482,7 +486,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 
-		$exp = '[{"workload":23,"lectureID":null,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":null,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":null,"maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
+		$exp = '[{"workload":23,"lectureID":null,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":null,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":null,"maxParticipants":null,"hours":null,"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 
@@ -549,7 +553,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 
-		$exp = '[{"workload":23,"lectureID":1232,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":null,"title":null,"url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":null,"maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""},{"id":4,"title":null,"maxParticipants":null,"hours":null,"lectureres":[{}],"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
+		$exp = '[{"workload":23,"lectureID":1232,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":"","organisation":"","status":2,"study_courses":4000,"termID":"","lectureType":null,"title":null,"url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":null,"maxParticipants":null,"hours":null,"datesAndVenues":""},{"id":4,"title":null,"maxParticipants":null,"hours":null,"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
 

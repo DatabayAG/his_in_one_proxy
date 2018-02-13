@@ -423,7 +423,10 @@ class DataPrinter
 	 */
 	public function printCourseOfStudyDetail($obj, $tabs)
 	{
-		$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' CourseOfStudy-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
+		if($obj !== null)
+		{
+			$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' CourseOfStudy-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
+		}
 	}
 
 	/**

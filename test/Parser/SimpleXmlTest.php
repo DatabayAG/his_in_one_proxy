@@ -62,8 +62,8 @@ class SimpleXmlTest extends TestCaseExtension
 
 	public function test_doesMoreThanOneElementExists_shouldReturnInstance()
 	{
-		$xml = simplexml_load_string('<res><xml></xml><xml></xml></res>');
-		$val = $this->instance->doesMoreThanOneElementExists($xml, 'xml');
+		$xml = simplexml_load_string('<res><bla></bla><bla></bla></res>');
+		$val = $this->callMethod($this->instance, 'doesAttributeExist', array($xml, 'bla'));
 		$this->assertTrue($val);
 		$xml = simplexml_load_string('<res><xml>Blalubb</xml></res>');
 		$val = $this->callMethod($this->instance, 'doesAttributeExist', array($xml, 'xml2'));

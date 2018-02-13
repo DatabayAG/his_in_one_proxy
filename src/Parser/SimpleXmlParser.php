@@ -78,7 +78,7 @@ class SimpleXmlParser
 	public function doesMoreThanOneElementExists($xml, $attribute)
 	{
 		return $this->isAttributeValidAsContainer($xml, $attribute)
-			&& is_array($xml->{$attribute}) && count($xml->{$attribute}) > 1;
+			&& $this->isCountable($xml->{$attribute}) && count($xml->{$attribute}) > 1;
 	}
 
 	/**
@@ -100,6 +100,11 @@ class SimpleXmlParser
 	public function doesExactlyOneElementExists($xml, $attribute)
 	{
 		return ($this->isAttributeValidAsContainer($xml, $attribute)
-			&& is_array($xml->{$attribute}) && count($xml->{$attribute}) == 1);
+			&& $this->isCountable($xml->{$attribute}) && count($xml->{$attribute}) == 1);
+	}
+	
+	protected function isCountable($object)
+	{
+		return (is_array($object) || $object instanceof \SimpleXMLElement || $object instanceof \Countable );
 	}
 }
