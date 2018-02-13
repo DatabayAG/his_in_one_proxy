@@ -17,6 +17,7 @@ class ParseCourseCatalogElementIdList extends SimpleXmlParser
 	public function parse($xml)
 	{
 		$course_catalog_element_id_list = new CourseCatalogElementIdList();
+
 		if($this->isAttributeValid($xml, 'courseCatalogElementId'))
 		{
 			foreach($xml->courseCatalogElementId as $value)

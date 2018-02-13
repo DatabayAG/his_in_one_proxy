@@ -119,14 +119,14 @@ class CourseCatalogServiceTest extends TestCaseExtension
 		$this->assertEqualClearedString('Error: Something horrible happened to the plan element.', array_pop($this->collectedMessages));
 	}
 
-	public function test_ggetCourseCatalogElementIdsForPlanElement_shouldReturnValue()
+	public function test_getCourseCatalogElementIdsForPlanElement_shouldReturnValue()
 	{
 		$this->soap_client_router->getSoapClientCourseCatalog()->expects($this->any())
 								 ->method('__soapCall')
-								 ->willReturn(simplexml_load_string('<resp>' . file_get_contents('test/fixtures/visible_children.xml') . '</resp>'));
+								 ->willReturn(simplexml_load_string('<resp>' . file_get_contents('test/fixtures/course_catalog_element_ids.xml') . '</resp>'));
 		$soap_client = new Soap\CourseCatalogService($this->log, $this->soap_client_router);
 		$value = $soap_client->getCourseCatalogElementIdsForPlanElement(4444);
-		$this->assertEquals(1, count($value));
+		$this->assertEquals(1, $value->getSizeOfContainer());
 	}
 
 }

@@ -179,10 +179,8 @@ class UnitTest extends PHPUnit\Framework\TestCase
 		$child = new DataModel\ChildRelation();
 		$child->setChildId("3");
 		$container->appendChildRelation($child);
-		$this->instance->setChildContainer($container->getChildRelationContainer());
-		$this->assertEquals(2, count($this->instance->getChildContainer()));
-		$this->instance->setChildContainer(null);
-		$this->assertEquals(0, count($this->instance->getChildContainer()));
+
+		$this->assertEquals(2, count($container->getChildRelationContainer()));
 	}
 
 	public function test_replaceChildInContainer_shouldReplaceChildContainer()

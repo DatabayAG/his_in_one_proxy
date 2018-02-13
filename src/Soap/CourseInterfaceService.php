@@ -112,7 +112,6 @@ class CourseInterfaceService extends SoapService
 		try{
 			$response	= $this->soap_course_interface->__soapCall('readUnit81', $params);
 			$parser		= new Parser\ParseUnit(new Log\Log());
-			var_dump($response);
 			if(isset($response->unit) && $response->unit != null && $response->unit != '')
 			{
 				$unit = $parser->parse($response->unit);

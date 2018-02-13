@@ -326,7 +326,7 @@ class JsonBuilder
 		{
 			$accounts = DataCache::getInstance()->getAccountsForPersonId($element->getPersonId());
 
-			if(count($accounts) > 0)
+			if(is_array($accounts) && count($accounts) > 0)
 			{
 				/**
 				 * @var \HisInOneProxy\DataModel\CompleteAccount $account
