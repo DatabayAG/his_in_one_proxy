@@ -424,14 +424,14 @@ class JsonBuilder
 		$programs = array();
 		if(is_array($container->getCourseOfStudies()))
 		{
-			foreach($container->getCourseOfStudies() as $prog)
+			foreach($container->getCourseOfStudies() as $course_of_study)
 			{
 				$program						= new \stdClass();
-				$program->id					= $prog->getLid();
-				$program->title					= $prog->getDefaultText();
-				$program->courseUnitYearOfStudy = '';
-				$program->from					= $prog->getValidFrom();
-				$program->to					= $prog->getValidTo();
+				$program->id					= $course_of_study->getLid();
+				$program->title					= $course_of_study->getDefaultText();
+				$program->courseUnitYearOfStudy = $course_of_study->getValidFromTermYear();
+				$program->from					= $course_of_study->getValidFrom();
+				$program->to					= $course_of_study->getValidTo();
 				$programs[] = $program;
 			}
 		}
