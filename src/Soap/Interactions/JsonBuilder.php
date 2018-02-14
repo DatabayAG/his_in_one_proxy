@@ -372,7 +372,11 @@ class JsonBuilder
 			$org_details = DataCache::getInstance()->resolveOrgUnitByLid($org->getLid());
 			$org_unit			= new \stdClass();
 			$org_unit->id		= $org->getLid();
-			$org_unit->title	= $org_details->getDefaultText();
+			if(is_a($org_details, 'HisInOneProxy\DataModel\OrgUnit'))
+			{
+				$org_unit->title	= $org_details->getDefaultText();
+			}
+			
 			$org_units[]		= $org_unit;
 		}
 		return $org_units;
