@@ -154,13 +154,13 @@ class DataPrinterTest extends TestCaseExtension
 		$units = $this->buildUnit();
 		$this->instance->printUnits($units);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString( 'Debug: 		|-  Org-Lid: () Id: ()', $msg);
+		$this->assertEqualClearedString( 'Debug:|*OrgUnits:Org-Lid:()Id:()', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: |* Unit: , ', $msg);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString( 'Debug: 		|-  Org-Lid: () Id: ()', $msg);
+		$this->assertEqualClearedString( 'Debug:|*OrgUnits:Org-Lid:()Id:()', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
@@ -395,7 +395,7 @@ class DataPrinterTest extends TestCaseExtension
 		$org->setParentId(0);
 		$this->instance->printOrgUnitForUnit($org, 1);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString('Debug: 	|- 1 Org-Lid: (3423) Id: (51)', $msg);
+		$this->assertEqualClearedString('Debug:|*OrgUnits:1Org-Lid:(3423)Id:(51)', $msg);
 	}
 
 	public function test_buildTabs_shouldReturnTabs()
