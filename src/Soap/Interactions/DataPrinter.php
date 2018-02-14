@@ -356,7 +356,7 @@ class DataPrinter
 		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnit'))
 		{
 			$tabs = $this->buildTabs($level);
-			$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ') Type: ('.$obj->getElementTypeId().') Number: ('.$obj->getElementNr().') ValidFrom: ('.$obj->getValidFrom().') ValidTo: ('.$obj->getValidTo().')');
+			$this->log->debug($tabs . "|* OrgUnits: " . $obj->getDefaultText() . ' Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ') Type: ('.$obj->getElementTypeId().') Number: ('.$obj->getElementNr().') ValidFrom: ('.$obj->getValidFrom().') ValidTo: ('.$obj->getValidTo().')');
 
 			$container = $obj->getChildContainer();
 			if(count($container) > 0)
@@ -374,7 +374,7 @@ class DataPrinter
 
 						#if($parent_id == $parent || $parent_id == null)
 						{
-							$this->printUnitDetailFromCourseCatalog2($child, $child->getId(), $level);
+							$this->printUnitDetailFromCourseCatalog2($child, $child->getId(), $level +1);
 						}
 					}
 					else
@@ -420,7 +420,7 @@ class DataPrinter
 
 		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnit'))
 		{
-			$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' Org-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
+			$this->log->debug($tabs . "|* OrgUnits: " . $obj->getDefaultText() . ' Org-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
 		}
 		else
 		{
@@ -436,7 +436,7 @@ class DataPrinter
 	{
 		if($obj !== null)
 		{
-			$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' CourseOfStudy-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
+			$this->log->debug($tabs . "|* CourseOfStudy: " . $obj->getDefaultText() . ' CourseOfStudy-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
 		}
 	}
 
