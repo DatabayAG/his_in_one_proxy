@@ -413,11 +413,12 @@ class DataPrinter
 	 */
 	public function printOrgUnitDetailForUnit($obj, $tabs)
 	{
+		var_dump($obj);
 		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnitListItem'))
 		{
 			$obj = DataCache::getInstance()->resolveOrgUnitByLid($obj->getLid());
 		}
-
+		var_dump($obj);
 		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnit'))
 		{
 			$this->log->debug($tabs . "|* OrgUnits: " . $obj->getDefaultText() . ' Org-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
