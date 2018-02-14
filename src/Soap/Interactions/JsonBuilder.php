@@ -374,7 +374,7 @@ class JsonBuilder
 			$org_unit->id		= $org->getLid();
 			if(is_a($org_details, 'HisInOneProxy\DataModel\OrgUnit'))
 			{
-				$org_unit->title	= $org_details->getDefaultText();
+				$org_unit->title	= $org_details->getLongText();
 			}
 			
 			$org_units[]		= $org_unit;

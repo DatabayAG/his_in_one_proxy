@@ -399,7 +399,7 @@ class DataPrinter
 		if(array_key_exists($obj->getLid(), $course_of_studies))
 		{
 			$course_of_study = $course_of_studies[$obj->getLid()];
-			$this->log->debug($tabs . "\t|* " . $course_of_study->getDefaultText() . ' Org-Lid: (' . $course_of_study->getOrgUnitLid() . ') Id: (' . $course_of_study->getId() . ')');
+			$this->log->debug($tabs . "\t|* " . $course_of_study->getLongText() . ' Org-Lid: (' . $course_of_study->getOrgUnitLid() . ') Id: (' . $course_of_study->getId() . ')');
 		}
 		else
 		{
@@ -413,15 +413,13 @@ class DataPrinter
 	 */
 	public function printOrgUnitDetailForUnit($obj, $tabs)
 	{
-		var_dump($obj);
 		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnitListItem'))
 		{
 			$obj = DataCache::getInstance()->resolveOrgUnitByLid($obj->getLid());
 		}
-		var_dump($obj);
 		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnit'))
 		{
-			$this->log->debug($tabs . "|* OrgUnits: " . $obj->getDefaultText() . ' Org-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
+			$this->log->debug($tabs . "|* OrgUnits: " . $obj->getLongText() . ' Org-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
 		}
 		else
 		{
@@ -437,7 +435,7 @@ class DataPrinter
 	{
 		if($obj !== null)
 		{
-			$this->log->debug($tabs . "|* CourseOfStudy: " . $obj->getDefaultText() . ' CourseOfStudy-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
+			$this->log->debug($tabs . "|* CourseOfStudy: " . $obj->getLongText() . ' CourseOfStudy-Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ')');
 		}
 	}
 
