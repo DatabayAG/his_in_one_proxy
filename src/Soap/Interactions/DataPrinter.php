@@ -238,6 +238,7 @@ class DataPrinter
 	public function printOrgUnitForUnit($obj, $level = 0)
 	{
 		$tabs = $this->buildTabs($level);
+		var_dump($obj);
 		if (is_array($obj))
 		{
 			foreach($obj as $x)
