@@ -238,7 +238,6 @@ class DataPrinter
 	public function printOrgUnitForUnit($obj, $level = 0)
 	{
 		$tabs = $this->buildTabs($level);
-		var_dump($obj);
 		if (is_array($obj))
 		{
 			foreach($obj as $x)
@@ -411,6 +410,7 @@ class DataPrinter
 	 */
 	public function printOrgUnitDetailForUnit($obj, $tabs)
 	{
+		var_dump($obj);
 		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnitListItem'))
 		{
 			$obj = DataCache::getInstance()->resolveOrgUnitByLid($obj->getLid());
