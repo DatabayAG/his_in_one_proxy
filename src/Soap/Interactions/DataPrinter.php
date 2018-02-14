@@ -353,31 +353,34 @@ class DataPrinter
 	 */
 	public function printUnitDetailFromCourseCatalog2($obj, $parent,  $level)
 	{
-		$tabs = $this->buildTabs($level);
-		$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ') Type: ('.$obj->getElementTypeId().') Number: ('.$obj->getElementNr().') ValidFrom: ('.$obj->getValidFrom().') ValidTo: ('.$obj->getValidTo().')');
-
-		$container = $obj->getChildContainer();
-		if(count($container) > 0)
+		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnit'))
 		{
-			$level++;
-			if($level > $this->depth)
-			{
-				$this->depth = $level;
-			}
-			foreach($container as $child)
-			{
-				if($child instanceof DataModel\Unit)
-				{
-					#$parent_id = DataCache::getInstance()->getParentForChild($child->getId());
+			$tabs = $this->buildTabs($level);
+			$this->log->debug($tabs . "|- " . $obj->getDefaultText() . ' Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ') Type: ('.$obj->getElementTypeId().') Number: ('.$obj->getElementNr().') ValidFrom: ('.$obj->getValidFrom().') ValidTo: ('.$obj->getValidTo().')');
 
-					#if($parent_id == $parent || $parent_id == null)
-					{
-						$this->printUnitDetailFromCourseCatalog2($child, $child->getId(), $level);
-					}
-				}
-				else
+			$container = $obj->getChildContainer();
+			if(count($container) > 0)
+			{
+				$level++;
+				if($level > $this->depth)
 				{
-					$a = 'oh';
+					$this->depth = $level;
+				}
+				foreach($container as $child)
+				{
+					if($child instanceof DataModel\Unit)
+					{
+						#$parent_id = DataCache::getInstance()->getParentForChild($child->getId());
+
+						#if($parent_id == $parent || $parent_id == null)
+						{
+							$this->printUnitDetailFromCourseCatalog2($child, $child->getId(), $level);
+						}
+					}
+					else
+					{
+						$a = 'oh';
+					}
 				}
 			}
 		}
