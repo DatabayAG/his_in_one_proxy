@@ -306,7 +306,7 @@ class JsonBuilder
 			$group->hours			= $element->getHoursPerWeek();
 			if(array_key_exists($course_id, self::$course_lectures) && array_key_exists($element->getId(), self::$course_lectures[$course_id]))
 			{
-				$group->lectureres		= self::$course_lectures[$course_id][$element->getId()];
+				$group->lecturers		= self::$course_lectures[$course_id][$element->getId()];
 			}
 			$group->datesAndVenues	= '';
 			$row->groups[]			= $group;
