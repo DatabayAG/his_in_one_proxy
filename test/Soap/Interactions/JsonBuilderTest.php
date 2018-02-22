@@ -201,7 +201,7 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$this->assertEqualClearedString('[{"id":1,"title":null},{"id":2,"title":null},{"id":3,"title":null}]', json_encode($org_units));
+		$this->assertEqualClearedString('[{"id":1,"title":"Organisationseinheiten"},{"id":2,"title":"HochschuleHIS"},{"id":3,"title":"TechnischeFakult\u00e4t"}]', json_encode($org_units));
 	}
 
 	public function test_appendLinks_shouldReturnLinks()

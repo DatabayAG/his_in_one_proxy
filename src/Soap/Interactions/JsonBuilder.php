@@ -109,10 +109,10 @@ class JsonBuilder
 		$row->courseID				= $unit->getLid();
 		$row->lectureAssessmentType	= '';
 		$row->number				= '';
-		$row->organisation			= '';
+		$row->organisation			= ''; //Todo: where does this come from
 		$row->status				= $unit->getStatusId();
 		$row->study_courses			= $unit->getLid();
-		$row->termID				= '';
+		$row->termID				= ''; //Todo: set Termid
 		$row->lectureType			=  DataCache::getInstance()->resolveEventTypeById($event_type_id);
 		$plan_element_cont 			= $unit->getPlanElementContainer();
 		if(count($plan_element_cont) == 1)
@@ -353,7 +353,7 @@ class JsonBuilder
 						$person = DataCache::getInstance()->getPersonById($element->getPersonId());
 						$lecturer->firstName = $person->getFirstName();
 						$lecturer->lastName  = $person->getSurName();
-						self::$course_lectures[$course_id][$element->getPlanElementId()] = $lecturer;
+						self::$course_lectures[$course_id][$element->getPlanElementId()][] = $lecturer;
 					}
 				}
 			}
