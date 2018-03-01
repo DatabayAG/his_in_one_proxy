@@ -115,8 +115,8 @@ class JsonBuilder
 		$row->organisation			= ''; //Todo: where does this come from
 		$row->status				= $unit->getStatusId();
 		$row->study_courses			= $unit->getLid();
-		$row->termID				=  DataCache::getInstance()->getTermTypeForId($row->term_id) . ' ' . $row->term; //todo: term_id thorugh mapping gt
-		$row->lectureType			=  DataCache::getInstance()->resolveEventTypeById($event_type_id);
+		$row->termID				= DataCache::getInstance()->getTermTypeForId($row->term_type) . ' ' . $row->term; //todo: term_id thorugh mapping gt
+		$row->lectureType			= DataCache::getInstance()->resolveEventTypeById($event_type_id);
 		$plan_element_cont 			= $unit->getPlanElementContainer();
 		if(count($plan_element_cont) == 1)
 		{
