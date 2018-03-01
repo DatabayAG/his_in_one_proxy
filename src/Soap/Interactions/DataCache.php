@@ -708,6 +708,18 @@ class DataCache
 
 	/**
 	 * @param $id
+	 * @return array
+	 */
+	public function getTermTypeForId($id)
+	{
+		if(array_key_exists($id, self::$term_type_values))
+		{
+			return  self::$term_type_values[$id]->getDefaultText(); //todo: cleanup
+		}
+	}
+
+	/**
+	 * @param $id
 	 */
 	public function invalidatePersonInCache($id)
 	{
