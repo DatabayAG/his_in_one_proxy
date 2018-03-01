@@ -231,6 +231,7 @@ class Conductor
 	{
 		$services	= DataCache::getInstance();
 		$unit		= $services->getCourseInterfaceService()->readUnit($unit_id);
+		var_dump($unit);
 		$year               = $this->year;
 		$term_type_value_id = $this->term_id;
 

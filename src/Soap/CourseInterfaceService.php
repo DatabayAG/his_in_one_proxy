@@ -117,6 +117,7 @@ class CourseInterfaceService extends SoapService
 				$unit = $parser->parse($response->unit);
 
 				$response = $this->soap_service_router->getSoapClientUnitService()->__soapCall('findOrgunitsByUnit', $params);
+				var_dump($parser);
 				$parser		= new Parser\ParseOrgUnitList($this->log);
 				if(array_key_exists('unitOrgunitList', $response))
 				{
