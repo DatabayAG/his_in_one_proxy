@@ -112,7 +112,7 @@ class JsonBuilder
 		$row->comment1				= $unit->getComment();
 		$row->courseID				= $unit->getLid();
 		$row->lectureAssessmentType	= '';
-		$row->number				= '';
+		$row->number				= $unit->getElementNr();
 		$row->organisation			= ''; //Todo: where does this come from
 		$row->status				= $unit->getStatusId();
 		$row->study_courses			= $unit->getLid();
