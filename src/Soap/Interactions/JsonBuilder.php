@@ -104,6 +104,7 @@ class JsonBuilder
 	 */
 	protected static function addSimpleTypes($row, $unit, $event_type_id)
 	{
+		var_dump('Marko');
 		var_dump($row);
 		var_dump($unit);
 		var_dump($event_type_id);
