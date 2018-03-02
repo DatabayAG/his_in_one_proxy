@@ -154,7 +154,12 @@ class GlobalSettings
 	 * @var array
 	 */
 	protected $blocked_ids = array();
-	
+
+	/**
+	 * @var array
+	 */
+	protected $text_config;
+
 	/**
 	 * @param $name
 	 */
@@ -220,6 +225,7 @@ class GlobalSettings
 		$this->setPersonIdType($this->config->get('HIS.person_id_type'));
 		$this->setLoginSuffix($this->config->get('HIS.login_suffix'));
 		$this->setBlockedIds($this->config->get('HIS.blocked_ids'));
+		$this->setTextConfig($this->config->get('HIS.text'));
 
 		$this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
 		$this->end_point = new Endpoint();
@@ -292,7 +298,8 @@ class GlobalSettings
 			"HIS.soap_caching"               => $this->isSoapCaching(),
 			"HIS.actual_term_id"             => $this->getActualTermId(),
 			"HIS.actual_term_year"           => $this->getActualTermYear(),
-			"HIS.blocked_ids     "           => $this->getBlockedIds(),
+			"HIS.blocked_ids"                => $this->getBlockedIds(),
+			"HIS.text"                       => $this->getTextConfig(),
 			"ECS.auth_id"                    => $this->getEcsAuthId(),
 			"ECS.password"                   => $this->getEcsPassword(),
 			"ECS.url"                        => $this->getEcsServerUrl(),
@@ -712,5 +719,21 @@ class GlobalSettings
 	public function setHisToEcsSystemCourseIdMapping($his_to_ecs_system_course_id_mapping)
 	{
 		$this->his_to_ecs_system_course_id_mapping = $his_to_ecs_system_course_id_mapping;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getTextConfig()
+	{
+		return $this->text_config;
+	}
+
+	/**
+	 * @param array $text_config
+	 */
+	public function setTextConfig( $text_config)
+	{
+		$this->text_config = $text_config;
 	}
 }

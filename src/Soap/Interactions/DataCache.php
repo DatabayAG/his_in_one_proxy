@@ -589,7 +589,7 @@ class DataCache
 	{
 		if(array_key_exists($id, self::$event_type_list))
 		{
-			return self::$event_type_list[$id]->getDefaultText();
+			return self::$event_type_list[$id]->getText();
 		}
 		return null;
 	}
@@ -709,13 +709,13 @@ class DataCache
 
 	/**
 	 * @param $id
-	 * @return TermType
+	 * @return string
 	 */
 	public function getTermTypeForId($id)
 	{
-		if(array_key_exists($id, self::$term_type_values))
+		if(is_array(self::$term_type_values) && array_key_exists($id, self::$term_type_values))
 		{
-			return  self::$term_type_values[$id];
+			return  self::$term_type_values[$id]->getText();
 		}
 	}
 

@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel;
 
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
 
@@ -11,6 +12,8 @@ use HisInOneProxy\Exceptions;
  */
 class PlanElement
 {
+	const TEXT = 'plan_element';
+
 	use Traits\AcademicYear, Traits\Achievements, Traits\CompulsoryRequirement,  Traits\Contents, Traits\Credits, Traits\DefaultLanguage, 
 		Traits\ExternOrganizer, Traits\GenderId, Traits\Grading, Traits\Literature, Traits\LearningTarget, Traits\LockVersion,
 		Traits\ObjectiveQualification, Traits\ObjGuid,  Traits\RecommendedRequirement, Traits\TargetGroup, Traits\TeachingLanguageId,
@@ -95,6 +98,21 @@ class PlanElement
 	 * @var PlanningPreference
 	 */
 	protected $planning_preference;
+
+	/**
+	 * @return string
+	 */
+	public function getText()
+	{
+		if(array_key_exists(self::TEXT, GlobalSettings::getInstance()->getTextConfig()))
+		{
+			if(method_exists($this, GlobalSettings::getInstance()->getTextConfig()[self::TEXT]))
+			{
+				return $this->{GlobalSettings::getInstance()->getTextConfig()[self::TEXT]}();
+			}
+		}
+		return $this->getDefaultText();
+	}
 
 	/**
 	 * @return int

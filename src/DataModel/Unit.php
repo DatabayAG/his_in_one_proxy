@@ -3,6 +3,7 @@
 namespace HisInOneProxy\DataModel;
 
 use HisInOneProxy\DataModel\Container\ChildRelationContainer;
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
 
@@ -12,6 +13,8 @@ use HisInOneProxy\Exceptions;
  */
 class Unit
 {
+	const TEXT = 'unit';
+
 	use Traits\Comment, Traits\DefaultLanguage, Traits\Lid, Traits\LockVersion, Traits\ObjGuid, Traits\Text, Traits\Valid, Traits\Version;
 
 	/**
@@ -58,6 +61,21 @@ class Unit
 	 * @var CourseOfStudy[]
 	 */
 	protected $course_of_studies;
+
+	/**
+	 * @return string
+	 */
+	public function getText()
+	{
+		if(array_key_exists(self::TEXT, GlobalSettings::getInstance()->getTextConfig()))
+		{
+			if(method_exists($this, GlobalSettings::getInstance()->getTextConfig()[self::TEXT]))
+			{
+				return $this->{GlobalSettings::getInstance()->getTextConfig()[self::TEXT]}();
+			}
+		}
+		return $this->getDefaultText();
+	}
 	
 	/**
 	 * @return string

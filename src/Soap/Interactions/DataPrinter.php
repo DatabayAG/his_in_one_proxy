@@ -40,7 +40,7 @@ class DataPrinter
 		$tabs = $this->buildTabs($level);
 		foreach($units as $unit)
 		{
-			$this->log->debug(sprintf($tabs . '|* Unit: %s, %s', $unit->getDefaultText(), $unit->getLongText()));
+			$this->log->debug(sprintf($tabs . '|* Unit: %s', $unit->getText()));
 			$this->log->debug(sprintf($tabs . "\t|- %s, %s, %s, %s", $unit->getId(), $unit->getLid(), $unit->getStatusId(), $unit->getElementNr()));
 			$this->printPlanElementContainer($unit->getPlanElementContainer(), $unit,$level + 2);
 			$this->printOrgUnitForUnit($unit->getOrgUnitsContainer(), $level + 2);
@@ -59,7 +59,7 @@ class DataPrinter
 		foreach($plan_element_container as $plan_element)
 		{
 			$this->printCourseMapping($unit->getCourseMappingContainer(), $level);
-			$this->log->debug(sprintf($tabs . '|* PlanElement: %s, %s, %s', $plan_element->getShortText(), $plan_element->getLongText(), $plan_element->getId()));
+			$this->log->debug(sprintf($tabs . '|* PlanElement: %s, %s', $plan_element->getText(), $plan_element->getId()));
 			$this->log->debug(sprintf($tabs ."\t|- ". 'Attendee Min: %s, Attendee Max:%s', $plan_element->getAttendeeMinimum(), $plan_element->getAttendeeMaximum()));
 			$this->log->debug(sprintf($tabs ."\t|- ". 'Cancelled: %s, Credits:%s', $plan_element->getCancelled(), $plan_element->getCredits()));
 			$this->log->debug(sprintf($tabs ."\t|- ". 'Hours: %s, ParallelGroupId:%s => %s', $plan_element->getHoursPerWeek(), $plan_element->getParallelGroupId(), DataCache::getInstance()
@@ -356,7 +356,7 @@ class DataPrinter
 		if(is_a($obj, 'HisInOneProxy\DataModel\OrgUnit'))
 		{
 			$tabs = $this->buildTabs($level);
-			$this->log->debug($tabs . "|* OrgUnits: " . $obj->getDefaultText() . ' Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ') Type: ('.$obj->getElementTypeId().') Number: ('.$obj->getElementNr().') ValidFrom: ('.$obj->getValidFrom().') ValidTo: ('.$obj->getValidTo().')');
+			$this->log->debug($tabs . "|* OrgUnits: " . $obj->getText() . ' Lid: (' . $obj->getLid() . ') Id: (' . $obj->getId() . ') Type: ('.$obj->getElementTypeId().') Number: ('.$obj->getElementNr().') ValidFrom: ('.$obj->getValidFrom().') ValidTo: ('.$obj->getValidTo().')');
 
 			$container = $obj->getChildContainer();
 			if(count($container) > 0)

@@ -16,7 +16,13 @@
 		},
 		"person_id_type" : "ecs_loginUID",
 		"login_suffix" : "",
-		"blocked_ids" : []
+		"blocked_ids" : [],
+		"text" : {
+			"current_term" : "getDefaultText",
+			"event_type" : "getDefaultText",
+			"plan_element" : "getDefaultText",
+			"unit" : "getDefaultText"
+		}
 	},
 	"ECS" : {
 		"auth_id"             : "",
