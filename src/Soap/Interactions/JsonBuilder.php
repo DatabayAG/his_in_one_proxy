@@ -116,7 +116,7 @@ class JsonBuilder
 		$row->organisation			= ''; //Todo: where does this come from
 		$row->status				= $unit->getStatusId();
 		$row->study_courses			= $unit->getLid();
-		$row->termID				= $row->term_type . ' ' . $row->term; //todo: term_id thorugh mapping gt
+		$row->termID				= DataCache::getInstance()->getTermTypeForId($row->term_type)->getDefaultText() . ' ' . $row->term;
 		$row->lectureType			= DataCache::getInstance()->resolveEventTypeById($event_type_id);
 		$plan_element_cont 			= $unit->getPlanElementContainer();
 		if(count($plan_element_cont) == 1)
@@ -340,7 +340,6 @@ class JsonBuilder
 				 */
 				foreach($accounts as $account)
 				{
-
 					$person				= new \stdClass();
 					$role				= DataCache::STUDENT;
 					if(is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement') || is_a($element, 'HisInOneProxy\DataModel\PersonExternals'))

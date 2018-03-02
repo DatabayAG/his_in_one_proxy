@@ -39,7 +39,7 @@ class TermTypeList
 	 */
 	public function appendTermType($term_type)
 	{
-		$this->term_type_container[] = $term_type;
+		$this->term_type_container[$term_type->getId()] = $term_type;
 	}
 
 	/**

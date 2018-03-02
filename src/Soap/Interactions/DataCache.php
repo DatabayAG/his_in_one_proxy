@@ -12,6 +12,7 @@ use HisInOneProxy\DataModel\Container\WorkStatusContainer;
 use HisInOneProxy\DataModel\EAddressType;
 use HisInOneProxy\DataModel\OrgUnit;
 use HisInOneProxy\DataModel\Person;
+use HisInOneProxy\DataModel\TermType;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\AccountService;
@@ -708,13 +709,13 @@ class DataCache
 
 	/**
 	 * @param $id
-	 * @return array
+	 * @return TermType
 	 */
 	public function getTermTypeForId($id)
 	{
 		if(array_key_exists($id, self::$term_type_values))
 		{
-			return  self::$term_type_values[$id]->getDefaultText(); //todo: cleanup
+			return  self::$term_type_values[$id];
 		}
 	}
 
