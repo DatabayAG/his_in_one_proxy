@@ -27,15 +27,18 @@ class TermTypeListTest extends PHPUnit\Framework\TestCase
 	public function test_append_shouldReturnId()
 	{
 		$this->assertEquals(0, $this->instance->getSizeOfContainer());
-		$this->instance->appendTermType(new DataModel\TermType());
+		$term = new DataModel\TermType();
+		$term->setId(1);
+		$this->instance->appendTermType($term);
 		$this->assertEquals(1, $this->instance->getSizeOfContainer());
-		$this->instance->appendTermType(new DataModel\TermType());
+		$term = new DataModel\TermType();
+		$term->setId(5);
+		$this->instance->appendTermType($term);
 		$this->assertEquals(2, $this->instance->getSizeOfContainer());
-		$this->instance->appendTermType(new DataModel\TermType());
+		$term = new DataModel\TermType();
+		$term->setId(6);
+		$this->instance->appendTermType($term);
 		$this->assertEquals(3, $this->instance->getSizeOfContainer());
-		$this->instance->appendTermType(new DataModel\TermType());
-		$this->assertEquals(4, $this->instance->getSizeOfContainer());
-		$this->assertEquals(4, count($this->instance->getTermTypeContainer()));
 	}
 
 	public function test_generatorTest_shouldReturnInstance()

@@ -158,7 +158,7 @@ class GlobalSettings
 	/**
 	 * @var array
 	 */
-	protected $text_config;
+	protected $text_config = array();
 
 	/**
 	 * @param $name

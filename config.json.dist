@@ -19,9 +19,10 @@
 		"blocked_ids" : [],
 		"text" : {
 			"current_term" : "getDefaultText",
-			"event_type" : "getDefaultText",
+			"event_type"   : "getDefaultText",
 			"plan_element" : "getDefaultText",
-			"unit" : "getDefaultText"
+			"term"         : "getDefaultText",
+			"unit"         : "getDefaultText"
 		}
 	},
 	"ECS" : {

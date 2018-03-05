@@ -158,13 +158,13 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString( 'Debug: |* Unit: , ', $msg);
+		$this->assertEqualClearedString( 'Debug: |* Unit: ', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug:|*OrgUnits:blaOrg-Lid:()Id:()', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString( 'Debug: |* Unit: , ', $msg);
+		$this->assertEqualClearedString( 'Debug: |* Unit: ', $msg);
 	}
 
 	public function test_printExamRelation_shouldPrintExamRelation()
@@ -354,7 +354,7 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug: 	|- Attendee Min: 3, Attendee Max:34');
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString($msg, 'Debug: |* PlanElement: short, long, 51');
+		$this->assertEqualClearedString($msg, 'Debug: |* PlanElement: , 51');
 
 	}
 
