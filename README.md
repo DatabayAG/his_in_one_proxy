@@ -27,9 +27,10 @@ If the Unittest with coverage segfaults remove the opcache extension!
 		"blocked_ids" : [], // Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with php with "php cmd.php gb"
 		"text" : { //getShortText | getDefaultText | getLongText
 			"current_term" : "getDefaultText",
-			"event_type" : "getDefaultText",
+			"event_type"   : "getDefaultText",
 			"plan_element" : "getDefaultText",
-			"unit" : "getDefaultText"
+			"term"         : "getDefaultText",
+			"unit"         : "getDefaultText"
 		}
 	},
 	"ECS" : {
