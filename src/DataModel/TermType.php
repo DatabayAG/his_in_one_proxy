@@ -26,6 +26,8 @@ class TermType
 	 */
 	public function getText()
 	{
+		var_dump('Marko3');
+		var_dump(GlobalSettings::getInstance()->getTextConfig());
 		if(array_key_exists(self::TEXT, GlobalSettings::getInstance()->getTextConfig()))
 		{
 			if(method_exists($this, GlobalSettings::getInstance()->getTextConfig()[self::TEXT]))

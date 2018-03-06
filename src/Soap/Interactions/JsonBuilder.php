@@ -118,7 +118,7 @@ class JsonBuilder
 		$row->study_courses			= $unit->getLid();
 		if(array_key_exists('term_type', $row))
 		{
-			$row->termID				= DataCache::getInstance()->getTermTypeForId($row->term_type) . ' ' . $row->term;
+			$row->termID			= DataCache::getInstance()->getTermTypeForId($row->term_type) . ' ' . $row->term;
 		}
 		$row->lectureType			= DataCache::getInstance()->resolveEventTypeById($event_type_id);
 		$plan_element_cont 			= $unit->getPlanElementContainer();
