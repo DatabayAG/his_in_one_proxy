@@ -713,7 +713,7 @@ class DataCache
 	 */
 	public function getTermTypeForId($id)
 	{
-		if(array_key_exists($id, self::$term_type_values))
+		if($id)
 		{
 			var_dump('Marko2');
 			var_dump(self::$term_type_values[$id]->getText());
