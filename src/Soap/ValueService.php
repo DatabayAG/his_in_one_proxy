@@ -347,7 +347,7 @@ class ValueService extends SoapService
 
 	/**
 	 * @param $lang
-	 * @return \HisInOneProxy\DataModel\Container\TermTypeList|null
+	 * @return \HisInOneProxy\DataModel\Container\TermTypeList|null| array
 	 */
 	public function getAllTermTypes($lang)
 	{
