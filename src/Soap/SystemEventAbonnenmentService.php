@@ -90,7 +90,7 @@ class SystemEventAbonnenmentService extends SoapService
 									));
 			try{
 				$response = $this->soap_service_router->getSoapSystemEventAbonnenmentClient()->__soapCall('register60', $params);
-				return $response;
+				var_dump($response);
 			}
 			catch(\SoapFault $exception)
 			{
@@ -127,7 +127,7 @@ class SystemEventAbonnenmentService extends SoapService
 							));
 			try{
 				$response = $this->soap_service_router->getSoapSystemEventAbonnenmentClient()->__soapCall('quitRegistration', $params);
-				return $response;
+				var_dump($response);
 			}
 			catch(\SoapFault $exception)
 			{
