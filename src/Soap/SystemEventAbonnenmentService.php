@@ -64,7 +64,7 @@ class SystemEventAbonnenmentService extends SoapService
 		foreach($this->objects as $key => $name)
 		{
 			$this->register($key, $endpoint);
-			echo "Registration for " . $key . "done. \n";
+			echo "Registration for " . $key . " done. \n";
 		}
 	}
 
@@ -108,7 +108,7 @@ class SystemEventAbonnenmentService extends SoapService
 	{
 		foreach($this->objects as $key => $name)
 		{
-			echo "Quitting registration for " . $key . "done. \n";
+			echo "Quitting registration for " . $key . " done. \n";
 			$this->quitRegistration($key);
 		}
 	}
