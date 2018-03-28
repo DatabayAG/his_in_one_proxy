@@ -764,7 +764,7 @@ class DataCache
 	/**
 	 * @return SystemEventAbonnenmentService
 	 */
-	public static function getSystemEventAboService(): SystemEventAbonnenmentService
+	public static function getSystemEventAboService()
 	{
 		return self::$system_event_abo_service;
 	}
