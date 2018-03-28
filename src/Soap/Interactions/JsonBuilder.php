@@ -382,7 +382,7 @@ class JsonBuilder
 			{
 				$org_unit->title	= $org_details->getLongText();
 			}
-			
+
 			$org_units[]		= $org_unit;
 		}
 		return $org_units;

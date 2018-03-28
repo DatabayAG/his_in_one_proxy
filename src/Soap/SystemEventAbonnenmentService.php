@@ -81,11 +81,11 @@ class SystemEventAbonnenmentService extends SoapService
 			$params = array(array(	'objecttype' => $object_type,
 									'subscriberName' => $this->subscriber_name,
 									'endpoint' => array(
-										'endpointUrl'		=> $endpoint->getUrlWithPort(),
-										'webServiceMethod'	=> $endpoint->getWebServiceMethod(),
-										'username'			=> $endpoint->getUserName(),
-										'password'			=> $endpoint->getPassword()
-										),
+													'endpointUrl'		=> $endpoint->getUrlWithPort(),
+													'webServiceMethod'	=> $endpoint->getWebServiceMethod(),
+													'username'			=> $endpoint->getUserName(),
+													'password'			=> $endpoint->getPassword()
+												),
 									  'events' => array('CREATE','READ', 'UPDATE','DELETE','ASSOCIATION','DEASSOCIATION')
 									));
 			try{

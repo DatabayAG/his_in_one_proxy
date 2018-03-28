@@ -17,7 +17,10 @@ class HisHttpServerProcess
 	 * @var \HisInOneProxy\Log\Log
 	 */
 	protected $log;
-	
+
+	/**
+	 * @var ProcessHandling 
+	 */
 	protected $process;
 
 	/**

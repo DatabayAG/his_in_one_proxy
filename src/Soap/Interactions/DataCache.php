@@ -63,7 +63,7 @@ class DataCache
 	protected static $work_status;
 
 	/**
-	 * @var TermTypeList
+	 * @var array
 	 */
 	protected static $term_type_values;
 
@@ -429,7 +429,7 @@ class DataCache
 	}
 
 	/**
-	 * @return TermTypeList
+	 * @return array
 	 */
 	public function getTermTypeValues()
 	{
