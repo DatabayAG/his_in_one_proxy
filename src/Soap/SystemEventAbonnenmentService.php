@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Endpoint;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\Interactions\DataCache;
@@ -14,9 +15,30 @@ class SystemEventAbonnenmentService extends SoapService
 {
 
 	protected $objects = array(
-		'person' => 'Person',
-		'student' => 'Student',
-		'examrelation' => 'Examrelation'
+		'person' 				=> 'Person',
+		'personinfo'			=> 'Personinfo',
+		'student'				=> 'Student',
+		'account'				=> 'Account',
+		'chipcard'				=> 'Chipcard',
+		'rolle'					=> 'Rolle',
+		'postaddress'			=> 'Postaddress',
+		'email'					=> 'EMail',
+		'phone'					=> 'Phone',
+		'personorgunit'			=> 'Personorgunit',
+		'degreeprogram'			=> 'DegreeProgram',
+		'degreeprogramprogress'	=> 'DegreeProgramProgress',
+		'personattribute'		=> 'PersonAttribute',
+		'individualdate'		=> 'IndividualDate',
+		'examrelation'			=> 'Examrelation'
+	);
+
+	protected $event_types = array(
+		'create' 		=> 'CREATE',
+		'read'			=> 'READ',
+		'update'		=> 'UPDATE',
+		'delete'		=> 'DELETE',
+		'association'	=> 'ASSOCIATION',
+		'deassociation'	=> 'DEASSOCIATION'
 	);
 
 	/**
@@ -32,6 +54,18 @@ class SystemEventAbonnenmentService extends SoapService
 	public function __construct($log, $soap_service_router)
 	{
 		parent::__construct($log, $soap_service_router);
+		$this->quitAllRegistrations();
+		$this->registerAll();
+	}
+
+	public function registerAll()
+	{
+		$endpoint = GlobalSettings::getInstance()->getEndPoint();
+		foreach($this->objects as $key => $name)
+		{
+			$this->register($key, $endpoint);
+			echo "Registration for " . $key . "done. \n";
+		}
 	}
 
 	/**
@@ -51,7 +85,8 @@ class SystemEventAbonnenmentService extends SoapService
 										'webServiceMethod'	=> $endpoint->getWebServiceMethod(),
 										'username'			=> $endpoint->getUserName(),
 										'password'			=> $endpoint->getPassword()
-										)
+										),
+									  'events' => array('CREATE','READ', 'UPDATE','DELETE','ASSOCIATION','DEASSOCIATION')
 									));
 			try{
 				$response = $this->soap_service_router->getSoapSystemEventAbonnenmentClient()->__soapCall('register60', $params);
@@ -67,6 +102,15 @@ class SystemEventAbonnenmentService extends SoapService
 			DataCache::getInstance()->getLog()->error(printf('Trying to register unknown object type (%s', $object_type));
 		}
 		return null;
+	}
+	
+	public function quitAllRegistrations()
+	{
+		foreach($this->objects as $key => $name)
+		{
+			echo "Quitting registration for " . $key . "done. \n";
+			$this->quitRegistration($key);
+		}
 	}
 
 	/**

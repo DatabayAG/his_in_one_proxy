@@ -25,6 +25,7 @@ use HisInOneProxy\Soap\OrgUnitService;
 use HisInOneProxy\Soap\PersonService;
 use HisInOneProxy\Soap\SoapServiceRouter;
 use HisInOneProxy\Soap\StudentService;
+use HisInOneProxy\Soap\SystemEventAbonnenmentService;
 use HisInOneProxy\Soap\TermService;
 use HisInOneProxy\Soap\UnitService;
 use HisInOneProxy\Soap\ValueService;
@@ -147,6 +148,11 @@ class DataCache
 	protected static $account_service;
 
 	/**
+	 * @var SystemEventAbonnenmentService
+	 */
+	protected static $system_event_abo_service;
+
+	/**
 	 * @var
 	 */
 	protected static $default_lang_id;
@@ -252,6 +258,7 @@ class DataCache
 		self::$value_service            = new ValueService(self::$log, self::$router);
 		self::$account_service          = new AccountService(self::$log, self::$router);
 		self::$address_service          = new AddressService(self::$log, self::$router);
+		self::$system_event_abo_service = new SystemEventAbonnenmentService(self::$log, self::$router);
 	}
 
 	protected static function readDefaultLanguage()
@@ -752,6 +759,14 @@ class DataCache
 	public function getStudentService()
 	{
 		return self::$student_service;
+	}
+
+	/**
+	 * @return SystemEventAbonnenmentService
+	 */
+	public static function getSystemEventAboService(): SystemEventAbonnenmentService
+	{
+		return self::$system_event_abo_service;
 	}
 
 	/**

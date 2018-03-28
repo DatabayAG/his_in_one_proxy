@@ -53,7 +53,7 @@ class HisHttpServer
 
 	protected function init()
 	{
-		#$this->addAliveTimer();
+		$this->addAliveTimer();
 		#$this->addHisMessageTimer();
 
 		$server = new Server(function (ServerRequestInterface $request) {
