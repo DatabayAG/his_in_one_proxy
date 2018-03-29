@@ -63,8 +63,8 @@ class SystemEventAbonnenmentService extends SoapService
 		$endpoint = GlobalSettings::getInstance()->getEndPoint();
 		foreach($this->objects as $key => $name)
 		{
-			$this->register($key, $endpoint);
-			echo "Registration for " . $key . " done. \n";
+			$this->register($name, $endpoint);
+			echo "Registration for " . $name . " done. \n";
 		}
 	}
 
@@ -108,8 +108,8 @@ class SystemEventAbonnenmentService extends SoapService
 	{
 		foreach($this->objects as $key => $name)
 		{
-			echo "Quitting registration for " . $key . " done. \n";
-			$this->quitRegistration($key);
+			echo "Quitting registration for " . $name . " done. \n";
+			$this->quitRegistration($name);
 		}
 	}
 
