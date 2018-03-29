@@ -37,7 +37,7 @@ class ValueServiceTest extends TestCaseExtension
 			->willReturn(simplexml_load_string('<resp><listOfTermTypes>'.file_get_contents('test/fixtures/term_type.xml').'</listOfTermTypes></resp>'));
 		$soap_client = new Soap\ValueService($this->log, $this->soap_client_router);
 		$value = $soap_client->getAllTermTypes(12);
-		$this->assertInstanceOf('HisInOneProxy\DataModel\Container\TermTypeList', $value);
+		$this->assertEquals(array(), $value);
 	}
 
 	public function test_getAllEAddressTypes_shouldReturnValue()

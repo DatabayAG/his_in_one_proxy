@@ -30,7 +30,7 @@ class ParseTermTypeListTest extends TestCaseExtension
 		$xml    = file_get_contents('test/fixtures/term_type_list.xml');
 		$parser =  new Parser\ParseTermTypeList($this->log);
 		$term_type_list = $parser->parse(simplexml_load_string($xml));
-		$term_type = $term_type_list->getTermTypeContainer()["432423"];
+		$term_type = $term_type_list["432423"];
 		$this->assertEquals('432423', $term_type->getId());
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEquals('Info: Found TermType with id 432423.', $msg);

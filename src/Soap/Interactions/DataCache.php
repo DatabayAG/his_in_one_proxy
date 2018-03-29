@@ -349,7 +349,7 @@ class DataCache
 	/**
 	 * @param $term_type_list
 	 */
-	protected function setTermTypeList($term_type_list)
+	public function setTermTypeList($term_type_list)
 	{
 		self::$term_type_values = $term_type_list;
 	}

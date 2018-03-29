@@ -12,6 +12,18 @@ require_once 'test/TestCaseExtension.php';
  */
 class JsonBuilderTest extends TestCaseExtension
 {
+	protected function setUp()
+	{
+		parent::setUp();
+		DataCache::getInstance()->setLog($this->log);
+		DataCache::getInstance()->setTermTypeList(array());
+	}
+
+	protected function tearDown()
+	{
+		DataCache::getInstance()->setTermTypeList(null);
+	}
+
 	/**
 	 * @return \HisInOneProxy\DataModel\OrgUnit
 	 */

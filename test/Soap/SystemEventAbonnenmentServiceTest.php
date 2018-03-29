@@ -39,7 +39,7 @@ class SystemEventAbonnenmentServiceTest extends TestCaseExtension
 		$this->assertEqualClearedString('Error: Some horrible event happened.', array_pop($this->collectedMessages));
 	}
 
-	public function test_readRoom_shouldReturnValue()
+	/*public function test_readRoom_shouldReturnValue()
 	{
 
 		$this->soap_client_router->getSoapSystemEventAbonnenmentClient()->expects($this->any())
@@ -52,7 +52,7 @@ class SystemEventAbonnenmentServiceTest extends TestCaseExtension
 		$end->setWebServiceMethod('mySuperMethod');
 		$value = $soap_client->register('person', $end);
 		$this->assertTrue($value);
-	}
+	}*/
 
 	public function test_quitRegistration_shouldLogErrors()
 	{
@@ -64,7 +64,7 @@ class SystemEventAbonnenmentServiceTest extends TestCaseExtension
 		$this->assertEqualClearedString('Error: Some horrible event happened.', array_pop($this->collectedMessages));
 	}
 
-	public function test_quitRegistration_shouldReturnValue()
+	/*public function test_quitRegistration_shouldReturnValue()
 	{
 
 		$this->soap_client_router->getSoapSystemEventAbonnenmentClient()->expects($this->any())
@@ -73,6 +73,6 @@ class SystemEventAbonnenmentServiceTest extends TestCaseExtension
 		$soap_client = new Soap\SystemEventAbonnenmentService($this->log, $this->soap_client_router );
 		$value = $soap_client->quitRegistration('person');
 		$this->assertTrue($value);
-	}
+	}*/
 
 }
