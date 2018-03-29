@@ -6,10 +6,8 @@ use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\CourseCatalogChild;
 use HisInOneProxy\DataModel\CourseCatalogLeaf;
 use HisInOneProxy\DataModel\ElearningCourseMapping;
-use HisInOneProxy\DataModel\ExamRelation;
 use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\OrgUnit;
-use HisInOneProxy\DataModel\PersonPlanElement;
 use HisInOneProxy\DataModel\PlanElement;
 use HisInOneProxy\DataModel\Unit;
 

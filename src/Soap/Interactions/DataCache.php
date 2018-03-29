@@ -3,7 +3,6 @@
 namespace HisInOneProxy\Soap\Interactions;
 
 use HisInOneProxy\DataModel\ChildRelation;
-use HisInOneProxy\DataModel\CompleteAccount;
 use HisInOneProxy\DataModel\Container\CourseMappingTypeContainer;
 use HisInOneProxy\DataModel\Container\ElearningPlatformContainer;
 use HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer;
@@ -12,7 +11,6 @@ use HisInOneProxy\DataModel\Container\WorkStatusContainer;
 use HisInOneProxy\DataModel\EAddressType;
 use HisInOneProxy\DataModel\OrgUnit;
 use HisInOneProxy\DataModel\Person;
-use HisInOneProxy\DataModel\TermType;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\AccountService;

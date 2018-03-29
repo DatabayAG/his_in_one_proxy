@@ -3,7 +3,6 @@
 namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Parser;
-use HisInOneProxy\Soap\Interactions\DataCache;
 
 /**
  * Class ValueService
