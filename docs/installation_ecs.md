@@ -1,21 +1,16 @@
 ## ECS Configuration
-
 Download http://freeit.de/pub/ecs4_1.2.0-20180301120015_amd64.deb
 
 ### Installation of needed packages
-
     apt-get install mysql-common libpq5 libsqlite3-0 openssl libxml2 libxslt1.1 libssl1.0.2 libmariadbclient18 libevent-2.0-5 libevent-core-2.0-5 libevent-extra-2.0-5 libreadline7 postgresql
 
 ### Installation ECS4
-
     dpkg -i ecs4_1.2.0-20180301120015_amd64.deb
 
 ### Database
-
     su - postgres
     createuser -d ecs4 
     exit
-
 
 ## ECS4 Configuration
     su ecs4
@@ -25,7 +20,6 @@ Download http://freeit.de/pub/ecs4_1.2.0-20180301120015_amd64.deb
     ecs4 run web 
       ---> Port: 8080 <-- check this
     exit
-
     ecs4 scale web=1
 
 ### View logs
@@ -35,24 +29,21 @@ Download http://freeit.de/pub/ecs4_1.2.0-20180301120015_amd64.deb
     dpg -i install neuesecs.deb
     ecs4 restart
 
-### Nginx-Proxy and user passwort authentication
+### nginx proxy and user password authentication
     apt-get install nginx apache2-utils
     cd /etc/nginx
     mkdir conf
     htpasswd -c /etc/nginx/conf.ecs ecsuser
 
 ### Example vhost nginx
-    upstream ecs {
-    
-            server localhost:8080;
-    
+    upstream ecs { 
+            server localhost:8080; 
     }
     
     server {
-    
             server_name toBeReplaced.com
             listen 80;
-    
+             
             # Logfiles
             access_log /var/log/nginx/ecs_access.log;
             access_log on;
@@ -60,28 +51,23 @@ Download http://freeit.de/pub/ecs4_1.2.0-20180301120015_amd64.deb
             error_log /var/log/nginx/ecs_error.log;
             error_log on;
     
-    
-            location / {
+                location / {
                     return 301 https://tobeReplaced.com;
             }
     
     }
     
     server {
-    
             server_name DUMMY_SERVER;
             listen 443 ssl http2;
     
             error_page 404 /local/404.html;
             error_page 403 502 504 =503 /local/503.html;
     
-    
             location / {
-                    proxy_pass http://ecs;
-    
-                    auth_basic           "closed site";
-                    auth_basic_user_file conf/.ecs;
-    
+                  proxy_pass http://ecs;
+                  auth_basic           "closed site";
+                  auth_basic_user_file conf/.ecs;
                   allow all;
             }
     
@@ -109,8 +95,6 @@ Download http://freeit.de/pub/ecs4_1.2.0-20180301120015_amd64.deb
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     
             proxy_set_header X-EcsAuthId $remote_user;
-    
-    
             proxy_connect_timeout 300s;
             proxy_read_timeout 3600s;
             proxy_send_timeout 3600s;
