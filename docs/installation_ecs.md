@@ -18,9 +18,9 @@ Download http://freeit.de/pub/ecs4_1.2.0-20180301120015_amd64.deb
     ecs4 run rake cc:ressources
     ecs4 config:set PORT=8080
     ecs4 run web 
-      ---> Port: 8080 <-- check this
     exit
     ecs4 scale web=1
+Ensure the port is correct!
 
 ### View logs
     ecs4 logs
