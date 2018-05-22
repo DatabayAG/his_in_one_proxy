@@ -26,7 +26,7 @@ Ensure the port is correct!
     ecs4 logs
 
 ### Update
-    dpg -i install neuesecs.deb
+    dpkg -i install neuesecs.deb
     ecs4 restart
 
 ### nginx proxy and user password authentication
