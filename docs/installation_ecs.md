@@ -18,8 +18,7 @@ Download http://freeit.de/pub/ecs4_1.2.0-20180301120015_amd64.deb
 
 
 ## ECS4 Configuration
-su ecs4
-
+    su ecs4
     ecs4 run rake db:setup
     ecs4 run rake cc:ressources
     ecs4 config:set PORT=8080
@@ -30,23 +29,19 @@ su ecs4
     ecs4 scale web=1
 
 ### View logs
-
     ecs4 logs
 
 ### Update
-
     dpg -i install neuesecs.deb
     ecs4 restart
 
 ### Nginx-Proxy and user passwort authentication
-
     apt-get install nginx apache2-utils
     cd /etc/nginx
     mkdir conf
     htpasswd -c /etc/nginx/conf.ecs ecsuser
 
 ### Example vhost nginx
-
     upstream ecs {
     
             server localhost:8080;
