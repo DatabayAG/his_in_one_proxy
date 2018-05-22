@@ -58,6 +58,7 @@ class ConsoleHandler
 	 * ConsoleHandler constructor.
 	 * @param null $term
 	 * @param null $year
+	 * @throws \Exception
 	 */
 	public function __construct($term = null, $year = null)
 	{
@@ -369,6 +370,9 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	/**
+	 * @param $param
+	 */
 	protected function readEAddressesForPerson($param)
 	{
 		// 1109
@@ -378,11 +382,14 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
-
+	/**
+	 * @param $id
+	 */
 	public function readAccount($id)
 	{
 		var_dump(DataCache::getInstance()->getAccountService()->searchAccountForPerson61($id));
 	}
+
 	/**
 	 * 
 	 */
@@ -517,6 +524,7 @@ class ConsoleHandler
 
 	/**
 	 * @return array
+	 * @throws \ReflectionException
 	 */
 	protected function gatherServicesForWsdl()
 	{
