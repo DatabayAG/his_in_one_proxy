@@ -41,7 +41,7 @@ Ensure the port is correct!
     }
     
     server {
-            server_name toBeReplaced.com
+            server_name DUMMY_SERVER
             listen 80;
              
             # Logfiles
