@@ -19,11 +19,11 @@
 * _soap_caching_: SOAP Caching active(1) or inactive (0)
 * _soap_debug_: SOAP Debug (true/false) if true all response xml gets dumpt to shell
 * _endpoint_: The Endpoint for the HISInOne Queue
-  * _register_listener_: Listener active (true/false)
-  * _listener_url_: URL/IP for listener
-  * _listener_port_: Port for listener
-  * _username_: Username for listener
-  * _password_: Password for listener
+  1. _register_listener_: Listener active (true/false)
+  2. _listener_url_: URL/IP for listener
+  3. _listener_port_: Port for listener
+  4. _username_: Username for listener
+  5. _password_: Password for listener
 * _person_id_type_:  The identification value for the users. possible personIDtype values:
   1. ecs_PersonalUniqueCode
   2. ecs_ePPN
@@ -44,13 +44,13 @@
 #### Block General
 * _HIStoECSMapping_: Maps the System Id from HISinOne to the ECS Server
   1. SYSTEM_ID_HIS : SYSTEM_ID_ECS (MembershipID (mid) Community)
-
-Use "php cmd.php ge" to get the course Elearning Id from your HIS installation
+    
+   Use "php cmd.php ge" to get the course Elearning Id from your HIS installation
 
 * _HIStoECSCourseMapping_: Maps the Course type from HISinOne to the course type in the target system 
   1. COURSE_TYPE_ID_HIS : COURSE_TYPE_ID_ECS
 
-Use "php cmd.php cm" to get the course Mapping Id from your HIS installation
+   Use "php cmd.php cm" to get the course Mapping Id from your HIS installation
 
 * _path_to_queue_: Path to queue from his_in_one_proxy
 * _path_to_log_: Path to logfile from his_in_one_proxy
