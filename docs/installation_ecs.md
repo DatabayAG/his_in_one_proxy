@@ -52,7 +52,7 @@ Ensure the port is correct!
             error_log on;
     
                 location / {
-                    return 301 https://tobeReplaced.com;
+                    return 301 https://DUMMY_SERVER;
             }
     
     }
