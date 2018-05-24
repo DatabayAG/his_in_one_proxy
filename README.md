@@ -1,6 +1,8 @@
 # HISinOne Proxy
 If the Unittest with coverage segfaults remove the opcache extension!
 
+**For a more detailed instruction consult the ``docs`` folder!**
+
 ## Config description
 	"HIS" : {
 		"username"           : "Username for HisInOne Server",
