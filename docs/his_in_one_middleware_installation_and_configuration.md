@@ -27,19 +27,19 @@
   4. _username_: Username for listener  
   5. _password_: Password for listener  
 * _person_id_type_:  The identification value for the users. possible personIDtype values:  
-     ecs_PersonalUniqueCode 
-     ecs_ePPN 
-     ecs_login 
-     ecs_loginUID e
-     cs_uid ecs_email 
+     * ecs_PersonalUniqueCode 
+     * ecs_ePPN 
+     * ecs_login 
+     * ecs_loginUID e
+     * ecs_uid ecs_email 
 
  * _login_suffix_: String which should be appended to login name  
 * _blocked_ids_: Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with:   
     `php cmd.php gb`  
 * _text_: Which function should be used to retrieve a text from an object, possible values are: 
-     getShortText    
-     getDefaultText   
-     getLongText  
+     * getShortText    
+     * getDefaultText   
+     * getLongText  
 
 #### Block ECS 
 * _auth_id_: AUTH id for ecs server  
@@ -55,10 +55,10 @@
   1. COURSE_TYPE_ID_HIS : COURSE_TYPE_ID_ECS  
      **Use `php cmd.php cm` to get the course Mapping Id from your HIS installation**  
    * The ILIAS Course ids are the following:  
-     PARALLEL_ONE_COURSE => 0 
-     PARALLEL_GROUPS_IN_COURSE => 1 
-     PARALLEL_ALL_COURSES => 2 
-     PARALLEL_COURSES_FOR_LECTURERS => 3
+     * PARALLEL_ONE_COURSE => 0 
+     * PARALLEL_GROUPS_IN_COURSE => 1 
+     * PARALLEL_ALL_COURSES => 2 
+     * PARALLEL_COURSES_FOR_LECTURERS => 3
 
  * _path_to_queue_: Path to queue from his_in_one_proxy  
 * _path_to_log_: Path to logfile from his_in_one_proxy  
