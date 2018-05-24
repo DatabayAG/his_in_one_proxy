@@ -53,6 +53,12 @@
 
    **Use "php cmd.php cm" to get the course Mapping Id from your HIS installation**
 
+    * The ILIAS Course ids are the following:
+      * PARALLEL_ONE_COURSE => 0
+      * PARALLEL_GROUPS_IN_COURSE => 1
+      * PARALLEL_ALL_COURSES => 2
+      * PARALLEL_COURSES_FOR_LECTURERS => 3
+
 * _path_to_queue_: Path to queue from his_in_one_proxy
 * _path_to_log_: Path to logfile from his_in_one_proxy
 * _keep_elements_in_queue_: Keep elements in queue and do not delete them (true/false)
