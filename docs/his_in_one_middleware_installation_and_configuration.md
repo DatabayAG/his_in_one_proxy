@@ -41,7 +41,8 @@
      getDefaultText   
      getLongText  
 
-#### Block ECS * _auth_id_: AUTH id for ecs server  
+#### Block ECS 
+* _auth_id_: AUTH id for ecs server  
 * _url_: URL to ecs server  
 * _ssl_validation_: SSL validation (true/false)  
  
