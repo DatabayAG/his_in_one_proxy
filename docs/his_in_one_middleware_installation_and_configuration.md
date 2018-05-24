@@ -25,19 +25,23 @@
   4. _username_: Username for listener
   5. _password_: Password for listener
 * _person_id_type_:  The identification value for the users. possible personIDtype values:
-  1. ecs_PersonalUniqueCode
-  2. ecs_ePPN
-  3. ecs_login
-  4. ecs_loginUID
-  5. ecs_uid
-  6. ecs_email
+    ```
+    ecs_PersonalUniqueCode
+    ecs_ePPN
+    ecs_login
+    ecs_loginUID
+    ecs_uid
+    ecs_email
+  ```
 * _login_suffix_: String which should be appended to login name
 * _blocked_ids_: Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with: 
-    **php cmd.php gb**
+    ```php cmd.php gb```
 * _text_: Which function should be used to retrieve a text from an object, possible values are
-  1. getShortText 
-  2. getDefaultText 
-  3. getLongText
+    ```
+    getShortText 
+    getDefaultText 
+    getLongText
+    ```
 #### Block ECS 
 * _auth_id_: AUTH id for ecs server
 * _url_: URL to ecs server
@@ -46,19 +50,20 @@
 * _HIStoECSMapping_: Maps the System Id from HISinOne to the ECS Server
   1. SYSTEM_ID_HIS : SYSTEM_ID_ECS (MembershipID (mid) Community)
     
-   **Use "php cmd.php ge" to get the course Elearning Id from your HIS installation**
+   **Use ```php cmd.php ge``` to get the course Elearning Id from your HIS installation**
 
 * _HIStoECSCourseMapping_: Maps the Course type from HISinOne to the course type in the target system 
   1. COURSE_TYPE_ID_HIS : COURSE_TYPE_ID_ECS
 
-   **Use "php cmd.php cm" to get the course Mapping Id from your HIS installation**
+   **Use ```php cmd.php cm``` to get the course Mapping Id from your HIS installation**
 
     * The ILIAS Course ids are the following:
-      * PARALLEL_ONE_COURSE => 0
-      * PARALLEL_GROUPS_IN_COURSE => 1
-      * PARALLEL_ALL_COURSES => 2
-      * PARALLEL_COURSES_FOR_LECTURERS => 3
-
+      ```
+      PARALLEL_ONE_COURSE => 0
+      PARALLEL_GROUPS_IN_COURSE => 1
+      PARALLEL_ALL_COURSES => 2
+      PARALLEL_COURSES_FOR_LECTURERS => 3
+      ```
 * _path_to_queue_: Path to queue from his_in_one_proxy
 * _path_to_log_: Path to logfile from his_in_one_proxy
 * _keep_elements_in_queue_: Keep elements in queue and do not delete them (true/false)
@@ -120,3 +125,56 @@
     			"coverage" : "true"
     	}
     }
+### All possible command
+```
+php cmd.php
+```
+This should give you a list of all possible commands, below you see an example from the output:
+```
+Usage: php cmd.php function [term] [year] [param]
+    lc => Gets all lectures and add them to queue.
+    li => Gets a Lecture by id. Uses id as param.
+    in => Gets all institutions.
+    cc => Gets course catalog.
+    ge => Gets all elearning platforms.
+    gb => Gets all blocked id states.
+    ts => Gets wsdls needed for unittests and runs tests.
+    sq => Starts queue which is used to communicate with the ecs server.
+    se => Starts his listener which listens to the system events from his server.
+    cm => Gets all course mapping types.
+    ro => (Debug) Get root id of term
+    le => (Debug) Gets course catalog leaf by id.
+    gg => (Debug) Gets all gender types.
+    gp => (Debug) Gets all parallel group types.
+    gw => (Debug) Gets all work status types.
+    gt => (Debug) Gets all term types.
+    gl => (Debug) Gets all language types.
+    ga => (Debug) Gets all eaddress tags.
+    gy => (Debug) Gets all eaddress types.
+    gf => (Debug) Gets all field of study types.
+    gm => (Debug) Gets all mayor field of studies types.
+    go => (Debug) Gets all org unit attributes types.
+    gs => (Debug) Gets all org unit types.
+    gc => (Debug) Gets all person group types.
+    dl => (Debug) Gets default language id.
+    ct => (Debug) Gets current term.
+    rs => (Debug) Read student with course of study by person id
+    ci => (Debug) Get course of study by id.
+    rp => (Debug) Reads person by id.
+    ra => (Debug) Reads account by id.
+    sa => (Debug) Reads accounts by person id.
+    ea => (Debug) Reads electronic addresses by person id.
+    et => (Debug) Reads element types.
+    cs => (Debug) Reads all event types.
+```
+The functions with the ```(Debug)``` prefix only get printed to console if you have set the ```debug``` option to ```true``` in your config file!
+
+### Example of usage
+The example below reads all courses which are exported to an elearning system for the second term in 2017:
+```
+php cmd.php lc 2 2017
+```
+The call below would export you only the course with the id ```47117230```
+```
+php cmd.php li 2 2017 47117230
+```
