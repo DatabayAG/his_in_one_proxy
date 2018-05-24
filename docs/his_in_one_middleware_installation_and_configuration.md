@@ -173,7 +173,7 @@ The example below reads all courses which are exported to an elearning system fo
 ```  
 php cmd.php lc 2 2017  
 ```  
-The call below would export you only the course with the id ```47117230```  
+The call below would export only the course with the id ```47117230```  
 ```  
 php cmd.php li 2 2017 47117230  
 ```
