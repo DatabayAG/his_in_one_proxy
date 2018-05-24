@@ -32,7 +32,8 @@
   5. ecs_uid
   6. ecs_email
 * _login_suffix_: String which should be appended to login name
-* _blocked_ids_: Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with php with "php cmd.php gb"
+* _blocked_ids_: Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with: 
+    **php cmd.php gb**
 * _text_: Which function should be used to retrieve a text from an object, possible values are
   1. getShortText 
   2. getDefaultText 
@@ -45,12 +46,12 @@
 * _HIStoECSMapping_: Maps the System Id from HISinOne to the ECS Server
   1. SYSTEM_ID_HIS : SYSTEM_ID_ECS (MembershipID (mid) Community)
     
-   Use "php cmd.php ge" to get the course Elearning Id from your HIS installation
+   **Use "php cmd.php ge" to get the course Elearning Id from your HIS installation**
 
 * _HIStoECSCourseMapping_: Maps the Course type from HISinOne to the course type in the target system 
   1. COURSE_TYPE_ID_HIS : COURSE_TYPE_ID_ECS
 
-   Use "php cmd.php cm" to get the course Mapping Id from your HIS installation
+   **Use "php cmd.php cm" to get the course Mapping Id from your HIS installation**
 
 * _path_to_queue_: Path to queue from his_in_one_proxy
 * _path_to_log_: Path to logfile from his_in_one_proxy
