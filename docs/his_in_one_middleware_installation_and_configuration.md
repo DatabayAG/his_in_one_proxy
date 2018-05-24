@@ -66,3 +66,56 @@
 * _debug_: Debug mode active for his_in_one_proxy (true/false)
 * _PHPUnit_:   
   * _coverage_: PHPUnit coverage when running unittest (true/false)
+
+## Example Config
+
+    {
+    	"HIS" : {
+    		"username"           : "myGreatHISinOneUsername",
+    		"password"           : "myGreatHISinOnePAssword",
+    		"url"                : "https://myGreatHISinOneURL/qisserver/services2/",
+    		"soap_caching"       : "1",
+    		"soap_debug"         : "false",
+    		"actual_term_id"     : 2,
+    		"actual_term_year"   : 2017,
+    		"endpoint"           : {
+    			"register_listener"  : "false",
+    			"listener_url"       : "192.168.1.2",
+    			"listener_port"      : "83",
+    			"username"           : "",
+    			"password"           : ""
+    		},
+    		"person_id_type" : "ecs_loginUID",
+    		"login_suffix" : "",
+    		"blocked_ids" : [4, 2],
+    		"text" : {
+    			"current_term" : "getDefaultText",
+    			"event_type"   : "getDefaultText",
+    			"plan_element" : "getDefaultText",
+    			"term"         : "getDefaultText",
+    			"unit"         : "getLongText"
+    		}
+    	},
+    	"ECS" : {
+    		"auth_id"            : "myECSAuthId",
+    		"url"                : "http://192.168.1.183:8080",
+    		"ssl_validation"     : "false"
+    	},
+    	"HIStoECSMapping": {
+    		"7" : "666",
+    		"8" : "512"
+    	},
+    	"HIStoECSCourseMapping" : {
+    		"1" : "0",
+    		"2" : "1",
+    		"3" : "2"
+    	},
+    	"path_to_queue"          : "/opt/his_middleware/simple_queue2/",
+    	"path_to_log"            : "//opt/his_middleware/log/debug.log",
+    	"keep_elements_in_queue" : "true",
+    	"queue_timer"            : "1",
+    	"debug"                  : "true",
+    	"PHPUnit"                : {
+    			"coverage" : "true"
+    	}
+    }
