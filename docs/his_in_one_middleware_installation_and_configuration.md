@@ -72,7 +72,7 @@
     {
     	"HIS" : {
     		"username"           : "myGreatHISinOneUsername",
-    		"password"           : "myGreatHISinOnePAssword",
+    		"password"           : "myGreatHISinOnePassword",
     		"url"                : "https://myGreatHISinOneURL/qisserver/services2/",
     		"soap_caching"       : "1",
     		"soap_debug"         : "false",
@@ -98,6 +98,7 @@
     	},
     	"ECS" : {
     		"auth_id"            : "myECSAuthId",
+    		"password"           : "myHighlySecretPasswort47!!",
     		"url"                : "http://192.168.1.183:8080",
     		"ssl_validation"     : "false"
     	},
@@ -111,7 +112,7 @@
     		"3" : "2"
     	},
     	"path_to_queue"          : "/opt/his_middleware/simple_queue2/",
-    	"path_to_log"            : "//opt/his_middleware/log/debug.log",
+    	"path_to_log"            : "/opt/his_middleware/log/debug.log",
     	"keep_elements_in_queue" : "true",
     	"queue_timer"            : "1",
     	"debug"                  : "true",
