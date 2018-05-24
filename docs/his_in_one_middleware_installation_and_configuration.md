@@ -9,8 +9,11 @@
     git clone https://gitlab.databay.de/ilias-utils/his_in_one_proxy  
   
 ## Configure the middleware  
+
 ### Create a config file  
- cp config.json.dist config.json### Config file in details  
+ cp config.json.dist config.json
+ 
+### Config file in details  
 #### Block HIS  
 * _username_: Username for HisInOne Server  
 * _password_: Password for HisInOne Server  
@@ -38,7 +41,7 @@
      getDefaultText   
      getLongText  
 
- #### Block ECS * _auth_id_: AUTH id for ecs server  
+#### Block ECS * _auth_id_: AUTH id for ecs server  
 * _url_: URL to ecs server  
 * _ssl_validation_: SSL validation (true/false)  
  
