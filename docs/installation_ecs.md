@@ -105,7 +105,7 @@ Ensure the port is correct!
 
 ## Configuring the  ECS server
 - create a community with a name XYZ
-- create a participant with a name and the ILIAS-URL and add it to the XYZ community, the user id has to be equal with the usernam ein the nginx passwd file.
+- create a participant with a name and the ILIAS-URL and add it to the XYZ community, the user id has to be equal with the username in the nginx passwd file.
 
 ## in ILIAS
 - Create a new import category in your repository and add the ref-id to the configuration
