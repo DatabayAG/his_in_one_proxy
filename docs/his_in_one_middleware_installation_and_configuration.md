@@ -4,14 +4,14 @@
 **You need a running HISinOne, ECS Server and ILIAS installation.**  
   
 ## Needed packages  
- apt-get install php-7.0 php7.0-xml php7.0-soap  
+    apt-get install php-7.0 php7.0-xml php7.0-soap  
 ## Clone the project   
     git clone https://gitlab.databay.de/ilias-utils/his_in_one_proxy  
   
 ## Configure the middleware  
 
 ### Create a config file  
- cp config.json.dist config.json
+    cp config.json.dist config.json
  
 ### Config file in details  
 #### Block HIS  
