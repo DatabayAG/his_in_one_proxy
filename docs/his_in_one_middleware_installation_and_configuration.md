@@ -27,20 +27,18 @@
   4. _username_: Username for listener  
   5. _password_: Password for listener  
 * _person_id_type_:  The identification value for the users. possible personIDtype values:  
-   * ecs_PersonalUniqueCode 
-   * ecs_ePPN 
-   * ecs_login 
-   * ecs_loginUID e
-   * ecs_uid ecs_email 
-
- * _login_suffix_: String which should be appended to login name  
+  * ecs_PersonalUniqueCode 
+  * ecs_ePPN 
+  * ecs_login 
+  * ecs_loginUID e
+  * ecs_uid ecs_email 
+* _login_suffix_: String which should be appended to login name  
 * _blocked_ids_: Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with:   
     `php cmd.php gb`  
 * _text_: Which function should be used to retrieve a text from an object, possible values are: 
   * getShortText    
   * getDefaultText   
   * getLongText  
-
 #### Block ECS 
 * _auth_id_: AUTH id for ecs server  
 * _url_: URL to ecs server  
