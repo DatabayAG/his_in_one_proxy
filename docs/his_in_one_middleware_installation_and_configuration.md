@@ -38,7 +38,8 @@
 * _text_: Which function should be used to retrieve a text from an object, possible values are: 
   * getShortText    
   * getDefaultText   
-  * getLongText  
+  * getLongText
+  
 #### Block ECS 
 * _auth_id_: AUTH id for ecs server  
 * _url_: URL to ecs server  
