@@ -331,27 +331,31 @@ class Conductor
 		if(!array_key_exists($unit->getId(), $this->course_of_studies))
 		{
 			$course_ids = $services->getCourseInterfaceService()->getCourseOfStudiesForUnit($unit->getId());
-			foreach($course_ids->getCourseOfStudyIdContainer() as $course_id)
+			//Todo: check whats wrong here, only a quick fix
+			if($course_ids !== null)
 			{
-				if(array_key_exists($course_id, $cos_map))
-				{
-					$cos_lid = $cos_map[$course_id];
-					if(!array_key_exists($cos_lid, $cos_already))
-					{
-						$this->log->debug(sprintf('Read details for course of study %s.', $cos_lid));
-						$cos_already = $this->getCourseOfStudyDetails($cos_lid, $cos_already);
-					}
-					else
-					{
-						$this->log->debug(sprintf('Course of study %s was already found.', $cos_lid));
-					}
-				}
-				else
-				{
-					$this->log->warning(sprintf('Course of study with id %s was not found in map.', $course_id));
-				}
-			}
-			$unit->setCourseOfStudies($cos_already);
+                foreach($course_ids->getCourseOfStudyIdContainer() as $course_id)
+                {
+                    if(array_key_exists($course_id, $cos_map))
+                    {
+                        $cos_lid = $cos_map[$course_id];
+                        if(!array_key_exists($cos_lid, $cos_already))
+                        {
+                            $this->log->debug(sprintf('Read details for course of study %s.', $cos_lid));
+                            $cos_already = $this->getCourseOfStudyDetails($cos_lid, $cos_already);
+                        }
+                        else
+                        {
+                            $this->log->debug(sprintf('Course of study %s was already found.', $cos_lid));
+                        }
+                    }
+                    else
+                    {
+                        $this->log->warning(sprintf('Course of study with id %s was not found in map.', $course_id));
+                    }
+                }
+                $unit->setCourseOfStudies($cos_already);
+            }
 		}
 	}
 
