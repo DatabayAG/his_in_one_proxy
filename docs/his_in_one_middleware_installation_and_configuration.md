@@ -1,10 +1,9 @@
-
 # HISinOne Middleware Installation & Configuration  
   
 **You need a running HISinOne, ECS Server and ILIAS installation.**  
   
 ## Needed packages  
-    apt-get install php-7.0 php7.0-xml php7.0-soap  
+    apt-get install php7.0 php7.0-xml php7.0-soap  
 ## Clone the project   
     git clone https://gitlab.databay.de/ilias-utils/his_in_one_proxy  
   
