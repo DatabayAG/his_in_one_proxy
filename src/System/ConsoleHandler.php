@@ -128,7 +128,7 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
-	protected function getCourseCataloggetCourseCatalog()
+	protected function getCourseCatalog()
 	{
 		$this->startTimer();
 		self::$conductor->getCourseCatalog();
@@ -458,6 +458,8 @@ class ConsoleHandler
 	 */
 	public function functionMap($func, $param)
 	{
+		$a = array_key_exists($func, $this->collection);
+		$aa = method_exists($this, $this->collection[$func]->getFunction());
 		if(array_key_exists($func, $this->collection) && 
 			method_exists($this, $this->collection[$func]->getFunction())
 		)
