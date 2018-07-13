@@ -2,7 +2,7 @@
 	"HIS" : {
 		"username"           : "",
 		"password"           : "",
-		"url"                : "test/wsdl",
+		"url"                : "{URL_TO_HIS_IN_ONE}/qisserver/services2/",
 		"soap_caching"       : "0",
 		"soap_debug"         : "false",
 		"actual_ter_id"      : null,
