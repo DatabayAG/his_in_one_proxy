@@ -54,8 +54,8 @@ class SystemEventAbonnenmentService extends SoapService
 	public function __construct($log, $soap_service_router)
 	{
 		parent::__construct($log, $soap_service_router);
-		$this->quitAllRegistrations();
-		$this->registerAll();
+		#$this->quitAllRegistrations();
+		#$this->registerAll();
 	}
 
 	public function registerAll()

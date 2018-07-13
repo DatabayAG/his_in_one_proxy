@@ -140,7 +140,7 @@ class GlobalSettingsTest extends TestCaseExtension
 			array()
 		);
 
-		$this->assertEquals('test/wsdl/', $this->instance->getHisServerUrl());
+		$this->assertEquals('{URL_TO_HIS_IN_ONE}/qisserver/services2/', $this->instance->getHisServerUrl());
 	}
 
 	public function test_getHisUserName_shouldReturnHisUserName()
