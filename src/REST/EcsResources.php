@@ -12,7 +12,7 @@ class EcsResources
 	 */
 	public function getPlainPath()
 	{
-		return '/campusconnect/';
+		return 'campusconnect/';
 	}
 
 	/**
