@@ -57,7 +57,8 @@ class GuzzleWrapper
 	 * @param        $method
 	 * @param string $uri
 	 * @param array  $options
-	 * @return ResponseInterface
+	 * @return mixed|ResponseInterface
+	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 */
 	public function makeRequest($method, $uri = '', $options = array())
 	{
