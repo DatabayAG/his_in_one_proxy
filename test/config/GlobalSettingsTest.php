@@ -44,6 +44,7 @@ class GlobalSettingsTest extends TestCaseExtension
 						"password"           : "pass",
 						"url"                : "http://his_url",
 						"soap_debug"         : "false",
+						"ssl_validation"     : "false",
 						"endpoint"           : {
 							"register_listener"  : "false",
 							"listener_url"       : "http://my_his_listener",
@@ -54,8 +55,7 @@ class GlobalSettingsTest extends TestCaseExtension
 					},
 					"ECS" : {
 						"auth_id"            : "user2",
-						"url"                : "http://super_ecs_server_url",
-						"ssl_validation"     : "false"
+						"url"                : "http://super_ecs_server_url"
 					},
 					"path_to_queue"          : "/tmp/my_path_to_queue",
 					"keep_elements_in_queue" : "true",

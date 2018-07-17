@@ -10,6 +10,7 @@ If the Unittest with coverage segfaults remove the opcache extension!
 		"url"                : "URL for HisInOneServer with 'qisserver/services2/'",
 		"soap_caching"       : "SOAP Caching active(1) or inactive (0)",
 		"soap_debug"         : "SOAP Debug (true/false) if true all response xml gets dumpt to shell",
+		"ssl_validation"     : "SSL validation (true/false)",
 		"endpoint"           : {
 			"register_listener"  : "Listener active (true/false)",
 			"listener_url"       : "URL/IP for listener",
@@ -38,8 +39,7 @@ If the Unittest with coverage segfaults remove the opcache extension!
 	"ECS" : {
 		"auth_id"            : "AUTH id for ecs server",
 		"receiver_memberships": "Membership overwrite",
-		"url"                : "URL to ecs server",
-		"ssl_validation"     : "SSL validation (true/false)"
+		"url"                : "URL to ecs server"
 	},
 		"HIStoECSMapping": {
 			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS (MembershipID (mid) Community)"

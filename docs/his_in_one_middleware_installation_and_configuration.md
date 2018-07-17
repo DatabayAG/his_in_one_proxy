@@ -18,7 +18,8 @@
 * _password_: Password for HisInOne Server  
 * _url_: URL for HisInOneServer with 'qisserver/services2/'  
 * _soap_caching_: SOAP Caching active(1) or inactive (0)  
-* _soap_debug_: SOAP Debug (true/false) if true all response xml gets dumpt to shell  
+* _soap_debug_: SOAP Debug (true/false) if true all response xml gets dumpt to shell 
+* _ssl_validation_: SSL validation (true/false)   
 * _endpoint_: The Endpoint for the HISInOne Queue  
   1. _register_listener_: Listener active (true/false)  
   2. _listener_url_: URL/IP for listener  
@@ -41,8 +42,7 @@
   
 #### Block ECS 
 * _auth_id_: AUTH id for ecs server  
-* _url_: URL to ecs server  
-* _ssl_validation_: SSL validation (true/false)  
+* _url_: URL to ecs server 
  
 #### Block General  
 * _HIStoECSMapping_: Maps the System Id from HISinOne to the ECS Server  
@@ -74,7 +74,8 @@
             "password"        : "myGreatHISinOnePassword", 
             "url"             : "https://myGreatHISinOneURL/qisserver/services2/", 
             "soap_caching"    : "1", 
-            "soap_debug"      : "false", 
+            "soap_debug"      : "false"
+             "ssl_validation"     : "false",
             "actual_term_id"  : 2, 
             "actual_term_year" : 2017, 
             "endpoint"         : { 
@@ -98,8 +99,7 @@
             "ECS" : { 
               "auth_id"            : "myECSAuthId", 
               "password"           : "myHighlySecretPasswort47!!", 
-              "url"                : "http://192.168.1.183:8080", 
-              "ssl_validation"     : "false" 
+              "url"                : "http://192.168.1.183:8080"
             }, 
             "HIStoECSMapping": { 
               "7" : "666", 

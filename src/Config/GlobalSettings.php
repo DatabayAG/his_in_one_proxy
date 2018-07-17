@@ -220,6 +220,7 @@ class GlobalSettings
 		$this->setHisPassword($this->config->get('HIS.password'));
 		$this->setSoapDebug($this->config->get('HIS.soap_debug'));
 		$this->setSoapCaching($this->config->get('HIS.soap_caching'));
+		$this->setValidateSsl($this->config->get('HIS.ssl_validation'));
 		$this->setActualTermId($this->config->get('HIS.actual_term_id'));
 		$this->setActualTermYear($this->config->get('HIS.actual_term_year'));
 		$this->setPersonIdType($this->config->get('HIS.person_id_type'));
@@ -237,7 +238,6 @@ class GlobalSettings
 		$this->setEcsServerUrl($this->config->get('ECS.url'));
 		$this->setEcsAuthId($this->config->get('ECS.auth_id'));
 		$this->setEcsPassword($this->config->get('ECS.password'));
-		$this->setValidateSsl($this->config->get('ECS.ssl_validation'));
 
 		$this->setPathToQueue($this->config->get('path_to_queue'));
 		$this->setQueueTimer($this->config->get('queue_timer'));
@@ -296,6 +296,7 @@ class GlobalSettings
 			"HIS.login_suffix"               => $this->getLoginSuffix(),
 			"HIS.soap_debug"                 => $this->isSoapDebug(),
 			"HIS.soap_caching"               => $this->isSoapCaching(),
+			"HIS.ssl_validation"             => $this->getValidateSsl(),
 			"HIS.actual_term_id"             => $this->getActualTermId(),
 			"HIS.actual_term_year"           => $this->getActualTermYear(),
 			"HIS.blocked_ids"                => $this->getBlockedIds(),
@@ -303,7 +304,6 @@ class GlobalSettings
 			"ECS.auth_id"                    => $this->getEcsAuthId(),
 			"ECS.password"                   => $this->getEcsPassword(),
 			"ECS.url"                        => $this->getEcsServerUrl(),
-			"ECS.ssl_validation"             => $this->getValidateSsl(),
 			"path_to_queue"                  => $this->getPathToQueue(),
 			"queue_timer"                    => $this->getQueueTimer(),
 			"path_to_log"                    => $this->getPathToLog(),

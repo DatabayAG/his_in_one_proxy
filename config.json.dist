@@ -5,6 +5,7 @@
 		"url"                : "{URL_TO_HIS_IN_ONE}/qisserver/services2/",
 		"soap_caching"       : "0",
 		"soap_debug"         : "false",
+		"ssl_validation"      : "",
 		"actual_ter_id"      : null,
 		"actual_term_year"   : null,
 		"endpoint"           : {
@@ -28,8 +29,7 @@
 	"ECS" : {
 		"auth_id"             : "",
 		"password"            : "",
-		"url"                 : "",
-		"ssl_validation"      : ""
+		"url"                 : ""
 		},
 		"HIStoECSMapping": {
 			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS (MembershipID (mid) Community)"
