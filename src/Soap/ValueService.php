@@ -393,7 +393,7 @@ class ValueService extends SoapService
 
 	/**
 	 * @param $lang
-	 * @return \HisInOneProxy\DataModel\EventType[]|null
+	 * @return \HisInOneProxy\DataModel\EAddressType[]|null
 	 */
 	public function getAllEventtypes($lang)
 	{

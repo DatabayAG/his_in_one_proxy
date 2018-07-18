@@ -274,6 +274,7 @@ class GlobalSettings
 
 	/**
 	 * @param $json
+	 * @throws \Noodlehaus\Exception\EmptyDirectoryException
 	 */
 	public function readCustomConfig($json)
 	{

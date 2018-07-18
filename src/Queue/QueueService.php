@@ -46,6 +46,7 @@ class QueueService
 	 * @param $json
 	 * @param $receiver
 	 * @return bool
+	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 */
 	public static function publish_course_to_ecs($json, $receiver)
 	{
@@ -61,6 +62,7 @@ class QueueService
 	 * @param $json
 	 * @param $receiver
 	 * @return bool
+	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 */
 	public static function publish_members_to_ecs($json, $receiver)
 	{
@@ -76,6 +78,7 @@ class QueueService
 	 * @param $json
 	 * @param $receiver
 	 * @return bool
+	 * @throws \GuzzleHttp\Exception\GuzzleException
 	 */
 	public static function publish_course_catalog_to_ecs($json, $receiver)
 	{

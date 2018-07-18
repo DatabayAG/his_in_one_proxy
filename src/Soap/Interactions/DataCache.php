@@ -6,7 +6,6 @@ use HisInOneProxy\DataModel\ChildRelation;
 use HisInOneProxy\DataModel\Container\CourseMappingTypeContainer;
 use HisInOneProxy\DataModel\Container\ElearningPlatformContainer;
 use HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer;
-use HisInOneProxy\DataModel\Container\TermTypeList;
 use HisInOneProxy\DataModel\Container\WorkStatusContainer;
 use HisInOneProxy\DataModel\EAddressType;
 use HisInOneProxy\DataModel\OrgUnit;
@@ -337,7 +336,7 @@ class DataCache
 	}
 
 	/**
-	 * @return TermTypeList
+	 * @return array
 	 */
 	public function getTermTypeList()
 	{

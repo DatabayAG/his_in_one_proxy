@@ -20,6 +20,7 @@ class Log
 	 * Log constructor.
 	 * @param string $channel
 	 * @param null   $logger
+	 * @throws \Exception
 	 */
 	public function __construct($channel = 'default', $logger = null)
 	{

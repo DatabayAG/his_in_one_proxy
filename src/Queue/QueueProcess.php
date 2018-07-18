@@ -43,7 +43,7 @@ class QueueProcess
 	}
 
 	/**
-	 * @return bool
+	 * 
 	 */
 	protected function killAllQueueProcess()
 	{
