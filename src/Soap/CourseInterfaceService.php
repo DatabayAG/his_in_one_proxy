@@ -61,7 +61,8 @@ class CourseInterfaceService extends SoapService
 	 * @param null $workstatus_ids
 	 * @param null $cancellation
 	 * @param null $updated_since
-	 * @return \HisInOneProxy\DataModel\Container\ExamRelationContainer|null
+	 * @return null
+	 * @throws \Exception
 	 */
 	public function readPersonExamPlanEnrollments($plan_element, $workstatus_ids = null, $cancellation = null, $updated_since = null)
 	{
@@ -85,6 +86,7 @@ class CourseInterfaceService extends SoapService
 	 * @param null $term_type_id
 	 * @param null $year
 	 * @return \HisInOneProxy\DataModel\Container\UnitIdList|null
+	 * @throws \Exception
 	 */
 	public function findUnit($term_type_id = null, $year = null)
 	{
@@ -105,6 +107,7 @@ class CourseInterfaceService extends SoapService
 	/**
 	 * @param $unit_id
 	 * @return Unit|null
+	 * @throws \Exception
 	 */
 	public function readUnit($unit_id)
 	{
@@ -137,6 +140,7 @@ class CourseInterfaceService extends SoapService
 	/**
 	 * @param $unit_id
 	 * @return \HisInOneProxy\DataModel\Container\UnitIdList|null
+	 * @throws \Exception
 	 */
 	public function getModulesForUnit($unit_id)
 	{
@@ -160,6 +164,7 @@ class CourseInterfaceService extends SoapService
 	/**
 	 * @param $unit_id
 	 * @return \HisInOneProxy\DataModel\Container\CourseOfStudyIdList|null
+	 * @throws \Exception
 	 */
 	public function getCourseOfStudiesForUnit($unit_id)
 	{
@@ -182,6 +187,7 @@ class CourseInterfaceService extends SoapService
 	 * @param $term_type_id
 	 * @param $year
 	 * @return null
+	 * @throws \Exception
 	 */
 	public function getCombinationForCourse($unit, $term_type_id, $year)
 	{
@@ -227,6 +233,7 @@ class CourseInterfaceService extends SoapService
 	 * @param $term_type_id
 	 * @param $year
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public function doesCombinationForCourseExist($unit_id, $term_type_id, $year)
 	{
@@ -252,6 +259,7 @@ class CourseInterfaceService extends SoapService
 	 * @param $term_type_id
 	 * @param $term_year
 	 * @return null
+	 * @throws \Exception
 	 */
 	public function readPlanElementsForUnit($unit, $term_type_id, $term_year)
 	{

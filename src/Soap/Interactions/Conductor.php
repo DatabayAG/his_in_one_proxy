@@ -57,6 +57,7 @@ class Conductor
 	 * @param null $term
 	 * @param null $year
 	 * @param null $log
+	 * @throws \Exception
 	 */
 	public function __construct($term = null, $year = null, $log = null)
 	{
@@ -195,6 +196,7 @@ class Conductor
 	 * @param $cos_map
 	 * @param $cos_already
 	 * @return array
+	 * @throws \Exception
 	 */
 	protected function startHandlingUnitList($unit_list, $cos_map, $cos_already)
 	{
@@ -226,6 +228,7 @@ class Conductor
 	 * @param $cos_map
 	 * @param $cos_already
 	 * @return Unit|null
+	 * @throws \Exception
 	 */
 	protected function gatherUnitDetails($unit_id, $cos_map, $cos_already)
 	{
@@ -261,7 +264,8 @@ class Conductor
 
 	/**
 	 * @param Unit $unit
-	 * @param UnitIdList $unit_id_list
+	 * @param $unit_id_list
+	 * @throws \Exception
 	 */
 	protected function readDetailsForOrgUnits($unit, $unit_id_list)
 	{
@@ -289,6 +293,7 @@ class Conductor
 
 	/**
 	 * @param $unit
+	 * @throws \Exception
 	 */
 	protected function readPlanElementsForUnit($unit)
 	{
@@ -320,9 +325,10 @@ class Conductor
 	}
 
 	/**
-	 * @param Unit $unit
+	 * @param $unit
 	 * @param $cos_map
 	 * @param $cos_already
+	 * @throws \Exception
 	 */
 	protected function getDetailOfCourseOfStudy($unit, $cos_map, $cos_already)
 	{

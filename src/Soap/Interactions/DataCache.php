@@ -218,6 +218,7 @@ class DataCache
 
 	/**
 	 * @return DataCache
+	 * @throws \Exception
 	 */
 	protected static function init()
 	{

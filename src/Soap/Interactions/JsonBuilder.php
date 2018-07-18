@@ -63,9 +63,9 @@ class JsonBuilder
 			{
 				$course					= $course_container[0];
 				$row->workload			= $course->getWorkload();
+				$row->lectureID			= $course->getId();
 			}
 
-			$row->lectureID				= $course->getId();
 			$row						= self::appendMapping($mapping, $row);
 			self::addMappingToArray($course->getId(), $row->elearning_sys_string);
 			self::addSimpleTypes($row, $unit, $course->getEventTypeId());
@@ -163,7 +163,7 @@ class JsonBuilder
 				{
 					if(in_array($group['blocked'], GlobalSettings::getInstance()->getBlockedIds()))
 					{
-						DataCache::getInstance()->getLog()->debug(sprintf('Account with name (%s) will be ignored, since it is not active, blocked id(%s)!', $account->getUserName(), $account->getBlockedId()));
+						DataCache::getInstance()->getLog()->debug(sprintf('Account with name (%s) will be ignored, since it is not active, blocked id(%s)!', $user_name, $user->getBlockedId()));
 						$skip = true;
 						continue;
 					}
