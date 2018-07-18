@@ -34,7 +34,7 @@ class EcsCommunication
 	/**
 	 * @return array
 	 */
-	protected function appendAuthData(): array
+	protected function appendAuthData()
 	{
 		return [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()];
 	}
