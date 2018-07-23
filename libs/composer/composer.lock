@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d0a5caadfb9ee450a56833f6116742b2",
-    "content-hash": "3abba2cbf0a0c8d591939e57bbffd31f",
+    "hash": "bd1a7b6dcaf6864b154d999544f3e71d",
+    "content-hash": "f7e7911741519f770c14e157f38ffe38",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -57,16 +57,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.2.3",
+            "version": "6.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "8d6c6cc55186db87b7dc5009827429ba4e9dc006"
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8d6c6cc55186db87b7dc5009827429ba4e9dc006",
-                "reference": "8d6c6cc55186db87b7dc5009827429ba4e9dc006",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
                 "shasum": ""
             },
             "require": {
@@ -76,13 +76,16 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.0",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
                 "psr/log": "^1.0"
+            },
+            "suggest": {
+                "psr/log": "Required for using the Log middleware"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.2-dev"
+                    "dev-master": "6.3-dev"
                 }
             },
             "autoload": {
@@ -115,7 +118,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-02-28 22:50:30"
+            "time": "2018-04-22 15:46:56"
         },
         {
             "name": "guzzlehttp/promises",
