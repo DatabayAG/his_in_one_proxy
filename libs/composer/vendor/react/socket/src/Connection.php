@@ -5,8 +5,8 @@ namespace React\Socket;
 use Evenement\EventEmitter;
 use React\EventLoop\LoopInterface;
 use React\Stream\DuplexResourceStream;
-use React\Stream\Stream;
 use React\Stream\Util;
+use React\Stream\WritableResourceStream;
 use React\Stream\WritableStreamInterface;
 
 /**
@@ -50,20 +50,24 @@ class Connection extends EventEmitter implements ConnectionInterface
         // See https://bugs.php.net/bug.php?id=65137
         // https://bugs.php.net/bug.php?id=41631
         // https://github.com/reactphp/socket-client/issues/24
-        $clearCompleteBuffer = (version_compare(PHP_VERSION, '5.6.8', '<'));
+        $clearCompleteBuffer = PHP_VERSION_ID < 50608;
 
-        // @codeCoverageIgnoreStart
-        if (class_exists('React\Stream\Stream')) {
-            // legacy react/stream < 0.7 requires additional buffer property
-            $this->input = new Stream($resource, $loop);
-            if ($clearCompleteBuffer) {
-                $this->input->bufferSize = null;
-            }
-        } else {
-            // preferred react/stream >= 0.7 accepts buffer parameter
-            $this->input = new DuplexResourceStream($resource, $loop, $clearCompleteBuffer ? -1 : null);
-        }
-        // @codeCoverageIgnoreEnd
+        // PHP < 7.1.4 (and PHP < 7.0.18) suffers from a bug when writing big
+        // chunks of data over TLS streams at once.
+        // We try to work around this by limiting the write chunk size to 8192
+        // bytes for older PHP versions only.
+        // This is only a work-around and has a noticable performance penalty on
+        // affected versions. Please update your PHP version.
+        // This applies to all streams because TLS may be enabled later on.
+        // See https://github.com/reactphp/socket/issues/105
+        $limitWriteChunks = (PHP_VERSION_ID < 70018 || (PHP_VERSION_ID >= 70100 && PHP_VERSION_ID < 70104));
+
+        $this->input = new DuplexResourceStream(
+            $resource,
+            $loop,
+            $clearCompleteBuffer ? -1 : null,
+            new WritableResourceStream($resource, $loop, null, $limitWriteChunks ? 8192 : null)
+        );
 
         $this->stream = $resource;
 
@@ -124,9 +128,10 @@ class Connection extends EventEmitter implements ConnectionInterface
         // side already closed. Shutting down may return to blocking mode on
         // some legacy versions, so reset to non-blocking just in case before
         // continuing to close the socket resource.
+        // Underlying Stream implementation will take care of closing file
+        // handle, so we otherwise keep this open here.
         @stream_socket_shutdown($this->stream, STREAM_SHUT_RDWR);
         stream_set_blocking($this->stream, false);
-        fclose($this->stream);
     }
 
     public function getRemoteAddress()
@@ -147,14 +152,14 @@ class Connection extends EventEmitter implements ConnectionInterface
 
         if ($this->unix) {
             // remove trailing colon from address for HHVM < 3.19: https://3v4l.org/5C1lo
-            // note that techncially ":" is a valid address, so keep this in place otherwise
+            // note that technically ":" is a valid address, so keep this in place otherwise
             if (substr($address, -1) === ':' && defined('HHVM_VERSION_ID') && HHVM_VERSION_ID < 31900) {
                 $address = (string)substr($address, 0, -1);
             }
 
-            // work around unknown addresses should return null value: https://3v4l.org/5C1lo
+            // work around unknown addresses should return null value: https://3v4l.org/5C1lo and https://bugs.php.net/bug.php?id=74556
             // PHP uses "\0" string and HHVM uses empty string (colon removed above)
-            if ($address === "\x00" || $address === '') {
+            if ($address === '' || $address[0] === "\x00" ) {
                 return null;
             }
 

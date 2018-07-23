@@ -5,6 +5,8 @@ namespace React\Socket;
 use React\Dns\Resolver\Resolver;
 use React\Promise;
 use React\Promise\CancellablePromiseInterface;
+use InvalidArgumentException;
+use RuntimeException;
 
 final class DnsConnector implements ConnectorInterface
 {
@@ -27,11 +29,16 @@ final class DnsConnector implements ConnectorInterface
         }
 
         if (!$parts || !isset($parts['host'])) {
-            return Promise\reject(new \InvalidArgumentException('Given URI "' . $uri . '" is invalid'));
+            return Promise\reject(new InvalidArgumentException('Given URI "' . $uri . '" is invalid'));
         }
 
         $host = trim($parts['host'], '[]');
         $connector = $this->connector;
+
+        // skip DNS lookup / URI manipulation if this URI already contains an IP
+        if (false !== filter_var($host, FILTER_VALIDATE_IP)) {
+            return $connector->connect($uri);
+        }
 
         return $this
             ->resolveHostname($host)
@@ -84,10 +91,6 @@ final class DnsConnector implements ConnectorInterface
 
     private function resolveHostname($host)
     {
-        if (false !== filter_var($host, FILTER_VALIDATE_IP)) {
-            return Promise\resolve($host);
-        }
-
         $promise = $this->resolver->resolve($host);
 
         return new Promise\Promise(
@@ -97,7 +100,7 @@ final class DnsConnector implements ConnectorInterface
             },
             function ($_, $reject) use ($promise) {
                 // cancellation should reject connection attempt
-                $reject(new \RuntimeException('Connection attempt cancelled during DNS lookup'));
+                $reject(new RuntimeException('Connection attempt cancelled during DNS lookup'));
 
                 // (try to) cancel pending DNS lookup
                 if ($promise instanceof CancellablePromiseInterface) {

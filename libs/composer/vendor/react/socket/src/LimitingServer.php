@@ -3,6 +3,8 @@
 namespace React\Socket;
 
 use Evenement\EventEmitter;
+use Exception;
+use OverflowException;
 
 /**
  * The `LimitingServer` decorator wraps a given `ServerInterface` and is responsible
@@ -60,7 +62,7 @@ class LimitingServer extends EventEmitter implements ServerInterface
      * You MAY pass a `null` limit in order to put no limit on the number of
      * open connections and keep accepting new connection until you run out of
      * operating system resources (such as open file handles). This may be
-     * useful it you do not want to take care of applying a limit but still want
+     * useful if you do not want to take care of applying a limit but still want
      * to use the `getConnections()` method.
      *
      * You can optionally configure the server to pause accepting new
@@ -155,7 +157,7 @@ class LimitingServer extends EventEmitter implements ServerInterface
     {
         // close connection if limit exceeded
         if ($this->limit !== null && count($this->connections) >= $this->limit) {
-            $this->handleError(new \OverflowException('Connection closed because server reached connection limit'));
+            $this->handleError(new OverflowException('Connection closed because server reached connection limit'));
             $connection->close();
             return;
         }
@@ -194,7 +196,7 @@ class LimitingServer extends EventEmitter implements ServerInterface
     }
 
     /** @internal */
-    public function handleError(\Exception $error)
+    public function handleError(Exception $error)
     {
         $this->emit('error', array($error));
     }

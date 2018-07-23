@@ -33,6 +33,7 @@ final class DuplexResourceStream extends EventEmitter implements DuplexStreamInt
     private $readable = true;
     private $writable = true;
     private $closing = false;
+    private $listening = false;
 
     public function __construct($stream, LoopInterface $loop, $readChunkSize = null, WritableStreamInterface $buffer = null)
     {
@@ -59,7 +60,7 @@ final class DuplexResourceStream extends EventEmitter implements DuplexStreamInt
         // This does not affect the default event loop implementation (level
         // triggered), so we can ignore platforms not supporting this (HHVM).
         // Pipe streams (such as STDIN) do not seem to require this and legacy
-        // PHP < 5.4 causes SEGFAULTs on unbuffered pipe streams, so skip this.
+        // PHP versions cause SEGFAULTs on unbuffered pipe streams, so skip this.
         if (function_exists('stream_set_read_buffer') && !$this->isLegacyPipe($stream)) {
             stream_set_read_buffer($stream, 0);
         }
@@ -100,13 +101,17 @@ final class DuplexResourceStream extends EventEmitter implements DuplexStreamInt
 
     public function pause()
     {
-        $this->loop->removeReadStream($this->stream);
+        if ($this->listening) {
+            $this->loop->removeReadStream($this->stream);
+            $this->listening = false;
+        }
     }
 
     public function resume()
     {
-        if ($this->readable) {
+        if (!$this->listening && $this->readable) {
             $this->loop->addReadStream($this->stream, array($this, 'handleData'));
+            $this->listening = true;
         }
     }
 
@@ -131,11 +136,13 @@ final class DuplexResourceStream extends EventEmitter implements DuplexStreamInt
         $this->writable = false;
 
         $this->emit('close');
-        $this->loop->removeStream($this->stream);
+        $this->pause();
         $this->buffer->close();
         $this->removeAllListeners();
 
-        $this->handleClose();
+        if (is_resource($this->stream)) {
+            fclose($this->stream);
+        }
     }
 
     public function end($data = null)
@@ -191,25 +198,21 @@ final class DuplexResourceStream extends EventEmitter implements DuplexStreamInt
         }
     }
 
-    /** @internal */
-    public function handleClose()
-    {
-        if (is_resource($this->stream)) {
-            fclose($this->stream);
-        }
-    }
-
     /**
      * Returns whether this is a pipe resource in a legacy environment
      *
+     * This works around a legacy PHP bug (#61019) that was fixed in PHP 5.4.28+
+     * and PHP 5.5.12+ and newer.
+     *
      * @param resource $resource
      * @return bool
+     * @link https://github.com/reactphp/child-process/issues/40
      *
      * @codeCoverageIgnore
      */
     private function isLegacyPipe($resource)
     {
-        if (PHP_VERSION_ID < 50400) {
+        if (PHP_VERSION_ID < 50428 || (PHP_VERSION_ID >= 50500 && PHP_VERSION_ID < 50512)) {
             $meta = stream_get_meta_data($resource);
 
             if (isset($meta['stream_type']) && $meta['stream_type'] === 'STDIO') {
