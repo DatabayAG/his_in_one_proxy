@@ -6,7 +6,7 @@
 		"soap_caching"       : "0",
 		"soap_debug"         : "false",
 		"ssl_validation"      : "",
-		"actual_ter_id"      : null,
+		"actual_term_id"      : null,
 		"actual_term_year"   : null,
 		"endpoint"           : {
 			"register_listener"  : "true",
