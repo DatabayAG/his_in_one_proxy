@@ -21,7 +21,7 @@
 * _soap_debug_: SOAP Debug (true/false) if true all response xml gets dumpt to shell 
 * _ssl_validation_: SSL validation (true/false)   
 * _actual_term_id_ : If set this will be used as default term_id
-* _actual_term_year_  : If set this will be used as default year
+* _actual_term_year_ : If set this will be used as default year
 * _endpoint_: The Endpoint for the HISInOne Queue  
   1. _register_listener_: Listener active (true/false)  
   2. _listener_url_: URL/IP for listener  
