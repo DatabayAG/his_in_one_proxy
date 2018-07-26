@@ -11,6 +11,8 @@ If the Unittest with coverage segfaults remove the opcache extension!
 		"soap_caching"       : "SOAP Caching active(1) or inactive (0)",
 		"soap_debug"         : "SOAP Debug (true/false) if true all response xml gets dumpt to shell",
 		"ssl_validation"     : "SSL validation (true/false)",
+		"actual_term_id"      : null,
+		"actual_term_year"   : null,
 		"endpoint"           : {
 			"register_listener"  : "Listener active (true/false)",
 			"listener_url"       : "URL/IP for listener",
