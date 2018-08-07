@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Parser;
 
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
@@ -50,6 +51,7 @@ class ParseExamRelation extends SimpleXmlParser
 		{
 			$exam_relation->setPersonId($data->personId);
 			DataCache::getInstance()->appendPersonIdToCache($data->personId);
+			$this->log->info(sprintf('Added person id %s.', $data->personId));
 			$this->log->info(sprintf('Found ExamRelation with id %s.', $exam_relation->getPersonId()));
 			if($this->isAttributeValid($data, 'cancellation'))
 			{

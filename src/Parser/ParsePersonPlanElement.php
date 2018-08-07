@@ -29,6 +29,7 @@ class ParsePersonPlanElement extends SimpleXmlParser
 				{
 					$person_plan_element->setPersonId($value->abstractPersonId);
 					DataCache::getInstance()->appendPersonIdToCache($value->abstractPersonId);
+					$this->log->info(sprintf('Added person id %s.', $value->abstractPersonId));
 				}
 				if(isset($value->sortorder))
 				{

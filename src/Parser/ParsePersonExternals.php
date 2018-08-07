@@ -29,6 +29,7 @@ class ParsePersonExternals extends SimpleXmlParser
 				{
 					$person_externals->setPersonId($person->abstractPersonId);
 					DataCache::getInstance()->appendPersonIdToCache($person->abstractPersonId);
+					$this->log->info(sprintf('Added person id %s.', $person->abstractPersonId));
 				}
 				if(isset($person->sortorder))
 				{
