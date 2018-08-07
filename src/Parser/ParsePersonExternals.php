@@ -40,6 +40,7 @@ class ParsePersonExternals extends SimpleXmlParser
 			else
 			{
 				$this->log->warning('No id given for PersonExternals, skipping!');
+				$this->log->debug(var_dump($value));
 			}
 		}
 	}

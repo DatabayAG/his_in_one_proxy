@@ -40,6 +40,7 @@ class ParsePersonPlanElement extends SimpleXmlParser
 			else
 			{
 				$this->log->warning('No id given for PersonPlanElement, skipping!');
+				$this->log->debug(var_dump($value));
 			}
 		}
 	}

@@ -77,6 +77,7 @@ class ParseExamRelation extends SimpleXmlParser
 		else
 		{
 			$this->log->warning('No id given for ExamRelation, skipping!');
+			$this->log->debug(var_dump($value));
 		}
 		return $exam_relation;
 	}
