@@ -91,6 +91,7 @@ class Conductor
 	 * @param $cos_lid
 	 * @param $cos_already
 	 * @return mixed
+	 * @throws \Exception
 	 */
 	protected function getCourseOfStudyDetails($cos_lid, $cos_already)
 	{
@@ -105,6 +106,7 @@ class Conductor
 
 	/**
 	 * @return \HisInOneProxy\DataModel\CourseCatalogLeaf|null
+	 * @throws \Exception
 	 */
 	public function getCourseCatalog()
 	{
@@ -279,6 +281,7 @@ class Conductor
 	/**
 	 * @param Unit $module
 	 * @return array
+	 * @throws \Exception
 	 */
 	protected function getOrgUnitDetails($module)
 	{
@@ -331,6 +334,7 @@ class Conductor
 
 	/**
 	 * @param $units
+	 * @throws \Exception
 	 */
 	protected function finishHandlingUnits($units)
 	{
@@ -353,6 +357,7 @@ class Conductor
 
 	/**
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public function getInstitutionsAndOrgUnits()
 	{
@@ -387,6 +392,7 @@ class Conductor
 
 	/**
 	 * @return \HisInOneProxy\DataModel\CurrentTerm|null
+	 * @throws \Exception
 	 */
 	protected function getCurrentTerm()
 	{

@@ -69,6 +69,7 @@ class HisSystemResponse
 
 	/**
 	 * @param string $event_type
+	 * @throws \Exception
 	 */
 	public function setEventType($event_type)
 	{

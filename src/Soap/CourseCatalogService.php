@@ -54,7 +54,8 @@ class CourseCatalogService extends SoapService
 
 	/**
 	 * @param $rootIdOfTerm
-	 * @return \HisInOneProxy\DataModel\CourseCatalogLeaf | null
+	 * @return CourseCatalogLeaf|null
+	 * @throws \Exception
 	 */
 	public function getCourseCatalogLeaf($rootIdOfTerm)
 	{
@@ -76,6 +77,7 @@ class CourseCatalogService extends SoapService
 	/**
 	 * @param CourseCatalogLeaf $course_catalog_element
 	 * @return CourseCatalogLeaf | null
+	 * @throws \Exception
 	 */
 	public function getChildren($course_catalog_element)
 	{
@@ -125,6 +127,7 @@ class CourseCatalogService extends SoapService
 	 * @param $termTypeValueId
 	 * @param $year
 	 * @return \HisInOneProxy\DataModel\VisibleChild[]  | null
+	 * @throws \Exception
 	 */
 	public function getUnitChildren($courseCatalogElementId, $termTypeValueId = 1, $year = 2017)
 	{

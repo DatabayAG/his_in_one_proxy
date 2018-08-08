@@ -84,6 +84,9 @@ class ConsoleHandler
 		$this->endTimer('Initialisation');
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	protected function getLectures()
 	{
 		$this->startTimer();
@@ -101,6 +104,7 @@ class ConsoleHandler
 
 	/**
 	 * @param $id
+	 * @throws \Exception
 	 */
 	protected function getLectureById($id)
 	{
@@ -178,6 +182,7 @@ class ConsoleHandler
 
 	/**
 	 * @param $param
+	 * @throws \Exception
 	 */
 	protected function getCourseCatalogLeaf($param)
 	{
@@ -321,7 +326,10 @@ class ConsoleHandler
 		print_r($obj);
 		$this->endTimer();
 	}
-	
+
+	/**
+	 * @throws \Exception
+	 */
 	protected function getCurrentTerm()
 	{
 		$this->startTimer();
@@ -331,6 +339,9 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	protected function getDefaultLanguageId()
 	{
 		$this->startTimer();
@@ -341,6 +352,7 @@ class ConsoleHandler
 
 	/**
 	 * @param $param
+	 * @throws \Exception
 	 */
 	protected function readStudentWithCoursesOfStudyByPersonId($param)
 	{
@@ -352,6 +364,7 @@ class ConsoleHandler
 
 	/**
 	 * @param $param
+	 * @throws \Exception
 	 */
 	protected function getCourseOfStudyById($param)
 	{
@@ -361,6 +374,9 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	protected function getAllTermTypes()
 	{
 		$this->startTimer();
@@ -372,6 +388,7 @@ class ConsoleHandler
 
 	/**
 	 * @param $param
+	 * @throws \Exception
 	 */
 	protected function readEAddressesForPerson($param)
 	{
@@ -384,6 +401,7 @@ class ConsoleHandler
 
 	/**
 	 * @param $id
+	 * @throws \Exception
 	 */
 	public function readAccount($id)
 	{
@@ -391,7 +409,7 @@ class ConsoleHandler
 	}
 
 	/**
-	 * 
+	 * @throws \Exception
 	 */
 	protected function readPersonRange()
 	{
@@ -418,6 +436,7 @@ class ConsoleHandler
 
 	/**
 	 * @param $param
+	 * @throws \Exception
 	 */
 	protected function readPerson($param)
 	{
@@ -436,6 +455,7 @@ class ConsoleHandler
 
 	/**
 	 * @param $param
+	 * @throws \Exception
 	 */
 	protected function searchAccountForPerson61($param)
 	{
@@ -445,6 +465,9 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	protected function unknownCommand()
 	{
 		DataCache::getInstance()->getLog()->error(sprintf("Unknown command %s.", $_SERVER['argv'][1]));
@@ -455,6 +478,7 @@ class ConsoleHandler
 	/**
 	 * @param $func
 	 * @param $param
+	 * @throws \Exception
 	 */
 	public function functionMap($func, $param)
 	{
@@ -481,6 +505,7 @@ class ConsoleHandler
 	/**
 	 * @param $file
 	 * @param $url
+	 * @throws \Exception
 	 */
 	protected function wsdlDownloader($file, $url)
 	{
@@ -505,6 +530,9 @@ class ConsoleHandler
 		}
 	}
 
+	/**
+	 * @throws \ReflectionException
+	 */
 	public function wsdlHelper()
 	{
 		$wsdl_files = $this->gatherServicesForWsdl();
@@ -605,6 +633,7 @@ class ConsoleHandler
 
 	/**
 	 * @param string $what
+	 * @throws \Exception
 	 */
 	protected function endTimer($what = 'Queries')
 	{

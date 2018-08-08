@@ -2,7 +2,6 @@
 
 namespace HisInOneProxy\Parser;
 
-use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
@@ -15,6 +14,7 @@ class ParseExamRelation extends SimpleXmlParser
 	/**
 	 * @param $xml
 	 * @param DataModel\PlanElement $plan_element
+	 * @throws \Exception
 	 */
 	public function parse($xml, $plan_element)
 	{
@@ -43,6 +43,7 @@ class ParseExamRelation extends SimpleXmlParser
 	/**
 	 * @param $data
 	 * @return DataModel\ExamRelation
+	 * @throws \Exception
 	 */
 	protected function buildExamRelation($data)
 	{

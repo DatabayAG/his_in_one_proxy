@@ -12,9 +12,10 @@ class ParsePlanElements extends SimpleXmlParser
 {
 
 	/**
-	 * @param                $xml
+	 * @param $xml
 	 * @param DataModel\Unit $unit
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public function parse($xml, $unit)
 	{
@@ -42,6 +43,7 @@ class ParsePlanElements extends SimpleXmlParser
 	/**
 	 * @param $value
 	 * @param DataModel\Unit $unit
+	 * @throws \Exception
 	 */
 	protected function parseElement($value, $unit)
 	{

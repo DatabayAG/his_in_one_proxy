@@ -12,8 +12,9 @@ use HisInOneProxy\Soap\Interactions\DataCache;
 class ParsePersonPlanElement extends SimpleXmlParser
 {
 	/**
-	 * @param                       $xml
+	 * @param $xml
 	 * @param DataModel\PlanElement $plan_element
+	 * @throws \Exception
 	 */
 	public function parse($xml, $plan_element)
 	{

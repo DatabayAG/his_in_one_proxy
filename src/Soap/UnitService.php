@@ -26,7 +26,8 @@ class UnitService extends SoapService
 
 	/**
 	 * @param $unitId
-	 * @return \HisInOneProxy\DataModel\Unit | null
+	 * @return \HisInOneProxy\DataModel\Unit|null
+	 * @throws \Exception
 	 */
 	public function readUnit($unitId)
 	{
@@ -54,7 +55,8 @@ class UnitService extends SoapService
 
 	/**
 	 * @param $unitId
-	 * @return \HisInOneProxy\DataModel\Unit | null
+	 * @return \HisInOneProxy\DataModel\Unit|null
+	 * @throws \Exception
 	 */
 	public function readUnitWithChildren($unitId)
 	{

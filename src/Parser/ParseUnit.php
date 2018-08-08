@@ -14,6 +14,7 @@ class ParseUnit extends SimpleXmlParser
 	/**
 	 * @param $xml
 	 * @return DataModel\Unit
+	 * @throws \Exception
 	 */
 	public function parse($xml)
 	{

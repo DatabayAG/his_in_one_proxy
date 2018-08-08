@@ -25,7 +25,8 @@ class PersonService extends SoapService
 
 	/**
 	 * @param $person_id
-	 * @return \HisInOneProxy\DataModel\Person | null
+	 * @return \HisInOneProxy\DataModel\Person|null
+	 * @throws \Exception
 	 */
 	public function readPerson($person_id)
 	{

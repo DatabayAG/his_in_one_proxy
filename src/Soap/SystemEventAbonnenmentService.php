@@ -58,6 +58,9 @@ class SystemEventAbonnenmentService extends SoapService
 		#$this->registerAll();
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function registerAll()
 	{
 		$endpoint = GlobalSettings::getInstance()->getEndPoint();
@@ -71,9 +74,10 @@ class SystemEventAbonnenmentService extends SoapService
 	}
 
 	/**
-	 * @param string $object_type
+	 * @param $object_type
 	 * @param Endpoint $endpoint
-	 * @return mixed|null
+	 * @return null
+	 * @throws \Exception
 	 */
 	public function register($object_type, $endpoint)
 	{
@@ -119,7 +123,8 @@ class SystemEventAbonnenmentService extends SoapService
 
 	/**
 	 * @param string $object_type
-	 * @return mixed|null
+	 * @return null
+	 * @throws \Exception
 	 */
 	public function quitRegistration($object_type)
 	{

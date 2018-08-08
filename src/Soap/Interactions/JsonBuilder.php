@@ -44,6 +44,7 @@ class JsonBuilder
 	/**
 	 * @param Unit[] $units
 	 * @return array
+	 * @throws \Exception
 	 */
 	public static function convertUnitsToArray($units)
 	{
@@ -99,6 +100,7 @@ class JsonBuilder
 	 * @param $row
 	 * @param Unit $unit
 	 * @param $event_type_id
+	 * @throws \Exception
 	 */
 	protected static function addSimpleTypes($row, $unit, $event_type_id)
 	{
@@ -131,6 +133,7 @@ class JsonBuilder
 	 * @param $row
 	 * @param Unit $unit
 	 * @param $course_id
+	 * @throws \Exception
 	 */
 	protected static function addComplexTypes($row, $unit, $course_id)
 	{
@@ -243,7 +246,8 @@ class JsonBuilder
 
 	/**
 	 * @param $plan_element_id
-	 * @return string
+	 * @return mixed|string
+	 * @throws \Exception
 	 */
 	public static function getElearningSystemStringFromPlanElementId($plan_element_id)
 	{
@@ -288,6 +292,7 @@ class JsonBuilder
 	 * @param $row
 	 * @param $course_id
 	 * @return mixed
+	 * @throws \Exception
 	 */
 	protected static function appendGroups($unit, $row, $course_id)
 	{
@@ -319,9 +324,10 @@ class JsonBuilder
 	}
 
 	/**
-	 * @param $plan_element PlanElement
+	 * @param PlanElement $plan_element
 	 * @param $unit_id
 	 * @param $course_id
+	 * @throws \Exception
 	 */
 	protected static function analysePersonContainer($plan_element, $unit_id, $course_id)
 	{
@@ -363,6 +369,7 @@ class JsonBuilder
 	/**
 	 * @param OrgUnit[] $container
 	 * @return array
+	 * @throws \Exception
 	 */
 	protected static function addOrgUnits($container)
 	{

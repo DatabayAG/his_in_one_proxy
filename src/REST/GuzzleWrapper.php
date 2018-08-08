@@ -103,7 +103,8 @@ class GuzzleWrapper
 
 	/**
 	 * @param ResponseInterface $response
-	 * @return string
+	 * @return mixed
+	 * @throws \Exception
 	 */
 	public function getStatusCode($response)
 	{

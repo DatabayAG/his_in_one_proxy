@@ -202,7 +202,8 @@ class DataCache
 	protected static $purposes_list = array();
 
 	/**
-	 * @return self
+	 * @return DataCache
+	 * @throws \Exception
 	 */
 	public static function getInstance()
 	{
@@ -637,6 +638,7 @@ class DataCache
 
 	/**
 	 * @return array
+	 * @throws \Exception
 	 */
 	public function readPersonDetailsToCache()
 	{
@@ -654,6 +656,7 @@ class DataCache
 	/**
 	 * @param $person_id
 	 * @return Person
+	 * @throws \Exception
 	 */
 	public function getPersonById($person_id)
 	{

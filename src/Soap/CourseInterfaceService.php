@@ -35,9 +35,10 @@ class CourseInterfaceService extends SoapService
 	 * @param      $unit_id
 	 * @param      $term_type_id
 	 * @param      $year
-	 * @param   $work_status_ids
+	 * @param int  $work_status_ids
 	 * @param null $cancellation
 	 * @param null $updated_since
+	 * @throws \Exception
 	 */
 	public function readPersonExamPlanEnrollmentsForUnit($plan_element, $unit_id, $term_type_id, $year, $work_status_ids = 8, $cancellation = null, $updated_since = null)
 	{
@@ -211,6 +212,7 @@ class CourseInterfaceService extends SoapService
 	 * @param $term_type_id
 	 * @param $term_year
 	 * @return null
+	 * @throws \Exception
 	 */
 	public function getPersonExternalForCourse($unit_id, $plan_element, $term_type_id, $term_year)
 	{
@@ -296,6 +298,7 @@ class CourseInterfaceService extends SoapService
 	 * @param $plan_element_id
 	 * @param $plan_element
 	 * @return null
+	 * @throws \Exception
 	 */
 	public function getPersonResponsibleForPlanElement($plan_element_id, $plan_element)
 	{
@@ -319,6 +322,7 @@ class CourseInterfaceService extends SoapService
 	 * @param $term_type_id
 	 * @param $term_year
 	 * @return null
+	 * @throws \Exception
 	 */
 	public function getPersonResponsibleForUnit($unit_id, $plan_element, $term_type_id, $term_year)
 	{

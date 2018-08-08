@@ -31,6 +31,7 @@ class QueueService
 	 * @param null $json
 	 * @param null $receiver
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public static function get_institutions_and_org_units($json = null, $receiver = null)
 	{
@@ -106,6 +107,7 @@ class QueueService
 	 * @param null $json
 	 * @param null $receiver
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public static function get_all_lectures_for_this_term($json = null, $receiver = null)
 	{
