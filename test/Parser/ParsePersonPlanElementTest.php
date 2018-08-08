@@ -34,6 +34,19 @@ class ParsePersonPlanElementTest extends TestCaseExtension
 
 	public function test_simplePersonPlanElementParsing_shouldReturnPersonPlanElement()
 	{
+		$xml      = file_get_contents('test/fixtures/person_plan_element.xml');
+		$parser   = new Parser\ParsePersonPlanElement($this->log);
+		$plan_element = new \HisInOneProxy\DataModel\PlanElement();
+		$parser->parse(simplexml_load_string($xml), $plan_element);
+		$person_plan = $plan_element->getPersonPlanElementContainer()[0]; 
+		$this->assertEquals('21', $person_plan->getPersonId());
+		$msg = array_pop($this->collectedMessages);
+		$this->assertEquals('Info: Added person id 21.', $msg);
+
+	}
+
+	public function test_multiPersonPlanElementParsing_shouldReturnPersonPlanElement()
+	{
 		$xml      = file_get_contents('test/fixtures/person_plan_elements.xml');
 		$parser   = new Parser\ParsePersonPlanElement($this->log);
 		$plan_element = new \HisInOneProxy\DataModel\PlanElement();
@@ -41,7 +54,7 @@ class ParsePersonPlanElementTest extends TestCaseExtension
 		$person_plan = $plan_element->getPersonPlanElementContainer()[0]; 
 		$this->assertEquals('22', $person_plan->getPersonId());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Info: Found PersonPlanElement with planelementId 2.', $msg);
+		$this->assertEquals('Info: Added person id 22.', $msg);
 
 	}
 
