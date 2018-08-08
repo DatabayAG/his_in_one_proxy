@@ -1,8 +1,13 @@
 <resp>
 <personPlanelements>
-
+	<personPlanelement>
 		<planelementId>2</planelementId>
 		<abstractPersonId>22</abstractPersonId>
+	</personPlanelement>
+	<personPlanelement>
+		<planelementId>3</planelementId>
+		<abstractPersonId>21</abstractPersonId>
+	</personPlanelement>
 
 </personPlanelements>
 </resp>
