@@ -27,7 +27,7 @@ class ParseAccounts extends SimpleXmlParser
 					$container[] = $this->buildObject($account);
 				}
 			}
-			else if($this->doesExactlyOneElementExists($xml, 'completeAccount60'))
+			else
 			{
 				$container[] = $this->buildObject($xml->completeAccount60);
 			}
