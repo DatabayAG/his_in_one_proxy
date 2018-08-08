@@ -645,6 +645,7 @@ class DataCache
 			if( ! is_a($person_id, 'HisInOneProxy\DataModel\Person'))
 			{
 				self::$person_cache[trim($person_id)] = self::getPersonService()->readPerson($person_id);
+				DataCache::getInstance()->getLog()->info(sprintf('Added details for person id %s to cache.', $person_id));
 			}
 		}
 		return self::$person_cache;
@@ -656,12 +657,19 @@ class DataCache
 	 */
 	public function getPersonById($person_id)
 	{
+		DataCache::getInstance()->getLog()->info(sprintf('Looking for person with id %s in cache.', $person_id));
 		if(array_key_exists($person_id, self::$person_cache))
 		{
 			if( ! is_a(self::$person_cache[$person_id], 'HisInOneProxy\DataModel\Person'))
 			{
 				self::$person_cache[trim($person_id)] = self::getPersonService()->readPerson($person_id);
+				DataCache::getInstance()->getLog()->info(sprintf('Gathering data for person with id %s and adding it to cache.', $person_id));
 			}
+		}
+		else
+		{
+			self::$person_cache[trim($person_id)] = self::getPersonService()->readPerson($person_id);
+			DataCache::getInstance()->getLog()->info(sprintf('No id %s exists in person cache, adding it with person data.', $person_id));
 		}
 		return self::$person_cache[trim($person_id)];
 	}
