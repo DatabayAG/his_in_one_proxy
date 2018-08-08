@@ -20,7 +20,7 @@ class ParsePersonPlanElement extends SimpleXmlParser
 	{
 		foreach($xml->personPlanelements as $value)
 		{
-			$value = $value->personPlanElement;
+			$value = $value->personPlanelement;
 			$person_plan_element = new DataModel\PersonPlanElement();
 			if(isset($value->planelementId) && $value->planelementId != null && $value->planelementId != '')
 			{
