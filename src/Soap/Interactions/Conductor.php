@@ -131,6 +131,9 @@ class Conductor
 		return $catalog_leaf;
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	public function getAllLecturesForThisTerm()
 	{
 		$services    = DataCache::getInstance();
@@ -158,6 +161,7 @@ class Conductor
 
 	/**
 	 * @param $unit_id
+	 * @throws \Exception
 	 */
 	public function getLectureByUnitIdForTerm($unit_id)
 	{
@@ -237,7 +241,7 @@ class Conductor
 
 	/**
 	 * @param Unit $unit
-	 * @param      $unit_id_list
+	 * @param UnitIdList $unit_id_list
 	 * @throws \Exception
 	 */
 	protected function readDetailsForOrgUnits($unit, $unit_id_list)
@@ -253,8 +257,9 @@ class Conductor
 
 	/**
 	 * @param Unit $unit
-	 * @param      $cos_map
-	 * @param      $cos_already
+	 * @param $cos_map
+	 * @param $cos_already
+	 * @throws \Exception
 	 */
 	protected function readCourseOfStudyForUnit($unit, $cos_map, $cos_already)
 	{
@@ -293,7 +298,7 @@ class Conductor
 	}
 
 	/**
-	 * @param $unit
+	 * @param Unit $unit
 	 * @param $cos_map
 	 * @param $cos_already
 	 * @throws \Exception
