@@ -21,10 +21,6 @@ class ParsePersonPlanElement extends SimpleXmlParser
 		foreach($xml->personPlanelements as $value)
 		{
 			$person_plan_element = new DataModel\PersonPlanElement();
-			if(property_exists($value, 'personPlanelement'))
-			{
-				$value = $value->personPlanelement;
-			}
 			if(isset($value->planelementId) && $value->planelementId != null && $value->planelementId != '')
 			{
 				$person_plan_element->setPlanElementId($value->planelementId);
