@@ -16,8 +16,6 @@ class ParsePersonPlanElementTest extends TestCaseExtension
 	 */
 	protected $log;
 
-	protected $collectedMessages = array();
-
 	protected function setUp()
 	{
 		parent::setUp();
@@ -27,7 +25,7 @@ class ParsePersonPlanElementTest extends TestCaseExtension
 	{
 		$xml    = file_get_contents('test/fixtures/incomplete/person_plan_element_incomplete.xml');
 		$parser = new Parser\ParsePersonPlanElement($this->log);
-		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanElement(), $this->log);
+		$parser->parse(simplexml_load_string($xml), new \HisInOneProxy\DataModel\PlanElement());
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEquals('Warning: No id given for PersonPlanElement, skipping!', $msg);
 	}
@@ -52,9 +50,9 @@ class ParsePersonPlanElementTest extends TestCaseExtension
 		$plan_element = new \HisInOneProxy\DataModel\PlanElement();
 		$parser->parse(simplexml_load_string($xml), $plan_element);
 		$person_plan = $plan_element->getPersonPlanElementContainer()[0]; 
-		$this->assertEquals('22', $person_plan->getPersonId());
+		$this->assertEquals('133972', $person_plan->getPersonId());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Info: Added person id 22.', $msg);
+		$this->assertEquals('Info: Added person id 636.', $msg);
 
 	}
 

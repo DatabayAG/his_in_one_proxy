@@ -1,13 +1,14 @@
 <resp>
-<personPlanelements>
-	<personPlanelement>
-		<planelementId>2</planelementId>
-		<abstractPersonId>22</abstractPersonId>
-	</personPlanelement>
-	<personPlanelement>
-		<planelementId>3</planelementId>
-		<abstractPersonId>21</abstractPersonId>
-	</personPlanelement>
-
-</personPlanelements>
+	<personPlanelements>
+		<personPlanelement>
+			<planelementId>10525</planelementId>
+			<abstractPersonId>133972</abstractPersonId>
+			<sortorder>1</sortorder>
+		</personPlanelement>
+		<personPlanelement>
+			<planelementId>10525</planelementId>
+			<abstractPersonId>636</abstractPersonId>
+			<sortorder>2</sortorder>
+		</personPlanelement>
+	</personPlanelements>
 </resp>
