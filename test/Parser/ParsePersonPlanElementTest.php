@@ -37,9 +37,9 @@ class ParsePersonPlanElementTest extends TestCaseExtension
 		$plan_element = new \HisInOneProxy\DataModel\PlanElement();
 		$parser->parse(simplexml_load_string($xml), $plan_element);
 		$person_plan = $plan_element->getPersonPlanElementContainer()[0]; 
-		$this->assertEquals('21', $person_plan->getPersonId());
+		$this->assertEquals('636', $person_plan->getPersonId());
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEquals('Info: Added person id 21.', $msg);
+		$this->assertEquals('Info: Added person id 636.', $msg);
 
 	}
 

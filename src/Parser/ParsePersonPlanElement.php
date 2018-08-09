@@ -54,15 +54,20 @@ class ParsePersonPlanElement extends SimpleXmlParser
 	 */
 	public function parse($xml, $plan_element)
 	{
-		if(isset($xml->personPlanelements)) {
+		if($this->doesAttributeExist($xml, 'personPlanelements'))
+		{
 			$xml = $xml->personPlanelements;
-			foreach($xml->personPlanelement as $value)
+			if($this->doesMoreThanOneElementExists($xml, 'personPlanelement'))
 			{
-				$this->parseElement($value, $plan_element);
+				foreach($xml->personPlanelement as $value)
+				{
+					$this->parseElement($value, $plan_element);
+				}
 			}
-		}
-		else {
-			$this->parseElement($xml, $plan_element);
+			else 
+			{
+				$this->parseElement($xml->personPlanelement, $plan_element);
+			}
 		}
 	}
 }

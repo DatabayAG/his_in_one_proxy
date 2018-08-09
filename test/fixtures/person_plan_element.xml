@@ -1,6 +1,9 @@
 <resp>
-	<personPlanelement>
-		<planelementId>3</planelementId>
-		<abstractPersonId>21</abstractPersonId>
-	</personPlanelement>
+	<personPlanelements>
+		<personPlanelement>
+			<planelementId>10525</planelementId>
+			<abstractPersonId>636</abstractPersonId>
+			<sortorder>2</sortorder>
+		</personPlanelement>
+	</personPlanelements>
 </resp>
