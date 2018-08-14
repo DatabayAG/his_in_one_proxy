@@ -60,7 +60,7 @@ class ParsePersonExternals extends SimpleXmlParser
 			}
 			else
 			{
-				$this->parseElement($xml->personPlanelement, $plan_element);
+				$this->parseElement($xml->personExternal, $plan_element);
 			}
 		}
 	}
