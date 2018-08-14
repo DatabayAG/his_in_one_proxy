@@ -35,7 +35,7 @@ class ParsePersonExternals extends SimpleXmlParser
 			if (isset($xml->sortorder)) {
 				$person_externals->setSortOrder($xml->sortorder);
 			}
-			$plan_element->appendPersonExternalsElement($person_externals);
+			$plan_element->appendPersonPlanElement($person_externals);
 		} else {
 			$this->log->warning('No id given for PersonExternals, skipping!');
 		}

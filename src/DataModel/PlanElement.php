@@ -299,11 +299,12 @@ class PlanElement
 	}
 
 	/**
-	 * @param \HisInOneProxy\DataModel\PersonPlanElement | ExamRelation $person_plan_element
+	 * @param \HisInOneProxy\DataModel\PersonPlanElement | ExamRelation | PersonExternals $person_plan_element 
 	 */
 	public function appendPersonPlanElement($person_plan_element)
 	{
 		if(is_a($person_plan_element, '\HisInOneProxy\DataModel\PersonPlanElement') ||
+			is_a($person_plan_element, '\HisInOneProxy\DataModel\PersonExternals') ||
 			is_a($person_plan_element, '\HisInOneProxy\DataModel\ExamRelation'))
 		{
 			$this->person_plan_element_container[] = $person_plan_element;

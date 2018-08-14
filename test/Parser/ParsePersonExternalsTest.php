@@ -27,7 +27,7 @@ class ParsePersonExternalsTest extends TestCaseExtension
 		$parser   = new Parser\ParsePersonExternals($this->log);
 		$plan_element = new \HisInOneProxy\DataModel\PlanElement();
 		$parser->parse(simplexml_load_string($xml), $plan_element);
-		$person_plan = $plan_element->getPersonExternalsContainer()[0]; 
+		$person_plan = $plan_element->getPersonPlanElementContainer()[0]; 
 		$this->assertEquals('133972', $person_plan->getPersonId());
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEquals('Info: Added person id 133972.', $msg);
@@ -40,7 +40,7 @@ class ParsePersonExternalsTest extends TestCaseExtension
 		$parser   = new Parser\ParsePersonExternals($this->log);
 		$plan_element = new \HisInOneProxy\DataModel\PlanElement();
 		$parser->parse(simplexml_load_string($xml), $plan_element);
-		$person_plan = $plan_element->getPersonExternalsContainer()[0]; 
+		$person_plan = $plan_element->getPersonPlanElementContainer()[0]; 
 		$this->assertEquals('133972', $person_plan->getPersonId());
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEquals('Info: Added person id 133972.', $msg);
