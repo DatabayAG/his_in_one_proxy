@@ -1,0 +1,14 @@
+<resp>
+	<personExternals>
+		<personExternal>
+			<planelementId>10525</planelementId>
+			<abstractPersonId>133972</abstractPersonId>
+			<sortorder>1</sortorder>
+		</personExternal>
+		<personPlanelement>
+			<planelementId>10525</planelementId>
+			<abstractPersonId>636</abstractPersonId>
+			<sortorder>2</sortorder>
+		</personPlanelement>
+	</personExternals>
+</resp>

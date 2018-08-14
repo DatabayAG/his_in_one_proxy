@@ -329,7 +329,7 @@ class PlanElement
 	{
 		if(is_a($person_external, '\HisInOneProxy\DataModel\PersonExternals'))
 		{
-			$this->person_plan_element_container[] = $person_external;
+			$this->person_externals_container[] = $person_external;
 		}
 		else
 		{
