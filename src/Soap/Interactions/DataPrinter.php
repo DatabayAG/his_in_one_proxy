@@ -104,9 +104,13 @@ class DataPrinter
 			}
 			$this->log->debug(sprintf($tabs . '|* Person: %s, %s, role: %s', $person->getPersonId(), $person->getPlanElementId(), $role));
 			$per = DataCache::getInstance()->getPersonDetails($person->getPersonId());
+			if ($per!=null) {
 			$this->log->debug(sprintf($tabs . "\t|* Person: %s, %s, %s", $per->getFirstName(), $per->getSurName(), $per->getTitleId()));
 			$this->printPersonAccounts(DataCache::getInstance()->getAccountsForPersonId($person->getPersonId()), $level + 2);
 			$this->printPersonEAddress($per->getEAddresses(), $level + 3);
+			} else {
+			$this->log->debug(sprintf($tabs . '|* Person NULL: %s', $person->getPersonId()));
+			}
 		}
 	}
 
@@ -121,9 +125,13 @@ class DataPrinter
 		{
 			$tabs = $this->buildTabs($level);
 			$per = DataCache::getInstance()->getPersonDetails($person->getId());
+			if ($per!=null) {
 			$this->log->debug(sprintf($tabs . "\t|* Person: %s, %s, %s", $per->getFirstName(), $per->getSurName(), $per->getTitleId()));
 			$this->printPersonAccounts(DataCache::getInstance()->getAccountsForPersonId($person->getId()), $level + 2);
 			$this->printPersonEAddress($per->getEAddresses(), $level + 3);
+			} else {
+			$this->log->debug(sprintf($tabs . '|* Person NULL: %s', $person->getPersonId()));
+			}
 		}
 	}
 
