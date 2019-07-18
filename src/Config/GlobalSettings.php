@@ -8,10 +8,10 @@ use HisInOneProxy\DataModel\Endpoint;
 use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\HisToEcsIdMapping;
 use HisInOneProxy\System\Utils;
-use function json_decode;
-use function json_last_error_msg;
 use Noodlehaus\Config;
 use Noodlehaus\Exception\EmptyDirectoryException;
+use function json_decode;
+use function json_last_error_msg;
 
 /**
  * Class GlobalSettings
