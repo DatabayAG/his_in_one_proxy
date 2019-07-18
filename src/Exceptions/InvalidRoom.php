@@ -1,6 +1,7 @@
 <?php
 
 namespace HisInOneProxy\Exceptions;
+
 /**
  * Class InvalidRoom
  * @package HisInOneProxy\Exceptions

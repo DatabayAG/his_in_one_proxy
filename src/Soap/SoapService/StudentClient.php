@@ -10,27 +10,27 @@ use HisInOneProxy\Soap;
  */
 class StudentClient implements SoapClientService
 {
-	/**
-	 * @return string
-	 */
-	public function getServiceWsdl()
-	{
-		return 'StudentService.wsdl';
-	}
+    /**
+     * @param Soap\SoapServiceRouter $router
+     */
+    public function appendRouterConfig($router)
+    {
+        $router->setSoapClientStudentService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getServiceDir()
-	{
-		return 'StudentService';
-	}
+    /**
+     * @return string
+     */
+    public function getServiceWsdl()
+    {
+        return 'StudentService.wsdl';
+    }
 
-	/**
-	 * @param Soap\SoapServiceRouter $router
-	 */
-	public function appendRouterConfig($router)
-	{
-		$router->setSoapClientStudentService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
-	}
+    /**
+     * @return string
+     */
+    public function getServiceDir()
+    {
+        return 'StudentService';
+    }
 }

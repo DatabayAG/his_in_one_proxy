@@ -10,27 +10,27 @@ use HisInOneProxy\Soap;
  */
 class AddressClient implements SoapClientService
 {
-	/**
-	 * @return string
-	 */
-	public function getServiceWsdl()
-	{
-		return 'AddressService.wsdl';
-	}
+    /**
+     * @param Soap\SoapServiceRouter $router
+     */
+    public function appendRouterConfig($router)
+    {
+        $router->setSoapClientAddressService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getServiceDir()
-	{
-		return 'AddressService';
-	}
+    /**
+     * @return string
+     */
+    public function getServiceWsdl()
+    {
+        return 'AddressService.wsdl';
+    }
 
-	/**
-	 * @param Soap\SoapServiceRouter $router
-	 */
-	public function appendRouterConfig($router)
-	{
-		$router->setSoapClientAddressService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
-	}
+    /**
+     * @return string
+     */
+    public function getServiceDir()
+    {
+        return 'AddressService';
+    }
 }

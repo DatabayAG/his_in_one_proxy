@@ -10,27 +10,27 @@ use HisInOneProxy\Soap;
  */
 class SystemEventAbonnenmentClient implements SoapClientService
 {
-	/**
-	 * @return string
-	 */
-	public function getServiceWsdl()
-	{
-		return 'SystemEventAbonnenmentService.wsdl';
-	}
+    /**
+     * @param Soap\SoapServiceRouter $router
+     */
+    public function appendRouterConfig($router)
+    {
+        $router->setSoapSystemEventAbonnenmentClient(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getServiceDir()
-	{
-		return 'SystemEventAbonnenmentService';
-	}
+    /**
+     * @return string
+     */
+    public function getServiceWsdl()
+    {
+        return 'SystemEventAbonnenmentService.wsdl';
+    }
 
-	/**
-	 * @param Soap\SoapServiceRouter $router
-	 */
-	public function appendRouterConfig($router)
-	{
-		$router->setSoapSystemEventAbonnenmentClient(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
-	}
+    /**
+     * @return string
+     */
+    public function getServiceDir()
+    {
+        return 'SystemEventAbonnenmentService';
+    }
 }

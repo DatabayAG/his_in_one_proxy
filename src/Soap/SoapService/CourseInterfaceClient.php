@@ -10,27 +10,27 @@ use HisInOneProxy\Soap;
  */
 class CourseInterfaceClient implements SoapClientService
 {
-	/**
-	 * @return string
-	 */
-	public function getServiceWsdl()
-	{
-		return 'CourseInterfaceService.wsdl';
-	}
+    /**
+     * @param Soap\SoapServiceRouter $router
+     */
+    public function appendRouterConfig($router)
+    {
+        $router->setSoapClientCourseInterfaceService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getServiceDir()
-	{
-		return 'CourseInterfaceService';
-	}
+    /**
+     * @return string
+     */
+    public function getServiceWsdl()
+    {
+        return 'CourseInterfaceService.wsdl';
+    }
 
-	/**
-	 * @param Soap\SoapServiceRouter $router
-	 */
-	public function appendRouterConfig($router)
-	{
-		$router->setSoapClientCourseInterfaceService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
-	}
+    /**
+     * @return string
+     */
+    public function getServiceDir()
+    {
+        return 'CourseInterfaceService';
+    }
 }

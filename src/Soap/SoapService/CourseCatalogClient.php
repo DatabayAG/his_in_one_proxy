@@ -10,27 +10,27 @@ use HisInOneProxy\Soap;
  */
 class CourseCatalogClient implements SoapClientService
 {
-	/**
-	 * @return string
-	 */
-	public function getServiceWsdl()
-	{
-		return 'CourseCatalogService.wsdl';
-	}
+    /**
+     * @param Soap\SoapServiceRouter $router
+     */
+    public function appendRouterConfig($router)
+    {
+        $router->setSoapClientCourseCatalog(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getServiceDir()
-	{
-		return 'CourseCatalogService';
-	}
+    /**
+     * @return string
+     */
+    public function getServiceWsdl()
+    {
+        return 'CourseCatalogService.wsdl';
+    }
 
-	/**
-	 * @param Soap\SoapServiceRouter $router
-	 */
-	public function appendRouterConfig($router)
-	{
-		$router->setSoapClientCourseCatalog(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
-	}
+    /**
+     * @return string
+     */
+    public function getServiceDir()
+    {
+        return 'CourseCatalogService';
+    }
 }

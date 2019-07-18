@@ -1,6 +1,7 @@
 <?php
 
 namespace HisInOneProxy\Exceptions;
+
 /**
  * Class InvalidPlanElement
  * @package HisInOneProxy\Exceptions

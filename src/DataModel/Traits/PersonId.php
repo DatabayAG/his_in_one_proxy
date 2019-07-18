@@ -1,30 +1,31 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
+
 /**
  * Trait PersonId
  * @package HisInOneProxy\DataModel\Traits
  */
 trait PersonId
 {
-	/**
-	 * @var int
-	 */
-	protected $person_id;
+    /**
+     * @var int
+     */
+    protected $person_id;
 
-	/**
-	 * @return int
-	 */
-	public function getPersonId()
-	{
-		return $this->person_id;
-	}
+    /**
+     * @return int
+     */
+    public function getPersonId()
+    {
+        return $this->person_id;
+    }
 
-	/**
-	 * @param int $person_id
-	 */
-	public function setPersonId($person_id)
-	{
-		$this->person_id = $person_id;
-	}
+    /**
+     * @param int $person_id
+     */
+    public function setPersonId($person_id)
+    {
+        $this->person_id = $person_id;
+    }
 }

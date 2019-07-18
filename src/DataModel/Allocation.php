@@ -10,5 +10,5 @@ use HisInOneProxy\DataModel\Traits;
  */
 class Allocation
 {
-	use Traits\ParentId, Traits\SortingOrder;
+    use Traits\ParentId, Traits\SortingOrder;
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
+
 /**
  * Trait Credits
  * @package HisInOneProxy\DataModel\Traits
@@ -8,25 +9,25 @@ namespace HisInOneProxy\DataModel\Traits;
 trait Credits
 {
 
-	/**
-	 * @var string
-	 */
-	protected $credits;
+    /**
+     * @var string
+     */
+    protected $credits;
 
-	/**
-	 * @return string
-	 */
-	public function getCredits()
-	{
-		return $this->credits;
-	}
+    /**
+     * @return string
+     */
+    public function getCredits()
+    {
+        return $this->credits;
+    }
 
-	/**
-	 * @param string $credits
-	 */
-	public function setCredits($credits)
-	{
-		$this->credits = $credits;
-	}
+    /**
+     * @param string $credits
+     */
+    public function setCredits($credits)
+    {
+        $this->credits = $credits;
+    }
 
 }

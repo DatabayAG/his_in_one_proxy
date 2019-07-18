@@ -10,5 +10,5 @@ use HisInOneProxy\DataModel\Traits;
  */
 class WorkStatus
 {
-	use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText;
+    use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText;
 }

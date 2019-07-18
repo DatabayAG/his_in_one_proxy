@@ -10,5 +10,5 @@ use HisInOneProxy\DataModel\Traits;
  */
 class PersonPlanElement
 {
-	use Traits\PersonId, Traits\PlanElementId, Traits\SortingOrder;
+    use Traits\PersonId, Traits\PlanElementId, Traits\SortingOrder;
 }

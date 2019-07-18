@@ -1,6 +1,7 @@
 <?php
 
 namespace HisInOneProxy\Exceptions;
+
 /**
  * Class InvalidTimePreference
  * @package HisInOneProxy\Exceptions

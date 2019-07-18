@@ -1,6 +1,7 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
+
 /**
  * Trait Contents
  * @package HisInOneProxy\DataModel\Traits
@@ -8,25 +9,25 @@ namespace HisInOneProxy\DataModel\Traits;
 trait Contents
 {
 
-	/**
-	 * @var string
-	 */
-	protected $contents;
+    /**
+     * @var string
+     */
+    protected $contents;
 
-	/**
-	 * @return string
-	 */
-	public function getContents()
-	{
-		return $this->contents;
-	}
+    /**
+     * @return string
+     */
+    public function getContents()
+    {
+        return $this->contents;
+    }
 
-	/**
-	 * @param string $contents
-	 */
-	public function setContents($contents)
-	{
-		$this->contents = $contents;
-	}
+    /**
+     * @param string $contents
+     */
+    public function setContents($contents)
+    {
+        $this->contents = $contents;
+    }
 
 }

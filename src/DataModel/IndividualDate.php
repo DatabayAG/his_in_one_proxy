@@ -10,27 +10,27 @@ use HisInOneProxy\DataModel\Traits;
  */
 class IndividualDate
 {
-	use Traits\Appointment, Traits\LockVersion, Traits\ObjGuid, Traits\PlannedDatesId, Traits\RoomId;
+    use Traits\Appointment, Traits\LockVersion, Traits\ObjGuid, Traits\PlannedDatesId, Traits\RoomId;
 
-	/**
-	 * @var int
-	 */
-	protected $execution_date;
+    /**
+     * @var int
+     */
+    protected $execution_date;
 
-	/**
-	 * @return int
-	 */
-	public function getExecutionDate()
-	{
-		return $this->execution_date;
-	}
+    /**
+     * @return int
+     */
+    public function getExecutionDate()
+    {
+        return $this->execution_date;
+    }
 
-	/**
-	 * @param int $execution_date
-	 */
-	public function setExecutionDate($execution_date)
-	{
-		$this->execution_date = $execution_date;
-	}
+    /**
+     * @param int $execution_date
+     */
+    public function setExecutionDate($execution_date)
+    {
+        $this->execution_date = $execution_date;
+    }
 
 }

@@ -2,8 +2,8 @@
 
 namespace HisInOneProxy\DataModel;
 
-use HisInOneProxy\DataModel\Container\ChildRelationContainer;
 use HisInOneProxy\Config\GlobalSettings;
+use HisInOneProxy\DataModel\Container\ChildRelationContainer;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
 
@@ -13,280 +13,267 @@ use HisInOneProxy\Exceptions;
  */
 class Unit
 {
-	const TEXT = 'unit';
+    const TEXT = 'unit';
 
-	use Traits\Comment, Traits\DefaultLanguage, Traits\Lid, Traits\LockVersion, Traits\ObjGuid, Traits\Text, Traits\Valid, Traits\Version;
+    use Traits\Comment, Traits\DefaultLanguage, Traits\Lid, Traits\LockVersion, Traits\ObjGuid, Traits\Text, Traits\Valid, Traits\Version;
 
-	/**
-	 * @var string
-	 */
-	protected $element_nr;
+    /**
+     * @var string
+     */
+    protected $element_nr;
 
-	/**
-	 * @var int
-	 */
-	protected $element_type_id;
+    /**
+     * @var int
+     */
+    protected $element_type_id;
 
-	/**
-	 * @var int
-	 */
-	protected $status_id;
+    /**
+     * @var int
+     */
+    protected $status_id;
 
-	/**
-	 * @var Course[]
-	 */
-	protected $course_container = array();
+    /**
+     * @var Course[]
+     */
+    protected $course_container = array();
 
-	/**
-	 * @var ElearningCourseMapping[]
-	 */
-	protected $course_mapping_container = array();
+    /**
+     * @var ElearningCourseMapping[]
+     */
+    protected $course_mapping_container = array();
 
-	/**
-	 * @var OrgUnit[]
-	 */
-	protected $org_units_container = array();
+    /**
+     * @var OrgUnit[]
+     */
+    protected $org_units_container = array();
 
-	/**
-	 * @var PlanElement[]
-	 */
-	protected $plan_elements_container = array();
+    /**
+     * @var PlanElement[]
+     */
+    protected $plan_elements_container = array();
 
-	/**
-	 * @var ChildRelationContainer
-	 */
-	protected $child_container;
+    /**
+     * @var ChildRelationContainer
+     */
+    protected $child_container;
 
-	/**
-	 * @var CourseOfStudy[]
-	 */
-	protected $course_of_studies;
+    /**
+     * @var CourseOfStudy[]
+     */
+    protected $course_of_studies;
 
-	/**
-	 * @return string
-	 */
-	public function getText()
-	{
-		if(array_key_exists(self::TEXT, GlobalSettings::getInstance()->getTextConfig()))
-		{
-			if(method_exists($this, GlobalSettings::getInstance()->getTextConfig()[self::TEXT]))
-			{
-				return $this->{GlobalSettings::getInstance()->getTextConfig()[self::TEXT]}();
-			}
-		}
-		return $this->getDefaultText();
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getElementNr()
-	{
-		return $this->element_nr;
-	}
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        if (array_key_exists(self::TEXT, GlobalSettings::getInstance()->getTextConfig())) {
+            if (method_exists($this, GlobalSettings::getInstance()->getTextConfig()[self::TEXT])) {
+                return $this->{GlobalSettings::getInstance()->getTextConfig()[self::TEXT]}();
+            }
+        }
+        return $this->getDefaultText();
+    }
 
-	/**
-	 * @param string $element_nr
-	 */
-	public function setElementNr($element_nr)
-	{
-		$this->element_nr = $element_nr;
-	}
+    /**
+     * @return string
+     */
+    public function getElementNr()
+    {
+        return $this->element_nr;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getElementTypeId()
-	{
-		return $this->element_type_id;
-	}
+    /**
+     * @param string $element_nr
+     */
+    public function setElementNr($element_nr)
+    {
+        $this->element_nr = $element_nr;
+    }
 
-	/**
-	 * @param int $element_type_id
-	 */
-	public function setElementTypeId($element_type_id)
-	{
-		$this->element_type_id = (int) $element_type_id;
-	}
+    /**
+     * @return int
+     */
+    public function getElementTypeId()
+    {
+        return $this->element_type_id;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getStatusId()
-	{
-		return $this->status_id;
-	}
+    /**
+     * @param int $element_type_id
+     */
+    public function setElementTypeId($element_type_id)
+    {
+        $this->element_type_id = (int) $element_type_id;
+    }
 
-	/**
-	 * @param int $status_id
-	 */
-	public function setStatusId($status_id)
-	{
-		$this->status_id = (int) $status_id;
-	}
+    /**
+     * @return int
+     */
+    public function getStatusId()
+    {
+        return $this->status_id;
+    }
 
-	/**
-	 * @return Course[]
-	 */
-	public function getCourseContainer()
-	{
-		return $this->course_container;
-	}
+    /**
+     * @param int $status_id
+     */
+    public function setStatusId($status_id)
+    {
+        $this->status_id = (int) $status_id;
+    }
 
-	/**
-	 * @param Course $course
-	 */
-	public function appendCourse($course)
-	{
-		if(is_a($course, '\HisInOneProxy\DataModel\Course'))
-		{
-			$this->course_container[] = $course;
-		}
-		else
-		{
-			throw new Exceptions\InvalidCourse();
-		}
-	}
+    /**
+     * @return Course[]
+     */
+    public function getCourseContainer()
+    {
+        return $this->course_container;
+    }
 
-	/**
-	 * @return OrgUnit[]
-	 */
-	public function getOrgUnitsContainer()
-	{
-		return $this->org_units_container;
-	}
+    /**
+     * @param Course $course
+     */
+    public function appendCourse($course)
+    {
+        if (is_a($course, '\HisInOneProxy\DataModel\Course')) {
+            $this->course_container[] = $course;
+        } else {
+            throw new Exceptions\InvalidCourse();
+        }
+    }
 
-	/**
-	 * @param $org_units
-	 */
-	public function setOrgUnitsContainer($org_units)
-	{
-		$this->org_units_container = $org_units;
-	}
+    /**
+     * @return OrgUnit[]
+     */
+    public function getOrgUnitsContainer()
+    {
+        return $this->org_units_container;
+    }
 
-	/**
-	 * @return OrgUnit[]
-	 */
-	public function getSizeOfOrgUnitContainer()
-	{
-		return count($this->org_units_container);
-	}
-	
-	/**
-	 * @param OrgUnit $org_unit
-	 */
-	public function appendOrgUnit($org_unit)
-	{
-		if(is_a($org_unit, '\HisInOneProxy\DataModel\OrgUnit'))
-		{
-			$this->org_units_container[] = $org_unit;
-		}
-		else
-		{
-			throw new Exceptions\InvalidOrgUnit();
-		}
-	}
+    /**
+     * @param $org_units
+     */
+    public function setOrgUnitsContainer($org_units)
+    {
+        $this->org_units_container = $org_units;
+    }
 
-	/**
-	 * @return PlanElement[]
-	 */
-	public function getPlanElementContainer()
-	{
-		return $this->plan_elements_container;
-	}
+    /**
+     * @return OrgUnit[]
+     */
+    public function getSizeOfOrgUnitContainer()
+    {
+        return count($this->org_units_container);
+    }
 
-	/**
-	 * @return PlanElement[]
-	 */
-	public function getSizeOfPlanElementContainer()
-	{
-		return count($this->plan_elements_container);
-	}
+    /**
+     * @param OrgUnit $org_unit
+     */
+    public function appendOrgUnit($org_unit)
+    {
+        if (is_a($org_unit, '\HisInOneProxy\DataModel\OrgUnit')) {
+            $this->org_units_container[] = $org_unit;
+        } else {
+            throw new Exceptions\InvalidOrgUnit();
+        }
+    }
 
-	/**
-	 * @param PlanElement $plan_element
-	 */
-	public function appendPlanElement($plan_element)
-	{
-		if(is_a($plan_element, '\HisInOneProxy\DataModel\PlanElement'))
-		{
-			$this->plan_elements_container[] = $plan_element;
-		}
-		else
-		{
-			throw new Exceptions\InvalidPlanElement();
-		}
-	}
+    /**
+     * @return PlanElement[]
+     */
+    public function getPlanElementContainer()
+    {
+        return $this->plan_elements_container;
+    }
 
-	/**
-	 * @return ElearningCourseMapping[]
-	 */
-	public function getCourseMappingContainer()
-	{
-		return $this->course_mapping_container;
-	}
+    /**
+     * @return PlanElement[]
+     */
+    public function getSizeOfPlanElementContainer()
+    {
+        return count($this->plan_elements_container);
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getSizeOfCourseMappingContainer()
-	{
-		return count($this->course_mapping_container);
-	}
+    /**
+     * @param PlanElement $plan_element
+     */
+    public function appendPlanElement($plan_element)
+    {
+        if (is_a($plan_element, '\HisInOneProxy\DataModel\PlanElement')) {
+            $this->plan_elements_container[] = $plan_element;
+        } else {
+            throw new Exceptions\InvalidPlanElement();
+        }
+    }
 
-	/**
-	 * @param ElearningCourseMapping[] $course_mapping_container
-	 */
-	public function appendCourseMappingContainer($course_mapping_container)
-	{
-		if(count($course_mapping_container) > 0)
-		{
-			$this->course_mapping_container = $course_mapping_container;
-		}
-	}
+    /**
+     * @return ElearningCourseMapping[]
+     */
+    public function getCourseMappingContainer()
+    {
+        return $this->course_mapping_container;
+    }
 
-	/**
-	 * @return ChildRelation[]
-	 */
-	public function getChildContainer()
-	{
-		if($this->child_container != null)
-		{
-			return $this->child_container->getChildRelationContainer();
-		}
-	}
+    /**
+     * @return int
+     */
+    public function getSizeOfCourseMappingContainer()
+    {
+        return count($this->course_mapping_container);
+    }
 
-	/**
-	 * @param ChildRelationContainer $child_container
-	 */
-	public function setChildContainer($child_container)
-	{
-		$this->child_container = $child_container;
-	}
+    /**
+     * @param ElearningCourseMapping[] $course_mapping_container
+     */
+    public function appendCourseMappingContainer($course_mapping_container)
+    {
+        if (count($course_mapping_container) > 0) {
+            $this->course_mapping_container = $course_mapping_container;
+        }
+    }
 
-	/**
-	 * @param $id
-	 * @param ChildRelation|Unit $child
-	 */
-	public function replaceChildInContainer($id, $child)
-	{
-		$this->child_container->replaceChildInContainer($id, $child);
-	}
+    /**
+     * @return ChildRelation[]
+     */
+    public function getChildContainer()
+    {
+        if ($this->child_container != null) {
+            return $this->child_container->getChildRelationContainer();
+        }
+    }
 
-	/**
-	 * @return CourseOfStudy[]
-	 */
-	public function getCourseOfStudies()
-	{
-		return $this->course_of_studies;
-	}
+    /**
+     * @param ChildRelationContainer $child_container
+     */
+    public function setChildContainer($child_container)
+    {
+        $this->child_container = $child_container;
+    }
 
-	/**
-	 * @param CourseOfStudy[] $course_of_studies
-	 */
-	public function setCourseOfStudies($course_of_studies)
-	{
-		$this->course_of_studies = $course_of_studies;
-	}
+    /**
+     * @param                    $id
+     * @param ChildRelation|Unit $child
+     */
+    public function replaceChildInContainer($id, $child)
+    {
+        $this->child_container->replaceChildInContainer($id, $child);
+    }
+
+    /**
+     * @return CourseOfStudy[]
+     */
+    public function getCourseOfStudies()
+    {
+        return $this->course_of_studies;
+    }
+
+    /**
+     * @param CourseOfStudy[] $course_of_studies
+     */
+    public function setCourseOfStudies($course_of_studies)
+    {
+        $this->course_of_studies = $course_of_studies;
+    }
 
 }

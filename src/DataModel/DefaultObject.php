@@ -10,5 +10,5 @@ use HisInOneProxy\DataModel\Traits;
  */
 class DefaultObject
 {
-	use Traits\DefaultObject;
+    use Traits\DefaultObject;
 }

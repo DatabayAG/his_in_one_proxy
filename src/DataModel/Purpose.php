@@ -7,26 +7,26 @@ use HisInOneProxy\DataModel\Traits;
 class Purpose
 {
 
-	use Traits\DefaultObject;
+    use Traits\DefaultObject;
 
-	/**
-	 * @var string
-	 */
-	protected $object_type;
+    /**
+     * @var string
+     */
+    protected $object_type;
 
-	/**
-	 * @return string
-	 */
-	public function getObjectType()
-	{
-		return $this->object_type;
-	}
+    /**
+     * @return string
+     */
+    public function getObjectType()
+    {
+        return $this->object_type;
+    }
 
-	/**
-	 * @param string $object_type
-	 */
-	public function setObjectType($object_type)
-	{
-		$this->object_type = $object_type;
-	}
+    /**
+     * @param string $object_type
+     */
+    public function setObjectType($object_type)
+    {
+        $this->object_type = $object_type;
+    }
 }

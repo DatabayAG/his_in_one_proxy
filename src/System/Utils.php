@@ -1,45 +1,46 @@
 <?php
 
 namespace HisInOneProxy\System;
+
 /**
  * Class Utils
  * @package HisInOneProxy\System
  */
 class Utils
 {
-	/**
-	 * @param $path
-	 * @return string
-	 */
-	public static function ensureTrailingSlash($path)
-	{
-		$path = self::ensureNoTrailingSlash($path);
-		return $path . '/';
-	}
+    /**
+     * @param $path
+     * @return string
+     */
+    public static function ensureTrailingSlash($path)
+    {
+        $path = self::ensureNoTrailingSlash($path);
+        return $path . '/';
+    }
 
-	/**
-	 * @param $path
-	 * @return string
-	 */
-	public static function ensureNoTrailingSlash($path)
-	{
-		return rtrim($path, '/');
-	}
+    /**
+     * @param $path
+     * @return string
+     */
+    public static function ensureNoTrailingSlash($path)
+    {
+        return rtrim($path, '/');
+    }
 
-	/**
-	 * @param $msg
-	 */
-	public static function LogToShellAndExit($msg)
-	{
-		echo $msg . " Exiting!\n";
-		self::terminate();
-	}
+    /**
+     * @param $msg
+     */
+    public static function LogToShellAndExit($msg)
+    {
+        echo $msg . " Exiting!\n";
+        self::terminate();
+    }
 
-	/**
-	 * @param int $code
-	 */
-	public static function terminate($code = 1)
-	{
-		exit($code);
-	}
+    /**
+     * @param int $code
+     */
+    public static function terminate($code = 1)
+    {
+        exit($code);
+    }
 }

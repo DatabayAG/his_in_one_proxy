@@ -10,5 +10,5 @@ use HisInOneProxy\DataModel\Traits;
  */
 class EAddressTag
 {
-	use Traits\DefaultObject;
+    use Traits\DefaultObject;
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace HisInOneProxy\DataModel\Traits;
+
 /**
  * Trait Literature
  * @package HisInOneProxy\DataModel\Traits
@@ -8,24 +9,24 @@ namespace HisInOneProxy\DataModel\Traits;
 trait Literature
 {
 
-	/**
-	 * @var string
-	 */
-	protected $literature;
+    /**
+     * @var string
+     */
+    protected $literature;
 
-	/**
-	 * @return string
-	 */
-	public function getLiterature()
-	{
-		return $this->literature;
-	}
+    /**
+     * @return string
+     */
+    public function getLiterature()
+    {
+        return $this->literature;
+    }
 
-	/**
-	 * @param string $literature
-	 */
-	public function setLiterature($literature)
-	{
-		$this->literature = $literature;
-	}
+    /**
+     * @param string $literature
+     */
+    public function setLiterature($literature)
+    {
+        $this->literature = $literature;
+    }
 }
