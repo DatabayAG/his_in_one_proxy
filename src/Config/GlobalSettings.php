@@ -8,7 +8,10 @@ use HisInOneProxy\DataModel\Endpoint;
 use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\HisToEcsIdMapping;
 use HisInOneProxy\System\Utils;
+use function json_decode;
+use function json_last_error_msg;
 use Noodlehaus\Config;
+use Noodlehaus\Exception\EmptyDirectoryException;
 
 /**
  * Class GlobalSettings
@@ -170,10 +173,10 @@ class GlobalSettings
     {
         if (file_exists($this->getConfigFileName())) {
             $json = file_get_contents($this->getConfigFileName());
-            if (\json_decode($json) != null) {
+            if (json_decode($json) != null) {
                 $this->config = new Config($this->getConfigFileName());
             } else {
-                Utils::LogToShellAndExit(sprintf('No valid config found, content of file is not valid json structure. (%s)', \json_last_error_msg()));
+                Utils::LogToShellAndExit(sprintf('No valid config found, content of file is not valid json structure. (%s)', json_last_error_msg()));
             }
         } else {
             if (defined('PHPUNIT') && PHPUNIT) {
@@ -262,7 +265,7 @@ class GlobalSettings
 
     /**
      * @param $json
-     * @throws \Noodlehaus\Exception\EmptyDirectoryException
+     * @throws EmptyDirectoryException
      */
     public function readCustomConfig($json)
     {

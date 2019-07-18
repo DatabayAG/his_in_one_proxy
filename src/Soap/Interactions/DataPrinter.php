@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Soap\Interactions;
 
+use Exception;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel;
 use HisInOneProxy\Log\Log;
@@ -33,7 +34,7 @@ class DataPrinter
     /**
      * @param DataModel\Unit[] $units
      * @param int              $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printUnits($units, $level = 0)
     {
@@ -60,7 +61,7 @@ class DataPrinter
      * @param DataModel\PlanElement[] $plan_element_container
      * @param DataModel\Unit          $unit
      * @param                         $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printPlanElementContainer($plan_element_container, $unit, $level)
     {
@@ -81,7 +82,7 @@ class DataPrinter
     /**
      * @param DataModel\ElearningCourseMapping[] $course_mapping_container
      * @param                                    $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printCourseMapping($course_mapping_container, $level)
     {
@@ -97,7 +98,7 @@ class DataPrinter
     /**
      * @param DataModel\PersonPlanElement[] | DataModel\ExamRelation $person_plan_element_container
      * @param                                                        $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printPersonPlanElementContainer($person_plan_element_container, $level)
     {
@@ -122,7 +123,7 @@ class DataPrinter
     /**
      * @param array $account_list
      * @param       $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printPersonAccounts($account_list, $level)
     {
@@ -158,7 +159,7 @@ class DataPrinter
     /**
      * @param array $ea_list
      * @param       $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printPersonEAddress($ea_list, $level)
     {
@@ -181,7 +182,7 @@ class DataPrinter
     /**
      * @param     $obj
      * @param int $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printOrgUnitForUnit($obj, $level = 0)
     {
@@ -198,7 +199,7 @@ class DataPrinter
     /**
      * @param DataModel\OrgUnit $obj
      * @param                   $tabs
-     * @throws \Exception
+     * @throws Exception
      */
     public function printOrgUnitDetailForUnit($obj, $tabs)
     {
@@ -242,7 +243,7 @@ class DataPrinter
     /**
      * @param DataModel\Container\ExamRelationContainer $exams_relation
      * @param                                           $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printExamRelation($exams_relation, $level)
     {
@@ -256,7 +257,7 @@ class DataPrinter
     /**
      * @param DataModel\Person[] $persons
      * @param                    $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printMultiplePersons($persons, $level)
     {
@@ -268,7 +269,7 @@ class DataPrinter
     /**
      * @param DataModel\Person $person
      * @param                  $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printPerson($person, $level)
     {
@@ -322,7 +323,7 @@ class DataPrinter
     /**
      * @param DataModel\CourseCatalogLeaf | DataModel\CourseCatalogChild $leaf
      * @param int                                                        $level
-     * @throws \Exception
+     * @throws Exception
      */
     public function printCourseCatalog($leaf, $level = 0)
     {
@@ -361,7 +362,7 @@ class DataPrinter
 
     /**
      * @param DataModel\Unit $obj
-     * @throws \Exception
+     * @throws Exception
      */
     public function gatherMissingDetailFromCourseCatalog($obj)
     {

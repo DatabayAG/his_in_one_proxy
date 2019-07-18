@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\System;
 
+use Exception;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\Log\Log;
@@ -16,6 +17,10 @@ use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use PHPUnit\TextUI\TestRunner;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ReflectionClass;
+use ReflectionException;
 
 require_once 'libs/composer/vendor/autoload.php';
 
@@ -59,7 +64,7 @@ class ConsoleHandler
      * ConsoleHandler constructor.
      * @param null $term
      * @param null $year
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($term = null, $year = null)
     {
@@ -91,7 +96,7 @@ class ConsoleHandler
 
     /**
      * @param string $what
-     * @throws \Exception
+     * @throws Exception
      */
     protected function endTimer($what = 'Queries')
     {
@@ -104,7 +109,7 @@ class ConsoleHandler
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getLectures()
     {
@@ -123,7 +128,7 @@ class ConsoleHandler
 
     /**
      * @param $id
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getLectureById($id)
     {
@@ -196,7 +201,7 @@ class ConsoleHandler
 
     /**
      * @param $param
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getCourseCatalogLeaf($param)
     {
@@ -342,7 +347,7 @@ class ConsoleHandler
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getCurrentTerm()
     {
@@ -354,7 +359,7 @@ class ConsoleHandler
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getDefaultLanguageId()
     {
@@ -366,7 +371,7 @@ class ConsoleHandler
 
     /**
      * @param $param
-     * @throws \Exception
+     * @throws Exception
      */
     protected function readStudentWithCoursesOfStudyByPersonId($param)
     {
@@ -378,7 +383,7 @@ class ConsoleHandler
 
     /**
      * @param $param
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getCourseOfStudyById($param)
     {
@@ -389,7 +394,7 @@ class ConsoleHandler
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getAllTermTypes()
     {
@@ -402,7 +407,7 @@ class ConsoleHandler
 
     /**
      * @param $param
-     * @throws \Exception
+     * @throws Exception
      */
     protected function readEAddressesForPerson($param)
     {
@@ -414,7 +419,7 @@ class ConsoleHandler
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function readPersonRange()
     {
@@ -439,7 +444,7 @@ class ConsoleHandler
 
     /**
      * @param $param
-     * @throws \Exception
+     * @throws Exception
      */
     protected function readPerson($param)
     {
@@ -457,7 +462,7 @@ class ConsoleHandler
 
     /**
      * @param $param
-     * @throws \Exception
+     * @throws Exception
      */
     protected function searchAccountForPerson61($param)
     {
@@ -469,7 +474,7 @@ class ConsoleHandler
 
     /**
      * @param $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function readAccount($id)
     {
@@ -479,7 +484,7 @@ class ConsoleHandler
     /**
      * @param $func
      * @param $param
-     * @throws \Exception
+     * @throws Exception
      */
     public function functionMap($func, $param)
     {
@@ -498,7 +503,7 @@ class ConsoleHandler
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function unknownCommand()
     {
@@ -518,7 +523,7 @@ class ConsoleHandler
     }
 
     /**
-     * @param \HisInOneProxy\System\Console\FunctionObject $func
+     * @param FunctionObject $func
      */
     protected function printHelpLine($func)
     {
@@ -532,7 +537,7 @@ class ConsoleHandler
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function wsdlHelper()
     {
@@ -551,16 +556,16 @@ class ConsoleHandler
 
     /**
      * @return array
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected function gatherServicesForWsdl()
     {
-        $rii      = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator('src/Soap/SoapService/'));
+        $rii      = new RecursiveIteratorIterator(new RecursiveDirectoryIterator('src/Soap/SoapService/'));
         $services = array();
         foreach ($rii as $file) {
             if ($file->isFile() && $file->getExtension() === 'php') {
                 $class      = str_replace(array('class.', '.php'), '', $file->getBasename());
-                $reflection = new \ReflectionClass('HisInOneProxy\Soap\SoapService\\' . $class);
+                $reflection = new ReflectionClass('HisInOneProxy\Soap\SoapService\\' . $class);
                 if (!$reflection->isAbstract() && !$reflection->isInterface() && $reflection->implementsInterface('HisInOneProxy\Soap\SoapService\SoapClientService')) {
                     /** @var $c SoapService\SoapClientService */
                     $map        = 'HisInOneProxy\Soap\SoapService\\' . $class;
@@ -575,7 +580,7 @@ class ConsoleHandler
     /**
      * @param $file
      * @param $url
-     * @throws \Exception
+     * @throws Exception
      */
     protected function wsdlDownloader($file, $url)
     {
@@ -606,7 +611,7 @@ class ConsoleHandler
             $test_suite = $phpunit->getTest('test/GlobalTestSuite.php');
             $config     = $this->getPhpUnitConfig();
             $phpunit->dorun($test_suite, $config);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             print $e->getMessage() . "\n";
             die ("Unit tests failed.");
         }

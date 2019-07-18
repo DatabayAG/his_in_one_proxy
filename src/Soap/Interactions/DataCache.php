@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Soap\Interactions;
 
+use Exception;
 use HisInOneProxy\DataModel\ChildRelation;
 use HisInOneProxy\DataModel\Container\CourseMappingTypeContainer;
 use HisInOneProxy\DataModel\Container\ElearningPlatformContainer;
@@ -530,7 +531,7 @@ class DataCache
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function readPersonDetailsToCache()
     {
@@ -561,7 +562,7 @@ class DataCache
 
     /**
      * @return DataCache
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getInstance()
     {
@@ -576,7 +577,7 @@ class DataCache
 
     /**
      * @return DataCache
-     * @throws \Exception
+     * @throws Exception
      */
     protected static function init()
     {
@@ -665,7 +666,7 @@ class DataCache
     /**
      * @param $person_id
      * @return Person
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPersonById($person_id)
     {

@@ -2,11 +2,15 @@
 
 namespace HisInOneProxy\Soap;
 
+use Exception;
+use HisInOneProxy\DataModel\Container\CourseOfStudyIdList;
+use HisInOneProxy\DataModel\Container\UnitIdList;
 use HisInOneProxy\DataModel\PlanElement;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log;
 use HisInOneProxy\Parser;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use SoapFault;
 
 /**
  * Class CourseInterfaceService
@@ -36,7 +40,7 @@ class CourseInterfaceService extends SoapService
      * @param null        $cancellation
      * @param null        $updated_since
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
     public function readPersonExamPlanEnrollments($plan_element, $workstatus_ids = null, $cancellation = null, $updated_since = null)
     {
@@ -47,7 +51,7 @@ class CourseInterfaceService extends SoapService
             if (isset($response->examplans)) {
                 $parser->parse($response, $plan_element);
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -56,8 +60,8 @@ class CourseInterfaceService extends SoapService
     /**
      * @param null $term_type_id
      * @param null $year
-     * @return \HisInOneProxy\DataModel\Container\UnitIdList|null
-     * @throws \Exception
+     * @return UnitIdList|null
+     * @throws Exception
      */
     public function findUnit($term_type_id = null, $year = null)
     {
@@ -67,7 +71,7 @@ class CourseInterfaceService extends SoapService
             $parser        = new Parser\ParseUnitIdList(new Log\Log());
             $exam_relation = $parser->parse($response);
             return $exam_relation;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -76,7 +80,7 @@ class CourseInterfaceService extends SoapService
     /**
      * @param $unit_id
      * @return Unit|null
-     * @throws \Exception
+     * @throws Exception
      */
     public function readUnit($unit_id)
     {
@@ -96,7 +100,7 @@ class CourseInterfaceService extends SoapService
 
                 return $unit;
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -104,8 +108,8 @@ class CourseInterfaceService extends SoapService
 
     /**
      * @param $unit_id
-     * @return \HisInOneProxy\DataModel\Container\UnitIdList|null
-     * @throws \Exception
+     * @return UnitIdList|null
+     * @throws Exception
      */
     public function getModulesForUnit($unit_id)
     {
@@ -117,7 +121,7 @@ class CourseInterfaceService extends SoapService
                 $unit_list = $parser->parse($response);
                 return $unit_list;
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -125,8 +129,8 @@ class CourseInterfaceService extends SoapService
 
     /**
      * @param $unit_id
-     * @return \HisInOneProxy\DataModel\Container\CourseOfStudyIdList|null
-     * @throws \Exception
+     * @return CourseOfStudyIdList|null
+     * @throws Exception
      */
     public function getCourseOfStudiesForUnit($unit_id)
     {
@@ -136,7 +140,7 @@ class CourseInterfaceService extends SoapService
             $course_of_study_id      = new Parser\ParseCourseOfStudyIdList(new Log\Log());
             $course_of_study_id_list = $course_of_study_id->parse($response);
             return $course_of_study_id_list;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -147,7 +151,7 @@ class CourseInterfaceService extends SoapService
      * @param      $term_type_id
      * @param      $year
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCombinationForCourse($unit, $term_type_id, $year)
     {
@@ -157,7 +161,7 @@ class CourseInterfaceService extends SoapService
             $course_of_study_id_list = new Parser\ParseElearningCourseMapping(new Log\Log());
             $course_mapping          = $course_of_study_id_list->parse($response);
             $unit->appendCourseMappingContainer($course_mapping);
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -168,7 +172,7 @@ class CourseInterfaceService extends SoapService
      * @param $term_type_id
      * @param $year
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function doesCombinationForCourseExist($unit_id, $term_type_id, $year)
     {
@@ -180,7 +184,7 @@ class CourseInterfaceService extends SoapService
             if (count($course_mapping) > 0) {
                 return true;
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return false;
@@ -191,7 +195,7 @@ class CourseInterfaceService extends SoapService
      * @param      $term_type_id
      * @param      $term_year
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
     public function readPlanElementsForUnit($unit, $term_type_id, $term_year)
     {
@@ -214,7 +218,7 @@ class CourseInterfaceService extends SoapService
             }
 
             return $unit;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -224,7 +228,7 @@ class CourseInterfaceService extends SoapService
      * @param $plan_element_id
      * @param $plan_element
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPersonResponsibleForPlanElement($plan_element_id, $plan_element)
     {
@@ -234,7 +238,7 @@ class CourseInterfaceService extends SoapService
             $person_plan_elements = new Parser\ParsePersonPlanElement($this->log);
             $person_plan_elements->parse($response, $plan_element);
             return $plan_element;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -246,7 +250,7 @@ class CourseInterfaceService extends SoapService
      * @param $term_type_id
      * @param $term_year
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPersonExternalForCourse($unit_id, $plan_element, $term_type_id, $term_year)
     {
@@ -256,7 +260,7 @@ class CourseInterfaceService extends SoapService
             $person_plan_elements = new Parser\ParsePersonExternals($this->log);
             $person_plan_elements->parse($response, $plan_element);
             return $plan_element;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -268,7 +272,7 @@ class CourseInterfaceService extends SoapService
      * @param $term_type_id
      * @param $term_year
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPersonResponsibleForUnit($unit_id, $plan_element, $term_type_id, $term_year)
     {
@@ -278,7 +282,7 @@ class CourseInterfaceService extends SoapService
             $person_plan_elements = new Parser\ParsePersonPlanElement($this->log);
             $person_plan_elements->parse($response, $plan_element);
             return $plan_element;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -292,7 +296,7 @@ class CourseInterfaceService extends SoapService
      * @param int  $work_status_ids
      * @param null $cancellation
      * @param null $updated_since
-     * @throws \Exception
+     * @throws Exception
      */
     public function readPersonExamPlanEnrollmentsForUnit($plan_element, $unit_id, $term_type_id, $year, $work_status_ids = 8, $cancellation = null, $updated_since = null)
     {
@@ -303,7 +307,7 @@ class CourseInterfaceService extends SoapService
             if (isset($response->examplans)) {
                 $parser->parse($response, $plan_element);
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
     }
@@ -322,7 +326,7 @@ class CourseInterfaceService extends SoapService
         try {
             $this->soap_course_interface->__soapCall('addLinkToCourse', $params);
             return true;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

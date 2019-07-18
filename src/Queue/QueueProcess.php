@@ -2,8 +2,13 @@
 
 namespace HisInOneProxy\Queue;
 
+use FilesystemIterator;
+use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\System\ProcessHandling;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
 
 /**
  * Class QueueProcess
@@ -12,7 +17,7 @@ use HisInOneProxy\System\ProcessHandling;
 class QueueProcess
 {
     /**
-     * @var \HisInOneProxy\Log\Log
+     * @var Log
      */
     protected $log;
 
@@ -48,13 +53,13 @@ class QueueProcess
     protected function killAllQueueProcess()
     {
 
-        $iterator = new \RecursiveDirectoryIterator(
+        $iterator = new RecursiveDirectoryIterator(
             'pid/',
-            \FilesystemIterator::SKIP_DOTS
+            FilesystemIterator::SKIP_DOTS
         );
 
-        $iterator = new \RecursiveIteratorIterator($iterator);
-        $iterator = new \RegexIterator($iterator, '/' . $this->process_name . '_(\d+)\.pid/');
+        $iterator = new RecursiveIteratorIterator($iterator);
+        $iterator = new RegexIterator($iterator, '/' . $this->process_name . '_(\d+)\.pid/');
 
         foreach ($iterator as $item) {
             if (file_exists($item->getPathName())) {

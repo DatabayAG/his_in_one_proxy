@@ -2,10 +2,14 @@
 
 namespace HisInOneProxy\Soap;
 
+use Exception;
+use HisInOneProxy\DataModel\Container\CourseCatalogElementIdList;
 use HisInOneProxy\DataModel\CourseCatalogChild;
 use HisInOneProxy\DataModel\CourseCatalogLeaf;
+use HisInOneProxy\DataModel\VisibleChild;
 use HisInOneProxy\Parser;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use SoapFault;
 
 /**
  * Class CourseCatalogService
@@ -44,7 +48,7 @@ class CourseCatalogService extends SoapService
             $response = $this->soap_client_course_catalog->__soapCall('getRootIdOfTerm', $params);
             $term_id  = $response->rootIdOfTerm;
             return $term_id;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -53,7 +57,7 @@ class CourseCatalogService extends SoapService
     /**
      * @param $rootIdOfTerm
      * @return CourseCatalogLeaf|null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCourseCatalogLeaf($rootIdOfTerm)
     {
@@ -64,7 +68,7 @@ class CourseCatalogService extends SoapService
             $catalog_leaf           = $parser->parse($response->courseCatalogLeaf);
             $course_catalog_element = $this->getChildren($catalog_leaf);
             return $course_catalog_element;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -73,7 +77,7 @@ class CourseCatalogService extends SoapService
     /**
      * @param CourseCatalogLeaf $course_catalog_element
      * @return CourseCatalogLeaf | null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getChildren($course_catalog_element)
     {
@@ -106,7 +110,7 @@ class CourseCatalogService extends SoapService
                 }
             }
             return $course_catalog_element;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -116,8 +120,8 @@ class CourseCatalogService extends SoapService
      * @param $courseCatalogElementId
      * @param $termTypeValueId
      * @param $year
-     * @return \HisInOneProxy\DataModel\VisibleChild[]  | null
-     * @throws \Exception
+     * @return VisibleChild[]  | null
+     * @throws Exception
      */
     public function getUnitChildren($courseCatalogElementId, $termTypeValueId = 1, $year = 2017)
     {
@@ -135,7 +139,7 @@ class CourseCatalogService extends SoapService
                 }
             }
             return $units;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -143,7 +147,7 @@ class CourseCatalogService extends SoapService
 
     /**
      * @param $plan_element_id
-     * @return \HisInOneProxy\DataModel\Container\CourseCatalogElementIdList | null
+     * @return CourseCatalogElementIdList | null
      */
     public function getCourseCatalogElementIdsForPlanElement($plan_element_id)
     {
@@ -153,7 +157,7 @@ class CourseCatalogService extends SoapService
             $parser   = new Parser\ParseCourseCatalogElementIdList($this->log);
             $children = $parser->parse($response);
             return $children;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

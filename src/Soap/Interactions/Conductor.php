@@ -2,8 +2,11 @@
 
 namespace HisInOneProxy\Soap\Interactions;
 
+use Exception;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Container\UnitIdList;
+use HisInOneProxy\DataModel\CourseCatalogLeaf;
+use HisInOneProxy\DataModel\CurrentTerm;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue\QueueConstants;
@@ -57,7 +60,7 @@ class Conductor
      * @param null $term
      * @param null $year
      * @param null $log
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($term = null, $year = null, $log = null)
     {
@@ -88,8 +91,8 @@ class Conductor
     }
 
     /**
-     * @return \HisInOneProxy\DataModel\CurrentTerm|null
-     * @throws \Exception
+     * @return CurrentTerm|null
+     * @throws Exception
      */
     protected function getCurrentTerm()
     {
@@ -109,8 +112,8 @@ class Conductor
     }
 
     /**
-     * @return \HisInOneProxy\DataModel\CourseCatalogLeaf|null
-     * @throws \Exception
+     * @return CourseCatalogLeaf|null
+     * @throws Exception
      */
     public function getCourseCatalog()
     {
@@ -138,7 +141,7 @@ class Conductor
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAllLecturesForThisTerm()
     {
@@ -170,7 +173,7 @@ class Conductor
      * @param            $cos_map
      * @param            $cos_already
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     protected function startHandlingUnitList($unit_list, $cos_map, $cos_already)
     {
@@ -197,7 +200,7 @@ class Conductor
      * @param $cos_map
      * @param $cos_already
      * @return Unit|null
-     * @throws \Exception
+     * @throws Exception
      */
     protected function gatherUnitDetails($unit_id, $cos_map, $cos_already)
     {
@@ -231,7 +234,7 @@ class Conductor
     /**
      * @param Unit       $unit
      * @param UnitIdList $unit_id_list
-     * @throws \Exception
+     * @throws Exception
      */
     protected function readDetailsForOrgUnits($unit, $unit_id_list)
     {
@@ -247,7 +250,7 @@ class Conductor
     /**
      * @param Unit $module
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getOrgUnitDetails($module)
     {
@@ -270,7 +273,7 @@ class Conductor
      * @param Unit $unit
      * @param      $cos_map
      * @param      $cos_already
-     * @throws \Exception
+     * @throws Exception
      */
     protected function readCourseOfStudyForUnit($unit, $cos_map, $cos_already)
     {
@@ -282,7 +285,7 @@ class Conductor
      * @param Unit $unit
      * @param      $cos_map
      * @param      $cos_already
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getDetailOfCourseOfStudy($unit, $cos_map, $cos_already)
     {
@@ -314,7 +317,7 @@ class Conductor
      * @param $cos_lid
      * @param $cos_already
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getCourseOfStudyDetails($cos_lid, $cos_already)
     {
@@ -329,7 +332,7 @@ class Conductor
 
     /**
      * @param $unit
-     * @throws \Exception
+     * @throws Exception
      */
     protected function readPlanElementsForUnit($unit)
     {
@@ -338,7 +341,7 @@ class Conductor
 
     /**
      * @param $units
-     * @throws \Exception
+     * @throws Exception
      */
     protected function finishHandlingUnits($units)
     {
@@ -361,7 +364,7 @@ class Conductor
 
     /**
      * @param $unit_id
-     * @throws \Exception
+     * @throws Exception
      */
     public function getLectureByUnitIdForTerm($unit_id)
     {
@@ -378,7 +381,7 @@ class Conductor
 
     /**
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function getInstitutionsAndOrgUnits()
     {

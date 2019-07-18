@@ -2,7 +2,9 @@
 
 namespace HisInOneProxy\Soap\Interactions;
 
+use Exception;
 use HisInOneProxy\Config\GlobalSettings;
+use HisInOneProxy\DataModel\CompleteAccount;
 use HisInOneProxy\DataModel\CourseCatalogChild;
 use HisInOneProxy\DataModel\CourseCatalogLeaf;
 use HisInOneProxy\DataModel\ElearningCourseMapping;
@@ -10,6 +12,7 @@ use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\OrgUnit;
 use HisInOneProxy\DataModel\PlanElement;
 use HisInOneProxy\DataModel\Unit;
+use stdClass;
 
 /**
  * Class JsonBuilder
@@ -46,7 +49,7 @@ class JsonBuilder
     {
         $links = array();
         foreach ($container as $lin) {
-            $link        = new \stdClass();
+            $link        = new stdClass();
             $link->title = '';
             $link->href  = '';
             $links[]     = $link;
@@ -57,7 +60,7 @@ class JsonBuilder
     /**
      * @param Unit[] $units
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public static function convertUnitsToArray($units)
     {
@@ -70,7 +73,7 @@ class JsonBuilder
              * @var Unit $unit
              */
             $mapping          = $unit->getCourseMappingContainer();
-            $row              = new \stdClass();
+            $row              = new stdClass();
             $course_container = $unit->getCourseContainer();
             if (count($course_container) > 0) {
                 $course         = $course_container[0];
@@ -144,7 +147,7 @@ class JsonBuilder
      * @param      $row
      * @param Unit $unit
      * @param      $event_type_id
-     * @throws \Exception
+     * @throws Exception
      */
     protected static function addSimpleTypes($row, $unit, $event_type_id)
     {
@@ -173,7 +176,7 @@ class JsonBuilder
      * @param      $row
      * @param Unit $unit
      * @param      $course_id
-     * @throws \Exception
+     * @throws Exception
      */
     protected static function addComplexTypes($row, $unit, $course_id)
     {
@@ -193,7 +196,7 @@ class JsonBuilder
     {
         $allocations = array();
         foreach ($container as $loc) {
-            $allocation           = new \stdClass();
+            $allocation           = new stdClass();
             $allocation->parentID = '';
             $allocation->order    = '';
             $allocations[]        = $allocation;
@@ -210,7 +213,7 @@ class JsonBuilder
         $programs = array();
         if (is_array($container->getCourseOfStudies())) {
             foreach ($container->getCourseOfStudies() as $course_of_study) {
-                $program                        = new \stdClass();
+                $program                        = new stdClass();
                 $program->id                    = $course_of_study->getLid();
                 $program->title                 = $course_of_study->getDefaultText();
                 $program->courseUnitYearOfStudy = $course_of_study->getValidFromTermYear();
@@ -226,14 +229,14 @@ class JsonBuilder
     /**
      * @param OrgUnit[] $container
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     protected static function addOrgUnits($container)
     {
         $org_units = array();
         foreach ($container as $org) {
             $org_details  = DataCache::getInstance()->resolveOrgUnitByLid($org->getLid());
-            $org_unit     = new \stdClass();
+            $org_unit     = new stdClass();
             $org_unit->id = $org->getLid();
             if (is_a($org_details, 'HisInOneProxy\DataModel\OrgUnit')) {
                 $org_unit->title = $org_details->getLongText();
@@ -262,7 +265,7 @@ class JsonBuilder
      * @param      $row
      * @param      $course_id
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     protected static function appendGroups($unit, $row, $course_id)
     {
@@ -271,7 +274,7 @@ class JsonBuilder
 
         foreach ($plan_element as $element) {
             self::analysePersonContainer($element, $unit->getId(), $course_id);
-            $group                  = new \stdClass();
+            $group                  = new stdClass();
             $group->id              = $element->getId();
             $group->title           = DataCache::getInstance()
                                                ->getParallelGroupValues()
@@ -295,7 +298,7 @@ class JsonBuilder
      * @param PlanElement $plan_element
      * @param             $unit_id
      * @param             $course_id
-     * @throws \Exception
+     * @throws Exception
      */
     protected static function analysePersonContainer($plan_element, $unit_id, $course_id)
     {
@@ -305,10 +308,10 @@ class JsonBuilder
 
             if (is_array($accounts) && count($accounts) > 0) {
                 /**
-                 * @var \HisInOneProxy\DataModel\CompleteAccount $account
+                 * @var CompleteAccount $account
                  */
                 foreach ($accounts as $account) {
-                    $person = new \stdClass();
+                    $person = new stdClass();
                     $role   = DataCache::STUDENT;
                     if (is_a($element, 'HisInOneProxy\DataModel\PersonPlanElement') || is_a($element, 'HisInOneProxy\DataModel\PersonExternals')) {
                         $role = DataCache::COURSE_ADMINISTRATOR;
@@ -318,7 +321,7 @@ class JsonBuilder
                     $usr_name                                                                          = $account->getUserName() . GlobalSettings::getInstance()->getLoginSuffix();
                     self::$course_user_groups_map[$course_id][$usr_name][$element->getPlanElementId()] = array('role' => $role, 'blocked' => $account->getBlockedId());
                     if ($role === DataCache::COURSE_ADMINISTRATOR) {
-                        $lecturer                                                          = new \stdClass();
+                        $lecturer                                                          = new stdClass();
                         $person                                                            = DataCache::getInstance()->getPersonById($element->getPersonId());
                         $lecturer->firstName                                               = $person->getFirstName();
                         $lecturer->lastName                                                = $person->getSurName();
@@ -340,8 +343,8 @@ class JsonBuilder
         foreach (self::$course_user_groups_map as $course_id => $course) {
             $person_element = null;
             foreach ($course as $user_name => $user) {
-                $element         = new \stdClass();
-                $person          = new \stdClass();
+                $element         = new stdClass();
+                $person          = new stdClass();
                 $group_container = array();
 
                 foreach ($user as $group_id => $group) {
@@ -354,7 +357,7 @@ class JsonBuilder
                     $person->personID     = $user_name . GlobalSettings::getInstance()->getLoginSuffix();
                     $person->personIDtype = GlobalSettings::getInstance()->getPersonIdType();
                     $person->role         = $user_element['role'];
-                    $group_element        = new \stdClass();
+                    $group_element        = new stdClass();
                     $group_element->id    = $group_id;
                     $group_element->role  = $group['role'];
                     $group_element->num   = self::getCourseGroupNum($course_id, $group_id);
@@ -405,7 +408,7 @@ class JsonBuilder
     /**
      * @param $plan_element_id
      * @return mixed|string
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getElearningSystemStringFromPlanElementId($plan_element_id)
     {
@@ -442,7 +445,7 @@ class JsonBuilder
 
         $array = array();
 
-        $row                     = new \stdClass();
+        $row                     = new stdClass();
         $row->rootID             = $course_catalog->getId();
         $row->directoryTreeTitle = $course_catalog->getTitle();
         $row->term               = '';
@@ -463,7 +466,7 @@ class JsonBuilder
             foreach ($children as $n) {
                 if ($n != null) {
                     /** @var CourseCatalogChild $n */
-                    $node          = new \stdClass();
+                    $node          = new stdClass();
                     $node->id      = $n->getCourseCatalogId();
                     $node->title   = $n->getType();
                     $node->nodes   = array();
@@ -483,7 +486,7 @@ class JsonBuilder
     {
 
         $array                   = array();
-        $row                     = new \stdClass();
+        $row                     = new stdClass();
         $row->rootID             = $org_unit->getId();
         $row->directoryTreeTitle = $org_unit->getLongText();
         $row->parent             = '';
@@ -505,7 +508,7 @@ class JsonBuilder
         foreach ($children as $n) {
             if ($n != null) {
                 /** @var OrgUnit $n */
-                $node          = new \stdClass();
+                $node          = new stdClass();
                 $node->id      = $n->getId();
                 $node->title   = $n->getLongText();
                 $node->parent  = $parent_id;

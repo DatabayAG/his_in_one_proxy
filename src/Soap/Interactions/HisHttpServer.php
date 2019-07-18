@@ -4,11 +4,16 @@ namespace HisInOneProxy\Soap\Interactions;
 
 require_once './libs/composer/vendor/autoload.php';
 
+use Exception;
 use GuzzleHttp\Psr7\Response;
 use HisInOneProxy\Config;
 use HisInOneProxy\Queue;
 use Psr\Http\Message\ServerRequestInterface;
+use React\EventLoop\ExtEventLoop;
 use React\EventLoop\Factory;
+use React\EventLoop\LibEventLoop;
+use React\EventLoop\LibEvLoop;
+use React\EventLoop\StreamSelectLoop;
 use React\Http\Server;
 use React\Promise\Promise;
 
@@ -29,7 +34,7 @@ class HisHttpServer
     protected $events = 0;
 
     /**
-     * @var \React\EventLoop\ExtEventLoop|\React\EventLoop\LibEventLoop|\React\EventLoop\LibEvLoop|\React\EventLoop\StreamSelectLoop
+     * @var ExtEventLoop|LibEventLoop|LibEvLoop|StreamSelectLoop
      */
     protected $loop;
 
@@ -86,7 +91,7 @@ class HisHttpServer
                     $resolve($response);
                 });
 
-                $request->getBody()->on('error', function (\Exception $exception) use ($resolve, &$contentLength) {
+                $request->getBody()->on('error', function (Exception $exception) use ($resolve, &$contentLength) {
                     $response = new Response(
                         400,
                         array('Content-Type' => 'text/plain'),

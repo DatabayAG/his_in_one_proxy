@@ -2,10 +2,12 @@
 
 namespace HisInOneProxy\Exceptions;
 
+use InvalidArgumentException;
+
 /**
  * Class InvalidDateTime
  * @package HisInOneProxy\Exceptions
  */
-class InvalidDateTime extends \InvalidArgumentException
+class InvalidDateTime extends InvalidArgumentException
 {
 }

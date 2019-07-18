@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Parser;
 
+use Exception;
 use HisInOneProxy\DataModel;
 
 /**
@@ -15,7 +16,7 @@ class ParsePlanElements extends SimpleXmlParser
      * @param                $xml
      * @param DataModel\Unit $unit
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function parse($xml, $unit)
     {
@@ -37,7 +38,7 @@ class ParsePlanElements extends SimpleXmlParser
     /**
      * @param                $value
      * @param DataModel\Unit $unit
-     * @throws \Exception
+     * @throws Exception
      */
     protected function parseElement($value, $unit)
     {

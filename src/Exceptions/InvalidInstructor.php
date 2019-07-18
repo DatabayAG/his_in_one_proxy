@@ -2,10 +2,12 @@
 
 namespace HisInOneProxy\Exceptions;
 
+use InvalidArgumentException;
+
 /**
  * Class InvalidInstructor
  * @package HisInOneProxy\Exceptions
  */
-class InvalidInstructor extends \InvalidArgumentException
+class InvalidInstructor extends InvalidArgumentException
 {
 }

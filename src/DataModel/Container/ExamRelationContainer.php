@@ -26,7 +26,7 @@ class ExamRelationContainer
     }
 
     /**
-     * @param \HisInOneProxy\DataModel\ExamRelation $exam_relation
+     * @param ExamRelation $exam_relation
      */
     public function appendExamRelation($exam_relation)
     {

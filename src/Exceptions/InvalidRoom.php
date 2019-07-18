@@ -2,10 +2,12 @@
 
 namespace HisInOneProxy\Exceptions;
 
+use InvalidArgumentException;
+
 /**
  * Class InvalidRoom
  * @package HisInOneProxy\Exceptions
  */
-class InvalidRoom extends \InvalidArgumentException
+class InvalidRoom extends InvalidArgumentException
 {
 }

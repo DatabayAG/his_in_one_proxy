@@ -2,6 +2,8 @@
 
 namespace HisInOneProxy\Queue;
 
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use HisInOneProxy\REST\EcsCommunication;
 use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
@@ -31,7 +33,7 @@ class QueueService
      * @param null $json
      * @param null $receiver
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function get_institutions_and_org_units($json = null, $receiver = null)
     {
@@ -46,7 +48,7 @@ class QueueService
      * @param $json
      * @param $receiver
      * @return bool
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public static function publish_course_to_ecs($json, $receiver)
     {
@@ -61,7 +63,7 @@ class QueueService
      * @param $json
      * @param $receiver
      * @return bool
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public static function publish_members_to_ecs($json, $receiver)
     {
@@ -76,7 +78,7 @@ class QueueService
      * @param $json
      * @param $receiver
      * @return bool
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public static function publish_course_catalog_to_ecs($json, $receiver)
     {
@@ -103,7 +105,7 @@ class QueueService
      * @param null $json
      * @param null $receiver
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function get_all_lectures_for_this_term($json = null, $receiver = null)
     {

@@ -2,6 +2,8 @@
 
 namespace HisInOneProxy\DataModel\Container;
 
+use Generator;
+
 /**
  * Class CourseOfStudyIdList
  * @package HisInOneProxy\DataModel\Container
@@ -41,7 +43,7 @@ class CourseOfStudyIdList
     }
 
     /**
-     * @return \Generator
+     * @return Generator
      */
     public function getCourseOfStudyId()
     {

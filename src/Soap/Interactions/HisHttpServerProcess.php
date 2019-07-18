@@ -3,6 +3,7 @@
 namespace HisInOneProxy\Soap\Interactions;
 
 use HisInOneProxy\Config\GlobalSettings;
+use HisInOneProxy\Log\Log;
 use HisInOneProxy\System\ProcessHandling;
 
 /**
@@ -14,7 +15,7 @@ class HisHttpServerProcess
     const HIS_SERVER_PID = 'pid/server.pid';
 
     /**
-     * @var \HisInOneProxy\Log\Log
+     * @var Log
      */
     protected $log;
 

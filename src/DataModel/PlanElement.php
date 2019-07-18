@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel;
 
+use DateTime;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Traits;
 use HisInOneProxy\Exceptions;
@@ -30,7 +31,7 @@ class PlanElement
     protected $attendee_minimum;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $cancel_end;
 
@@ -55,12 +56,12 @@ class PlanElement
     protected $parallel_group_id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $register_begin;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $register_end;
 
@@ -145,7 +146,7 @@ class PlanElement
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCancelEnd()
     {
@@ -153,7 +154,7 @@ class PlanElement
     }
 
     /**
-     * @param \DateTime $cancel_end
+     * @param DateTime $cancel_end
      */
     public function setCancelEnd($cancel_end)
     {
@@ -225,7 +226,7 @@ class PlanElement
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getRegisterBegin()
     {
@@ -233,7 +234,7 @@ class PlanElement
     }
 
     /**
-     * @param \DateTime $register_begin
+     * @param DateTime $register_begin
      */
     public function setRegisterBegin($register_begin)
     {
@@ -241,7 +242,7 @@ class PlanElement
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getRegisterEnd()
     {
@@ -249,7 +250,7 @@ class PlanElement
     }
 
     /**
-     * @param \DateTime $register_end
+     * @param DateTime $register_end
      */
     public function setRegisterEnd($register_end)
     {
@@ -297,7 +298,7 @@ class PlanElement
     }
 
     /**
-     * @param \HisInOneProxy\DataModel\PersonPlanElement | ExamRelation | PersonExternals $person_plan_element
+     * @param PersonPlanElement | ExamRelation | PersonExternals $person_plan_element
      */
     public function appendPersonPlanElement($person_plan_element)
     {
@@ -319,7 +320,7 @@ class PlanElement
     }
 
     /**
-     * @param \HisInOneProxy\DataModel\PersonExternals
+     * @param PersonExternals
      */
     public function appendPersonExternalsElement($person_external)
     {

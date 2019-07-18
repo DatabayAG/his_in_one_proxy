@@ -2,8 +2,10 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\DataModel\CompleteAccount;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser\ParseAccounts;
+use SoapFault;
 
 /**
  * Class AccountService
@@ -24,7 +26,7 @@ class AccountService extends SoapService
 
     /**
      * @param $person_id
-     * @return \HisInOneProxy\DataModel\CompleteAccount[]|null
+     * @return CompleteAccount[]|null
      */
     public function searchAccountForPerson61($person_id)
     {
@@ -34,7 +36,7 @@ class AccountService extends SoapService
             $parser       = new ParseAccounts($this->log);
             $account_list = $parser->parse($response);
             return $account_list;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

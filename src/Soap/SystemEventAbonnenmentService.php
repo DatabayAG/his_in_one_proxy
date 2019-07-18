@@ -2,10 +2,12 @@
 
 namespace HisInOneProxy\Soap;
 
+use Exception;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Endpoint;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use SoapFault;
 
 /**
  * Class SystemEventAbonnenmentService
@@ -59,7 +61,7 @@ class SystemEventAbonnenmentService extends SoapService
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function registerAll()
     {
@@ -76,7 +78,7 @@ class SystemEventAbonnenmentService extends SoapService
      * @param          $object_type
      * @param Endpoint $endpoint
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
     public function register($object_type, $endpoint)
     {
@@ -98,7 +100,7 @@ class SystemEventAbonnenmentService extends SoapService
             try {
                 $response = $this->soap_service_router->getSoapSystemEventAbonnenmentClient()->__soapCall('register60', $params);
                 var_dump($response);
-            } catch (\SoapFault $exception) {
+            } catch (SoapFault $exception) {
                 $this->log->error($exception->getMessage());
             }
         } else {
@@ -120,7 +122,7 @@ class SystemEventAbonnenmentService extends SoapService
     /**
      * @param string $object_type
      * @return null
-     * @throws \Exception
+     * @throws Exception
      */
     public function quitRegistration($object_type)
     {
@@ -135,7 +137,7 @@ class SystemEventAbonnenmentService extends SoapService
             try {
                 $response = $this->soap_service_router->getSoapSystemEventAbonnenmentClient()->__soapCall('quitRegistration', $params);
                 var_dump($response);
-            } catch (\SoapFault $exception) {
+            } catch (SoapFault $exception) {
                 $this->log->error($exception->getMessage());
             }
         } else {

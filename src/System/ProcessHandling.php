@@ -2,7 +2,13 @@
 
 namespace HisInOneProxy\System;
 
+use Exception;
+use FilesystemIterator;
+use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
 
 /**
  * Class ProcessHandling
@@ -11,7 +17,7 @@ use HisInOneProxy\Soap\Interactions\DataCache;
 class ProcessHandling
 {
     /**
-     * @var \HisInOneProxy\Log\Log
+     * @var Log
      */
     protected $log;
 
@@ -53,7 +59,7 @@ class ProcessHandling
 
             try {
                 $response = posix_kill($pid, SIGKILL);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->log->error(sprintf('Process with id (%s) could not be killed, %s!', $pid, $e->getMessage()));
             }
 
@@ -77,13 +83,13 @@ class ProcessHandling
      */
     public function getMultiProcessName($process_name)
     {
-        $iterator = new \RecursiveDirectoryIterator(
+        $iterator = new RecursiveDirectoryIterator(
             'pid/',
-            \FilesystemIterator::SKIP_DOTS
+            FilesystemIterator::SKIP_DOTS
         );
 
-        $iterator = new \RecursiveIteratorIterator($iterator);
-        $iterator = new \RegexIterator($iterator, '/' . $process_name . '_(\d+)\.pid/');
+        $iterator = new RecursiveIteratorIterator($iterator);
+        $iterator = new RegexIterator($iterator, '/' . $process_name . '_(\d+)\.pid/');
 
         return 'pid/' . $process_name . '_' . iterator_count($iterator) . '.pid';
 

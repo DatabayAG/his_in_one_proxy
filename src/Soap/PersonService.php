@@ -2,9 +2,12 @@
 
 namespace HisInOneProxy\Soap;
 
+use Exception;
+use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use SoapFault;
 
 /**
  * Class PersonService
@@ -25,8 +28,8 @@ class PersonService extends SoapService
 
     /**
      * @param $person_id
-     * @return \HisInOneProxy\DataModel\Person|null
-     * @throws \Exception
+     * @return Person|null
+     * @throws Exception
      */
     public function readPerson($person_id)
     {
@@ -39,7 +42,7 @@ class PersonService extends SoapService
                 $person->setEAddresses(DataCache::getInstance()->getAddressService()->readEAddressesForPerson($person_id));
                 return $person;
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

@@ -4,12 +4,15 @@ namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Soap\SoapService\ConfigClient;
+use SoapClient;
+use SoapHeader;
+use SoapVar;
 
 /**
  * Class WSSoapClient
  * @package HisInOneProxy\Soap
  */
-class WSSoapClient extends \SoapClient
+class WSSoapClient extends SoapClient
 {
     private $OASIS = 'http://docs.oasis-open.org/wss/2004/01';
     /**
@@ -92,7 +95,7 @@ class WSSoapClient extends \SoapClient
     }
 
     /**
-     * @return \SoapHeader
+     * @return SoapHeader
      */
     protected function generateWSSecurityHeader()
     {
@@ -103,10 +106,10 @@ class WSSoapClient extends \SoapClient
 					</wsse:UsernameToken>
 				</wsse:Security>';
 
-        $soap_header = new \SoapHeader(
+        $soap_header = new SoapHeader(
             $this->OASIS . '/oasis-200401-wss-wssecurity-secext-1.0.xsd',
             'Security',
-            new \SoapVar($xml, XSD_ANYXML),
+            new SoapVar($xml, XSD_ANYXML),
             true);
 
         return $soap_header;

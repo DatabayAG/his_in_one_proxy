@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel\Container;
 
+use Generator;
 use HisInOneProxy\DataModel\CompleteAccount;
 
 /**
@@ -24,7 +25,7 @@ class AccountList
     }
 
     /**
-     * @return \Generator
+     * @return Generator
      */
     public function getAccount()
     {

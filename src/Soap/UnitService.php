@@ -2,7 +2,10 @@
 
 namespace HisInOneProxy\Soap;
 
+use Exception;
+use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class UnitService
@@ -26,8 +29,8 @@ class UnitService extends SoapService
 
     /**
      * @param $unitId
-     * @return \HisInOneProxy\DataModel\Unit|null
-     * @throws \Exception
+     * @return Unit|null
+     * @throws Exception
      */
     public function readUnit($unitId)
     {
@@ -42,7 +45,7 @@ class UnitService extends SoapService
             } else {
                 $this->log->error('No unit object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -50,8 +53,8 @@ class UnitService extends SoapService
 
     /**
      * @param $unitId
-     * @return \HisInOneProxy\DataModel\Unit|null
-     * @throws \Exception
+     * @return Unit|null
+     * @throws Exception
      */
     public function readUnitWithChildren($unitId)
     {
@@ -72,7 +75,7 @@ class UnitService extends SoapService
             } else {
                 $this->log->error('No unit object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -102,7 +105,7 @@ class UnitService extends SoapService
             } else {
                 $this->log->error('No unit object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

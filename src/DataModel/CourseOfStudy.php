@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel;
 
+use DateTime;
 use HisInOneProxy\DataModel\Traits;
 
 /**
@@ -142,7 +143,7 @@ class CourseOfStudy
     protected $type_of_study_id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $valid_from;
 
@@ -157,7 +158,7 @@ class CourseOfStudy
     protected $valid_from_term_year;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $valid_to;
 
@@ -593,7 +594,7 @@ class CourseOfStudy
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getValidFrom()
     {
@@ -601,7 +602,7 @@ class CourseOfStudy
     }
 
     /**
-     * @param \DateTime $valid_from
+     * @param DateTime $valid_from
      */
     public function setValidFrom($valid_from)
     {
@@ -641,7 +642,7 @@ class CourseOfStudy
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getValidTo()
     {
@@ -649,7 +650,7 @@ class CourseOfStudy
     }
 
     /**
-     * @param \DateTime $valid_to
+     * @param DateTime $valid_to
      */
     public function setValidTo($valid_to)
     {

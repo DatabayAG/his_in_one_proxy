@@ -2,8 +2,17 @@
 
 namespace HisInOneProxy\Queue;
 
+use Exception;
+use FilesystemIterator;
+use GlobIterator;
 use HisInOneProxy\Config\GlobalSettings;
+use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RegexIterator;
+use SplFileInfo;
+use SplFileObject;
 
 require_once './libs/composer/vendor/autoload.php';
 
@@ -30,7 +39,7 @@ class SimpleQueue
     protected $permissions = 0740;
 
     /**
-     * @var \HisInOneProxy\Log\Log
+     * @var Log
      */
     protected $log;
 
@@ -65,7 +74,7 @@ class SimpleQueue
     {
         if ($this->queueExists($queue_name)) {
             $queue_dir = $this->getQueueDirectory($queue_name);
-            $it        = new \GlobIterator($queue_dir . DIRECTORY_SEPARATOR . '*.job', \FilesystemIterator::KEY_AS_FILENAME);
+            $it        = new GlobIterator($queue_dir . DIRECTORY_SEPARATOR . '*.job', FilesystemIterator::KEY_AS_FILENAME);
             $files     = array_keys(iterator_to_array($it));
             natsort($files);
 
@@ -76,7 +85,7 @@ class SimpleQueue
 
                     try {
 
-                        $file = new \SplFileObject($queue_dir . DIRECTORY_SEPARATOR . $id, 'r+');
+                        $file = new SplFileObject($queue_dir . DIRECTORY_SEPARATOR . $id, 'r+');
                         $file->flock(LOCK_EX);
                         $data = array(file_get_contents($queue_dir . DIRECTORY_SEPARATOR . $id), $id);
                         rename($queue_dir . DIRECTORY_SEPARATOR . $id, $queue_dir . DIRECTORY_SEPARATOR . $id . '.done');
@@ -85,7 +94,7 @@ class SimpleQueue
 
                         return $data;
 
-                    } catch (\Exception $e) {
+                    } catch (Exception $e) {
                         $this->log->error(sprintf('File could not be renamed %s.', $e->getMessage()));
                     }
                 }
@@ -124,13 +133,13 @@ class SimpleQueue
     public function getSize($queue_name)
     {
         if ($this->queueExists($queue_name)) {
-            $iterator = new \RecursiveDirectoryIterator(
+            $iterator = new RecursiveDirectoryIterator(
                 $this->getQueueDirectory($queue_name),
-                \FilesystemIterator::SKIP_DOTS
+                FilesystemIterator::SKIP_DOTS
             );
 
-            $iterator = new \RecursiveIteratorIterator($iterator);
-            $iterator = new \RegexIterator($iterator, '#\.job$#');
+            $iterator = new RecursiveIteratorIterator($iterator);
+            $iterator = new RegexIterator($iterator, '#\.job$#');
 
             return iterator_count($iterator);
         }
@@ -143,7 +152,7 @@ class SimpleQueue
     public function cleanUpStaleJobs()
     {
         $queue_dir = $this->getQueueDirectory(QueueConstants::SERVICE_QUEUE);
-        $it        = new \GlobIterator($queue_dir . DIRECTORY_SEPARATOR . '*.job.done', \FilesystemIterator::KEY_AS_FILENAME);
+        $it        = new GlobIterator($queue_dir . DIRECTORY_SEPARATOR . '*.job.done', FilesystemIterator::KEY_AS_FILENAME);
         $files     = array_keys(iterator_to_array($it));
         $sec_a_day = 86400;
         $yesterday = time() - $sec_a_day;
@@ -151,7 +160,7 @@ class SimpleQueue
 
         if ($files) {
             foreach ($files as $file) {
-                $info = new \SplFileInfo($queue_dir . DIRECTORY_SEPARATOR . $file);
+                $info = new SplFileInfo($queue_dir . DIRECTORY_SEPARATOR . $file);
                 $time = $info->getCTime();
                 if ($time <= $yesterday) {
                     unlink($queue_dir . DIRECTORY_SEPARATOR . $file);
@@ -197,7 +206,7 @@ class SimpleQueue
             chmod($path, $this->permissions);
         }
 
-        $file = new \SplFileObject($path, 'r+');
+        $file = new SplFileObject($path, 'r+');
         $file->flock(LOCK_EX);
         $meta = unserialize($file->fgets());
         $id   = isset($meta[$queue_name]) ? $meta[$queue_name] : 0;

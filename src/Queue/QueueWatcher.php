@@ -9,6 +9,10 @@ use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use React\EventLoop;
+use React\EventLoop\ExtEventLoop;
+use React\EventLoop\LibEventLoop;
+use React\EventLoop\LibEvLoop;
+use React\EventLoop\StreamSelectLoop;
 
 /**
  * Class QueueWatcher
@@ -32,7 +36,7 @@ class QueueWatcher
     protected $events = 0;
 
     /**
-     * @var \React\EventLoop\ExtEventLoop|\React\EventLoop\LibEventLoop|\React\EventLoop\LibEvLoop|\React\EventLoop\StreamSelectLoop
+     * @var ExtEventLoop|LibEventLoop|LibEvLoop|StreamSelectLoop
      */
     protected $loop;
 

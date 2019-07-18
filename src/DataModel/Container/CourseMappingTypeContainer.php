@@ -25,7 +25,7 @@ class CourseMappingTypeContainer
     }
 
     /**
-     * @param \HisInOneProxy\DataModel\CourseMappingType $course_mapping_type
+     * @param CourseMappingType $course_mapping_type
      */
     public function appendCourseMappingType($course_mapping_type)
     {

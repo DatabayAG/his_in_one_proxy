@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel\Container;
 
+use Generator;
 use HisInOneProxy\DataModel\HisSystemResponse;
 
 /**
@@ -24,7 +25,7 @@ class HisSystemResponseContainer
     }
 
     /**
-     * @return \Generator
+     * @return Generator
      */
     public function getSystemResponse()
     {

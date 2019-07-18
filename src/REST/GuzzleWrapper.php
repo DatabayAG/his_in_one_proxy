@@ -2,7 +2,9 @@
 
 namespace HisInOneProxy\REST;
 
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use Psr\Http\Message\ResponseInterface;
@@ -14,7 +16,7 @@ use Psr\Http\Message\ResponseInterface;
 class GuzzleWrapper
 {
     /**
-     * @var \GuzzleHttp\Client
+     * @var Client
      */
     protected $client;
     /**
@@ -36,19 +38,19 @@ class GuzzleWrapper
      * @param string $uri
      * @param array  $options
      * @return mixed|ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function makeRequest($method, $uri = '', $options = array())
     {
         try {
             return $this->getClient()->request($method, $uri, $options);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DataCache::getInstance()->getLog()->critical($e->getMessage());
         }
     }
 
     /**
-     * @return \GuzzleHttp\Client
+     * @return Client
      */
     public function getClient()
     {
@@ -99,7 +101,7 @@ class GuzzleWrapper
     /**
      * @param ResponseInterface $response
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getStatusCode($response)
     {

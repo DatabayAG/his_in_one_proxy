@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel;
 
+use DateTime;
 use HisInOneProxy\DataModel\Traits;
 
 /**
@@ -18,7 +19,7 @@ class DegreeProgram
     protected $student_id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $extension_date;
 
@@ -49,7 +50,7 @@ class DegreeProgram
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getExtensionDate()
     {
@@ -57,7 +58,7 @@ class DegreeProgram
     }
 
     /**
-     * @param \DateTime $extension_date
+     * @param DateTime $extension_date
      */
     public function setExtensionDate($extension_date)
     {

@@ -2,8 +2,10 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\DataModel\OrgUnit;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class OrgUnitService
@@ -31,7 +33,7 @@ class OrgUnitService extends SoapService
     /**
      * @param $lid
      * @param $date
-     * @return \HisInOneProxy\DataModel\OrgUnit | null
+     * @return OrgUnit | null
      */
     public function readOrgUnit($lid, $date = null)
     {
@@ -41,7 +43,7 @@ class OrgUnitService extends SoapService
             $parser   = new Parser\ParseOrgUnit($this->log);
             $org_unit = $parser->parse($response->orgunit);
             return $org_unit;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -56,7 +58,7 @@ class OrgUnitService extends SoapService
         try {
             $response = $this->soap_org_unit->__soapCall('getUniversityLid', $params);
             return $response->universityLid;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -65,7 +67,7 @@ class OrgUnitService extends SoapService
     /**
      * @param $lid
      * @param $date
-     * @return \HisInOneProxy\DataModel\OrgUnit | null
+     * @return OrgUnit | null
      */
     public function getOrgUnitWithChildren($lid, $date = null)
     {
@@ -86,7 +88,7 @@ class OrgUnitService extends SoapService
                 }
             }
             return $org_unit;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

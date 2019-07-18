@@ -3,8 +3,10 @@
 namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\DataModel\Address;
+use HisInOneProxy\DataModel\ElectronicAddress;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class AddressService
@@ -37,7 +39,7 @@ class AddressService extends SoapService
             $address  = $parser->parse($response);
 
             return $address;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -45,7 +47,7 @@ class AddressService extends SoapService
 
     /**
      * @param $person_id
-     * @return \HisInOneProxy\DataModel\ElectronicAddress[]|null
+     * @return ElectronicAddress[]|null
      */
     public function readEAddressesForPerson($person_id)
     {
@@ -57,7 +59,7 @@ class AddressService extends SoapService
             $eaddresses = $parser->parse($response);
 
             return $eaddresses;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

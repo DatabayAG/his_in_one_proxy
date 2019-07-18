@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\Parser;
 
+use Exception;
 use HisInOneProxy\DataModel;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
@@ -14,7 +15,7 @@ class ParseUnit extends SimpleXmlParser
     /**
      * @param $xml
      * @return DataModel\Unit
-     * @throws \Exception
+     * @throws Exception
      */
     public function parse($xml)
     {

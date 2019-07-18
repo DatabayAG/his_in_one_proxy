@@ -4,6 +4,7 @@ namespace HisInOneProxy\Log;
 
 include_once './libs/composer/vendor/autoload.php';
 
+use Exception;
 use HisInOneProxy\Config\GlobalSettings;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -20,7 +21,7 @@ class Log
      * Log constructor.
      * @param string $channel
      * @param null   $logger
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($channel = 'default', $logger = null)
     {

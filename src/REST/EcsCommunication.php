@@ -2,6 +2,8 @@
 
 namespace HisInOneProxy\REST;
 
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
@@ -34,7 +36,7 @@ class EcsCommunication
     /**
      * @param $json
      * @return bool
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function publishCourseToEcs($json)
     {
@@ -45,7 +47,7 @@ class EcsCommunication
             if ($this->client->getStatusCode($response) == HttpStatusCode::CREATED) {
                 return true;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e->getMessage()));
         }
         return false;
@@ -62,7 +64,7 @@ class EcsCommunication
     /**
      * @param $json
      * @return bool
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function publishMembersToEcs($json)
     {
@@ -71,7 +73,7 @@ class EcsCommunication
             if ($this->client->getStatusCode($response) == HttpStatusCode::CREATED) {
                 return true;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e->getMessage()));
         }
         return false;
@@ -80,7 +82,7 @@ class EcsCommunication
     /**
      * @param $json
      * @return bool
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function publishCourseCatalogToEcs($json)
     {
@@ -89,7 +91,7 @@ class EcsCommunication
             if ($this->client->getStatusCode($response) == HttpStatusCode::CREATED) {
                 return true;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e->getMessage()));
         }
         return false;
@@ -98,7 +100,7 @@ class EcsCommunication
     /**
      * @param $path
      * @param $course_urls
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function getCourseIds($path, $course_urls)
     {
@@ -128,7 +130,7 @@ class EcsCommunication
     }
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function getCoursesUrls()
     {

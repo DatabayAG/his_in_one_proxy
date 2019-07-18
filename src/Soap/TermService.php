@@ -2,8 +2,10 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\DataModel\CurrentTerm;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class TermService
@@ -24,7 +26,7 @@ class TermService extends SoapService
 
     /**
      * @param null $lang
-     * @return \HisInOneProxy\DataModel\CurrentTerm | null
+     * @return CurrentTerm | null
      */
     public function getCurrentTerm($lang = null)
     {
@@ -38,7 +40,7 @@ class TermService extends SoapService
             } else {
                 $this->log->error('No current term object found in response, now we have a real problem!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

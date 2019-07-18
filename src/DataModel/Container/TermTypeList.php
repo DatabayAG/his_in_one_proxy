@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel\Container;
 
+use Generator;
 use HisInOneProxy\DataModel\TermType;
 
 /**
@@ -24,7 +25,7 @@ class TermTypeList
     }
 
     /**
-     * @return \Generator
+     * @return Generator
      */
     public function getTermType()
     {

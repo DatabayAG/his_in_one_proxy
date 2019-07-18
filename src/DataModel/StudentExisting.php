@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel;
 
+use DateTime;
 use HisInOneProxy\DataModel\Traits;
 
 /**
@@ -27,7 +28,7 @@ class StudentExisting
     protected $edu_type;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     protected $enrollment_date;
 
@@ -165,7 +166,7 @@ class StudentExisting
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEnrollmentDate()
     {
@@ -173,7 +174,7 @@ class StudentExisting
     }
 
     /**
-     * @param \DateTime $enrollment_date
+     * @param DateTime $enrollment_date
      */
     public function setEnrollmentDate($enrollment_date)
     {

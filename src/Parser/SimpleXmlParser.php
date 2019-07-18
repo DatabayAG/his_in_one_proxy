@@ -2,7 +2,9 @@
 
 namespace HisInOneProxy\Parser;
 
+use Countable;
 use HisInOneProxy\Log\Log;
+use SimpleXMLElement;
 
 /**
  * Class SimpleXmlParser
@@ -94,7 +96,7 @@ class SimpleXmlParser
 
     protected function isCountable($object)
     {
-        return (is_array($object) || $object instanceof \SimpleXMLElement || $object instanceof \Countable);
+        return (is_array($object) || $object instanceof SimpleXMLElement || $object instanceof Countable);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace HisInOneProxy\DataModel\Container;
 
+use Generator;
+
 /**
  * Class UnitIdList
  * @package HisInOneProxy\DataModel\Container
@@ -14,7 +16,7 @@ class UnitIdList
     protected $unit_id_container = array();
 
     /**
-     * @return \Generator
+     * @return Generator
      */
     public function getUnitId()
     {

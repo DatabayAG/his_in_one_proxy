@@ -4,6 +4,7 @@ namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class CourseService
@@ -36,7 +37,7 @@ class CourseService extends SoapService
                 $exam_relation = $parser->parse($response, new Unit());
                 return $exam_relation;
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -56,7 +57,7 @@ class CourseService extends SoapService
                 #$exam_relation = $parser->parse($response);
                 #	return $exam_relation;
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

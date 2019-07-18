@@ -2,7 +2,20 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\DataModel\Container\CourseMappingTypeContainer;
+use HisInOneProxy\DataModel\Container\ElearningPlatformContainer;
+use HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer;
+use HisInOneProxy\DataModel\Container\TermTypeList;
+use HisInOneProxy\DataModel\Container\WorkStatusContainer;
+use HisInOneProxy\DataModel\DefaultObject;
+use HisInOneProxy\DataModel\EAddressTag;
+use HisInOneProxy\DataModel\EAddressType;
+use HisInOneProxy\DataModel\FieldOfStudy;
+use HisInOneProxy\DataModel\Gender;
+use HisInOneProxy\DataModel\Language;
+use HisInOneProxy\DataModel\Purpose;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class ValueService
@@ -22,7 +35,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Container\CourseMappingTypeContainer|null
+     * @return CourseMappingTypeContainer|null
      */
     public function getAllCourseMappingTypes($lang)
     {
@@ -36,7 +49,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No course mapping type object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -56,7 +69,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No default languages value found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -64,7 +77,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\EAddressType[]|null
+     * @return EAddressType[]|null
      */
     public function getAllEAddressTypes($lang)
     {
@@ -78,7 +91,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of EAddresstype types object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -86,7 +99,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\EAddressTag[]|null
+     * @return EAddressTag[]|null
      */
     public function getAllEAddressTags($lang)
     {
@@ -100,7 +113,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of EAddressTag object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -108,7 +121,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Container\ElearningPlatformContainer|null
+     * @return ElearningPlatformContainer|null
      */
     public function getAllElearningPlatforms($lang)
     {
@@ -122,7 +135,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No elearning plattform object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -130,7 +143,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+     * @return DefaultObject[]|null
      */
     public function getAllExternalSystems($lang)
     {
@@ -142,7 +155,7 @@ class ValueService extends SoapService
      * @param $soap_function
      * @param $list_attribute
      * @param $attribute
-     * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+     * @return DefaultObject[]|null
      */
     protected function getDefaultObjectType($lang, $soap_function, $list_attribute, $attribute)
     {
@@ -159,7 +172,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of default object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -167,7 +180,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\FieldOfStudy[]|null
+     * @return FieldOfStudy[]|null
      */
     public function getAllFieldOfStudies($lang)
     {
@@ -181,7 +194,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of field of studies found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -189,7 +202,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Gender[]|null
+     * @return Gender[]|null
      */
     public function getAllGenders($lang)
     {
@@ -203,7 +216,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of genders found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -211,7 +224,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Language[]|null
+     * @return Language[]|null
      */
     public function getAllLanguages($lang)
     {
@@ -225,7 +238,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of languages found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -233,7 +246,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+     * @return DefaultObject[]|null
      */
     public function getAllMajorFieldOfStudies($lang)
     {
@@ -242,7 +255,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+     * @return DefaultObject[]|null
      */
     public function getAllOrgUnitAttributes($lang)
     {
@@ -251,7 +264,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+     * @return DefaultObject[]|null
      */
     public function getAllOrgUnitTypes($lang)
     {
@@ -260,7 +273,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer|null
+     * @return ParallelGroupValuesContainer|null
      */
     public function getAllParallelGroups($lang)
     {
@@ -274,7 +287,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of ParallelGroup object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -282,7 +295,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\DefaultObject[]|null
+     * @return DefaultObject[]|null
      */
     public function getAllPersonGroupCategories($lang)
     {
@@ -291,7 +304,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Purpose[]|null
+     * @return Purpose[]|null
      */
     public function getAllPurposes($lang)
     {
@@ -306,7 +319,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of purposes found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -314,7 +327,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Container\TermTypeList|null| array
+     * @return TermTypeList|null| array
      */
     public function getAllTermTypes($lang)
     {
@@ -328,7 +341,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of term types object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -336,7 +349,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Container\TermTypeList|null
+     * @return TermTypeList|null
      */
     public function getAllElementtypes($lang)
     {
@@ -344,7 +357,7 @@ class ValueService extends SoapService
         try {
             $response = $this->soap_service_router->getSoapClientValueService()->__soapCall('getAllElementtypes', $params);
             return $response;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -352,7 +365,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\EAddressType[]|null
+     * @return EAddressType[]|null
      */
     public function getAllEventtypes($lang)
     {
@@ -366,7 +379,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of work status object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -374,7 +387,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Container\WorkStatusContainer|null
+     * @return WorkStatusContainer|null
      */
     public function getAllWorkStatus($lang)
     {
@@ -389,7 +402,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of work status object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -397,7 +410,7 @@ class ValueService extends SoapService
 
     /**
      * @param $lang
-     * @return \HisInOneProxy\DataModel\Container\WorkStatusContainer|null
+     * @return WorkStatusContainer|null
      */
     public function getAllBlockeds($lang)
     {
@@ -410,7 +423,7 @@ class ValueService extends SoapService
             } else {
                 $this->log->error('No list of blocked ids found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

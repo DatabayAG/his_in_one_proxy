@@ -4,6 +4,10 @@ namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Log\Log;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ReflectionClass;
+use SplFileInfo;
 
 /**
  * Class SoapServiceRouter
@@ -110,15 +114,15 @@ class SoapServiceRouter
         $service_counter = 0;
         $start_time      = microtime(true);
         $this->log->info('Starting initializing Services...');
-        $rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(dirname(__FILE__) . '/SoapService'));
-        /** @var \SplFileInfo $file */
+        $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(dirname(__FILE__) . '/SoapService'));
+        /** @var SplFileInfo $file */
         foreach ($rii as $file) {
             if ($file->isDir()) {
                 continue;
             }
             if ($file->getExtension() === 'php') {
                 $class      = str_replace(array('class.', '.php'), '', $file->getBasename());
-                $reflection = new \ReflectionClass('HisInOneProxy\Soap\SoapService\\' . $class);
+                $reflection = new ReflectionClass('HisInOneProxy\Soap\SoapService\\' . $class);
                 if (!$reflection->isAbstract() && $reflection->implementsInterface('HisInOneProxy\Soap\SoapService\SoapClientService')) {
                     /** @var $instance SoapService\SoapClientService */
                     $instance = $reflection->newInstance();

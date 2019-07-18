@@ -2,8 +2,10 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\DataModel\Room;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class FacilityService
@@ -24,7 +26,7 @@ class FacilityService extends SoapService
 
     /**
      * @param $room_id
-     * @return \HisInOneProxy\DataModel\Room | null
+     * @return Room | null
      */
     public function readRoom($room_id)
     {
@@ -38,7 +40,7 @@ class FacilityService extends SoapService
             } else {
                 $this->log->error('No room object found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

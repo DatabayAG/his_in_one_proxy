@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel;
 
+use Exception;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
 /**
@@ -53,7 +54,7 @@ class HisSystemResponse
 
     /**
      * @param string $event_type
-     * @throws \Exception
+     * @throws Exception
      */
     public function setEventType($event_type)
     {

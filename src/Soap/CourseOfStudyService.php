@@ -2,8 +2,10 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\DataModel\CourseOfStudy;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class CourseOfStudyService
@@ -30,7 +32,7 @@ class CourseOfStudyService extends SoapService
 
     /**
      * @param $course_of_study_id
-     * @return \HisInOneProxy\DataModel\CourseOfStudy | null
+     * @return CourseOfStudy | null
      */
     public function getCourseOfStudyById($course_of_study_id)
     {
@@ -40,7 +42,7 @@ class CourseOfStudyService extends SoapService
             $parser   = new Parser\ParseCourseOfStudy($this->log);
             $study    = $parser->parse($response->courseOfStudy);
             return $study;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -64,7 +66,7 @@ class CourseOfStudyService extends SoapService
                 }
             }
             return $map;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;

@@ -4,6 +4,7 @@ namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\DataModel\StudentExisting;
 use HisInOneProxy\Parser;
+use SoapFault;
 
 /**
  * Class StudentService
@@ -40,7 +41,7 @@ class StudentService extends SoapService
             $parser   = new Parser\ParseStudentExisting($this->log);
             $student  = $parser->parse($response->student);
             return $student;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -58,7 +59,7 @@ class StudentService extends SoapService
             $parser   = new Parser\ParseStudentExisting($this->log);
             $student  = $parser->parse($response->student);
             return $student;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -74,7 +75,7 @@ class StudentService extends SoapService
             $response = $this->soap_student->__soapCall('getUniversityLid', $params);
             $lid      = $response->universityLid;
             return $lid;
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
