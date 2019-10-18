@@ -26,7 +26,7 @@ use HisInOneProxy\Soap\StudentService;
 use HisInOneProxy\Soap\SystemEventAbonnenmentService;
 use HisInOneProxy\Soap\TermService;
 use HisInOneProxy\Soap\UnitService;
-use HisInOneProxy\Soap\ValueService;
+use HisInOneProxy\Soap\KeyvalueService;
 
 /**
  * Class DataCache
@@ -119,20 +119,15 @@ class DataCache
      */
     protected static $person_service;
 
-    /**
-     * @var UnitService
-     */
-    protected static $unit_service;
-
-    /**
-     * @var ValueService
-     */
-    protected static $value_service;
- 
-    /**
-     * @var KeyvalueService
-     */
-    protected static $keyvalue_service;
+	/**
+	 * @var UnitService
+	 */
+	protected static $unit_service;
+	
+	/**
+	 * @var KeyvalueService
+	 */
+	protected static $keyvalue_service;
 
     /**
      * @var TermService
@@ -263,7 +258,7 @@ class DataCache
 		self::$student_service          = new StudentService(self::$log, self::$router);
 		self::$term_service             = new TermService(self::$log, self::$router);
 		self::$unit_service             = new UnitService(self::$log, self::$router);
-		self::$keyvalue_service         = new KeyValueService(self::$log, self::$router);
+		self::$keyvalue_service         = new KeyvalueService(self::$log, self::$router);
 		self::$account_service          = new AccountService(self::$log, self::$router);
 		self::$address_service          = new AddressService(self::$log, self::$router);
 		self::$system_event_abo_service = new SystemEventAbonnenmentService(self::$log, self::$router);
@@ -524,21 +519,21 @@ class DataCache
         return self::$course_of_study_service;
     }
 
-    /**
-     * @return UnitService
-     */
-    public function getUnitService()
-    {
-        return self::$unit_service;
-    }
-
-    /**
-     * @return ValueService
-     */
-    public function getValueService()
-    {
-        return self::$value_service;
-    }
+	/**
+	 * @return UnitService
+	 */
+	public function getUnitService()
+	{
+		return self::$unit_service;
+	}
+	
+	/**
+	 * @return KeyvalueService
+	 */
+	public function getKeyValueService()
+	{
+		return self::$keyvalue_service;
+	}
 
     /**
      * @return CourseCatalogService

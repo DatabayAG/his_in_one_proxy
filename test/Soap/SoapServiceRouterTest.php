@@ -69,9 +69,9 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router->getSoapClientAddressService();
 		$this->assertEqualClearedString('Emergency: Address service not initialised!', array_pop($this->collectedMessages));
 
-		$this->soap_client_router->setSoapClientValueService(null);
-		$this->soap_client_router->getSoapClientValueService();
-		$this->assertEqualClearedString('Emergency: Value service not initialised!', array_pop($this->collectedMessages));
+		$this->soap_client_router->setSoapClientKeyValueService(null);
+		$this->soap_client_router->getSoapClientKeyValueService();
+		$this->assertEqualClearedString('Emergency: KeyValue service not initialised!', array_pop($this->collectedMessages));
 
 		$this->soap_client_router->setSoapClientTermService(null);
 		$this->soap_client_router->getSoapClientTermService();

@@ -1,5 +1,5 @@
-<listOfEAddresstags>
-	<eaddresstagvalue>
+<values>
+	<value>
 		<id>23412</id>
 		<uniquename>MyName</uniquename>
 		<shorttext>f</shorttext>
@@ -9,5 +9,5 @@
 		<defaultlanguage>12</defaultlanguage>
 		<objGuid>43523534643523432</objGuid>
 		<hiskeyId>31</hiskeyId>
-	</eaddresstagvalue>
-</listOfEAddresstags>
+	</value>
+</values>

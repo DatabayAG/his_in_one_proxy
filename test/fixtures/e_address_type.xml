@@ -1,5 +1,5 @@
-<listOfEAddresstypes>
-	<eaddresstypevalue>
+<values>
+	<value>
 		<id>23412</id>
 		<uniquename>MyName</uniquename>
 		<shorttext>f</shorttext>
@@ -10,5 +10,5 @@
 		<objGuid>43523534643523432</objGuid>
 		<addresstype>10</addresstype>
 		<hiskeyId>31</hiskeyId>
-	</eaddresstypevalue>
-</listOfEAddresstypes>
+	</value>
+</values>

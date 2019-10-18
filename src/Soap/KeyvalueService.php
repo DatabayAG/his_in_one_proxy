@@ -3,10 +3,10 @@
 namespace HisInOneProxy\Soap;
 
 /**
- * Class KeyValueService
+ * Class KeyvalueService
  * @package HisInOneProxy\Soap
  */
-class KeyValueService extends SoapService
+class KeyvalueService extends SoapService
 {
     /**
      * CourseCatalogService constructor.

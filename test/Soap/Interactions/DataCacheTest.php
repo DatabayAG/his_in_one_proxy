@@ -149,10 +149,10 @@ class DataCacheTest extends TestCaseExtension
 		$this->assertInstanceOf('HisInOneProxy\Soap\UnitService', $instance);
 	}
 
-	public function test_getValueService_shouldReturnInstance()
+	public function test_getKeyValueService_shouldReturnInstance()
 	{
-		$instance =$this->instance->getValueService();
-		$this->assertInstanceOf('HisInOneProxy\Soap\ValueService', $instance);
+		$instance =$this->instance->getKeyValueService();
+		$this->assertInstanceOf('HisInOneProxy\Soap\KeyvalueService', $instance);
 	}
 
 	public function test_getCourseCatalogService_shouldReturnInstance()
