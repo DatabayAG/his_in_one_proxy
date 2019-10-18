@@ -82,7 +82,11 @@ class SoapServiceRouter
      * @var WSSoapClient
      */
     protected $soap_client_address_service;
-
+	/**
+	 * @var WSSoapClient
+	 */
+	protected $soap_client_keyvalue_service;
+	
     /**
      * @var WSSoapClient
      */
@@ -374,18 +378,37 @@ class SoapServiceRouter
         return GlobalSettings::getInstance()->getHisServerUrl();
     }
 
-    /**
-     * @return WSSoapClient|null
-     */
-    public function getSoapClientValueService()
-    {
-        if ($this->soap_client_value_service !== null) {
-            return $this->soap_client_value_service;
-        } else {
-            $this->log->emergency('Value service not initialised!');
-        }
-        return null;
-    }
+	/**
+	 * @return WSSoapClient|null
+	 */
+	public function getSoapClientKeyValueService()
+	{
+		if($this->soap_client_keyvalue_service !== null)
+		{
+			return $this->soap_client_keyvalue_service;
+		}
+		else
+		{
+			$this->log->emergency('KeyValue service not initialised!');
+		}
+		return null;
+	}
+
+	/**
+	 * @return WSSoapClient|null
+	 */
+	public function getSoapClientValueService()
+	{
+		if($this->soap_client_value_service !== null)
+		{
+			return $this->soap_client_value_service;
+		}
+		else
+		{
+			$this->log->emergency('Value service not initialised!');
+		}
+		return null;
+	}
 
     /**
      * @param WSSoapClient $soap_client_value_service
@@ -395,18 +418,21 @@ class SoapServiceRouter
         $this->soap_client_value_service = $soap_client_value_service;
     }
 
-    /**
-     * @return WSSoapClient|null
-     */
-    public function getSoapClientAddressService()
-    {
-        if ($this->soap_client_address_service !== null) {
-            return $this->soap_client_address_service;
-        } else {
-            $this->log->emergency('Address service not initialised!');
-        }
-        return null;
-    }
+	/**
+	 * @return WSSoapClient|null
+	 */
+	public function getSoapClientAddressService()
+	{
+		if($this->soap_client_address_service !== null)
+		{
+			return $this->soap_client_address_service;
+		}
+		else
+		{
+			$this->log->emergency('Address service not initialised!');
+		}
+		return null;
+	}
 
     /**
      * @param WSSoapClient $soap_client_address_service

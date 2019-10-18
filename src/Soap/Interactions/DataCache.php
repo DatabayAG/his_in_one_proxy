@@ -271,7 +271,7 @@ class DataCache
 
 	protected static function readDefaultLanguage()
 	{
-		self::$default_lang_id = self::$keyvalue_service->getAllValid('LanguageValue', 'de');
+		self::$default_lang_id = self::$keyvalue_service->getDefaultLanguageId('LanguageValue', 'de');
 	}
 	
 	protected static function readParallelGroupValues()

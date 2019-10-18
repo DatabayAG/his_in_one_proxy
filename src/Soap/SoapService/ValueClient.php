@@ -26,11 +26,11 @@ class ValueClient implements SoapClientService
         return 'ValueService.wsdl';
     }
 
-    /**
-     * @return string
-     */
-    public function getServiceDir()
-    {
-        return 'ValueService';
-    }
+	/**
+	 * @return string
+	 */
+	public function getServiceDir()
+	{
+		return 'ValueService';
+	}
 }

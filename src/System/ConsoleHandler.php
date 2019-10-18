@@ -137,17 +137,17 @@ class ConsoleHandler
         $this->endTimer();
     }
 
-    /**
-     *
-     */
-    protected function getAllCourseMappingTypes()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllCourseMappingTypes($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	/**
+	 * 
+	 */
+	protected function getAllCourseMappingTypes()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllCourseMappingTypes($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
     protected function getInstitutions()
     {
@@ -163,13 +163,13 @@ class ConsoleHandler
         $this->endTimer();
     }
 
-    protected function getAllBlockeds()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        DataCache::getInstance()->getValueService()->getAllBlockeds($lng);
-        $this->endTimer();
-    }
+	protected function getAllBlockeds()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		DataCache::getInstance()->getValueService()->getAllBlockeds($lng);
+		$this->endTimer();
+	}
 
     protected function startHisListener()
     {
@@ -211,163 +211,164 @@ class ConsoleHandler
         $this->endTimer();
     }
 
-    protected function getAllParallelGroups()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllParallelGroups($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllParallelGroups()
+	{
+		$this->startTimer();
+		$lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('ParallelgroupValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllGenders()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllGenders($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllGenders()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('GenderValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllElementtypes()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllElementtypes($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllElementtypes()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('ElementtypeValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllEventtypes()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllEventtypes($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllEventtypes()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('EventtypeValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllLanguages()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllLanguages($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllLanguages()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('LanguageValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllEAddressTypes()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllEAddressTypes($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllEAddressTypes()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('EAddresstypeValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllFieldOfStudies()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllFieldOfStudies($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllFieldOfStudies()
+	{
+	    // ????
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('FormOfStudiesValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllEAddressTags()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllEAddressTags($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllEAddressTags()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('AddresstagValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllExternalSystems()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllExternalSystems($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllExternalSystems()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('ExternalsystemValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllMajorFieldOfStudies()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllMajorFieldOfStudies($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllMajorFieldOfStudies()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('MajorFieldOfStudy', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllOrgunitAttributes()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllOrgUnitAttributes($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllOrgunitAttributes()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('OrgunitAttributeValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllOrgUnitTypes()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllOrgUnitTypes($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllOrgUnitTypes()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('OrgunittypeValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllPersonGroupCategories()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllPersonGroupCategories($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllPersonGroupCategories()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('PersonGroupCategoryValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllWorkStatus()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllWorkStatus($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllWorkStatus()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('WorkstatusValue', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    protected function getAllElearningPlatforms()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllElearningPlatforms($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	protected function getAllElearningPlatforms()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('ElearningPlatform', $lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    /**
-     * @throws Exception
-     */
-    protected function getCurrentTerm()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getTermService()->getCurrentTerm($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	/**
+	 * @throws \Exception
+	 */
+	protected function getCurrentTerm()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getTermService()->getCurrentTerm($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
-    /**
-     * @throws Exception
-     */
-    protected function getDefaultLanguageId()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        var_dump($lng);
-        $this->endTimer();
-    }
+	/**
+	 * @throws \Exception
+	 */
+	protected function getDefaultLanguageId()
+	{
+		$this->startTimer();
+		$lng = DataCache::getInstance()->getKeyValueService()->getDefaultLanguageId();
+		var_dump($lng);
+		$this->endTimer();
+	}
 
     /**
      * @param $param
@@ -393,17 +394,17 @@ class ConsoleHandler
         $this->endTimer();
     }
 
-    /**
-     * @throws Exception
-     */
-    protected function getAllTermTypes()
-    {
-        $this->startTimer();
-        $lng = DataCache::getInstance()->getValueService()->getDefaultLanguageId();
-        $obj = DataCache::getInstance()->getValueService()->getAllTermTypes($lng);
-        print_r($obj);
-        $this->endTimer();
-    }
+	/**
+	 * @throws \Exception
+	 */
+	protected function getAllTermTypes()
+	{
+		$this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+		$obj = DataCache::getInstance()->getValueService()->getAllTermTypes($lng);
+		print_r($obj);
+		$this->endTimer();
+	}
 
     /**
      * @param $param
