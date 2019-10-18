@@ -128,6 +128,11 @@ class DataCache
      * @var ValueService
      */
     protected static $value_service;
+ 
+    /**
+     * @var KeyvalueService
+     */
+    protected static $keyvalue_service;
 
     /**
      * @var TermService
@@ -205,6 +210,109 @@ class DataCache
     {
         return self::$course_service;
     }
+	/**
+	 * @return DataCache
+	 * @throws \Exception
+	 */
+	public static function getInstance()
+	{
+		if(self::$instance instanceof self)
+		{
+			return self::$instance;
+		}
+
+		self::$instance = self::init();
+
+		return self::$instance;
+	}
+
+	/**
+	 * @return DataCache
+	 * @throws \Exception
+	 */
+	protected static function init()
+	{
+		self::$log = new Log();
+		self::initializeRouterAndServices();
+
+		self::readDefaultLanguage();
+		self::readParallelGroupValues();
+		self::readTermTypeValues();
+		self::readElearningPlatforms();
+		self::readCourseMappingTypes();
+		self::readWorkStatus();
+		self::readEAddressTypes();
+		self::readAllPurposes();
+		self::readAllEventTypes();
+		return new DataCache();
+	}
+
+	/**
+	 * 
+	 */
+	protected static function initializeRouterAndServices()
+	{
+		self::$router                   = new SoapServiceRouter(self::$log);
+
+		self::$course_catalog_service   = new CourseCatalogService(self::$log, self::$router);
+		self::$course_interface_service = new CourseInterfaceService(self::$log, self::$router);
+		self::$course_of_study_service  = new CourseOfStudyService(self::$log, self::$router);
+		self::$course_service           = new CourseService(self::$log, self::$router);
+		self::$org_unit_service         = new OrgUnitService(self::$log, self::$router);
+		self::$person_service           = new PersonService(self::$log, self::$router);
+		self::$student_service          = new StudentService(self::$log, self::$router);
+		self::$term_service             = new TermService(self::$log, self::$router);
+		self::$unit_service             = new UnitService(self::$log, self::$router);
+		self::$keyvalue_service         = new KeyValueService(self::$log, self::$router);
+		self::$account_service          = new AccountService(self::$log, self::$router);
+		self::$address_service          = new AddressService(self::$log, self::$router);
+		self::$system_event_abo_service = new SystemEventAbonnenmentService(self::$log, self::$router);
+	}
+
+	protected static function readDefaultLanguage()
+	{
+		self::$default_lang_id = self::$keyvalue_service->getAllValid('LanguageValue', 'de');
+	}
+	
+	protected static function readParallelGroupValues()
+	{
+		self::$parallel_group_values = self::$keyvalue_service->getAllValid('ParallelgroupValue', self::$default_lang_id);
+	}
+
+	protected static function readTermTypeValues()
+	{
+		self::$term_type_values = self::$keyvalue_service->getAllValid('TermTypeValue', self::$default_lang_id);
+	}
+
+	protected static function readElearningPlatforms()
+	{
+		self::$elearning_platforms_values = self::$keyvalue_service->getAllValid('ElearningPlatform', self::$default_lang_id);
+	}
+
+	protected static function readCourseMappingTypes()
+	{
+		self::$course_mapping_types = self::$keyvalue_service->getAllValid('CourseMappingTypeValue', self::$default_lang_id);
+	}
+	
+	protected static function readWorkStatus()
+	{
+		self::$work_status = self::$keyvalue_service->getAllValid('WorkstatusValue', self::$default_lang_id);
+	}
+
+	protected static function readEAddressTypes()
+	{
+		self::$e_address_type_list = self::$keyvalue_service->getAllValid('EAddresstypeValue', self::$default_lang_id);
+	}
+
+	protected static function readAllPurposes()
+	{
+		self::$purposes_list = self::$keyvalue_service->getAllValid('PurposeValue', self::$default_lang_id);
+	}
+
+	protected static function readAllEventTypes()
+	{
+		self::$event_type_list = self::$keyvalue_service->getAllValid('EventtypeValue', self::$default_lang_id);
+	}
 
     /**
      * @param CourseService $course_service
@@ -561,42 +669,6 @@ class DataCache
     }
 
     /**
-     * @return DataCache
-     * @throws Exception
-     */
-    public static function getInstance()
-    {
-        if (self::$instance instanceof self) {
-            return self::$instance;
-        }
-
-        self::$instance = self::init();
-
-        return self::$instance;
-    }
-
-    /**
-     * @return DataCache
-     * @throws Exception
-     */
-    protected static function init()
-    {
-        self::$log = new Log();
-        self::initializeRouterAndServices();
-
-        self::readDefaultLanguage();
-        self::readParallelGroupValues();
-        self::readTermTypeValues();
-        self::readElearningPlatforms();
-        self::readCourseMappingTypes();
-        self::readWorkStatus();
-        self::readEAddressTypes();
-        self::readAllPurposes();
-        self::readAllEventTypes();
-        return new DataCache();
-    }
-
-    /**
      *
      */
     protected static function initializeRouterAndServices()
@@ -616,51 +688,6 @@ class DataCache
         self::$account_service          = new AccountService(self::$log, self::$router);
         self::$address_service          = new AddressService(self::$log, self::$router);
         self::$system_event_abo_service = new SystemEventAbonnenmentService(self::$log, self::$router);
-    }
-
-    protected static function readDefaultLanguage()
-    {
-        self::$default_lang_id = self::$value_service->getDefaultLanguageId();
-    }
-
-    protected static function readParallelGroupValues()
-    {
-        self::$parallel_group_values = self::$value_service->getAllParallelGroups(self::$default_lang_id);
-    }
-
-    protected static function readTermTypeValues()
-    {
-        self::$term_type_values = self::$value_service->getAllTermTypes(self::$default_lang_id);
-    }
-
-    protected static function readElearningPlatforms()
-    {
-        self::$elearning_platforms_values = self::$value_service->getAllElearningPlatforms(self::$default_lang_id);
-    }
-
-    protected static function readCourseMappingTypes()
-    {
-        self::$course_mapping_types = self::$value_service->getAllCourseMappingTypes(self::$default_lang_id);
-    }
-
-    protected static function readWorkStatus()
-    {
-        self::$work_status = self::$value_service->getAllWorkStatus(self::$default_lang_id);
-    }
-
-    protected static function readEAddressTypes()
-    {
-        self::$e_address_type_list = self::$value_service->getAllEAddressTypes(self::$default_lang_id);
-    }
-
-    protected static function readAllPurposes()
-    {
-        self::$purposes_list = self::$value_service->getAllPurposes(self::$default_lang_id);
-    }
-
-    protected static function readAllEventTypes()
-    {
-        self::$event_type_list = self::$value_service->getAllEventTypes(self::$default_lang_id);
     }
 
     /**
