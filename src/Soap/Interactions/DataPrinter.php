@@ -79,21 +79,6 @@ class DataPrinter
         }
     }
 
-    /**
-     * @param DataModel\ElearningCourseMapping[] $course_mapping_container
-     * @param                                    $level
-     * @throws Exception
-     */
-    public function printCourseMapping($course_mapping_container, $level)
-    {
-        $tabs = $this->buildTabs($level);
-        foreach ($course_mapping_container as $courseMapping) {
-            $this->log->debug(sprintf($tabs . '|* Mapping: eSystemId: %s (%s), MappingId: %s',
-                $courseMapping->getELearningSystemId(),
-                DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText($courseMapping->getELearningSystemId()),
-                DataModel\HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($courseMapping->getCourseMappingTypeId())));
-        }
-    }
 
     /**
      * @param DataModel\PersonPlanElement[] | DataModel\ExamRelation $person_plan_element_container
@@ -156,28 +141,46 @@ class DataPrinter
         }
     }
 
-    /**
-     * @param array $ea_list
-     * @param       $level
-     * @throws Exception
-     */
-    public function printPersonEAddress($ea_list, $level)
-    {
-        $tabs = $this->buildTabs($level);
-        if (is_array($ea_list)) {
-            foreach ($ea_list as $ea) {
-                /** @var $ea DataModel\ElectronicAddress */
-                $this->log->debug(sprintf($tabs . '|* eAddress: Id (%s), objGuid (%s), SortOrder (%s), AddressType (%s), AddressTypeReadable (%s), Address (%s)',
-                    $ea->getid(),
-                    $ea->getObjGuid(),
-                    $ea->getSortOrder(),
-                    $ea->getEAddressTypeId(),
-                    DataCache::getInstance()->resolveEAddressTypeById($ea->getEAddressTypeId()),
-                    $ea->getEAddress()
-                ));
-            }
-        }
-    }
+	/**
+	 * @param DataModel\ElearningCourseMapping[] $course_mapping_container
+	 * @param $level
+	 * @throws \Exception
+	 */
+	public function printCourseMapping($course_mapping_container, $level)
+	{
+		$tabs = $this->buildTabs($level);
+		foreach($course_mapping_container as $courseMapping)
+		{
+		    
+		    $a = DataCache::getInstance()->getElearningPlatformContainer();
+            $aa = $courseMapping->getELearningSystemId();
+            
+            
+			$this->log->debug(sprintf($tabs . '|* Mapping: eSystemId: %s (%s), MappingId: %s', 
+															$courseMapping->getELearningSystemId(), 
+															DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText($courseMapping->getELearningSystemId()),
+															DataModel\HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($courseMapping->getCourseMappingTypeId())));
+		}
+	}
+
+	/**
+	 * @param DataModel\OrgUnit $obj
+	 * @param DataModel\CourseOfStudy | array $course_of_studies
+	 * @param int $level
+	 */
+	public function printOrgUnit($obj, $course_of_studies, $level = 0)
+	{
+		$tabs = $this->buildTabs($level);
+		if ($obj->getContainer() != null)
+		{
+			$level++;
+			$this->printOrgUnitDetail($obj, $course_of_studies, $tabs);
+			foreach ($obj->getContainer() as $x)
+			{
+				$this->printOrgUnit($x, $course_of_studies, $level);
+			}
+		}
+	}
 
     /**
      * @param     $obj
@@ -285,24 +288,7 @@ class DataPrinter
             }
         }
     }
-
-    /**
-     * @param DataModel\OrgUnit               $obj
-     * @param DataModel\CourseOfStudy | array $course_of_studies
-     * @param int                             $level
-     */
-    public function printOrgUnit($obj, $course_of_studies, $level = 0)
-    {
-        $tabs = $this->buildTabs($level);
-        if ($obj->getContainer() != null) {
-            $level++;
-            $this->printOrgUnitDetail($obj, $course_of_studies, $tabs);
-            foreach ($obj->getContainer() as $x) {
-                $this->printOrgUnit($x, $course_of_studies, $level);
-            }
-        }
-    }
-
+    
     /**
      * @param DataModel\OrgUnit               $obj
      * @param array | DataModel\CourseOfStudy $course_of_studies
