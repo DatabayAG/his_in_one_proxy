@@ -4,6 +4,10 @@ namespace HisInOneProxy\Soap;
 
 use HisInOneProxy\Parser\ParseDefaultObject;
 use HisInOneProxy\Parser\ParseElearningPlatform;
+use HisInOneProxy\Parser\ParseEventType;
+use HisInOneProxy\Parser\ParseParallelGroupValues;
+use HisInOneProxy\Parser\ParseTermType;
+use HisInOneProxy\Parser\ParseTermTypeList;
 
 /**
  * Class KeyvalueService
@@ -59,7 +63,22 @@ class KeyvalueService extends SoapService
                     $parser = new ParseElearningPlatform($this->log);
                     $default_object_list = $parser->parse($response);
                     return $default_object_list;
+                break; 
+                case 'ParallelgroupValue': 
+                    $parser = new ParseParallelGroupValues($this->log);
+                    $default_object_list = $parser->parse($response);
+                    return $default_object_list;
+                break; 
+                case 'TermTypeValue': 
+                    $parser = new ParseTermTypeList($this->log);
+                    $default_object_list = $parser->parse($response);
+                    return $default_object_list;
                 break;
+                case 'EventTypeValue':
+                    $parser = new ParseEventType($this->log);
+                    $default_object_list = $parser->parse($response);
+                    return $default_object_list;
+                    break;
                 default:
                     if (isset($response->values)) {
                         $parser->setListValue('values');
