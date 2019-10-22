@@ -401,7 +401,7 @@ class ConsoleHandler
 	{
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
-		$obj = DataCache::getInstance()->getValueService()->getAllTermTypes($lng);
+		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('TermTypeValue', $lng);
 		print_r($obj);
 		$this->endTimer();
 	}

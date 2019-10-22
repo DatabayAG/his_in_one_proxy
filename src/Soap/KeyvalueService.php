@@ -2,6 +2,8 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\Parser\ParseDefaultObject;
+
 /**
  * Class KeyvalueService
  * @package HisInOneProxy\Soap
@@ -41,7 +43,7 @@ class KeyvalueService extends SoapService
     /**
      * @param $valueClass
      * @param $lang
-     * @return |null
+     * @return |nullParseCourseMappingType
      */
     public function getAllValid($valueClass, $lang)
     {
@@ -50,10 +52,16 @@ class KeyvalueService extends SoapService
         {
             $response = $this->soap_service_router->getSoapClientKeyValueService()->__soapCall('getAllValid', $params);
 
+            $parser   = new ParseDefaultObject($this->log);
+
             if (isset($response->values)) {
-                return $response->values;
+                $parser->setListValue('values');
+                $parser->setTagValue('value');
+                $default_object_list = $parser->parse($response);
+                return $default_object_list;
+
             } else {
-                $this->log->error('No value found in response!');
+                $this->log->error('No values found in response!');
             }
         }
         catch(\SoapFault $exception)
