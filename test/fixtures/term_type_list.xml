@@ -1,5 +1,5 @@
-<resp>
-	<termtypevalue>
+<values>
+	<value>
 		<id>432423</id>
 		<objGuid>4324-234-234-23-4-23</objGuid>
 		<defaulttext>Text</defaulttext>
@@ -10,6 +10,6 @@
 		<defaultlanguage>2</defaultlanguage>
 		<termCategory>43</termCategory>
 		<termNumber>1</termNumber>
-	</termtypevalue>
-</resp>
+	</value>
+</values>
 

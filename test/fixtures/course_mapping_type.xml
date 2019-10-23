@@ -1,4 +1,5 @@
-<coursemappingtypevalue>
+<values>
+<value>
 	<id>342</id>
 	<shorttext>Bla2</shorttext>
 	<defaulttext>My little value</defaulttext>
@@ -8,4 +9,5 @@
 	<defaultlanguage>12</defaultlanguage>
 	<objGuid>454326547637562432</objGuid>
 	<hiskeyId>453</hiskeyId>
-</coursemappingtypevalue>
+</value>
+</values>

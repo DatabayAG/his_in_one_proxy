@@ -1,4 +1,5 @@
-<parallelgroupvalue>
+<values>
+ <value>
 	<id>342</id>
 	<shorttext>Bla2</shorttext>
 	<displaytext>My little value</displaytext>
@@ -7,4 +8,5 @@
 	<sortorder>0</sortorder>
 	<defaultlanguage>12</defaultlanguage>
 	<objGuid>454326547637562432</objGuid>
-</parallelgroupvalue>
+ </value>
+</values>

@@ -1,4 +1,5 @@
-<elearningplatform>
+<values>
+	<value>
 	<id>232</id>
 	<shorttext>Bla2</shorttext>
 	<defaulttext>My little platform</defaulttext>
@@ -9,4 +10,5 @@
 	<objGuid>454326547637562432</objGuid>
 	<connectioninfo>http://there</connectioninfo>
 	<hiskeyId>45432654763756243</hiskeyId>
-</elearningplatform>
+	</value>
+</values>
