@@ -74,7 +74,7 @@ class KeyvalueService extends SoapService
                     $default_object_list = $parser->parse($response);
                     return $default_object_list;
                 break;
-                case 'EventTypeValue':
+                case 'EventtypeValue':
                     $parser = new ParseEventType($this->log);
                     $default_object_list = $parser->parse($response);
                     return $default_object_list;
