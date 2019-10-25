@@ -394,28 +394,12 @@ class SoapServiceRouter
 		return null;
 	}
 
-	/**
-	 * @return WSSoapClient|null
-	 */
-	public function getSoapClientValueService()
-	{
-		if($this->soap_client_value_service !== null)
-		{
-			return $this->soap_client_value_service;
-		}
-		else
-		{
-			$this->log->emergency('Value service not initialised!');
-		}
-		return null;
-	}
-
     /**
      * @param WSSoapClient $soap_client_value_service
      */
-    public function setSoapClientValueService($soap_client_value_service)
+    public function setSoapClientKeyValueService($soap_client_value_service)
     {
-        $this->soap_client_value_service = $soap_client_value_service;
+        $this->soap_client_keyvalue_service = $soap_client_value_service;
     }
 
 	/**
@@ -483,4 +467,6 @@ class SoapServiceRouter
     {
         $this->soap_client_account_service = $soap_client_account_service;
     }
+    
+    
 }

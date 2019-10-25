@@ -664,28 +664,6 @@ class DataCache
     }
 
     /**
-     *
-     */
-    protected static function initializeRouterAndServices()
-    {
-        self::$router = new SoapServiceRouter(self::$log);
-
-        self::$course_catalog_service   = new CourseCatalogService(self::$log, self::$router);
-        self::$course_interface_service = new CourseInterfaceService(self::$log, self::$router);
-        self::$course_of_study_service  = new CourseOfStudyService(self::$log, self::$router);
-        self::$course_service           = new CourseService(self::$log, self::$router);
-        self::$org_unit_service         = new OrgUnitService(self::$log, self::$router);
-        self::$person_service           = new PersonService(self::$log, self::$router);
-        self::$student_service          = new StudentService(self::$log, self::$router);
-        self::$term_service             = new TermService(self::$log, self::$router);
-        self::$unit_service             = new UnitService(self::$log, self::$router);
-        self::$value_service            = new ValueService(self::$log, self::$router);
-        self::$account_service          = new AccountService(self::$log, self::$router);
-        self::$address_service          = new AddressService(self::$log, self::$router);
-        self::$system_event_abo_service = new SystemEventAbonnenmentService(self::$log, self::$router);
-    }
-
-    /**
      * @param $person_id
      * @return Person
      * @throws Exception
