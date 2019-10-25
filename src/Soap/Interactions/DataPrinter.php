@@ -140,7 +140,30 @@ class DataPrinter
             }
         }
     }
-
+    
+    /**
+     * @param array $ea_list
+     * @param       $level
+     * @throws Exception
+     */
+    public function printPersonEAddress($ea_list, $level)
+    {
+        $tabs = $this->buildTabs($level);
+        if (is_array($ea_list)) {
+            foreach ($ea_list as $ea) {
+                /** @var $ea DataModel\ElectronicAddress */
+                $this->log->debug(sprintf($tabs . '|* eAddress: Id (%s), objGuid (%s), SortOrder (%s), AddressType (%s), AddressTypeReadable (%s), Address (%s)',
+                    $ea->getid(),
+                    $ea->getObjGuid(),
+                    $ea->getSortOrder(),
+                    $ea->getEAddressTypeId(),
+                    DataCache::getInstance()->resolveEAddressTypeById($ea->getEAddressTypeId()),
+                    $ea->getEAddress()
+                ));
+            }
+        }
+    }
+    
 	/**
 	 * @param DataModel\ElearningCourseMapping[] $course_mapping_container
 	 * @param $level
