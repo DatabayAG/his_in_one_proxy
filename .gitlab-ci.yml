@@ -1,7 +1,0 @@
-ecs_proxy:7.0:
-  image: gitlab.office.databay.de:5005/docker/php7.0-soap
-  script:
-  - chmod u+x libs/phpunit-6.1.3.phar
-  - cp test/config.json_test config.json
-  - php cmd.php ts
-
