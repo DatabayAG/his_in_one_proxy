@@ -1,0 +1,6 @@
+ecs_proxy:7.0:
+  image: gitlab.office.databay.de:5005/docker/php7.0-soap
+  script:
+  - chmod u+x libs/phpunit-6.1.3.phar
+  - libs/phpunit-6.1.3.phar  --coverage-text --colors=never --configuration test/phpunit.xml
+
