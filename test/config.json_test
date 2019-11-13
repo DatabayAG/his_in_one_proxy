@@ -1,0 +1,53 @@
+{
+	"HIS" : {
+		"username"           : "",
+		"password"           : "",
+		"url"                : "https://ext-partner.his.de:8003/qisserver/services2/",
+		"soap_caching"       : "0",
+		"soap_debug"         : "false",
+		"ssl_validation"      : "",
+		"actual_term_id"     : "2",
+		"actual_term_year"   : "2017",
+		"endpoint"           : {
+			"register_listener"  : "true",
+			"listener_url"       : "",
+			"listener_port"      : "",
+			"username"           : "",
+			"password"           : ""
+		},
+		"person_id_type" : "ecs_loginUID",
+		"login_suffix" : "",
+		"blocked_ids" : [],
+		"text" : {
+			"current_term" : "getDefaultText",
+			"event_type"   : "getDefaultText",
+			"plan_element" : "getDefaultText",
+			"term"         : "getDefaultText",
+			"unit"         : "getLongText",
+			"group_title"  : "getParallelGroupValue"
+		}
+	},
+	"ECS" : {
+		"auth_id"             : "",
+		"password"            : "",
+		"url"                 : ""
+	},
+	"HIStoECSMapping": {
+		"7" : "2",
+		"8" : "1"
+	},
+	"HIStoECSCourseMapping" : {
+		"1" : "0",
+		"2" : "1",
+		"3" : "2"
+	},
+
+	"path_to_queue"          : "",
+	"path_to_log"            : "/tmp/debug.log",
+	"keep_elements_in_queue" : "",
+	"queue_timer"            : "",
+	"debug"                  : "",
+	"PHPUnit"                : {
+		"coverage" : "true"
+	}
+}
