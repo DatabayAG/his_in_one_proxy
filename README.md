@@ -1,9 +1,12 @@
 # HISinOne Proxy
+This is a middleware which communicates between HISinOne and ECS-Server and ILIAS. So it is possible to create courses and participants automatically from HISinOne into ILIAS. For more details please take a look at the ``docs`` folder.
+Since the configuration is rather complex, please don't try this on a Testinstallation before you use this in a production enviroment.
+
 If the Unittest with coverage segfaults remove the opcache extension!
 
 **For a more detailed instruction consult the ``docs`` folder!**
 
-## Config description
+## Config example
 	"HIS" : {
 		"username"           : "Username for HisInOne Server",
 		"password"           : "Password for HisInOne Server",
