@@ -5,7 +5,7 @@
 ## Needed packages  
     apt-get install php7.0 php7.0-xml php7.0-soap php7.0-curl
 ## Clone the project   
-    git clone https://gitlab.databay.de/ilias-utils/his_in_one_proxy  
+    git clone https://github.com/DatabayAG/his_in_one_proxy  
   
 ## Configure the middleware  
 
