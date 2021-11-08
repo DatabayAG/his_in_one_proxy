@@ -143,9 +143,12 @@ class ConsoleHandler
 	protected function getAllCourseMappingTypes()
 	{
 		$this->startTimer();
+        /*
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getValueService()->getAllCourseMappingTypes($lng);
 		print_r($obj);
+        */
+        print "ValueService does not exists anymore. Have to check where to get the values from now.";
 		$this->endTimer();
 	}
 

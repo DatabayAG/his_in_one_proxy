@@ -11,7 +11,7 @@ use HisInOneProxy\DataModel\Traits;
 class ExamRelation
 {
 
-    use Traits\PersonId, Traits\PlanElementId, Traits\UnitId;
+    use Traits\PersonId, Traits\PlanElementId, Traits\UnitId, Traits\SortingOrder;
 
     /**
      * @var boolean
