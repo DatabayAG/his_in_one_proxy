@@ -12,6 +12,7 @@ class ParseElectronicAddress extends SimpleXmlParser
 	 */
 	public function parse($xml)
 	{
+        //Todo: possibility the the parser must be rebuild with the new webservice version
 		$container = array();
 		if($this->doesAttributeExist($xml, 'eAdresses'))
 		{

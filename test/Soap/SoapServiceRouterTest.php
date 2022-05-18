@@ -65,8 +65,8 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router->getSoapClientFacilityService();
 		$this->assertEqualClearedString('Emergency: Facility service not initialised!', array_pop($this->collectedMessages));
 
-		$this->soap_client_router->setSoapClientAddressService(null);
-		$this->soap_client_router->getSoapClientAddressService();
+		$this->soap_client_router->setSoapClientPersonAddressService(null);
+		$this->soap_client_router->getSoapClientPersonAddressService();
 		$this->assertEqualClearedString('Emergency: Address service not initialised!', array_pop($this->collectedMessages));
 
 		$this->soap_client_router->setSoapClientKeyValueService(null);
@@ -77,8 +77,8 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router->getSoapClientTermService();
 		$this->assertEqualClearedString('Emergency: Term service not initialised!', array_pop($this->collectedMessages));
 
-		$this->soap_client_router->setSoapClientAddressService(null);
-		$this->soap_client_router->getSoapClientAddressService();
+		$this->soap_client_router->setSoapClientPersonAddressService(null);
+		$this->soap_client_router->getSoapClientPersonAddressService();
 		$this->assertEqualClearedString('Emergency: Address service not initialised!', array_pop($this->collectedMessages));
 
 		$this->soap_client_router->setSoapSystemEventAbonnenmentClient(null);

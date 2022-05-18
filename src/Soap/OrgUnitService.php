@@ -72,7 +72,7 @@ class OrgUnitService extends SoapService
     public function getOrgUnitWithChildren($lid, $date = null)
     {
         $params  = array(array('lid' => $lid, 'date' => $date));
-        $service = new AddressService($this->log, $this->soap_service_router);
+        $service = new PersonAddressService($this->log, $this->soap_service_router);
 
         try {
             $response = $this->soap_org_unit->__soapCall('getOrgUnitWithChildren', $params);

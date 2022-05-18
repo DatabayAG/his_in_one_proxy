@@ -14,7 +14,7 @@ use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\AccountService;
-use HisInOneProxy\Soap\AddressService;
+use HisInOneProxy\Soap\PersonAddressService;
 use HisInOneProxy\Soap\CourseCatalogService;
 use HisInOneProxy\Soap\CourseInterfaceService;
 use HisInOneProxy\Soap\CourseOfStudyService;
@@ -110,7 +110,7 @@ class DataCache
     protected static $student_service;
 
     /**
-     * @var AddressService
+     * @var PersonAddressService
      */
     protected static $address_service;
 
@@ -260,7 +260,7 @@ class DataCache
 		self::$unit_service             = new UnitService(self::$log, self::$router);
 		self::$keyvalue_service         = new KeyvalueService(self::$log, self::$router);
 		self::$account_service          = new AccountService(self::$log, self::$router);
-		self::$address_service          = new AddressService(self::$log, self::$router);
+		self::$address_service          = new PersonAddressService(self::$log, self::$router);
 		self::$system_event_abo_service = new SystemEventAbonnenmentService(self::$log, self::$router);
 	}
 
@@ -334,9 +334,9 @@ class DataCache
     }
 
     /**
-     * @return AddressService
+     * @return PersonAddressService
      */
-    public static function getAddressService()
+    public static function getPersonAddressService()
     {
         return self::$address_service;
     }

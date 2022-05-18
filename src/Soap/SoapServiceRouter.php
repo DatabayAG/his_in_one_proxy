@@ -81,7 +81,7 @@ class SoapServiceRouter
     /**
      * @var WSSoapClient
      */
-    protected $soap_client_address_service;
+    protected $soap_client_person_address_service;
 	/**
 	 * @var WSSoapClient
 	 */
@@ -405,11 +405,11 @@ class SoapServiceRouter
 	/**
 	 * @return WSSoapClient|null
 	 */
-	public function getSoapClientAddressService()
+	public function getSoapClientPersonAddressService()
 	{
-		if($this->soap_client_address_service !== null)
+		if($this->soap_client_person_address_service !== null)
 		{
-			return $this->soap_client_address_service;
+			return $this->soap_client_person_address_service;
 		}
 		else
 		{
@@ -419,11 +419,11 @@ class SoapServiceRouter
 	}
 
     /**
-     * @param WSSoapClient $soap_client_address_service
+     * @param WSSoapClient $soap_client_person_address_service
      */
-    public function setSoapClientAddressService($soap_client_address_service)
+    public function setSoapClientPersonAddressService($soap_client_person_address_service)
     {
-        $this->soap_client_address_service = $soap_client_address_service;
+        $this->soap_client_person_address_service = $soap_client_person_address_service;
     }
 
     /**

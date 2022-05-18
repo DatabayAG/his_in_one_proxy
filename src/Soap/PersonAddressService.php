@@ -9,14 +9,14 @@ use HisInOneProxy\Parser;
 use SoapFault;
 
 /**
- * Class AddressService
+ * Class PersonAddressService
  * @package HisInOneProxy\Soap
  */
-class AddressService extends SoapService
+class PersonAddressService extends SoapService
 {
 
     /**
-     * AddressService constructor.
+     * PersonAddressService constructor.
      * @param Log               $log
      * @param SoapServiceRouter $soap_service_router
      */
@@ -34,7 +34,7 @@ class AddressService extends SoapService
         // 'Person', 'Orgunit', 'Room', 'Building'
         $params = array(array('id' => $org_unit_id, 'objekttype' => 'Orgunit'));
         try {
-            $response = $this->soap_service_router->getSoapClientAddressService()->__soapCall('readPostAddresses', $params);
+            $response = $this->soap_service_router->getSoapClientPersonAddressService()->__soapCall('readPostAddresses', $params);
             $parser   = new Parser\ParseAddress($this->log);
             $address  = $parser->parse($response);
 
@@ -49,12 +49,13 @@ class AddressService extends SoapService
      * @param $person_id
      * @return ElectronicAddress[]|null
      */
-    public function readEAddressesForPerson($person_id)
+    public function readEAddresses($person_id)
     {
         // 'Person', 'Orgunit', 'Room', 'Building'
-        $params = array(array('id' => $person_id, 'objekttype' => 'Person'));
+        // $params = array(array('id' => $person_id, 'objekttype' => 'Person'));
+        $params = array(array('id' => $person_id));
         try {
-            $response   = $this->soap_service_router->getSoapClientAddressService()->__soapCall('readEAddresses', $params);
+            $response   = $this->soap_service_router->getSoapClientPersonAddressService()->__soapCall('readEAddresses', $params);
             $parser     = new Parser\ParseElectronicAddress($this->log);
             $eaddresses = $parser->parse($response);
 

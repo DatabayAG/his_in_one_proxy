@@ -5,17 +5,17 @@ namespace HisInOneProxy\Soap\SoapService;
 use HisInOneProxy\Soap;
 
 /**
- * Class AddressClient
+ * Class PersonAddressClient
  * @package HisInOneProxy\Soap\SoapService
  */
-class AddressClient implements SoapClientService
+class PersonAddressClient implements SoapClientService
 {
     /**
      * @param Soap\SoapServiceRouter $router
      */
     public function appendRouterConfig($router)
     {
-        $router->setSoapClientAddressService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
+        $router->setSoapClientPersonAddressService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
     }
 
     /**
@@ -23,7 +23,7 @@ class AddressClient implements SoapClientService
      */
     public function getServiceWsdl()
     {
-        return 'AddressService.wsdl';
+        return 'PersonAddressService.wsdl';
     }
 
     /**
@@ -31,6 +31,6 @@ class AddressClient implements SoapClientService
      */
     public function getServiceDir()
     {
-        return 'AddressService';
+        return 'PersonAddressService';
     }
 }

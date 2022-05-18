@@ -22,25 +22,25 @@ class AddressServiceTest extends TestCaseExtension
 		parent::setUp();
 
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
-		$this->soap_client_router->setSoapClientAddressService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'AddressService.wsdl'));
+		$this->soap_client_router->setSoapClientPersonAddressService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'AddressService.wsdl'));
 	}
 
 	public function test_readPostAddresses_shouldLogErrors()
 	{
-		$this->soap_client_router->getSoapClientAddressService()->expects($this->any())
+		$this->soap_client_router->getSoapClientPersonAddressService()->expects($this->any())
 								 ->method('__soapCall')
 								 ->will($this->throwException(new SoapFault('Server', 'Something horrible happened in the room.')));
-		$soap_client = new Soap\AddressService($this->log, $this->soap_client_router );
+		$soap_client = new Soap\PersonAddressService($this->log, $this->soap_client_router );
 		$soap_client->readPostAddresses(1999);
 		$this->assertEqualClearedString('Error: Something horrible happened in the room.', array_pop($this->collectedMessages));
 	}
 
 	public function test_readRoom_shouldReturnValue()
 	{
-		$this->soap_client_router->getSoapClientAddressService()->expects($this->any())
+		$this->soap_client_router->getSoapClientPersonAddressService()->expects($this->any())
 			->method('__soapCall')
 			->willReturn(simplexml_load_string('<resp>'.file_get_contents('test/fixtures/address.xml') . '</resp>'));
-		$soap_client = new Soap\AddressService($this->log, $this->soap_client_router);
+		$soap_client = new Soap\PersonAddressService($this->log, $this->soap_client_router);
 		$value = $soap_client->readPostAddresses(1999);
 		$this->assertInstanceOf('HisInOneProxy\DataModel\Address', $value[0]);
 		/**

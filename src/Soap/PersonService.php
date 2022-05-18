@@ -39,7 +39,7 @@ class PersonService extends SoapService
             $parser   = new Parser\ParsePerson($this->log);
             if (isset($response->person) && $response->person != null && $response->person != '') {
                 $person = $parser->parse($response->person);
-                $person->setEAddresses(DataCache::getInstance()->getAddressService()->readEAddressesForPerson($person_id));
+                $person->setEAddresses(DataCache::getInstance()->getPersonAddressService()->readEAddresses($person_id));
                 return $person;
             }
         } catch (SoapFault $exception) {

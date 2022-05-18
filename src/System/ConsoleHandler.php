@@ -417,7 +417,7 @@ class ConsoleHandler
     {
         // 1109
         $this->startTimer();
-        $obj = DataCache::getInstance()->getAddressService()->readEAddressesForPerson($param);
+        $obj = DataCache::getInstance()->getPersonAddressService()->readEAddresses($param);
         $this->printer->printPersonEAddress($obj, 1);
         $this->endTimer();
     }
