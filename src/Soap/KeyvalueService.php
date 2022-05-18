@@ -26,7 +26,7 @@ class KeyvalueService extends SoapService
     }
 
     /**
-     * @return null
+     * @return null|string
      */
     public function getDefaultLanguageId()
     {

@@ -170,7 +170,7 @@ class ConsoleHandler
 	{
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
-		DataCache::getInstance()->getValueService()->getAllBlockeds($lng);
+		DataCache::getInstance()->getKeyValueService()->getAllValid("blocked", $lng);
 		$this->endTimer();
 	}
 
@@ -362,15 +362,17 @@ class ConsoleHandler
 		$this->endTimer();
 	}
 
-	/**
-	 * @throws \Exception
-	 */
+    /**
+     * @return string|null
+     * @throws Exception
+     */
 	protected function getDefaultLanguageId()
 	{
 		$this->startTimer();
 		$lng = DataCache::getInstance()->getKeyValueService()->getDefaultLanguageId();
-		var_dump($lng);
+        var_dump($lng);
 		$this->endTimer();
+        return $lng;
 	}
 
     /**
