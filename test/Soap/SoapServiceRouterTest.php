@@ -37,8 +37,8 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router->getSoapClientCourseCatalog();
 		$this->assertEqualClearedString('Emergency: Course catalog service not initialised!', array_pop($this->collectedMessages));
 
-		$this->soap_client_router->setSoapClientCourseService(null);
-		$this->soap_client_router->getSoapClientCourseService();
+		$this->soap_client_router->setSoapClientPlanelementService(null);
+		$this->soap_client_router->getSoapClientPlanelementService();
 		$this->assertEqualClearedString('Emergency: Course service not initialised!', array_pop($this->collectedMessages));
 
 		$this->soap_client_router->setSoapClientUnitService(null);
@@ -98,7 +98,7 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router->setServiceNumber(20);
 		$this->soap_client_router->initialiseClientServices();
 		$this->assertEqualClearedString('Emergency: Not all Soap Services where initialised! Only 14 from 20 where initialised!', array_pop($this->collectedMessages));
-		$this->assertInstanceOf('HisInOneProxy\Soap\WSSoapClient', $this->soap_client_router->getSoapClientCourseService());
+		$this->assertInstanceOf('HisInOneProxy\Soap\WSSoapClient', $this->soap_client_router->getSoapClientPlanelementService());
 		$this->assertInstanceOf('HisInOneProxy\Soap\WSSoapClient', $this->soap_client_router->getSoapClientTermService());
 	}
 }

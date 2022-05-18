@@ -36,7 +36,7 @@ class SoapServiceRouter
     /**
      * @var WSSoapClient
      */
-    protected $soap_client_course_service;
+    protected $soap_client_planelement_service;
 
     /**
      * @var WSSoapClient
@@ -205,10 +205,10 @@ class SoapServiceRouter
     /**
      * @return WSSoapClient|null
      */
-    public function getSoapClientCourseService()
+    public function getSoapClientPlanelementService()
     {
-        if ($this->soap_client_course_service !== null) {
-            return $this->soap_client_course_service;
+        if ($this->soap_client_planelement_service !== null) {
+            return $this->soap_client_planelement_service;
         } else {
             $this->log->emergency('Course service not initialised!');
         }
@@ -216,11 +216,12 @@ class SoapServiceRouter
     }
 
     /**
-     * @param WSSoapClient $soap_client_course_service
+     * @param $soap_client_planelement_service
+     * @return void
      */
-    public function setSoapClientCourseService($soap_client_course_service)
+    public function setSoapClientPlanelementService($soap_client_planelement_service)
     {
-        $this->soap_client_course_service = $soap_client_course_service;
+        $this->soap_client_planelement_service = $soap_client_planelement_service;
     }
 
     /**

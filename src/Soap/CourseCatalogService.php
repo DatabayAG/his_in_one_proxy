@@ -96,13 +96,13 @@ class CourseCatalogService extends SoapService
                 } else {
                     if (strtolower($child->getType()) == self::PLAN_ELEMENT) {
                         $course_catalog_element->replaceChildWithObject($child->getCourseCatalogId(),
-                            DataCache::getInstance()->getCourseService()->getPlanElementById($child->getCourseCatalogId()));
+                            DataCache::getInstance()->getPlanelementService()->readPlanElementOfEvent($child->getCourseCatalogId()));
                     } else {
                         if (strtolower($child->getType()) == self::UNIT) {
                             $course_catalog_element->replaceChildWithObject($child->getCourseCatalogId(),
                                 $this->getUnitChildren($child->getCourseCatalogId()));
 
-                            DataCache::getInstance()->getCourseService()->getAllPlanelementsOfUnit($child->getCourseCatalogId());
+                            DataCache::getInstance()->getPlanelementService()->readAllPlanelementsOfEventForUnit($child->getCourseCatalogId());
                         } else {
                             $this->log->warning(sprintf('No children found.'));
                         }

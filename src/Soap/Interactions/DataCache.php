@@ -18,7 +18,7 @@ use HisInOneProxy\Soap\PersonAddressService;
 use HisInOneProxy\Soap\CourseCatalogService;
 use HisInOneProxy\Soap\CourseInterfaceService;
 use HisInOneProxy\Soap\CourseOfStudyService;
-use HisInOneProxy\Soap\CourseService;
+use HisInOneProxy\Soap\PlanelementService;
 use HisInOneProxy\Soap\OrgUnitService;
 use HisInOneProxy\Soap\PersonService;
 use HisInOneProxy\Soap\SoapServiceRouter;
@@ -135,9 +135,9 @@ class DataCache
     protected static $term_service;
 
     /**
-     * @var CourseService
+     * @var PlanelementService
      */
-    protected static $course_service;
+    protected static $planelement_service;
 
     /**
      * @var AccountService
@@ -199,11 +199,11 @@ class DataCache
     protected $accounts = array();
 
     /**
-     * @return CourseService
+     * @return PlanelementService
      */
-    public static function getCourseService()
+    public static function getPlanelementService()
     {
-        return self::$course_service;
+        return self::$planelement_service;
     }
 	/**
 	 * @return DataCache
@@ -252,7 +252,7 @@ class DataCache
 		self::$course_catalog_service   = new CourseCatalogService(self::$log, self::$router);
 		self::$course_interface_service = new CourseInterfaceService(self::$log, self::$router);
 		self::$course_of_study_service  = new CourseOfStudyService(self::$log, self::$router);
-		self::$course_service           = new CourseService(self::$log, self::$router);
+		self::$planelement_service      = new PlanelementService(self::$log, self::$router);
 		self::$org_unit_service         = new OrgUnitService(self::$log, self::$router);
 		self::$person_service           = new PersonService(self::$log, self::$router);
 		self::$student_service          = new StudentService(self::$log, self::$router);
@@ -310,11 +310,11 @@ class DataCache
 	}
 
     /**
-     * @param CourseService $course_service
+     * @param PlanelementService $planelement_service
      */
-    protected static function setCourseService($course_service)
+    protected static function setPlanelementService($planelement_service)
     {
-        self::$course_service = $course_service;
+        self::$planelement_service = $planelement_service;
     }
 
     /**

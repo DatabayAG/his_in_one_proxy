@@ -7,16 +7,15 @@ use HisInOneProxy\Parser;
 use SoapFault;
 
 /**
- * Class CourseService
+ * Class PlanelementService
  * @package HisInOneProxy\Soap
  */
-class CourseService extends SoapService
+class PlanelementService extends SoapService
 {
 
     /**
-     * CourseService constructor.
-     * @param                   $log
-     * @param SoapServiceRouter $soap_service_router
+     * @param $log
+     * @param $soap_service_router
      */
     public function __construct($log, $soap_service_router)
     {
@@ -27,11 +26,11 @@ class CourseService extends SoapService
      * @param $plan_element_id
      * @return null
      */
-    public function getPlanElementById($plan_element_id)
+    public function readPlanElementOfEvent($plan_element_id)
     {
         $params = array(array('planelementId' => $plan_element_id));
         try {
-            $response = $this->soap_service_router->getSoapClientCourseService()->__soapCall('getPlanElementById', $params);
+            $response = $this->soap_service_router->getSoapClientPlanelementService()->__soapCall('readPlanelementOfEvent', $params);
             $parser   = new Parser\ParsePlanElements($this->log);
             if (isset($response->examplans)) {
                 $exam_relation = $parser->parse($response, new Unit());
@@ -47,11 +46,11 @@ class CourseService extends SoapService
      * @param $unit_id
      * @return null
      */
-    public function getAllPlanelementsOfUnit($unit_id)
+    public function readAllPlanelementsOfEventForUnit($unit_id)
     {
         $params = array(array('unitId' => $unit_id));
         try {
-            $response = $this->soap_service_router->getSoapClientCourseService()->__soapCall('getAllPlanelementsOfUnit', $params);
+            $response = $this->soap_service_router->getSoapClientPlanelementService()->__soapCall('readAllPlanelementsOfEventForUnit', $params);
             $parser   = new Parser\ParsePlanElements($this->log);
             if (isset($response->examplans)) {
                 #$exam_relation = $parser->parse($response);
