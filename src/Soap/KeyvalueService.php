@@ -2,12 +2,17 @@
 
 namespace HisInOneProxy\Soap;
 
+use HisInOneProxy\DataModel\Container\ElearningPlatformContainer;
+use HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer;
+use HisInOneProxy\DataModel\DefaultObject;
+use HisInOneProxy\DataModel\EAddressType;
 use HisInOneProxy\Parser\ParseDefaultObject;
 use HisInOneProxy\Parser\ParseElearningPlatform;
 use HisInOneProxy\Parser\ParseEventType;
 use HisInOneProxy\Parser\ParseParallelGroupValues;
 use HisInOneProxy\Parser\ParseTermType;
 use HisInOneProxy\Parser\ParseTermTypeList;
+use SoapFault;
 
 /**
  * Class KeyvalueService
@@ -26,7 +31,7 @@ class KeyvalueService extends SoapService
     }
 
     /**
-     * @return null|string
+     * @return null
      */
     public function getDefaultLanguageId()
     {
@@ -39,7 +44,7 @@ class KeyvalueService extends SoapService
             } else {
                 $this->log->error('No default languages value found in response!');
             }
-        } catch (\SoapFault $exception) {
+        } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
         }
         return null;
@@ -48,7 +53,7 @@ class KeyvalueService extends SoapService
     /**
      * @param $valueClass
      * @param $lang
-     * @return |nullParseCourseMappingType
+     * @return array|ElearningPlatformContainer|ParallelGroupValuesContainer|DefaultObject[]|EAddressType[]|null
      */
     public function getAllValid($valueClass, $lang)
     {
@@ -95,7 +100,7 @@ class KeyvalueService extends SoapService
 
         
         }
-        catch(\SoapFault $exception)
+        catch(SoapFault $exception)
         {
             $this->log->error($exception->getMessage());
         }

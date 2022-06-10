@@ -5,6 +5,7 @@ namespace HisInOneProxy\Soap;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Soap\SoapService\ConfigClient;
 use SoapClient;
+use SoapFault;
 use SoapHeader;
 use SoapVar;
 
@@ -33,9 +34,9 @@ class WSSoapClient extends SoapClient
     protected $soap_debug = false;
 
     /**
-     * WSSoapClient constructor.
-     * @param mixed      $wsdl
+     * @param $wsdl
      * @param array|null $options
+     * @throws SoapFault
      */
     public function __construct($wsdl, array $options = null)
     {

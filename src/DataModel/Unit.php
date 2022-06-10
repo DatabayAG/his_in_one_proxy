@@ -160,7 +160,7 @@ class Unit
     }
 
     /**
-     * @return OrgUnit[]
+     * @return int
      */
     public function getSizeOfOrgUnitContainer()
     {
@@ -201,7 +201,8 @@ class Unit
     public function appendPlanElement($plan_element)
     {
         if (is_a($plan_element, '\HisInOneProxy\DataModel\PlanElement')) {
-            $this->plan_elements_container[] = $plan_element;
+            $this->plan_elements_container[$plan_element->getId()] = $plan_element;
+            asort($this->plan_elements_container);
         } else {
             throw new Exceptions\InvalidPlanElement();
         }

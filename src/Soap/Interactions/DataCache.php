@@ -14,11 +14,11 @@ use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\AccountService;
-use HisInOneProxy\Soap\PersonAddressService;
+use HisInOneProxy\Soap\AddressService;
 use HisInOneProxy\Soap\CourseCatalogService;
 use HisInOneProxy\Soap\CourseInterfaceService;
 use HisInOneProxy\Soap\CourseOfStudyService;
-use HisInOneProxy\Soap\PlanelementService;
+use HisInOneProxy\Soap\CourseService;
 use HisInOneProxy\Soap\OrgUnitService;
 use HisInOneProxy\Soap\PersonService;
 use HisInOneProxy\Soap\SoapServiceRouter;
@@ -110,7 +110,7 @@ class DataCache
     protected static $student_service;
 
     /**
-     * @var PersonAddressService
+     * @var AddressService
      */
     protected static $address_service;
 
@@ -135,9 +135,9 @@ class DataCache
     protected static $term_service;
 
     /**
-     * @var PlanelementService
+     * @var CourseService
      */
-    protected static $planelement_service;
+    protected static $course_service;
 
     /**
      * @var AccountService
@@ -199,11 +199,11 @@ class DataCache
     protected $accounts = array();
 
     /**
-     * @return PlanelementService
+     * @return CourseService
      */
-    public static function getPlanelementService()
+    public static function getCourseService()
     {
-        return self::$planelement_service;
+        return self::$course_service;
     }
 	/**
 	 * @return DataCache
@@ -252,7 +252,7 @@ class DataCache
 		self::$course_catalog_service   = new CourseCatalogService(self::$log, self::$router);
 		self::$course_interface_service = new CourseInterfaceService(self::$log, self::$router);
 		self::$course_of_study_service  = new CourseOfStudyService(self::$log, self::$router);
-		self::$planelement_service      = new PlanelementService(self::$log, self::$router);
+		self::$course_service           = new CourseService(self::$log, self::$router);
 		self::$org_unit_service         = new OrgUnitService(self::$log, self::$router);
 		self::$person_service           = new PersonService(self::$log, self::$router);
 		self::$student_service          = new StudentService(self::$log, self::$router);
@@ -260,13 +260,13 @@ class DataCache
 		self::$unit_service             = new UnitService(self::$log, self::$router);
 		self::$keyvalue_service         = new KeyvalueService(self::$log, self::$router);
 		self::$account_service          = new AccountService(self::$log, self::$router);
-		self::$address_service          = new PersonAddressService(self::$log, self::$router);
+		self::$address_service          = new AddressService(self::$log, self::$router);
 		self::$system_event_abo_service = new SystemEventAbonnenmentService(self::$log, self::$router);
 	}
 
 	protected static function readDefaultLanguage()
 	{
-		self::$default_lang_id = self::$keyvalue_service->getDefaultLanguageId('LanguageValue', 'de');
+		self::$default_lang_id = self::$keyvalue_service->getDefaultLanguageId();
 	}
 	
 	protected static function readParallelGroupValues()
@@ -310,11 +310,11 @@ class DataCache
 	}
 
     /**
-     * @param PlanelementService $planelement_service
+     * @param CourseService $course_service
      */
-    protected static function setPlanelementService($planelement_service)
+    protected static function setCourseService($course_service)
     {
-        self::$planelement_service = $planelement_service;
+        self::$course_service = $course_service;
     }
 
     /**
@@ -334,9 +334,9 @@ class DataCache
     }
 
     /**
-     * @return PersonAddressService
+     * @return AddressService
      */
-    public static function getPersonAddressService()
+    public static function getAddressService()
     {
         return self::$address_service;
     }
@@ -606,12 +606,10 @@ class DataCache
      */
     public function resolveOrgUnitByLid($l_id)
     {
-        if (array_key_exists($l_id, self::$org_unit_cache)) {
-            return self::$org_unit_cache[$l_id];
-        } else {
+        if (!array_key_exists($l_id, self::$org_unit_cache)) {
             self::$org_unit_cache[$l_id] = self::$org_unit_service->readOrgUnit($l_id);
-            return self::$org_unit_cache[$l_id];
         }
+        return self::$org_unit_cache[$l_id];
     }
 
     /**
@@ -730,6 +728,7 @@ class DataCache
         if (array_key_exists($id, $this->accounts)) {
             return $this->accounts[$id];
         }
+        return [];
     }
 
     /**
@@ -741,6 +740,7 @@ class DataCache
         if (array_key_exists($id, self::$term_type_values)) {
             return self::$term_type_values[$id]->getText();
         }
+        return '';
     }
 
     /**

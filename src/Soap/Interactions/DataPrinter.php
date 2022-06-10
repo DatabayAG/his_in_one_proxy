@@ -174,12 +174,7 @@ class DataPrinter
 		$tabs = $this->buildTabs($level);
 		foreach($course_mapping_container as $courseMapping)
 		{
-		    
-		    $a = DataCache::getInstance()->getElearningPlatformContainer();
-            $aa = $courseMapping->getELearningSystemId();
-            
-            
-			$this->log->debug(sprintf($tabs . '|* Mapping: eSystemId: %s (%s), MappingId: %s', 
+			$this->log->debug(sprintf($tabs . '|* Mapping: eSystemId: %s (%s), MappingId: %s',
 															$courseMapping->getELearningSystemId(), 
 															DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText($courseMapping->getELearningSystemId()),
 															DataModel\HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($courseMapping->getCourseMappingTypeId())));
@@ -384,11 +379,10 @@ class DataPrinter
                 } else {
                     if (array_key_exists($child->getChildId(), DataCache::getInstance()->getUnitCache())) {
                         $obj->replaceChildInContainer($child->getChildId(), DataCache::getInstance()->getUnitCache()[$child->getChildId()]);
-                        $this->gatherMissingDetailFromCourseCatalog($obj);
                     } else {
                         $obj->replaceChildInContainer($child->getChildId(), DataCache::getInstance()->getUnitService()->readUnitWithChildren($child->getChildId()));
-                        $this->gatherMissingDetailFromCourseCatalog($obj);
                     }
+                    $this->gatherMissingDetailFromCourseCatalog($obj);
                 }
             }
         }
