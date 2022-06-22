@@ -1,5 +1,69 @@
 # Changelog
 
+## 1.3.0 (2019-07-10)
+
+*   Feature: Forward compatibility with upcoming stable DNS component.
+    (#206 by @clue)
+
+## 1.2.1 (2019-06-03)
+
+*   Avoid uneeded fragmented TLS work around for PHP 7.3.3+ and 
+    work around failing test case detecting EOF on TLS 1.3 socket streams.
+    (#201 and #202 by @clue)
+
+*   Improve TLS certificate/passphrase example.
+    (#190 by @jsor)
+
+## 1.2.0 (2019-01-07)
+
+*   Feature / Fix: Improve TLS 1.3 support.
+    (#186 by @clue)
+
+    TLS 1.3 is now an official standard as of August 2018! :tada:
+    The protocol has major improvements in the areas of security, performance, and privacy.
+    TLS 1.3 is supported by default as of [OpenSSL 1.1.1](https://www.openssl.org/blog/blog/2018/09/11/release111/).
+    For example, this version ships with Ubuntu 18.10 (and newer) by default, meaning that recent installations support TLS 1.3 out of the box :shipit:
+
+*   Fix: Avoid possibility of missing remote address when TLS handshake fails.
+    (#188 by @clue)
+
+*   Improve performance by prefixing all global functions calls with `\` to skip the look up and resolve process and go straight to the global function.
+    (#183 by @WyriHaximus)
+
+*   Update documentation to use full class names with namespaces.
+    (#187 by @clue)
+
+*   Improve test suite to avoid some possible race conditions,
+    test against PHP 7.3 on Travis and
+    use dedicated `assertInstanceOf()` assertions.
+    (#185 by @clue, #178 by @WyriHaximus and #181 by @carusogabriel)
+
+## 1.1.0 (2018-10-01)
+
+*   Feature: Improve error reporting for failed connection attempts and improve
+    cancellation forwarding during DNS lookup, TCP/IP connection or TLS handshake.
+    (#168, #169, #170, #171, #176 and #177 by @clue)
+
+    All error messages now always contain a reference to the remote URI to give
+    more details which connection actually failed and the reason for this error.
+    Accordingly, failures during DNS lookup will now mention both the remote URI
+    as well as the DNS error reason. TCP/IP connection issues and errors during
+    a secure TLS handshake will both mention the remote URI as well as the
+    underlying socket error. Similarly, lost/dropped connections during a TLS
+    handshake will now report a lost connection instead of an empty error reason.
+
+    For most common use cases this means that simply reporting the `Exception`
+    message should give the most relevant details for any connection issues:
+
+    ```php
+    $promise = $connector->connect('tls://example.com:443');
+    $promise->then(function (ConnectionInterface $conn) use ($loop) {
+        // …
+    }, function (Exception $e) {
+        echo $e->getMessage();
+    });
+    ```
+
 ## 1.0.0 (2018-07-11)
 
 *   First stable LTS release, now following [SemVer](https://semver.org/).

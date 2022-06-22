@@ -5,35 +5,45 @@ namespace React\Dns\Resolver;
 use React\Cache\ArrayCache;
 use React\Cache\CacheInterface;
 use React\Dns\Config\HostsFile;
-use React\Dns\Query\CachedExecutor;
+use React\Dns\Query\CachingExecutor;
+use React\Dns\Query\CoopExecutor;
 use React\Dns\Query\ExecutorInterface;
 use React\Dns\Query\HostsFileExecutor;
-use React\Dns\Query\RecordCache;
 use React\Dns\Query\RetryExecutor;
 use React\Dns\Query\TimeoutExecutor;
 use React\Dns\Query\UdpTransportExecutor;
 use React\EventLoop\LoopInterface;
 
-class Factory
+final class Factory
 {
+    /**
+     * @param string        $nameserver
+     * @param LoopInterface $loop
+     * @return \React\Dns\Resolver\ResolverInterface
+     */
     public function create($nameserver, LoopInterface $loop)
     {
-        $nameserver = $this->addPortToServerIfMissing($nameserver);
-        $executor = $this->decorateHostsFileExecutor($this->createRetryExecutor($loop));
+        $executor = $this->decorateHostsFileExecutor($this->createRetryExecutor($nameserver, $loop));
 
-        return new Resolver($nameserver, $executor);
+        return new Resolver($executor);
     }
 
+    /**
+     * @param string          $nameserver
+     * @param LoopInterface   $loop
+     * @param ?CacheInterface $cache
+     * @return \React\Dns\Resolver\ResolverInterface
+     */
     public function createCached($nameserver, LoopInterface $loop, CacheInterface $cache = null)
     {
+        // default to keeping maximum of 256 responses in cache unless explicitly given
         if (!($cache instanceof CacheInterface)) {
-            $cache = new ArrayCache();
+            $cache = new ArrayCache(256);
         }
 
-        $nameserver = $this->addPortToServerIfMissing($nameserver);
-        $executor = $this->decorateHostsFileExecutor($this->createCachedExecutor($loop, $cache));
+        $executor = $this->decorateHostsFileExecutor($this->createCachedExecutor($nameserver, $loop, $cache));
 
-        return new Resolver($nameserver, $executor);
+        return new Resolver($executor);
     }
 
     /**
@@ -66,36 +76,25 @@ class Factory
         return $executor;
     }
 
-    protected function createExecutor(LoopInterface $loop)
+    private function createExecutor($nameserver, LoopInterface $loop)
     {
         return new TimeoutExecutor(
-            new UdpTransportExecutor($loop),
+            new UdpTransportExecutor(
+                $nameserver,
+                $loop
+            ),
             5.0,
             $loop
         );
     }
 
-    protected function createRetryExecutor(LoopInterface $loop)
+    private function createRetryExecutor($namserver, LoopInterface $loop)
     {
-        return new RetryExecutor($this->createExecutor($loop));
+        return new CoopExecutor(new RetryExecutor($this->createExecutor($namserver, $loop)));
     }
 
-    protected function createCachedExecutor(LoopInterface $loop, CacheInterface $cache)
+    private function createCachedExecutor($namserver, LoopInterface $loop, CacheInterface $cache)
     {
-        return new CachedExecutor($this->createRetryExecutor($loop), new RecordCache($cache));
-    }
-
-    protected function addPortToServerIfMissing($nameserver)
-    {
-        if (strpos($nameserver, '[') === false && substr_count($nameserver, ':') >= 2) {
-            // several colons, but not enclosed in square brackets => enclose IPv6 address in square brackets
-            $nameserver = '[' . $nameserver . ']';
-        }
-        // assume a dummy scheme when checking for the port, otherwise parse_url() fails
-        if (parse_url('dummy://' . $nameserver, PHP_URL_PORT) === null) {
-            $nameserver .= ':53';
-        }
-
-        return $nameserver;
+        return new CachingExecutor($this->createRetryExecutor($namserver, $loop), $cache);
     }
 }

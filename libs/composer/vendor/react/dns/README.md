@@ -13,7 +13,7 @@ easily be used to create a DNS server.
 * [Basic usage](#basic-usage)
 * [Caching](#caching)
   * [Custom cache adapter](#custom-cache-adapter)
-* [Resolver](#resolver)
+* [ResolverInterface](#resolverinterface)
   * [resolve()](#resolve)
   * [resolveAll()](#resolveall)
 * [Advanced usage](#advanced-usage)
@@ -111,7 +111,9 @@ $dns = $factory->createCached('8.8.8.8', $loop, $cache);
 
 See also the wiki for possible [cache implementations](https://github.com/reactphp/react/wiki/Users#cache-implementations).
 
-## Resolver
+## ResolverInterface
+
+<a id="resolver"><!-- legacy reference --></a>
 
 ### resolve()
 
@@ -208,10 +210,9 @@ The following example looks up the `IPv6` address for `igor.io`.
 
 ```php
 $loop = Factory::create();
-$executor = new UdpTransportExecutor($loop);
+$executor = new UdpTransportExecutor('8.8.8.8:53', $loop);
 
 $executor->query(
-    '8.8.8.8:53', 
     new Query($name, Message::TYPE_AAAA, Message::CLASS_IN)
 )->then(function (Message $message) {
     foreach ($message->answers as $answer) {
@@ -229,7 +230,7 @@ want to use this in combination with a `TimeoutExecutor` like this:
 
 ```php
 $executor = new TimeoutExecutor(
-    new UdpTransportExecutor($loop),
+    new UdpTransportExecutor($nameserver, $loop),
     3.0,
     $loop
 );
@@ -242,9 +243,29 @@ combination with a `RetryExecutor` like this:
 ```php
 $executor = new RetryExecutor(
     new TimeoutExecutor(
-        new UdpTransportExecutor($loop),
+        new UdpTransportExecutor($nameserver, $loop),
         3.0,
         $loop
+    )
+);
+```
+
+Note that this executor is entirely async and as such allows you to execute
+any number of queries concurrently. You should probably limit the number of
+concurrent queries in your application or you're very likely going to face
+rate limitations and bans on the resolver end. For many common applications,
+you may want to avoid sending the same query multiple times when the first
+one is still pending, so you will likely want to use this in combination with
+a `CoopExecutor` like this:
+
+```php
+$executor = new CoopExecutor(
+    new RetryExecutor(
+        new TimeoutExecutor(
+            new UdpTransportExecutor($nameserver, $loop),
+            3.0,
+            $loop
+        )
     )
 );
 ```
@@ -264,11 +285,10 @@ use this code:
 ```php
 $hosts = \React\Dns\Config\HostsFile::loadFromPathBlocking();
 
-$executor = new UdpTransportExecutor($loop);
+$executor = new UdpTransportExecutor('8.8.8.8:53', $loop);
 $executor = new HostsFileExecutor($hosts, $executor);
 
 $executor->query(
-    '8.8.8.8:53', 
     new Query('localhost', Message::TYPE_A, Message::CLASS_IN)
 );
 ```
@@ -278,10 +298,11 @@ $executor->query(
 The recommended way to install this library is [through Composer](https://getcomposer.org).
 [New to Composer?](https://getcomposer.org/doc/00-intro.md)
 
+This project follows [SemVer](https://semver.org/).
 This will install the latest supported version:
 
 ```bash
-$ composer require react/dns:^0.4.15
+$ composer require react/dns:^1.1
 ```
 
 See also the [CHANGELOG](CHANGELOG.md) for details about version upgrades.
