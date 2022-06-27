@@ -23,7 +23,7 @@ class PlanelementClient extends ConfigClient implements SoapClientService
      */
     public function getServiceWsdl()
     {
-        return 'PlanelementClient.wsdl';
+        return 'PlanelementService.wsdl';
     }
 
     /**
@@ -31,6 +31,6 @@ class PlanelementClient extends ConfigClient implements SoapClientService
      */
     public function getServiceDir()
     {
-        return 'PlanelementClient';
+        return 'PlanelementService';
     }
 }
