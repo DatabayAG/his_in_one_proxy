@@ -17,7 +17,7 @@ class ParsePersonExternals extends SimpleXmlParser
      * @param DataModel\PlanElement $plan_element
      * @throws Exception
      */
-    public function parse($xml, $plan_element, $nullablePlanElementId)
+    public function parse($xml, $plan_element, $nullablePlanElementId = null)
     {
         if ($this->doesAttributeExist($xml, 'personExternals')) {
             $xml = $xml->personExternals;
