@@ -75,10 +75,16 @@ class JsonBuilder
             $mapping          = $unit->getCourseMappingContainer();
             $row              = new stdClass();
             $course_container = $unit->getCourseContainer();
+
             if (count($course_container) > 0) {
                 $course         = $course_container[0];
                 $row->workload  = $course->getWorkload();
-                $row->lectureID = $course->getId();
+
+                $lecture_id             = $course->getId();
+                if(is_array($mapping) && count($mapping) > 0) {
+                    $lecture_id = $mapping[0]->getYear() . '_' . $mapping[0]->getTermTypeValueId() . '_' . $course->getId();
+                }
+                $row->lectureID = $lecture_id;
             }
 
             $row = self::appendMapping($mapping, $row);
