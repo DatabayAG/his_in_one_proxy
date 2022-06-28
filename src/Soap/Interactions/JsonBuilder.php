@@ -355,7 +355,7 @@ class JsonBuilder
 
                 foreach ($user as $group_id => $group) {
                     if (in_array($group['blocked'], GlobalSettings::getInstance()->getBlockedIds())) {
-                        DataCache::getInstance()->getLog()->debug(sprintf('Account with name (%s) will be ignored, since it is not active, blocked id(%s)!', $user_name, $group->getBlockedId()));
+                        DataCache::getInstance()->getLog()->debug(sprintf('Account with name (%s) will be ignored, since it is not active!', $user_name));
                         $skip = true;
                         continue;
                     }
