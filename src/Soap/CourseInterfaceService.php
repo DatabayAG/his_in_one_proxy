@@ -298,9 +298,9 @@ class CourseInterfaceService extends SoapService
      * @param null $updated_since
      * @throws Exception
      */
-    public function readPersonExamPlanEnrollmentsForUnit($plan_element, $unit_id, $term_type_id, $year, $work_status_ids = 8, $cancellation = null, $updated_since = null)
+    public function readPersonExamPlanEnrollmentsForUnit($plan_element, $unit_id, $term_type_id, $year, $work_status_ids = [1,6,26,27,22,8,20,28,30,32], $cancellation = null, $updated_since = null)
     {
-        $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $year, 'workstatusIds' => $work_status_ids, 'cancellation' => $cancellation, 'updatedSince' => $updated_since));
+        $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $year, 'workstatusIds' => [1,6,26,27,22,8,20,28,30,32], 'cancellation' => $cancellation, 'updatedSince' => $updated_since));
         try {
             $response = $this->soap_course_interface->__soapCall('readPersonExamplanEnrollmentsForUnit', $params);
             $parser   = new Parser\ParseExamRelation($this->log);
