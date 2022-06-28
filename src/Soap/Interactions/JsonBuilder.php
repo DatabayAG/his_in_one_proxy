@@ -82,7 +82,7 @@ class JsonBuilder
 
                 $lecture_id             = $course->getId();
                 if(is_array($mapping) && count($mapping) > 0) {
-                    $lecture_id = $mapping[0]->getYear() . '_' . $mapping[0]->getTermTypeValueId() . '_' . $course->getId();
+                    $lecture_id = $mapping[0]->getYear() . '' . $mapping[0]->getTermTypeValueId() . '' . $course->getId();
                 }
                 $row->lectureID = $lecture_id;
             }
