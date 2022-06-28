@@ -88,9 +88,9 @@ class JsonBuilder
             }
 
             $row = self::appendMapping($mapping, $row);
-            self::addMappingToArray($course->getId(), $row->elearning_sys_string);
+            self::addMappingToArray($lecture_id, $row->elearning_sys_string);
             self::addSimpleTypes($row, $unit, $course->getEventTypeId());
-            self::addComplexTypes($row, $unit, $course->getId());
+            self::addComplexTypes($row, $unit, $lecture_id);
 
             $array[] = $row;
         }
