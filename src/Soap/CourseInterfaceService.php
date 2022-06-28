@@ -300,6 +300,7 @@ class CourseInterfaceService extends SoapService
      */
     public function readPersonExamPlanEnrollmentsForUnit($plan_element, $unit_id, $term_type_id, $year, $work_status_ids = [1,6,26,27,22,8,20,28,30,32], $cancellation = null, $updated_since = null)
     {
+        //Todo: rework!
         $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $year, 'workstatusIds' => [1,6,26,27,22,8,20,28,30,32], 'cancellation' => $cancellation, 'updatedSince' => $updated_since));
         try {
             $response = $this->soap_course_interface->__soapCall('readPersonExamplanEnrollmentsForUnit', $params);
