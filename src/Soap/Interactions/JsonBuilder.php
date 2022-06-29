@@ -171,7 +171,8 @@ class JsonBuilder
         $row->lectureType  = DataCache::getInstance()->resolveEventTypeById($event_type_id);
         $plan_element_cont = $unit->getPlanElementContainer();
         if (count($plan_element_cont) == 1) {
-            $row->title = $plan_element_cont[0]->getText();
+            $title = array_pop($plan_element_cont);
+            $row->title = $title->getText();
         } else {
             $row->title = $unit->getText();
         }
