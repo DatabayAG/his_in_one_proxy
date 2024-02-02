@@ -14,7 +14,7 @@ class ElearningPlatformContainer
     /**
      * @var ElearningPlatform[]
      */
-    protected $container;
+    protected array $container = [];
 
     /**
      * @return ElearningPlatform[]
