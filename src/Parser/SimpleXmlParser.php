@@ -56,9 +56,6 @@ class SimpleXmlParser
      */
     protected function isAttributeNotNull($xml, $attribute)
     {
-        $a  = $xml->{$attribute} != null;
-        $a1 = $xml->{$attribute} != 'null';
-        $a1 = $xml->{$attribute};
         return $xml->{$attribute} != null;
     }
 

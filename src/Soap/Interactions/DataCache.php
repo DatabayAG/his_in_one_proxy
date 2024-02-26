@@ -14,11 +14,10 @@ use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\AccountService;
-use HisInOneProxy\Soap\AddressService;
 use HisInOneProxy\Soap\CourseCatalogService;
 use HisInOneProxy\Soap\CourseInterfaceService;
 use HisInOneProxy\Soap\CourseOfStudyService;
-use HisInOneProxy\Soap\CourseService;
+use HisInOneProxy\Soap\CurriculumDesignerService;
 use HisInOneProxy\Soap\OrgUnitService;
 use HisInOneProxy\Soap\PersonService;
 use HisInOneProxy\Soap\SoapService\PlanelementClient;
@@ -26,7 +25,6 @@ use HisInOneProxy\Soap\SoapServiceRouter;
 use HisInOneProxy\Soap\StudentService;
 use HisInOneProxy\Soap\SystemEventAbonnenmentService;
 use HisInOneProxy\Soap\TermService;
-use HisInOneProxy\Soap\UnitService;
 use HisInOneProxy\Soap\KeyvalueService;
 
 /**
@@ -111,19 +109,15 @@ class DataCache
     protected static $student_service;
 
     /**
-     * @var AddressService
-     */
-    protected static $address_service;
-
-    /**
      * @var PersonService
      */
     protected static $person_service;
 
-	/**
-	 * @var UnitService
+    /**
+	 * @var
+     *
 	 */
-	protected static $unit_service;
+	protected static $curriculum_designer_service;
 	
 	/**
 	 * @var KeyvalueService
@@ -248,20 +242,20 @@ class DataCache
 	 */
 	protected static function initializeRouterAndServices()
 	{
-		self::$router                   = new SoapServiceRouter(self::$log);
+		self::$router                      = new SoapServiceRouter(self::$log);
 
-		self::$course_catalog_service   = new CourseCatalogService(self::$log, self::$router);
-		self::$course_interface_service = new CourseInterfaceService(self::$log, self::$router);
-		self::$course_of_study_service  = new CourseOfStudyService(self::$log, self::$router);
-		self::$course_service           = new PlanelementClient(self::$log, self::$router);
-		self::$org_unit_service         = new OrgUnitService(self::$log, self::$router);
-		self::$person_service           = new PersonService(self::$log, self::$router);
-		self::$student_service          = new StudentService(self::$log, self::$router);
-		self::$term_service             = new TermService(self::$log, self::$router);
-		self::$unit_service             = new UnitService(self::$log, self::$router);
-		self::$keyvalue_service         = new KeyvalueService(self::$log, self::$router);
-		self::$account_service          = new AccountService(self::$log, self::$router);
-		self::$system_event_abo_service = new SystemEventAbonnenmentService(self::$log, self::$router);
+		self::$course_catalog_service      = new CourseCatalogService(self::$log, self::$router);
+		self::$course_interface_service    = new CourseInterfaceService(self::$log, self::$router);
+		self::$course_of_study_service     = new CourseOfStudyService(self::$log, self::$router);
+		self::$course_service              = new PlanelementClient(self::$log, self::$router);
+		self::$org_unit_service            = new OrgUnitService(self::$log, self::$router);
+		self::$person_service              = new PersonService(self::$log, self::$router);
+		self::$student_service             = new StudentService(self::$log, self::$router);
+		self::$term_service                = new TermService(self::$log, self::$router);
+		self::$curriculum_designer_service = new CurriculumDesignerService(self::$log, self::$router);
+		self::$keyvalue_service            = new KeyvalueService(self::$log, self::$router);
+		self::$account_service             = new AccountService(self::$log, self::$router);
+		self::$system_event_abo_service    = new SystemEventAbonnenmentService(self::$log, self::$router);
 	}
 
 	protected static function readDefaultLanguage()
@@ -519,14 +513,14 @@ class DataCache
         return self::$course_of_study_service;
     }
 
-	/**
-	 * @return UnitService
+    /**
+	 * @return
 	 */
-	public function getUnitService()
+	public function getCurriculumDesignerService()
 	{
-		return self::$unit_service;
+		return self::$curriculum_designer_service;
 	}
-	
+
 	/**
 	 * @return KeyvalueService
 	 */

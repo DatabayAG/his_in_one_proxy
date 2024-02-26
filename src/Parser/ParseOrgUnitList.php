@@ -23,14 +23,17 @@ class ParseOrgUnitList extends SimpleXmlParser
     public function parse($xml)
     {
         $this->list = array();
-        if ($this->doesMoreThanOneElementExists($xml, 'unitOrgunitInfo')) {
-            foreach ($xml->unitOrgunitInfo as $value) {
+        if(array_key_exists('unitOrgunits',$xml) && array_key_exists('unitOrgunits', $xml->unitOrgunits))
+        {
+            $xml = $xml->unitOrgunits;
+        }
+        if ($this->doesMoreThanOneElementExists($xml, 'unitOrgunits')) {
+            foreach ($xml->unitOrgunits as $value) {
                 $this->appendOrgUnitToList($this->buildOrgUnit($value));
             }
         } else {
             $this->appendOrgUnitToList($this->buildOrgUnit($xml));
         }
-
         return $this->list;
     }
 
@@ -49,15 +52,14 @@ class ParseOrgUnitList extends SimpleXmlParser
      * @return DataModel\OrgUnitListItem
      */
     public function buildOrgUnit($xml)
-    {
+    { 
         $org_unit = new DataModel\OrgUnitListItem();
 
-        if (array_key_exists('unitOrgunitInfo', $xml)) {
-            $xml = $xml->unitOrgunitInfo;
+        if (array_key_exists('unitOrgunits', $xml)) {
+            $xml = $xml->unitOrgunits;
         }
-
-        if (isset($xml->orgunitLid) && $xml->orgunitLid != null && $xml->orgunitLid != '') {
-            $org_unit->setOrgUnitLid($xml->orgunitLid);
+        if (isset($xml->lid) && $xml->lid != null && $xml->lid != '') {
+            $org_unit->setOrgUnitLid($xml->lid);
             $this->log->info(sprintf('Found OrgUnitListItem with id %s.', $org_unit->getOrgUnitLid()));
             if ($this->isAttributeValid($xml, 'unitId')) {
                 $org_unit->setUnitId($xml->unitId);

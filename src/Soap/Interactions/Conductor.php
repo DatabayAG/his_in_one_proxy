@@ -208,7 +208,6 @@ class Conductor
         $unit               = $services->getCourseInterfaceService()->readUnit($unit_id);
         $year               = $this->year;
         $term_type_value_id = $this->term_id;
-
         if ($unit->getId() != null) {
             $services->getCourseInterfaceService()->getCombinationForCourse($unit, $term_type_value_id, $year);
 

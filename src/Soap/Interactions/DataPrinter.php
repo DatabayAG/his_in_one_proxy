@@ -380,7 +380,7 @@ class DataPrinter
                     if (array_key_exists($child->getChildId(), DataCache::getInstance()->getUnitCache())) {
                         $obj->replaceChildInContainer($child->getChildId(), DataCache::getInstance()->getUnitCache()[$child->getChildId()]);
                     } else {
-                        $obj->replaceChildInContainer($child->getChildId(), DataCache::getInstance()->getUnitService()->readUnitWithChildren($child->getChildId()));
+                        $obj->replaceChildInContainer($child->getChildId(), DataCache::getInstance()->getCurriculumDesignerService()->readChildUnitRelations($child->getChildId()));
                     }
                     $this->gatherMissingDetailFromCourseCatalog($obj);
                 }

@@ -46,6 +46,11 @@ class SoapServiceRouter
     /**
      * @var WSSoapClient
      */
+    protected $soap_client_curriculum_designer_service;
+
+    /**
+     * @var WSSoapClient
+     */
     protected $soap_client_org_unit_service;
 
     /**
@@ -227,10 +232,10 @@ class SoapServiceRouter
     /**
      * @return WSSoapClient|null
      */
-    public function getSoapClientUnitService()
+    public function getSoapClientCurriculumDesingerService()
     {
-        if ($this->soap_client_unit_service !== null) {
-            return $this->soap_client_unit_service;
+        if ($this->soap_client_curriculum_designer_service !== null) {
+            return $this->soap_client_curriculum_designer_service;
         } else {
             $this->log->emergency('Unit service not initialised!');
         }
@@ -238,11 +243,12 @@ class SoapServiceRouter
     }
 
     /**
-     * @param WSSoapClient $soap_client_unit_service
+     * @param $soap_client_curriculum_designer_service
+     * @return void
      */
-    public function setSoapClientUnitService($soap_client_unit_service)
+    public function setSoapClientCurriculumDesignerService($soap_client_curriculum_designer_service)
     {
-        $this->soap_client_unit_service = $soap_client_unit_service;
+        $this->soap_client_curriculum_designer_service = $soap_client_curriculum_designer_service;
     }
 
     /**

@@ -41,8 +41,8 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router->getSoapClientPlanelementService();
 		$this->assertEqualClearedString('Emergency: Course service not initialised!', array_pop($this->collectedMessages));
 
-		$this->soap_client_router->setSoapClientUnitService(null);
-		$this->soap_client_router->getSoapClientUnitService();
+		$this->soap_client_router->getSoapClientCurriculumDesingerService(null);
+		$this->soap_client_router->getSoapClientCurriculumDesingerService();
 		$this->assertEqualClearedString('Emergency: Unit service not initialised!', array_pop($this->collectedMessages));
 
 		$this->soap_client_router->setSoapClientOrgUnitService(null);

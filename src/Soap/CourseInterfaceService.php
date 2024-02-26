@@ -90,14 +90,12 @@ class CourseInterfaceService extends SoapService
             $parser   = new Parser\ParseUnit(new Log\Log());
             if (isset($response->unit) && $response->unit != null && $response->unit != '') {
                 $unit = $parser->parse($response->unit);
-
-                $response = $this->soap_service_router->getSoapClientUnitService()->__soapCall('findOrgunitsByUnit', $params);
+                $response = $this->soap_service_router->getSoapClientCurriculumDesingerService()->__soapCall('readChildUnitRelations', $params);
                 $parser   = new Parser\ParseOrgUnitList($this->log);
-                if (array_key_exists('unitOrgunitList', $response)) {
-                    $org_units = $parser->parse($response->unitOrgunitList);
+                 if (array_key_exists('readUnitRelationsAttributeWithoutParents', $response) && array_key_exists('unitOrgunits', $response->readUnitRelationsAttributeWithoutParents)) {
+                    $org_units = $parser->parse($response->readUnitRelationsAttributeWithoutParents);
                     $unit->setOrgUnitsContainer($org_units);
                 }
-
                 return $unit;
             }
         } catch (SoapFault $exception) {

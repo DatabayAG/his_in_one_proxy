@@ -131,7 +131,7 @@ class CourseCatalogService extends SoapService
             $parser   = new Parser\ParseVisibleChildren($this->log);
             $children = $parser->parse($response);
             $units    = array();
-            $service  = DataCache::getInstance()->getUnitService();
+            $service  = DataCache::getInstance()->getCurriculumDesignerService();
 
             if (is_array($children) && count($children) > 0) {
                 foreach ($children as $id => $unit) {
