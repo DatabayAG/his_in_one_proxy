@@ -5,17 +5,17 @@ namespace HisInOneProxy\Soap\SoapService;
 use HisInOneProxy\Soap;
 
 /**
- * Class UnitClient
+ * Class CurriculumDesignerService
  * @package HisInOneProxy\Soap\SoapService
  */
-class UnitClient implements SoapClientService
+class CurriculumDesignerClient implements SoapClientService
 {
     /**
      * @param Soap\SoapServiceRouter $router
      */
     public function appendRouterConfig($router)
     {
-        $router->setSoapClientUnitService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
+        $router->setSoapClientCurriculumDesignerService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
     }
 
     /**
@@ -23,7 +23,7 @@ class UnitClient implements SoapClientService
      */
     public function getServiceWsdl()
     {
-        return 'UnitService.wsdl';
+        return 'CurriculumDesignerService.wsdl';
     }
 
     /**
@@ -31,6 +31,6 @@ class UnitClient implements SoapClientService
      */
     public function getServiceDir()
     {
-        return 'UnitService';
+        return 'CurriculumDesignerService';
     }
 }

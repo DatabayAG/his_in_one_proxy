@@ -8,23 +8,23 @@ use HisInOneProxy\Parser;
 use SoapFault;
 
 /**
- * Class UnitService
+ * Class CurriculumDesignerService
  * @package HisInOneProxy\Soap
  */
-class UnitService extends SoapService
+class CurriculumDesignerService extends SoapService
 {
 
     protected $soap_unit;
 
     /**
-     * CourseCatalogService constructor.
+     * CurriculumDesignerService constructor.
      * @param                   $log
      * @param SoapServiceRouter $soap_service_router
      */
     public function __construct($log, $soap_service_router)
     {
         parent::__construct($log, $soap_service_router);
-        $this->soap_unit = $this->soap_service_router->getSoapClientUnitService();
+        $this->soap_unit = $this->soap_service_router->getSoapClientCurriculumDesingerService();
     }
 
     /**
@@ -36,7 +36,7 @@ class UnitService extends SoapService
     {
         $params = array(array('unitId' => $unitId));
         try {
-            $response = $this->soap_unit->__soapCall('readUnit81', $params);
+            $response = $this->soap_unit->__soapCall('readUnit', $params);
             $parser   = new Parser\ParseUnit($this->log);
             if (isset($response->unit)) {
 
@@ -56,21 +56,21 @@ class UnitService extends SoapService
      * @return Unit|null
      * @throws Exception
      */
-    public function readUnitWithChildren($unitId)
+    public function readChildUnitRelations($unitId)
     {
         $params = array(array('unitId' => $unitId));
         try {
-            $response = $this->soap_unit->__soapCall('readUnitWithChildren', $params);
+            $response = $this->soap_unit->__soapCall('readChildUnitRelations', $params);
             $parser   = new Parser\ParseUnit($this->log);
             if (isset($response->unit)) {
                 $unit     = $parser->parse($response->unit);
-                $response = $this->soap_unit->__soapCall('findOrgunitsByUnit', $params);
+                $response = $this->soap_unit->__soapCall('readUnitWithRelations', $params);
                 $parser   = new Parser\ParseOrgUnitList($this->log);
-                if (array_key_exists('unitOrgunitList', $response)) {
-                    $org_units = $parser->parse($response->unitOrgunitList);
+                #if (array_key_exists('unitOrgunitList', $response)) {
+                if (array_key_exists('unitOrgunits', $response)) {
+                    $org_units = $parser->parse($response->unitOrgunits);
                     $unit->setOrgUnitsContainer($org_units);
                 }
-
                 return $unit;
             } else {
                 $this->log->error('No unit object found in response!');
@@ -85,11 +85,11 @@ class UnitService extends SoapService
      * @param $unitId
      * @return array | null
      */
-    public function findOrgUnitsByUnit($unitId)
+    public function readUnitWithRelations($unitId)
     {
         $params = array(array('unitId' => $unitId));
         try {
-            $response      = $this->soap_unit->__soapCall('findOrgunitsByUnit', $params);
+            $response      = $this->soap_unit->__soapCall('readUnitWithRelations', $params);
             $org_unit_lids = array();
             if (isset($response->unitOrgunitList)) {
                 $list = $response->unitOrgunitList;

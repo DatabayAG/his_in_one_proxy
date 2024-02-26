@@ -20,8 +20,7 @@ class ParseUnit extends SimpleXmlParser
     public function parse($xml)
     {
         $unit = new DataModel\Unit();
-
-        if ($this->isAttributeValid($xml, 'id')) {
+       if ($this->isAttributeValid($xml, 'id')) {
             $unit->setId($xml->id);
             $this->log->info(sprintf('Found Unit with id %s.', $unit->getId()));
             if ($this->isAttributeValid($xml, 'objGuid')) {
@@ -85,10 +84,9 @@ class ParseUnit extends SimpleXmlParser
                 $unit->setChildContainer($parser->parse($xml->children));
             }
             DataCache::getInstance()->appendUnitCache($unit);
+            return $unit;
         } else {
             $this->log->warning('No id given for Unit, skipping!');
         }
-
-        return $unit;
     }
 }
