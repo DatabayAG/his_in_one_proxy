@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of PHPUnit.
  *
@@ -7,69 +7,57 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace PHPUnit\Runner;
 
+use function array_slice;
+use function dirname;
+use function explode;
+use function implode;
+use function str_contains;
 use SebastianBergmann\Version as VersionId;
 
 /**
- * This class defines the current version of PHPUnit.
+ * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
  */
-class Version
+final class Version
 {
-    private static $pharVersion;
-    private static $version;
+    private static string $pharVersion = '';
+    private static string $version     = '';
 
     /**
      * Returns the current version of PHPUnit.
-     *
-     * @return string
      */
-    public static function id()
+    public static function id(): string
     {
-        if (self::$pharVersion !== null) {
+        if (self::$pharVersion !== '') {
             return self::$pharVersion;
         }
 
-        if (self::$version === null) {
-            $version       = new VersionId('6.1.3', \dirname(\dirname(__DIR__)));
-            self::$version = $version->getVersion();
+        if (self::$version === '') {
+            self::$version = (new VersionId('10.5.38', dirname(__DIR__, 2)))->asString();
         }
 
         return self::$version;
     }
 
-    /**
-     * @return string
-     */
-    public static function series()
+    public static function series(): string
     {
-        if (\strpos(self::id(), '-')) {
-            $version = \explode('-', self::id())[0];
+        if (str_contains(self::id(), '-')) {
+            $version = explode('-', self::id(), 2)[0];
         } else {
             $version = self::id();
         }
 
-        return \implode('.', \array_slice(\explode('.', $version), 0, 2));
+        return implode('.', array_slice(explode('.', $version), 0, 2));
     }
 
-    /**
-     * @return string
-     */
-    public static function getVersionString()
+    public static function majorVersionNumber(): int
+    {
+        return (int) explode('.', self::series())[0];
+    }
+
+    public static function getVersionString(): string
     {
         return 'PHPUnit ' . self::id() . ' by Sebastian Bergmann and contributors.';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getReleaseChannel()
-    {
-        if (\strpos(self::$pharVersion, '-') !== false) {
-            return '-nightly';
-        }
-
-        return '';
     }
 }

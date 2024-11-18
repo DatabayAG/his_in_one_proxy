@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of sebastian/diff.
  *
@@ -7,47 +7,59 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff;
 
-class Line
+final class Line
 {
-    const ADDED     = 1;
-    const REMOVED   = 2;
-    const UNCHANGED = 3;
+    public const ADDED     = 1;
+    public const REMOVED   = 2;
+    public const UNCHANGED = 3;
+    private int $type;
+    private string $content;
 
-    /**
-     * @var int
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @param int    $type
-     * @param string $content
-     */
-    public function __construct($type = self::UNCHANGED, $content = '')
+    public function __construct(int $type = self::UNCHANGED, string $content = '')
     {
         $this->type    = $type;
         $this->content = $content;
     }
 
+    public function content(): string
+    {
+        return $this->content;
+    }
+
+    public function type(): int
+    {
+        return $this->type;
+    }
+
+    public function isAdded(): bool
+    {
+        return $this->type === self::ADDED;
+    }
+
+    public function isRemoved(): bool
+    {
+        return $this->type === self::REMOVED;
+    }
+
+    public function isUnchanged(): bool
+    {
+        return $this->type === self::UNCHANGED;
+    }
+
     /**
-     * @return string
+     * @deprecated
      */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
     /**
-     * @return int
+     * @deprecated
      */
-    public function getType()
+    public function getType(): int
     {
         return $this->type;
     }

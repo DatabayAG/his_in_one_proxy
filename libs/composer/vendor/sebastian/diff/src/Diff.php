@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * This file is part of sebastian/diff.
  *
@@ -7,32 +7,38 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace SebastianBergmann\Diff;
 
-class Diff
+use ArrayIterator;
+use IteratorAggregate;
+use Traversable;
+
+/**
+ * @template-implements IteratorAggregate<int, Chunk>
+ */
+final class Diff implements IteratorAggregate
 {
     /**
-     * @var string
+     * @psalm-var non-empty-string
      */
-    private $from;
+    private string $from;
 
     /**
-     * @var string
+     * @psalm-var non-empty-string
      */
-    private $to;
+    private string $to;
 
     /**
-     * @var Chunk[]
+     * @psalm-var list<Chunk>
      */
-    private $chunks;
+    private array $chunks;
 
     /**
-     * @param string  $from
-     * @param string  $to
-     * @param Chunk[] $chunks
+     * @psalm-param non-empty-string $from
+     * @psalm-param non-empty-string $to
+     * @psalm-param list<Chunk> $chunks
      */
-    public function __construct($from, $to, array $chunks = array())
+    public function __construct(string $from, string $to, array $chunks = [])
     {
         $this->from   = $from;
         $this->to     = $to;
@@ -40,34 +46,69 @@ class Diff
     }
 
     /**
-     * @return string
+     * @psalm-return non-empty-string
      */
-    public function getFrom()
+    public function from(): string
     {
         return $this->from;
     }
 
     /**
-     * @return string
+     * @psalm-return non-empty-string
      */
-    public function getTo()
+    public function to(): string
     {
         return $this->to;
     }
 
     /**
-     * @return Chunk[]
+     * @psalm-return list<Chunk>
      */
-    public function getChunks()
+    public function chunks(): array
     {
         return $this->chunks;
     }
 
     /**
-     * @param Chunk[] $chunks
+     * @psalm-param list<Chunk> $chunks
      */
-    public function setChunks(array $chunks)
+    public function setChunks(array $chunks): void
     {
         $this->chunks = $chunks;
+    }
+
+    /**
+     * @psalm-return non-empty-string
+     *
+     * @deprecated
+     */
+    public function getFrom(): string
+    {
+        return $this->from;
+    }
+
+    /**
+     * @psalm-return non-empty-string
+     *
+     * @deprecated
+     */
+    public function getTo(): string
+    {
+        return $this->to;
+    }
+
+    /**
+     * @psalm-return list<Chunk>
+     *
+     * @deprecated
+     */
+    public function getChunks(): array
+    {
+        return $this->chunks;
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->chunks);
     }
 }

@@ -1,51 +1,61 @@
-<?php
+<?php declare(strict_types=1);
 /*
- * This file is part of the File_Iterator package.
+ * This file is part of phpunit/php-file-iterator.
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+namespace SebastianBergmann\FileIterator;
+
+use const GLOB_ONLYDIR;
+use function array_filter;
+use function array_map;
+use function array_merge;
+use function array_values;
+use function glob;
+use function is_dir;
+use function is_string;
+use function realpath;
+use AppendIterator;
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
- * Factory Method implementation that creates a File_Iterator that operates on
- * an AppendIterator that contains an RecursiveDirectoryIterator for each given
- * path.
- *
- * @since     Class available since Release 1.1.0
+ * @internal This class is not covered by the backward compatibility promise for phpunit/php-file-iterator
  */
-class File_Iterator_Factory
+final class Factory
 {
     /**
-     * @param  array|string   $paths
-     * @param  array|string   $suffixes
-     * @param  array|string   $prefixes
-     * @param  array          $exclude
-     * @return AppendIterator
+     * @psalm-param list<non-empty-string>|non-empty-string $paths
+     * @psalm-param list<non-empty-string>|string $suffixes
+     * @psalm-param list<non-empty-string>|string $prefixes
+     * @psalm-param list<non-empty-string> $exclude
      */
-    public function getFileIterator($paths, $suffixes = '', $prefixes = '', array $exclude = array())
+    public function getFileIterator(array|string $paths, array|string $suffixes = '', array|string $prefixes = '', array $exclude = []): AppendIterator
     {
         if (is_string($paths)) {
-            $paths = array($paths);
+            $paths = [$paths];
         }
 
-        $paths   = $this->getPathsAfterResolvingWildcards($paths);
-        $exclude = $this->getPathsAfterResolvingWildcards($exclude);
+        $paths   = $this->resolveWildcards($paths);
+        $exclude = $this->resolveWildcards($exclude);
 
         if (is_string($prefixes)) {
-            if ($prefixes != '') {
-                $prefixes = array($prefixes);
+            if ($prefixes !== '') {
+                $prefixes = [$prefixes];
             } else {
-                $prefixes = array();
+                $prefixes = [];
             }
         }
 
         if (is_string($suffixes)) {
-            if ($suffixes != '') {
-                $suffixes = array($suffixes);
+            if ($suffixes !== '') {
+                $suffixes = [$suffixes];
             } else {
-                $suffixes = array();
+                $suffixes = [];
             }
         }
 
@@ -54,15 +64,17 @@ class File_Iterator_Factory
         foreach ($paths as $path) {
             if (is_dir($path)) {
                 $iterator->append(
-                  new File_Iterator(
-                    new RecursiveIteratorIterator(
-                      new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::FOLLOW_SYMLINKS)
-                    ),
-                    $suffixes,
-                    $prefixes,
-                    $exclude,
-                    $path
-                  )
+                    new Iterator(
+                        $path,
+                        new RecursiveIteratorIterator(
+                            new ExcludeIterator(
+                                new RecursiveDirectoryIterator($path, FilesystemIterator::FOLLOW_SYMLINKS | FilesystemIterator::SKIP_DOTS),
+                                $exclude,
+                            ),
+                        ),
+                        $suffixes,
+                        $prefixes,
+                    )
                 );
             }
         }
@@ -71,21 +83,24 @@ class File_Iterator_Factory
     }
 
     /**
-     * @param  array $paths
-     * @return array
+     * @psalm-param list<non-empty-string> $paths
+     *
+     * @psalm-return list<non-empty-string>
      */
-    protected function getPathsAfterResolvingWildcards(array $paths)
+    private function resolveWildcards(array $paths): array
     {
-        $_paths = array();
+        $_paths = [[]];
 
         foreach ($paths as $path) {
             if ($locals = glob($path, GLOB_ONLYDIR)) {
-                $_paths = array_merge($_paths, array_map('realpath', $locals));
+                $_paths[] = array_map('\realpath', $locals);
             } else {
-                $_paths[] = realpath($path);
+                // @codeCoverageIgnoreStart
+                $_paths[] = [realpath($path)];
+                // @codeCoverageIgnoreEnd
             }
         }
 
-        return $_paths;
+        return array_values(array_filter(array_merge(...$_paths)));
     }
 }

@@ -2,6 +2,92 @@
 
 All notable changes to `Config` will be documented in this file
 
+## 3.1.0 - 2022-12-20
+
+### Added
+* PHP 8.2 to the build matrix (#154)
+
+### Fixed
+* Use assertEquals instead of assertSame (#153)
+* Namespaces in tests (#154)
+
+### Removed
+* .travis.yml file (#152)
+* support for the end of life PHP versions (#144)
+
+
+## 3.0.1 - 2022-03-26
+
+### Added
+- Fix merge method (#145 and #147)
+
+## 3.0.0 - 2021-12-30
+
+### Added
+- Move CI to GitHub actions (#132, #136 and #137)
+- PHP 8.0 support, adding it to the build matrix (#138 and #139)
+- PHP 8.1 support, adding it to the build matrix (#135, #140 and #141)
+
+## 2.2.0 - 2020-12-07
+
+### Added
+- Serialization support (#127)
+- Support for Properties files (#128)
+
+### Fixed
+- Test enhancement (#126)
+- Typehint on Xml parser, parse method (#130)
+
+## 2.1.0 - 2019-09-01
+
+### Added
+- Support for writing configuration back to file and string (#122)
+
+## 2.0.2 - 2019-04-06
+
+### Fixed
+- Implementations of `ParserInterface` and cleanup (#120)
+- Tests for PHP 7
+
+## 2.0.1 - 2019-02-02
+
+### Fixed
+- Parsing PHP file (#114)
+- Parsing PHP string with `$config` variable (#118)
+
+## 2.0.0 - 2018-10-03
+
+### Added
+- Usage of short array syntax (#109)
+- Support for string parsers (#111)
+
+### Breaking changes
+- Changes of interface and parsers
+
+## 1.1.0 - 2018-08-22
+
+### Added
+- Added support for PHP constants in YAML (#112)
+
+## 1.0.1 - 2018-03-31
+
+### Fixed
+- Possibility to use an own file parser (#103)
+
+## 1.0.0 - 2018-03-03
+
+### Added
+- Merge support (#96)
+- Set PHP 5.5.9 as minimum required version (#75 and #99)
+
+### Fixed
+- Fix PHP 5.6 test (#100)
+- Edit PHP versions tested on Travis (#101)
+- Add more info about the symfony/yaml requirement (#97 and #102)
+
+### Breaking changes
+- PHP 5.3 and 5.4 are no longer supported.
+
 ## 0.10.0 - 2016-02-11
 
 ### Added
