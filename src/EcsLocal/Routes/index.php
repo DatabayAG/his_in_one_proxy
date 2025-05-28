@@ -212,7 +212,7 @@ $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array
     } else {
         $logging->warning('This does not seem to be a valid course urls array');
     }
-    
+
     return $response;
 });
 $app->run();
