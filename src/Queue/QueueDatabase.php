@@ -7,8 +7,10 @@ use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Database\DbPdo;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use HisInOneProxy\System\Utils;
 use PDO;
 use PDOStatement;
+use React\Stream\Util;
 
 /**
  * Class SimpleQueueInterface
@@ -60,10 +62,8 @@ class QueueDatabase extends QueueBase
     {
         $service_queue_found = $this->db_connection->tableExists(QueueConstants::SERVICE_QUEUE);
         $maintenance_queue_found = $this->db_connection->tableExists(QueueConstants::MAINTENANCE_QUEUE);
-        //Todo: remove line
-       # $maintenance_queue_found = true;
         if (!$service_queue_found || !$maintenance_queue_found) {
-            echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+           Utils::LogToShellAndExit('Please ensure to run the DBUpdate.php script!');
         }
     }
     private function prepareStatements()
@@ -155,7 +155,7 @@ class QueueDatabase extends QueueBase
         return $participants;
     }
 
-    public function select(int $service_id): array|\stdClass
+    public function select(int $service_id)
     {
         $args = [
             'id' => $service_id,

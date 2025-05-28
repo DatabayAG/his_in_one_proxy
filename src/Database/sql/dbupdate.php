@@ -111,12 +111,12 @@ if(!$GLOBALS['DBPDO']->tableExists('participants'))
         'name'        => array(
             'type'    => 'text',
             'length'  => '255',
-            'notnull' => false
+            'notnull' => true
         ),
         'description'        => array(
             'type'    => 'text',
             'length'  => '255',
-            'notnull' => false
+            'notnull' => true
         ),
         'dns'        => array(
             'type'    => 'text',
@@ -126,17 +126,17 @@ if(!$GLOBALS['DBPDO']->tableExists('participants'))
         'email'        => array(
             'type'    => 'text',
             'length'  => '255',
-            'notnull' => false
+            'notnull' => true
         ),
         'org_name'        => array(
             'type'    => 'text',
             'length'  => '255',
-            'notnull' => false
+            'notnull' => true
         ),
         'org_abbr'        => array(
             'type'    => 'text',
             'length'  => '255',
-            'notnull' => false
+            'notnull' => true
         ),
 
     );

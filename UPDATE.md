@@ -12,6 +12,20 @@ After configuring the database, following script has to run to create the databa
 
     php src/Database/DBUpdate.php
 
+This will print something like this and create to files two track the updates:
+   [cfg_update_info.php](cfg_update_info.php) - [cfg_update_running.php](cfg_update_running.php)
+
+    File: cfg_update_info.php not found, initialising.
+    File: cfg_update_running.php not found, initialising.
+    Found 3 db updates in update file, 0 updates where applied.
+    Trying to apply update 1...
+    ...update nr 1 applied.
+    Trying to apply update 2...
+    ...update nr 2 applied.
+    Trying to apply update 3...
+    ...update nr 3 applied.
+
+
 This will create three new tables, please ensure to configure your participants in the table "participants" in your database.
 
 To use the local ecs implementation you have to create a ".htpasswd" file and configure your nginx accordingly, you find an example bellow:
