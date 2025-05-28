@@ -9,13 +9,13 @@ require_once 'test/TestCaseExtension.php';
  */
 class SimpleQueueTest extends TestCaseExtension
 {
-	
+
 	protected $path = '';
-	
+
 	protected $base_path;
 
 	/**
-	 * @var \HisInOneProxy\Queue\SimpleQueue
+	 * @var \HisInOneProxy\Queue\QueueFile
 	 */
 	protected $queue;
 
@@ -26,15 +26,15 @@ class SimpleQueueTest extends TestCaseExtension
 
 		mkdir($this->base_path .\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, 0777, true);
 		mkdir($this->base_path .'/'.\HisInOneProxy\Queue\QueueConstants::MAINTENANCE_QUEUE.'/', 0777, true);
-		$this->queue = new \HisInOneProxy\Queue\SimpleQueue();
+		$this->queue = new \HisInOneProxy\Queue\QueueFile();
 
 		parent::setUp();
 	}
 
-	function removeDirectory($path) 
+	function removeDirectory($path)
 	{
 		$files = glob($path . '/*');
-		foreach ($files as $file) 
+		foreach ($files as $file)
 		{
 			is_dir($file) ? $this->removeDirectory($file) : unlink($file);
 		}
@@ -61,7 +61,7 @@ class SimpleQueueTest extends TestCaseExtension
 
 	public function test_pushOnEmptyQueue_shouldAppendElement()
 	{
-		$queue = new \HisInOneProxy\Queue\SimpleQueue();
+		$queue = new \HisInOneProxy\Queue\QueueFile();
 		$queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, array(), 'my_great_function');
 		$value = $queue->pop(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
 		$this->assertEquals(array('{"data":[],"cmd":"my_great_function","receiver":"","unix_time":0}', '1.job'), $value);
@@ -100,8 +100,8 @@ class SimpleQueueTest extends TestCaseExtension
 		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, array(), 'my_great_function');
 		$this->assertEquals(1, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE));
 		$this->queue->pop(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
-		$this->queue->acknowledgeMessage(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '1.job');
-		$this->queue->acknowledgeMessage(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '2.job');
+		$this->queue->removeMessage(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '1.job');
+		$this->queue->removeMessage(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '2.job');
 		$this->assertEquals(0, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE));
 	}
 

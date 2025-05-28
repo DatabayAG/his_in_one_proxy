@@ -118,7 +118,7 @@ class DataCache
      *
 	 */
 	protected static $curriculum_designer_service;
-	
+
 	/**
 	 * @var KeyvalueService
 	 */
@@ -204,14 +204,14 @@ class DataCache
 	 * @return DataCache
 	 * @throws \Exception
 	 */
-	public static function getInstance()
+	public static function getInstance(bool $with_wsdl = true) : DataCache
 	{
 		if(self::$instance instanceof self)
 		{
 			return self::$instance;
 		}
 
-		self::$instance = self::init();
+		self::$instance = self::init($with_wsdl);
 
 		return self::$instance;
 	}
@@ -220,25 +220,28 @@ class DataCache
 	 * @return DataCache
 	 * @throws \Exception
 	 */
-	protected static function init()
-	{
+	protected static function init(bool $with_wsdl = true): DataCache
+    {
 		self::$log = new Log();
-		self::initializeRouterAndServices();
 
-		self::readDefaultLanguage();
-		self::readParallelGroupValues();
-		self::readTermTypeValues();
-		self::readElearningPlatforms();
-		self::readCourseMappingTypes();
-		self::readWorkStatus();
-		self::readEAddressTypes();
-		self::readAllPurposes();
-		self::readAllEventTypes();
+       if($with_wsdl) {
+           self::initializeRouterAndServices();
+
+           self::readDefaultLanguage();
+           self::readParallelGroupValues();
+           self::readTermTypeValues();
+           self::readElearningPlatforms();
+           self::readCourseMappingTypes();
+           self::readWorkStatus();
+           self::readEAddressTypes();
+           self::readAllPurposes();
+           self::readAllEventTypes();
+       }
 		return new DataCache();
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected static function initializeRouterAndServices()
 	{
@@ -262,7 +265,7 @@ class DataCache
 	{
 		self::$default_lang_id = self::$keyvalue_service->getDefaultLanguageId();
 	}
-	
+
 	protected static function readParallelGroupValues()
 	{
 		self::$parallel_group_values = self::$keyvalue_service->getAllValid('ParallelgroupValue', self::$default_lang_id);
@@ -282,7 +285,7 @@ class DataCache
 	{
 		self::$course_mapping_types = self::$keyvalue_service->getAllValid('CourseMappingTypeValue', self::$default_lang_id);
 	}
-	
+
 	protected static function readWorkStatus()
 	{
 		self::$work_status = self::$keyvalue_service->getAllValid('WorkstatusValue', self::$default_lang_id);

@@ -18,6 +18,7 @@
 		"person_id_type" : "ecs_loginUID",
 		"login_suffix" : "",
 		"blocked_ids" : [],
+		"workstation_status_ids" : [1,6,26,27,22,8,20,28,30,32],
 		"text" : {
 			"current_term" : "getDefaultText",
 			"event_type"   : "getDefaultText",
@@ -27,6 +28,8 @@
 		}
 	},
 	"ECS" : {
+	    "use_local_ecs"       : "",
+	    "ecs_community_id"    : "",
 		"auth_id"             : "",
 		"password"            : "",
 		"url"                 : ""
@@ -37,6 +40,13 @@
 		"HIStoECSCourseMapping" : {
 			"COURSE_TYPE_ID_HIS" : "COURSE_TYPE_ID_ECS"
 		},
+	"Database" : {
+	        "host" : "",
+	        "dbname" : "",
+	        "user" : "",
+	        "pass" : "",
+	},
+	"queue_type"             : "" (file_based, db_based),
 	"path_to_queue"          : "",
 	"path_to_log"            : "",
 	"keep_elements_in_queue" : "",

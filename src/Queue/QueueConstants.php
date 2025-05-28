@@ -24,7 +24,14 @@ class QueueConstants
     const LECTURE_SERVICE = 'get_all_lectures_for_this_term';
 
     const SERVICE_QUEUE = 'service_queue';
+    const PARTICIPANTS = 'participants';
 
     const MAINTENANCE_QUEUE = 'maintenance_queue';
+
+    const STATUS = 'status';
+    const CREATED = 'created';
+    const RESSOURCE = 'ressource';
+    const ECS_CAMPUS_LIGHT_COURSES = 'ecs_campus_light/courses/';
+    const ECS_CAMPUS_LIGHT_COURSE_MEMBERS = 'ecs_campus_light/course_members/';
 
 }

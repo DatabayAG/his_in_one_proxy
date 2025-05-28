@@ -39,7 +39,7 @@ class HisHttpServer
     protected $loop;
 
     /**
-     * @var Queue\SimpleQueue
+     * @var Queue\QueueFile
      */
     protected $queue;
 
@@ -53,7 +53,7 @@ class HisHttpServer
         $this->init();
 
         $this->start_time = date("Y-m-d H:i:s");
-        $this->queue      = new Queue\SimpleQueue();
+        $this->queue      = new Queue\QueueBase();
     }
 
     protected function init()

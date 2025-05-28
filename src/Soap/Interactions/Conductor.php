@@ -9,8 +9,9 @@ use HisInOneProxy\DataModel\CourseCatalogLeaf;
 use HisInOneProxy\DataModel\CurrentTerm;
 use HisInOneProxy\DataModel\Unit;
 use HisInOneProxy\Log\Log;
+use HisInOneProxy\Queue\QueueBase;
 use HisInOneProxy\Queue\QueueConstants;
-use HisInOneProxy\Queue\SimpleQueue;
+use HisInOneProxy\Queue\QueueFile;
 use HisInOneProxy\Soap\SoapServiceRouter;
 
 /**
@@ -164,7 +165,7 @@ class Conductor
             $this->log->info(sprintf('Unit relevant for export %s. Unit irrelevant for export %s',
                 $services->getRelevantForExport(), $services->getIrRelevantForExport()));
         } else {
-            $this->log->warning(sprintf('No unit ids found for year %s and term type value id.', $year, $term_type_value_id));
+            $this->log->warning(sprintf('No unit ids found for year %s and term type value id %s.', $year, $term_type_value_id));
         }
     }
 
@@ -208,7 +209,7 @@ class Conductor
         $unit               = $services->getCourseInterfaceService()->readUnit($unit_id);
         $year               = $this->year;
         $term_type_value_id = $this->term_id;
-        if ($unit->getId() != null) {
+        if (isset($unit) && $unit->getId() != null) {
             $services->getCourseInterfaceService()->getCombinationForCourse($unit, $term_type_value_id, $year);
 
             if ($unit->getSizeOfCourseMappingContainer() >= 1 && $unit->getCourseMappingContainer()[0]->getELearningSystemId() != null) {
@@ -240,7 +241,7 @@ class Conductor
         $org_units = array();
         foreach ($unit_id_list->getUnitIdContainer() as $module_unit_id) {
             $module = DataCache::getInstance()->getCourseInterfaceService()->readUnit($module_unit_id);
-            if ($module->getId() != null) {
+            if (isset($module) && $module->getId() != null) {
                 $org_units[] = $this->getOrgUnitDetails($module);
             }
         }
@@ -349,7 +350,7 @@ class Conductor
         $this->data_printer->printUnits($units);
         $builder = new JsonBuilder();
         $courses = $builder::convertUnitsToArray($units);
-        $queue   = new SimpleQueue();
+        $queue   = new QueueBase();
         foreach ($courses as $course) {
             $queue->push(QueueConstants::SERVICE_QUEUE, json_encode($course), QueueConstants::PUBLISH_COURSE_TO_ECS, $course->elearning_sys_string);
         }
@@ -359,6 +360,15 @@ class Conductor
             $e_learning_id = $builder->getElearningSystemStringFromPlanElementId($lecture_id);
             $queue->push(QueueConstants::SERVICE_QUEUE, json_encode($plan_elements), QueueConstants::PUBLISH_MEMBERS_TO_ECS, $e_learning_id);
         }
+
+        $this->log->notice("##############################################");
+        $peak_mb = 0;
+        $peak = memory_get_peak_usage();
+        if($peak > 0) {
+            $peak_mb = $peak / 1048576;
+        }
+        DataCache::getInstance()->getLog()->notice(sprintf('Peak memory usage was %s MB.',
+            $peak_mb));
     }
 
     /**
@@ -394,7 +404,7 @@ class Conductor
         $builder   = new JsonBuilder();
         $structure = $builder::convertOrgUnitsToJson($org_unit_root);
 
-        $queue = new SimpleQueue();
+        $queue = new QueueBase();
         $queue->push(QueueConstants::SERVICE_QUEUE, json_encode($structure), QueueConstants::PUBLISH_COURSE_CATALOG_TO_ECS);
 
         $this->log->debug('...added institution structure to queue done.');

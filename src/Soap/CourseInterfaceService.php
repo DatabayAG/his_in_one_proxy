@@ -3,6 +3,7 @@
 namespace HisInOneProxy\Soap;
 
 use Exception;
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Container\CourseOfStudyIdList;
 use HisInOneProxy\DataModel\Container\UnitIdList;
 use HisInOneProxy\DataModel\PlanElement;
@@ -92,7 +93,7 @@ class CourseInterfaceService extends SoapService
                 $unit = $parser->parse($response->unit);
                 $response = $this->soap_service_router->getSoapClientCurriculumDesingerService()->__soapCall('readChildUnitRelations', $params);
                 $parser   = new Parser\ParseOrgUnitList($this->log);
-                 if (array_key_exists('readUnitRelationsAttributeWithoutParents', $response) && array_key_exists('unitOrgunits', $response->readUnitRelationsAttributeWithoutParents)) {
+                if (isset($response->readUnitRelationsAttributeWithoutParents->unitOrgunits)) {
                     $org_units = $parser->parse($response->readUnitRelationsAttributeWithoutParents);
                     $unit->setOrgUnitsContainer($org_units);
                 }
@@ -296,10 +297,19 @@ class CourseInterfaceService extends SoapService
      * @param null $updated_since
      * @throws Exception
      */
-    public function readPersonExamPlanEnrollmentsForUnit($plan_element, $unit_id, $term_type_id, $year, $work_status_ids = [1,6,26,27,22,8,20,28,30,32], $cancellation = null, $updated_since = null)
+    public function readPersonExamPlanEnrollmentsForUnit($plan_element, $unit_id, $term_type_id, $year, $cancellation = null, $updated_since = null): void
     {
-        //Todo: rework!
-        $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $year, 'workstatusIds' => [1,6,26,27,22,8,20,28,30,32], 'cancellation' => $cancellation, 'updatedSince' => $updated_since));
+        $workStationStatusIds = GlobalSettings::getInstance()->getWorkStationStatusIds();
+
+        $params = [[
+            'unitId' => $unit_id,
+            'termTypeId' => $term_type_id,
+            'year' => $year,
+            'workstatusIds' => $workStationStatusIds,
+            'cancellation' => $cancellation,
+            'updatedSince' => $updated_since
+        ]];
+
         try {
             $response = $this->soap_course_interface->__soapCall('readPersonExamplanEnrollmentsForUnit', $params);
             $parser   = new Parser\ParseExamRelation($this->log);
@@ -319,11 +329,48 @@ class CourseInterfaceService extends SoapService
      * @param $description
      * @return bool|null
      */
-    public function addLinkToCourse($unit_id, $term_type_id, $year, $link_url, $description)
+    public function addLinkToCourse($unit_id, $term_type_id, $year, $description, $link_url)
     {
-        $params = array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $year, 'linkUrl' => $link_url, 'description' => $description);
+        $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $year, 'url' => $link_url, 'description' => $description));
         try {
             $this->soap_course_interface->__soapCall('addLinkToCourse', $params);
+            return true;
+        } catch (SoapFault $exception) {
+            $this->log->error($exception->getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * @param $unit_id
+     * @param $term_type_id
+     * @param $year
+     * @return bool|null
+     */
+    public function getLinksForCourse($unit_id, $term_type_id, $year)
+    {
+        $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $year));
+        try {
+            $response = $this->soap_course_interface->__soapCall('getLinksForCourse', $params);
+            return $response;
+        } catch (SoapFault $exception) {
+            $this->log->error($exception->getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * @param $unit_id
+     * @param $term_type_id
+     * @param $year
+     * @param $link_url
+     * @return bool|null
+     */
+    public function deleteLinkFromCourse($unit_id, $term_type_id, $year, $link_url)
+    {
+        $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $year, 'url' => $link_url));
+        try {
+            $this->soap_course_interface->__soapCall('deleteLinkFromCourse', $params);
             return true;
         } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());

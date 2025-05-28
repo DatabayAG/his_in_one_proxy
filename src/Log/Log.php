@@ -2,7 +2,7 @@
 
 namespace HisInOneProxy\Log;
 
-include_once './libs/composer/vendor/autoload.php';
+
 
 use Exception;
 use HisInOneProxy\Config\GlobalSettings;

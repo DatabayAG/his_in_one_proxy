@@ -14,11 +14,11 @@ class QueueWatcherTest extends TestCaseExtension
 	 * @var \HisInOneProxy\Queue\QueueWatcher
 	 */
 	protected $watcher;
-	
+
 	protected $base_path;
 
 	/**
-	 * @var \HisInOneProxy\Queue\SimpleQueue
+	 * @var \HisInOneProxy\Queue\QueueFile
 	 */
 	protected $queue;
 
@@ -76,7 +76,7 @@ class QueueWatcherTest extends TestCaseExtension
 
 	public function test_processMessage_shouldReturnLogUnknownCommand()
 	{
-		$queue = new \HisInOneProxy\Queue\SimpleQueue();
+		$queue = new \HisInOneProxy\Queue\QueueFile();
 		$queue->push(HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, json_encode(['{cmd => custom, data => custom, receiver = "", unix_time => null }']), 'customFunction');
 		$this->watcher->processMessage(HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
 		$this->assertEquals(rtrim('Warning: 	Empty/Invalid command (customFunction) found in queue, ignoring.',"\n\r"), rtrim(array_pop($this->collectedMessages),"\n\r"));

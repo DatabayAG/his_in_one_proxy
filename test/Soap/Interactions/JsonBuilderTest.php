@@ -177,14 +177,14 @@ class JsonBuilderTest extends TestCaseExtension
 		$e_learning->setCourseMappingTypeId(2);
 		$e_learning->setYear(2017);
 		$mapping[] = $e_learning;
-		
+
 		$row = new \stdClass();
 		$this->callMethod(
 			$builder,
 			'appendMapping',
 			array($mapping, $row)
 		);
-	
+
 		$this->assertEquals('2,3',$row->elearning_sys_string);
 	}
 
@@ -317,7 +317,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$child->setCourseCatalogId(1);
 		$child->setType('My type');
 		$leaf->appendChild($child);
-		
+
 		$nodes = $this->callMethod(
 			$builder,
 			'appendNodes',
@@ -357,7 +357,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$plan->appendPersonPlanElement(new \HisInOneProxy\DataModel\PersonPlanElement());
 		$unit->appendPlanElement($plan);
 		$row = new stdClass();
-		
+
 		$value = new \HisInOneProxy\DataModel\ParallelGroupValue();
 		$value->setId(1);
 		$value->setLongText('My group value.');
@@ -365,7 +365,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$container = new \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer();
 		$container->appendParallelGroupValue($value);
 		DataCache::getInstance()->setParallelGroupValues($container);
-		
+
 		$this->callMethod(
 			$builder,
 			'appendGroups',
@@ -418,9 +418,9 @@ class JsonBuilderTest extends TestCaseExtension
 		$e_learning->setCourseMappingTypeId(22);
 		$e_learning->setYear(2017);
 		$mapping[] = $e_learning;
-		
+
 		$unit->appendCourseMappingContainer($mapping);
-		
+
 		$container[] = $unit;
 		$nodes = $this->callMethod(
 			$builder,
@@ -478,7 +478,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$mapping[] = $e_learning;
 
 		$unit->appendCourseMappingContainer($mapping);
-		
+
 		$plan = new \HisInOneProxy\DataModel\PlanElement();
 		$plan->setId(3);
 		$plan->setParallelGroupId(1);
@@ -545,7 +545,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$account->setUserName('x2345');
 		$account->setId(22);
 		$plan->appendPersonPlanElement($person);
-		
+
 		$plan2 = new \HisInOneProxy\DataModel\PlanElement();
 		$plan2->setId(4);
 		$plan2->setParallelGroupId(1);
@@ -590,7 +590,7 @@ class JsonBuilderTest extends TestCaseExtension
 		$exp = '{"1232":{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","role":0,"groups":[{"id":3,"role":0,"num":0},{"id":9,"role":0,"num":1},{"id":4,"role":0,"num":2}]}]}}';
 		$this->assertEqualClearedString($exp, json_encode($nodes));
 	}
-	
+
 	public function test_convertComplexMultiMembersObject_shouldReturnArray()
 	{
 

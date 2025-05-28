@@ -31,7 +31,7 @@ class CourseInterfaceServiceTest extends TestCaseExtension
 			->method('__soapCall')
 			->will($this->throwException(new SoapFault('Server', 'Something horrible happened to the exam plan.')));
 		$soap_client = new Soap\CourseInterfaceService($this->log, $this->soap_client_router);
-		$soap_client->readPersonExamPlanEnrollmentsForUnit(1999, '12-12-1254', '1990', '23', 'false', '12-01-2015');
+		$soap_client->readPersonExamPlanEnrollmentsForUnit(1999, '12-12-1254', '1990', 'false', '12-01-2015');
 		$this->assertEqualClearedString('Error: Something horrible happened to the exam plan.', array_pop($this->collectedMessages));
 	}
 
@@ -43,7 +43,7 @@ class CourseInterfaceServiceTest extends TestCaseExtension
 										  ->willReturn(simplexml_load_string('<resp><examplans>' .$xml .'</examplans></resp>' ));
 		$soap_client = new Soap\CourseInterfaceService($this->log, $this->soap_client_router);
 		$plan = new \HisInOneProxy\DataModel\PlanElement();
-		$value = $soap_client->readPersonExamPlanEnrollmentsForUnit($plan, 1999, '12-12-1254', '1990', '23', 'false', '12-01-2015');
+		$soap_client->readPersonExamPlanEnrollmentsForUnit($plan, 1999, '12-12-1254', '1990',  'false', '12-01-2015');
 		$this->assertInstanceOf('\HisInOneProxy\DataModel\ExamRelation',  $plan->getPersonPlanElementContainer()[0]);
 	}
 

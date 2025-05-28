@@ -7,163 +7,55 @@ require_once __DIR__ . '/../Log/LogConfig.php';
 use HisInOneProxy\DataModel\Endpoint;
 use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\HisToEcsIdMapping;
+use HisInOneProxy\Queue\QueueBase;
 use HisInOneProxy\System\Utils;
 use Noodlehaus\Config;
 use Noodlehaus\Exception\EmptyDirectoryException;
 use function json_decode;
 use function json_last_error_msg;
 
-/**
- * Class GlobalSettings
- * @package HisInOneProxy\Config
- */
 class GlobalSettings
 {
     use LogConfig;
 
-    /**
-     * @var self
-     */
-    private static $instance;
-    private $default_config_name = 'config.json';
-    /**
-     * @var string
-     */
-    protected $his_user_name;
+    private static ?GlobalSettings $instance = null;
+    private string $default_config_name = 'config.json';
+    protected string $his_user_name;
+    protected string $his_password;
+    protected string $his_server_url;
+    protected bool $his_register_listener;
+    protected string $ecs_server_url;
+    protected string $person_id_type;
+    protected string $ecs_auth_id;
+    protected string $ecs_password;
+    protected HisToEcsIdMapping $his_to_ecs_system_id_mapping;
+    protected HisToEcsCourseIdMapping $his_to_ecs_system_course_id_mapping;
+    protected string $validate_ssl;
+    protected string $queue_type;
+    protected string $path_to_queue;
+    protected int $queue_timer;
+    protected Config $config;
+    protected int $soap_caching = 0;
+    protected string $path_to_log;
+    protected bool $soap_debug = true;
+    protected bool $keep_element_in_queue = false;
+    protected Endpoint $end_point;
+    protected bool $debug;
+    protected bool $phpunit_with_coverage;
+    protected int $soap_calls_counter = 0;
+    protected string $actual_term_id;
+    protected int $actual_term_year;
+    protected string $login_suffix;
+    protected array $blocked_ids = [];
+    protected array $text_config = [];
+    protected string $database_host;
+    protected string $database_dbname;
+    protected string $database_user;
+    protected string $database_pass;
+    protected bool $use_local_ecs = false;
+    protected string $ecs_community_id = "0";
+    protected array $workStationStatusIds = [];
 
-    /**
-     * @var string
-     */
-    protected $his_password;
-
-    /**
-     * @var string
-     */
-    protected $his_server_url;
-
-    /**
-     * @var string
-     */
-    protected $his_register_listener;
-
-    /**
-     * @var string
-     */
-    protected $ecs_server_url;
-
-    /**
-     * @var string
-     */
-    protected $person_id_type;
-
-    /**
-     * @var string
-     */
-    protected $ecs_auth_id;
-
-    /**
-     * @var string
-     */
-    protected $ecs_password;
-
-    /**
-     * @var array
-     */
-    protected $his_to_ecs_system_id_mapping;
-
-    /**
-     * @var array
-     */
-    protected $his_to_ecs_system_course_id_mapping;
-
-    /**
-     * @var string
-     */
-    protected $validate_ssl;
-
-    /**
-     * @var string
-     */
-    protected $path_to_queue;
-
-    /**
-     * @var int
-     */
-    protected $queue_timer;
-
-    /**
-     * @var Config
-     */
-    protected $config;
-
-    /**
-     * @var int
-     */
-    protected $soap_caching = 0;
-
-    /**
-     * @var string
-     */
-    protected $path_to_log;
-
-    /**
-     * @var bool
-     */
-    protected $soap_debug = true;
-
-    /**
-     * @var bool
-     */
-    protected $keep_element_in_queue = false;
-
-    /**
-     * @var Endpoint
-     */
-    protected $end_point;
-
-    /**
-     * @var bool
-     */
-    protected $debug;
-
-    /**
-     * @var boolean
-     */
-    protected $phpunit_with_coverage;
-
-    /**
-     * @var int
-     */
-    protected $soap_calls_counter = 0;
-
-    /**
-     * @var int
-     */
-    protected $actual_term_id;
-
-    /**
-     * @var int
-     */
-    protected $actual_term_year;
-
-    /**
-     * @var string
-     */
-    protected $login_suffix;
-
-    /**
-     * @var array
-     */
-    protected $blocked_ids = array();
-
-    /**
-     * @var array
-     */
-    protected $text_config = array();
-
-    /**
-     * GlobalSettings constructor.
-     */
     private function __construct()
     {
         $this->read();
@@ -178,7 +70,16 @@ class GlobalSettings
             } else {
                 Utils::LogToShellAndExit(sprintf('No valid config found, content of file is not valid json structure. (%s)', json_last_error_msg()));
             }
-        } else {
+        } elseif(file_exists('../../../' . $this->getConfigFileName())) {
+            $path_to_config = '../../../' . $this->getConfigFileName();
+            $json = file_get_contents($path_to_config);
+            if (json_decode($json) != null) {
+                $this->config = new Config($path_to_config);
+            } else {
+                Utils::LogToShellAndExit(sprintf('No valid config found, content of file is not valid json structure. (%s)', json_last_error_msg()));
+            }
+        }
+        else {
             if (defined('PHPUNIT') && PHPUNIT) {
                 $this->config = new Config('config.json.dist');
             } else {
@@ -189,15 +90,12 @@ class GlobalSettings
         $this->setValues();
     }
 
-    /**
-     * @return string
-     */
-    protected function getConfigFileName()
+    protected function getConfigFileName(): string
     {
         return $this->default_config_name;
     }
 
-    protected function setValues()
+    protected function setValues(): void
     {
         $this->setHisServerUrl($this->config->get('HIS.url'));
         $this->setHisUserName($this->config->get('HIS.username'));
@@ -211,6 +109,7 @@ class GlobalSettings
         $this->setLoginSuffix($this->config->get('HIS.login_suffix'));
         $this->setBlockedIds($this->config->get('HIS.blocked_ids'));
         $this->setTextConfig($this->config->get('HIS.text'));
+        $this->setWorkStationStatusIds($this->config->get('HIS.workstation_status_ids'));
 
         $this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
         $this->end_point = new Endpoint();
@@ -219,34 +118,30 @@ class GlobalSettings
         $this->end_point->setUserName($this->config->get('HIS.endpoint.username'));
         $this->end_point->setPassword($this->config->get('HIS.endpoint.password'));
 
+        $this->setUseLocalEcs($this->config->get('ECS.use_local_ecs'));
+        $this->setEcsCommunityId($this->config->get('ECS.ecs_community_id'));
         $this->setEcsServerUrl($this->config->get('ECS.url'));
         $this->setEcsAuthId($this->config->get('ECS.auth_id'));
         $this->setEcsPassword($this->config->get('ECS.password'));
 
+        $this->setDatabaseHost($this->config->get('Database.host'));
+        $this->setDatabaseDbname($this->config->get('Database.dbname'));
+        $this->setDatabaseUser($this->config->get('Database.user'));
+        $this->setDatabasePass($this->config->get('Database.pass'));
+
+        $this->setQueueType($this->config->get('queue_type'));
         $this->setPathToQueue($this->config->get('path_to_queue'));
         $this->setQueueTimer($this->config->get('queue_timer'));
         $this->setPathToLog($this->config->get('path_to_log'));
         $this->setKeepElementInQueue($this->config->get('keep_elements_in_queue'));
         $this->setDebug($this->config->get('debug'));
 
-        $this->his_to_ecs_system_id_mapping        = new HisToEcsIdMapping($this->config->get('HIStoECSMapping'));
+        $this->his_to_ecs_system_id_mapping = new HisToEcsIdMapping($this->config->get('HIStoECSMapping'));
         $this->his_to_ecs_system_course_id_mapping = new HisToEcsCourseIdMapping($this->config->get('HIStoECSCourseMapping'));
         $this->setPhpunitWithCoverage($this->config->get('PHPUnit.coverage'));
     }
 
-    /**
-     * @param int $soap_caching
-     */
-    protected function setSoapCaching($soap_caching)
-    {
-        $this->soap_caching = $soap_caching;
-    }
-
-    /**
-     * Get singleton instance
-     * @return self
-     */
-    public static function getInstance()
+    public static function getInstance(): self
     {
         if (null !== self::$instance) {
             return self::$instance;
@@ -255,130 +150,104 @@ class GlobalSettings
         return (self::$instance = new self());
     }
 
-    /**
-     * @param $name
-     */
-    protected function overWriteDefaultConfigFileName($name)
+    protected function overWriteDefaultConfigFileName(string $name): void
     {
         $this->default_config_name = $name;
     }
 
     /**
-     * @param $json
      * @throws EmptyDirectoryException
      */
-    public function readCustomConfig($json)
+    public function readCustomConfig(string $json)
     {
         $this->config = new Config($json);
         $this->setValues();
     }
 
-    public function returnConfig()
+    public function returnConfig(): string
     {
         $config = array(
-            "HIS.username"                   => $this->getHisUserName(),
-            "HIS.password"                   => $this->getHisPassword(),
-            "HIS.url"                        => $this->getHisServerUrl(),
+            "HIS.username" => $this->getHisUserName(),
+            "HIS.password" => $this->getHisPassword(),
+            "HIS.url" => $this->getHisServerUrl(),
             "HIS.endpoint.register_listener" => $this->getHisRegisterListener(),
-            "HIS.endpoint.listener_url"      => $this->end_point->getEndPointUrl(),
-            "HIS.endpoint.listener_port"     => $this->end_point->getPort(),
-            "HIS.endpoint.username"          => $this->end_point->getUserName(),
-            "HIS.endpoint.password"          => $this->end_point->getPassword(),
-            "HIS.person_id_type"             => $this->getPersonIdType(),
-            "HIS.login_suffix"               => $this->getLoginSuffix(),
-            "HIS.soap_debug"                 => $this->isSoapDebug(),
-            "HIS.soap_caching"               => $this->isSoapCaching(),
-            "HIS.ssl_validation"             => $this->getValidateSsl(),
-            "HIS.actual_term_id"             => $this->getActualTermId(),
-            "HIS.actual_term_year"           => $this->getActualTermYear(),
-            "HIS.blocked_ids"                => $this->getBlockedIds(),
-            "HIS.text"                       => $this->getTextConfig(),
-            "ECS.auth_id"                    => $this->getEcsAuthId(),
-            "ECS.password"                   => $this->getEcsPassword(),
-            "ECS.url"                        => $this->getEcsServerUrl(),
-            "path_to_queue"                  => $this->getPathToQueue(),
-            "queue_timer"                    => $this->getQueueTimer(),
-            "path_to_log"                    => $this->getPathToLog(),
-            "keep_elements_in_queue"         => $this->isKeepElementInQueue(),
-            "debug"                          => $this->isDebug(),
-            "PHPUnit.coverage"               => $this->isPhpunitWithCoverage()
+            "HIS.endpoint.listener_url" => $this->end_point->getEndPointUrl(),
+            "HIS.endpoint.listener_port" => $this->end_point->getPort(),
+            "HIS.endpoint.username" => $this->end_point->getUserName(),
+            "HIS.endpoint.password" => $this->end_point->getPassword(),
+            "HIS.person_id_type" => $this->getPersonIdType(),
+            "HIS.login_suffix" => $this->getLoginSuffix(),
+            "HIS.soap_debug" => $this->isSoapDebug(),
+            "HIS.soap_caching" => $this->isSoapCaching(),
+            "HIS.ssl_validation" => $this->getValidateSsl(),
+            "HIS.actual_term_id" => $this->getActualTermId(),
+            "HIS.actual_term_year" => $this->getActualTermYear(),
+            "HIS.blocked_ids" => $this->getBlockedIds(),
+            "HIS.text" => $this->getTextConfig(),
+            "HIS.workstation_status_ids" => $this->getWorkStationStatusIds(),
+            "ECS.use_local_ecs" => $this->isUseLocalEcs(),
+            "ECS.ecs_community_id" => $this->getEcsCommunityId(),
+            "ECS.auth_id" => $this->getEcsAuthId(),
+            "ECS.password" => $this->getEcsPassword(),
+            "ECS.url" => $this->getEcsServerUrl(),
+            "Database.host" => $this->getDatabaseHost(),
+            "Database.dbname" => $this->getDatabaseDbname(),
+            "Database.user" => $this->getDatabaseUser(),
+            "Database.pass" => $this->getDatabasePass(),
+            "queue_type" => $this->getQueueType(),
+            "path_to_queue" => $this->getPathToQueue(),
+            "queue_timer" => $this->getQueueTimer(),
+            "path_to_log" => $this->getPathToLog(),
+            "keep_elements_in_queue" => $this->isKeepElementInQueue(),
+            "debug" => $this->isDebug(),
+            "PHPUnit.coverage" => $this->isPhpunitWithCoverage()
         );
 
         $config = json_encode($config);
         return $config;
     }
 
-    /**
-     * @return string
-     */
-    public function getHisUserName()
+    public function getHisUserName(): string
     {
         return $this->his_user_name;
     }
 
-    /**
-     * @param string $his_user_name
-     */
-    protected function setHisUserName($his_user_name)
+    protected function setHisUserName(string $his_user_name): void
     {
         $this->his_user_name = $his_user_name;
     }
 
-    /**
-     * @return string
-     */
-    public function getHisPassword()
+    public function getHisPassword(): string
     {
         return $this->his_password;
     }
 
-    /**
-     * @param string $his_password
-     */
-    protected function setHisPassword($his_password)
+    protected function setHisPassword(string $his_password): void
     {
         $this->his_password = $his_password;
     }
 
-    /**
-     * @return string
-     */
-    public function getHisServerUrl()
+    public function getHisServerUrl(): string
     {
         return $this->his_server_url;
     }
 
-    /**
-     * @param $server_url
-     */
-    protected function setHisServerUrl($server_url)
+    protected function setHisServerUrl(string $server_url): void
     {
         $this->his_server_url = Utils::ensureTrailingSlash($server_url);
     }
 
-    /**
-     * @return string
-     */
-    public function getHisRegisterListener()
+    public function getHisRegisterListener(): bool
     {
-        if ($this->his_register_listener === 'true' || $this->his_register_listener === true) {
-            return true;
-        }
-        return false;
+        return $this->his_register_listener;
     }
 
-    /**
-     * @param $his_start_listener
-     */
-    protected function setHisRegisterListener($his_start_listener)
+    protected function setHisRegisterListener(string $his_register_listener): void
     {
-        $this->his_register_listener = $his_start_listener;
+        $this->his_register_listener = $this->getBoolFromConfigString($his_register_listener);
     }
 
-    /**
-     * @return string
-     */
-    public function getPersonIdType()
+    public function getPersonIdType(): string
     {
         return $this->person_id_type;
     }
@@ -386,340 +255,308 @@ class GlobalSettings
     /**
      * @param string $person_id_type
      */
-    public function setPersonIdType($person_id_type)
+    public function setPersonIdType(string $person_id_type): void
     {
         $this->person_id_type = $person_id_type;
     }
 
-    /**
-     * @return string
-     */
-    public function getLoginSuffix()
+    public function getLoginSuffix(): string
     {
         return $this->login_suffix;
     }
 
-    /**
-     * @param string $login_suffix
-     */
-    public function setLoginSuffix($login_suffix)
+    public function setLoginSuffix(string $login_suffix): void
     {
         $this->login_suffix = $login_suffix;
     }
 
-    /**
-     * @return bool
-     */
-    public function isSoapDebug()
+    public function isSoapDebug(): bool
     {
-        if ($this->soap_debug === 'true' || $this->soap_debug === true) {
-            return true;
-        }
-        return false;
+        return $this->soap_debug;
     }
 
-    /**
-     * @param bool $soap_debug
-     */
-    protected function setSoapDebug($soap_debug)
+    protected function setSoapDebug(string $soap_debug)
     {
-        $this->soap_debug = $soap_debug;
+        $this->soap_debug = $this->getBoolFromConfigString($soap_debug);
     }
 
-    /**
-     * @return int
-     */
-    public function isSoapCaching()
+    public function isSoapCaching(): int
     {
-        if ($this->soap_caching === '1' || $this->soap_caching === 1) {
-            return 1;
-        }
-        return 0;
+        return $this->soap_caching;
     }
 
-    /**
-     * @return string
-     */
-    public function getValidateSsl()
+    protected function setSoapCaching(string $soap_caching): void
+    {
+        $this->soap_caching = (int)$soap_caching;
+    }
+
+    public function getValidateSsl(): string
     {
         return $this->validate_ssl;
     }
 
-    /**
-     * @param string $validate_ssl
-     */
-    public function setValidateSsl($validate_ssl)
+    public function setValidateSsl(string $validate_ssl): void
     {
         $this->validate_ssl = $validate_ssl;
     }
 
-    /**
-     * @return int
-     */
-    public function getActualTermId()
+    public function getActualTermId(): string
     {
         return $this->actual_term_id;
     }
 
-    /**
-     * @param int $actual_term_id
-     */
-    public function setActualTermId($actual_term_id)
+    public function setActualTermId(string $actual_term_id): void
     {
         $this->actual_term_id = $actual_term_id;
     }
 
-    /**
-     * @return int
-     */
-    public function getActualTermYear()
+    public function getActualTermYear(): int
     {
         return $this->actual_term_year;
     }
 
-    /**
-     * @param int $actual_term_year
-     */
-    public function setActualTermYear($actual_term_year)
+    public function setActualTermYear(string $actual_term_year): void
     {
         $this->actual_term_year = $actual_term_year;
     }
 
-    /**
-     * @return array
-     */
-    public function getBlockedIds()
+    public function getBlockedIds(): array
     {
         return $this->blocked_ids;
     }
 
-    /**
-     * @param array $blocked_ids
-     */
-    public function setBlockedIds($blocked_ids)
+    public function setBlockedIds(array $blocked_ids): void
     {
         $this->blocked_ids = $blocked_ids;
     }
 
-    /**
-     * @return array
-     */
-    public function getTextConfig()
+    public function getTextConfig(): array
     {
         return $this->text_config;
     }
 
-    /**
-     * @param array $text_config
-     */
-    public function setTextConfig($text_config)
+    public function setTextConfig(array $text_config): void
     {
         $this->text_config = $text_config;
     }
 
-    /**
-     * @return string
-     */
-    public function getEcsAuthId()
+    public function getEcsAuthId(): string
     {
         return $this->ecs_auth_id;
     }
 
-    /**
-     * @param string $ecs_auth_id
-     */
-    protected function setEcsAuthId($ecs_auth_id)
+    protected function setEcsAuthId(string $ecs_auth_id): void
     {
         $this->ecs_auth_id = $ecs_auth_id;
     }
 
-    /**
-     * @return string
-     */
-    public function getEcsPassword()
+    public function getEcsPassword(): string
     {
         return $this->ecs_password;
     }
 
-    /**
-     * @param string $ecs_password
-     */
-    public function setEcsPassword($ecs_password)
+    public function setEcsPassword(string $ecs_password): void
     {
         $this->ecs_password = $ecs_password;
     }
 
-    /**
-     * @return string
-     */
-    public function getEcsServerUrl()
+    public function getEcsServerUrl(): string
     {
         return $this->ecs_server_url;
     }
 
-    /**
-     * @param string $ecs_server_url
-     */
-    protected function setEcsServerUrl($ecs_server_url)
+    protected function setEcsServerUrl(string $ecs_server_url): void
     {
         $this->ecs_server_url = Utils::ensureTrailingSlash($ecs_server_url);
     }
 
-    /**
-     * @return string
-     */
-    public function getPathToQueue()
+    public function getPathToQueue(): string
     {
         return $this->path_to_queue;
     }
 
-    /**
-     * @param string $path_to_queue
-     */
-    protected function setPathToQueue($path_to_queue)
+    protected function setPathToQueue(string $path_to_queue): void
     {
         $this->path_to_queue = Utils::ensureTrailingSlash($path_to_queue);
     }
 
-    /**
-     * @return int
-     */
-    public function getQueueTimer()
+    public function getQueueTimer(): int
     {
         return $this->queue_timer;
     }
 
-    /**
-     * @param int $queue_timer
-     */
-    protected function setQueueTimer($queue_timer)
+    protected function setQueueTimer(string $queue_timer): void
     {
         $this->queue_timer = $queue_timer;
     }
 
-    /**
-     * @return string
-     */
-    public function getPathToLog()
+    public function getPathToLog(): string
     {
         return $this->path_to_log;
     }
 
-    /**
-     * @param string $path_to_log
-     */
-    public function setPathToLog($path_to_log)
+    public function setPathToLog(string $path_to_log): void
     {
         $this->path_to_log = $path_to_log;
     }
 
-    /**
-     * @return bool
-     */
-    public function isKeepElementInQueue()
+    public function isKeepElementInQueue(): bool
     {
-        if ($this->keep_element_in_queue === 'true' || $this->keep_element_in_queue === true) {
-            return true;
-        }
-        return false;
+        return $this->keep_element_in_queue;
     }
 
-    /**
-     * @param bool $keep_element_in_queue
-     */
-    protected function setKeepElementInQueue($keep_element_in_queue)
+    protected function setKeepElementInQueue(string $keep_element_in_queue)
     {
-        $this->keep_element_in_queue = $keep_element_in_queue;
+        $this->keep_element_in_queue = $this->getBoolFromConfigString($keep_element_in_queue);
     }
 
-    /**
-     * @return bool
-     */
-    public function isDebug()
+    public function isDebug(): bool
     {
-        if ($this->debug === 'true' || $this->debug === true) {
-            return true;
-        }
-        return false;
+        return $this->debug;
     }
 
-    /**
-     * @param bool $debug
-     */
-    public function setDebug($debug)
+    public function setDebug(string $debug): void
     {
-        $this->debug = $debug;
+        $this->debug = $this->getBoolFromConfigString($debug);
     }
 
-    /**
-     * @return bool
-     */
-    public function isPhpunitWithCoverage()
+    public function isPhpunitWithCoverage(): bool
     {
-        if ($this->phpunit_with_coverage === 'true' || $this->phpunit_with_coverage === true) {
-            return true;
-        }
-        return false;
+        return $this->phpunit_with_coverage;
     }
 
-    /**
-     * @param bool $phpunit_with_coverage
-     */
-    public function setPhpunitWithCoverage($phpunit_with_coverage)
+    public function setPhpunitWithCoverage(string $phpunit_with_coverage): void
     {
-        $this->phpunit_with_coverage = $phpunit_with_coverage;
+        $this->phpunit_with_coverage = $this->getBoolFromConfigString($phpunit_with_coverage);
     }
 
-    /**
-     * @return Endpoint
-     */
-    public function getEndPoint()
+    public function getEndPoint(): Endpoint
     {
         return $this->end_point;
     }
 
-    public function incrementCallsCounter()
+    public function incrementCallsCounter(): void
     {
         $this->soap_calls_counter++;
     }
 
-    /**
-     * @return int
-     */
-    public function getCallsCounter()
+    public function getCallsCounter(): int
     {
         return $this->soap_calls_counter;
     }
 
-    /**
-     * @return array
-     */
-    public function getHisToEcsSystemIdMapping()
+    public function getHisToEcsSystemIdMapping(): HisToEcsIdMapping
     {
         return $this->his_to_ecs_system_id_mapping;
     }
 
-    /**
-     * @param array $his_to_ecs_system_id_mapping
-     */
-    public function setHisToEcsSystemIdMapping($his_to_ecs_system_id_mapping)
+    public function setHisToEcsSystemIdMapping(HisToEcsIdMapping $his_to_ecs_system_id_mapping): void
     {
         $this->his_to_ecs_system_id_mapping = $his_to_ecs_system_id_mapping;
     }
 
-    /**
-     * @return array
-     */
-    public function getHisToEcsSystemCourseIdMapping()
+    public function getHisToEcsSystemCourseIdMapping(): HisToEcsCourseIdMapping
     {
         return $this->his_to_ecs_system_course_id_mapping;
     }
 
-    /**
-     * @param array $his_to_ecs_system_course_id_mapping
-     */
-    public function setHisToEcsSystemCourseIdMapping($his_to_ecs_system_course_id_mapping)
+    public function setHisToEcsSystemCourseIdMapping(HisToEcsCourseIdMapping $his_to_ecs_system_course_id_mapping): void
     {
         $this->his_to_ecs_system_course_id_mapping = $his_to_ecs_system_course_id_mapping;
     }
+
+    public function getQueueType(): string
+    {
+        return $this->queue_type;
+    }
+
+    public function setQueueType(string $queue_type): void
+    {
+        if ($queue_type !== '') {
+            $queue_type = strtolower($queue_type);
+            if (in_array($queue_type, [QueueBase::FILE_BASED, QueueBase::DB_BASED])) {
+                $this->queue_type = $queue_type;
+            } else {
+                Utils::LogToShellAndExit('No known queue type selected, please check/update your config with the correct value.');
+            }
+        } else {
+            Utils::LogToShellAndExit('No valid queue type found, please check/update your config with the correct value.');
+        }
+    }
+
+    protected function getBoolFromConfigString(string $value): bool
+    {
+        return (bool) $value;
+    }
+
+    public function getDatabaseHost(): string
+    {
+        return $this->database_host;
+    }
+
+    public function setDatabaseHost(string $database_host): void
+    {
+        $this->database_host = $database_host;
+    }
+
+    public function getDatabaseDbname(): string
+    {
+        return $this->database_dbname;
+    }
+
+    public function setDatabaseDbname(string $database_dbname): void
+    {
+        $this->database_dbname = $database_dbname;
+    }
+
+    public function getDatabaseUser(): string
+    {
+        return $this->database_user;
+    }
+
+    public function setDatabaseUser(string $database_user): void
+    {
+        $this->database_user = $database_user;
+    }
+
+    public function getDatabasePass(): string
+    {
+        return $this->database_pass;
+    }
+
+    public function setDatabasePass(string $database_pass): void
+    {
+        $this->database_pass = $database_pass;
+    }
+
+    public function isUseLocalEcs(): bool
+    {
+        return $this->use_local_ecs;
+    }
+
+    public function setUseLocalEcs(string $use_local_ecs): void
+    {
+        $this->use_local_ecs = $this->getBoolFromConfigString($use_local_ecs);
+    }
+
+    public function getEcsCommunityId(): string
+    {
+        return $this->ecs_community_id;
+    }
+
+    public function setEcsCommunityId(string $ecs_community_id): void
+    {
+        $this->ecs_community_id = $ecs_community_id;
+    }
+
+    public function getWorkStationStatusIds(): array
+    {
+        return $this->workStationStatusIds;
+    }
+
+    public function setWorkStationStatusIds(array $workStationStatusIds): void
+    {
+        $this->workStationStatusIds = $workStationStatusIds;
+    }
+
 }

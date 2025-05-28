@@ -3,3 +3,9 @@ coverage/*
 config.json
 pid/*.pid
 test/wsdl/*.wsdl
+dummyTestingScript.php
+notes.txt
+cfg_update_info.php
+cfg_update_running.php
+participants.json
+.htpasswd

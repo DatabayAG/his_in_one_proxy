@@ -53,7 +53,7 @@ class ConsoleHandler
     /**
      * @var FunctionObject[]
      */
-    protected $collection;
+    protected array $collection = [];
 
     /**
      * @var DataPrinter
@@ -80,12 +80,16 @@ class ConsoleHandler
             Utils::LogToShellAndExit('No his server url found.');
         }
 
+        //Todo: Re-add function
+
         self::$conductor = new Conductor($term, $year, $log);
         $this->year      = $year;
         $this->term_id   = $term;
 
         $this->printer    = new DataPrinter();
+
         $this->collection = Functions::getFunctions();
+
         $this->endTimer('Initialisation');
     }
 
@@ -138,7 +142,7 @@ class ConsoleHandler
     }
 
 	/**
-	 * 
+	 *
 	 */
 	protected function getAllCourseMappingTypes()
 	{
@@ -474,6 +478,27 @@ class ConsoleHandler
     {
         $this->startTimer();
         $obj = DataCache::getInstance()->getAccountService()->searchAccountForPerson61($param);
+        print_r($obj);
+        $this->endTimer();
+    }
+
+    /**
+     * @param $param
+     * @throws Exception
+     */
+    protected function getLinksForCourse($param)
+    {
+        $unit_id = 1815;
+        $term_type = 30;
+        $term_year = 2025;
+
+        $this->startTimer();
+        $obj = DataCache::getInstance()->getCourseInterfaceService()->getLinksForCourse($unit_id, $term_type, $term_year);
+        print_r($obj);
+        $obj = DataCache::getInstance()->getCourseInterfaceService()->deleteLinkFromCourse($unit_id, $term_type, $term_year,   'https://heise.de');
+        $obj = DataCache::getInstance()->getCourseInterfaceService()->addLinkToCourse($unit_id, $term_type, $term_year,  'Test2', 'https://heise.de');
+        print_r($obj);
+        $obj = DataCache::getInstance()->getCourseInterfaceService()->getLinksForCourse($unit_id, $term_type, $term_year);
         print_r($obj);
         $this->endTimer();
     }

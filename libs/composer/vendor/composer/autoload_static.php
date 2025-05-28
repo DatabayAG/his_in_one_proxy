@@ -4,18 +4,26 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
+class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Php80\\' => 23,
+            'Slim\\Psr7\\' => 10,
+            'Slim\\' => 5,
+        ),
         'R' => 
         array (
             'React\\Stream\\' => 13,
@@ -29,12 +37,16 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Server\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
+            'Psr\\Container\\' => 14,
             'PhpParser\\' => 10,
         ),
         'N' => 
         array (
+            'Nyholm\\Psr7\\' => 12,
+            'Nyholm\\Psr7Server\\' => 18,
             'Noodlehaus\\' => 11,
         ),
         'M' => 
@@ -54,6 +66,7 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         'F' => 
         array (
             'Fig\\Http\\Message\\' => 17,
+            'FastRoute\\' => 10,
         ),
         'E' => 
         array (
@@ -66,6 +79,18 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Php80\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
+        ),
+        'Slim\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/slim/psr7/src',
+        ),
+        'Slim\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/slim/slim/Slim',
+        ),
         'React\\Stream\\' => 
         array (
             0 => __DIR__ . '/..' . '/react/stream/src',
@@ -98,6 +123,11 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
+        'Psr\\Http\\Server\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-server-handler/src',
+            1 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
@@ -107,9 +137,21 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'Nyholm\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nyholm/psr7/src',
+        ),
+        'Nyholm\\Psr7Server\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nyholm/psr7-server/src',
         ),
         'Noodlehaus\\' => 
         array (
@@ -139,6 +181,10 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         array (
             0 => __DIR__ . '/..' . '/fig/http-message-util/src',
         ),
+        'FastRoute\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/fast-route/src',
+        ),
         'Evenement\\' => 
         array (
             0 => __DIR__ . '/..' . '/evenement/evenement/src',
@@ -150,6 +196,7 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
     );
 
     public static $classMap = array (
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'HisInOneProxy\\Config\\GlobalSettings' => __DIR__ . '/../..' . '/../../src/Config/GlobalSettings.php',
         'HisInOneProxy\\Config\\LogConfig' => __DIR__ . '/../..' . '/../../src/Log/LogConfig.php',
@@ -262,6 +309,18 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         'HisInOneProxy\\DataModel\\Unit' => __DIR__ . '/../..' . '/../../src/DataModel/Unit.php',
         'HisInOneProxy\\DataModel\\VisibleChild' => __DIR__ . '/../..' . '/../../src/DataModel/VisibleChild.php',
         'HisInOneProxy\\DataModel\\WorkStatus' => __DIR__ . '/../..' . '/../../src/DataModel/WorkStatus.php',
+        'HisInOneProxy\\Database\\DBUpdate' => __DIR__ . '/../..' . '/../../src/Database/DBUpdate.php',
+        'HisInOneProxy\\Database\\DbPdo' => __DIR__ . '/../..' . '/../../src/Database/DbPdo.php',
+        'HisInOneProxy\\Database\\DbPdoManager' => __DIR__ . '/../..' . '/../../src/Database/DbPdoManager.php',
+        'HisInOneProxy\\Database\\FieldDefinition\\DBPdoFieldDefinition' => __DIR__ . '/../..' . '/../../src/Database/FieldDefinition/DBPdoFieldDefinition.php',
+        'HisInOneProxy\\Database\\FieldDefinition\\DBPdoMySQLFieldDefinition' => __DIR__ . '/../..' . '/../../src/Database/FieldDefinition/DBPdoMySQLFieldDefinition.php',
+        'HisInOneProxy\\Database\\MySQLQueryUtils' => __DIR__ . '/../..' . '/../../src/Database/MySQLQueryUtils.php',
+        'HisInOneProxy\\EcsLocal\\Data\\CourseUrl' => __DIR__ . '/../..' . '/../../src/EcsLocal/Data/CourseUrl.php',
+        'HisInOneProxy\\EcsLocal\\Data\\CourseUrls' => __DIR__ . '/../..' . '/../../src/EcsLocal/Data/CourseUrls.php',
+        'HisInOneProxy\\EcsLocal\\EcsAuth' => __DIR__ . '/../..' . '/../../src/EcsLocal/EcsAuth.php',
+        'HisInOneProxy\\EcsLocal\\EcsCommunicationInterface' => __DIR__ . '/../..' . '/../../src/EcsLocal/EcsCommunicationInterface.php',
+        'HisInOneProxy\\EcsLocal\\EcsCommunicationLocal' => __DIR__ . '/../..' . '/../../src/EcsLocal/EcsCommunicationLocal.php',
+        'HisInOneProxy\\EcsLocal\\EcsLocalFunctions' => __DIR__ . '/../..' . '/../../src/EcsLocal/EcsLocalFunctions.php',
         'HisInOneProxy\\Exceptions\\InvalidAllocation' => __DIR__ . '/../..' . '/../../src/Exceptions/InvalidAllocation.php',
         'HisInOneProxy\\Exceptions\\InvalidCourse' => __DIR__ . '/../..' . '/../../src/Exceptions/InvalidCourse.php',
         'HisInOneProxy\\Exceptions\\InvalidCycle' => __DIR__ . '/../..' . '/../../src/Exceptions/InvalidCycle.php',
@@ -336,11 +395,14 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         'HisInOneProxy\\Parser\\ParseVisibleChildren' => __DIR__ . '/../..' . '/../../src/Parser/ParseVisibleChildren.php',
         'HisInOneProxy\\Parser\\ParseWorkStatus' => __DIR__ . '/../..' . '/../../src/Parser/ParseWorkStatus.php',
         'HisInOneProxy\\Parser\\SimpleXmlParser' => __DIR__ . '/../..' . '/../../src/Parser/SimpleXmlParser.php',
+        'HisInOneProxy\\Queue\\QueueBase' => __DIR__ . '/../..' . '/../../src/Queue/QueueBase.php',
         'HisInOneProxy\\Queue\\QueueConstants' => __DIR__ . '/../..' . '/../../src/Queue/QueueConstants.php',
+        'HisInOneProxy\\Queue\\QueueDatabase' => __DIR__ . '/../..' . '/../../src/Queue/QueueDatabase.php',
+        'HisInOneProxy\\Queue\\QueueFile' => __DIR__ . '/../..' . '/../../src/Queue/QueueFile.php',
+        'HisInOneProxy\\Queue\\QueueInterface' => __DIR__ . '/../..' . '/../../src/Queue/QueueInterface.php',
         'HisInOneProxy\\Queue\\QueueProcess' => __DIR__ . '/../..' . '/../../src/Queue/QueueProcess.php',
         'HisInOneProxy\\Queue\\QueueService' => __DIR__ . '/../..' . '/../../src/Queue/QueueService.php',
         'HisInOneProxy\\Queue\\QueueWatcher' => __DIR__ . '/../..' . '/../../src/Queue/QueueWatcher.php',
-        'HisInOneProxy\\Queue\\SimpleQueue' => __DIR__ . '/../..' . '/../../src/Queue/SimpleQueue.php',
         'HisInOneProxy\\REST\\EcsCommunication' => __DIR__ . '/../..' . '/../../src/REST/EcsCommunication.php',
         'HisInOneProxy\\REST\\EcsResources' => __DIR__ . '/../..' . '/../../src/REST/EcsResources.php',
         'HisInOneProxy\\REST\\GuzzleWrapper' => __DIR__ . '/../..' . '/../../src/REST/GuzzleWrapper.php',
@@ -1336,6 +1398,7 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         'PharIo\\Version\\VersionConstraintParser' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintParser.php',
         'PharIo\\Version\\VersionConstraintValue' => __DIR__ . '/..' . '/phar-io/version/src/VersionConstraintValue.php',
         'PharIo\\Version\\VersionNumber' => __DIR__ . '/..' . '/phar-io/version/src/VersionNumber.php',
+        'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
         'SebastianBergmann\\CliParser\\Exception' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/Exception.php',
         'SebastianBergmann\\CliParser\\OptionDoesNotAllowArgumentException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/OptionDoesNotAllowArgumentException.php',
@@ -1539,6 +1602,7 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/type/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/type/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
         'TheSeer\\Tokenizer\\NamespaceUri' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUri.php',
         'TheSeer\\Tokenizer\\NamespaceUriException' => __DIR__ . '/..' . '/theseer/tokenizer/src/NamespaceUriException.php',
@@ -1547,14 +1611,16 @@ class ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1
         'TheSeer\\Tokenizer\\TokenCollectionException' => __DIR__ . '/..' . '/theseer/tokenizer/src/TokenCollectionException.php',
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
+        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
+        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit6155655be72a3bf3b3a802ee235d1ba1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873::$classMap;
 
         }, null, ClassLoader::class);
     }

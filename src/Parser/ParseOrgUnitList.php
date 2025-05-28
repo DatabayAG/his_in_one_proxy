@@ -23,7 +23,7 @@ class ParseOrgUnitList extends SimpleXmlParser
     public function parse($xml)
     {
         $this->list = array();
-        if(array_key_exists('unitOrgunits',$xml) && array_key_exists('unitOrgunits', $xml->unitOrgunits))
+        if(isset($xml->unitOrgunits->unitOrgunits))
         {
             $xml = $xml->unitOrgunits;
         }
@@ -52,10 +52,10 @@ class ParseOrgUnitList extends SimpleXmlParser
      * @return DataModel\OrgUnitListItem
      */
     public function buildOrgUnit($xml)
-    { 
+    {
         $org_unit = new DataModel\OrgUnitListItem();
 
-        if (array_key_exists('unitOrgunits', $xml)) {
+        if (isset($xml->unitOrgunits)) {
             $xml = $xml->unitOrgunits;
         }
         if (isset($xml->lid) && $xml->lid != null && $xml->lid != '') {

@@ -8,42 +8,27 @@ namespace HisInOneProxy\REST;
  */
 class EcsResources
 {
-    /**
-     * @return string
-     */
-    public function getCoursePath()
+    public function getCoursePath(): string
     {
         return $this->getPlainPath() . 'courses/';
     }
 
-    /**
-     * @return string
-     */
-    public function getPlainPath()
+    public function getPlainPath(): string
     {
         return 'campusconnect/';
     }
 
-    /**
-     * @return string
-     */
-    public function getCourseUrlPath()
+    public function getCourseUrlPath(): string
     {
         return $this->getPlainPath() . 'course_urls/';
     }
 
-    /**
-     * @return string
-     */
-    public function getMembersUrlPath()
+    public function getMembersUrlPath(): string
     {
         return $this->getPlainPath() . 'course_members/';
     }
 
-    /**
-     * @return string
-     */
-    public function getCourseCatalogUrlPath()
+    public function getCourseCatalogUrlPath(): string
     {
         return $this->getPlainPath() . 'directory_trees/';
     }

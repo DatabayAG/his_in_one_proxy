@@ -372,14 +372,14 @@ for($j=0; $j < 1; $j++)
 		}
 	]
 }');
-	$queue = new Queue\SimpleQueue();
+	$queue = new Queue\QueueFile();
 	$queue->push(Queue\QueueConstants::SERVICE_QUEUE, json_encode($members), Queue\QueueConstants::PUBLISH_MEMBERS_TO_ECS, '', time());
-#	$queue = new Queue\SimpleQueue();
+#	$queue = new Queue\SimpleQueueInterface();
 	#$queue->push(Queue\QueueConstants::MAINTENANCE_QUEUE, [], Queue\QueueConstants::CLEAN_UP_STALE_JOBS);
 
 	for($t = 0; $t > 10000; $t ++)
 	{
-	#	
+	#
 	}
 		#$test->publishMembersToEcs($members);
 	#$course = json_decode('{"lectureID":979,"title":"Einfchrung in die Zellbiologie","abstract":"Einffchrung in die Zellbiologie","url":"","groupScenario":2,"groups":null,"status":979,"courseID":979,"study_courses":979}');
@@ -437,7 +437,7 @@ $course_catalog	= json_decode('{
 #$ser->restartServer();
 
 #$process = new ProcessHandling();
-#$qu = new Queue\SimpleQueue();
+#$qu = new Queue\SimpleQueueInterface();
 #$qu->push(Queue\QueueConstants::SERVICE_QUEUE, json_encode(array()), Queue\QueueConstants::LECTURE_SERVICE);
 
 #$queue = new Queue\QueueProcess();

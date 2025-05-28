@@ -5,23 +5,17 @@ namespace HisInOneProxy\REST;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use HisInOneProxy\Config\GlobalSettings;
+use HisInOneProxy\EcsLocal\EcsCommunicationInterface;
 use HisInOneProxy\Soap\Interactions\DataCache;
 
 /**
  * Class EcsCommunication
  * @package HisInOneProxy\REST
  */
-class EcsCommunication
+class EcsCommunication implements EcsCommunicationInterface
 {
-    /**
-     * @var GuzzleWrapper
-     */
-    protected $client;
-
-    /**
-     * @var EcsResources
-     */
-    protected $resources;
+    protected GuzzleWrapper $client;
+    protected EcsResources $resources;
 
     /**
      * EcsCommunication constructor.
@@ -34,11 +28,9 @@ class EcsCommunication
     }
 
     /**
-     * @param $json
-     * @return bool
      * @throws GuzzleException
      */
-    public function publishCourseToEcs($json)
+    public function publishCourseToEcs($json): bool
     {
         try {
             $response    = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCoursePath(), ['json' => $json, 'auth' => $this->appendAuthData(), 'verify' => false]);
@@ -53,20 +45,15 @@ class EcsCommunication
         return false;
     }
 
-    /**
-     * @return array
-     */
-    protected function appendAuthData()
+    protected function appendAuthData(): array
     {
         return [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()];
     }
 
     /**
-     * @param $json
-     * @return bool
      * @throws GuzzleException
      */
-    public function publishMembersToEcs($json)
+    public function publishMembersToEcs($json): bool
     {
         try {
             $response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getMembersUrlPath(), ['json' => $json, 'auth' => $this->appendAuthData(), 'verify' => false]);
@@ -80,11 +67,9 @@ class EcsCommunication
     }
 
     /**
-     * @param $json
-     * @return bool
      * @throws GuzzleException
      */
-    public function publishCourseCatalogToEcs($json)
+    public function publishCourseCatalogToEcs($json): bool
     {
         try {
             $response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseCatalogUrlPath(), ['json' => $json, 'auth' => $this->appendAuthData(), 'verify' => false]);
@@ -98,11 +83,9 @@ class EcsCommunication
     }
 
     /**
-     * @param $path
-     * @param $course_urls
      * @throws GuzzleException
      */
-    public function getCourseIds($path, $course_urls)
+    public function getCourseIds($path, $course_urls): void
     {
         $response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCoursePath() . $path, ['auth' => $this->appendAuthData(), 'verify' => false]);
         $content  = $this->client->getContent($response);
@@ -132,7 +115,7 @@ class EcsCommunication
     /**
      * @throws GuzzleException
      */
-    public function getCoursesUrls()
+    public function getCoursesUrls(): void
     {
         $response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseUrlPath(), ['auth' => $this->appendAuthData(), 'verify' => false]);
         if ($this->client->getStatusCode($response) == HttpStatusCode::OK) {

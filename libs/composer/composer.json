@@ -1,11 +1,16 @@
 {
 	"require":
 	{
+		"php": ">=8.1 <8.3",
 		"monolog/monolog"      :           ">1.15",
-		"guzzlehttp/guzzle"    :           ">6.0",
+		"guzzlehttp/guzzle"    :           ">7.1",
 		"hassankhan/config"    :           ">0.10.0",
 		"react/http"           :           ">0.7.1",
-		"react/event-loop"     :           ">0.4.3"
+		"react/event-loop"     :           ">0.4.3",
+		"slim/psr7": "^1.7",
+		"nyholm/psr7": "^1.8",
+		"nyholm/psr7-server": "^1.1",
+		"slim/slim": "4.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": ">6.1.3"

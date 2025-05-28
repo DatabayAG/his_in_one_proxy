@@ -82,6 +82,10 @@ class JsonBuilder
 
                 $lecture_id             = $course->getId();
                 if(is_array($mapping) && count($mapping) > 0) {
+                    $row->originalLectureID = $lecture_id;
+                    $row->originalYear= $mapping[0]->getYear();
+                    $row->originalTerm = $mapping[0]->getTermTypeValueId();
+                    $row->unitId = $unit->getId();
                     $lecture_id = $mapping[0]->getYear() . '' . $mapping[0]->getTermTypeValueId() . '' . $course->getId();
                 }
                 $row->lectureID = $lecture_id;
@@ -165,7 +169,7 @@ class JsonBuilder
         $row->organisation          = ''; //Todo: where does this come from
         $row->status                = $unit->getStatusId();
         $row->study_courses         = $unit->getLid();
-        if (array_key_exists('term_type', $row)) {
+        if (isset($row->term_type)) {
             $row->termID = DataCache::getInstance()->getTermTypeForId($row->term_type) . ' ' . $row->term;
         }
         $row->lectureType  = DataCache::getInstance()->resolveEventTypeById($event_type_id);

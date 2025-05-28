@@ -17,60 +17,26 @@ use SplFileObject;
 require_once './libs/composer/vendor/autoload.php';
 
 /**
- * Class SimpleQueue
+ * Class SimpleQueueInterface
  * @package HisInOneProxy\Queue
  */
-class SimpleQueue
+class QueueFile extends QueueBase
 {
+    protected array $router = [];
+    protected string $base_path;
+    protected int $permissions = 0740;
+    protected bool $keep_elements;
+    protected Log $log;
 
-    /**
-     * @var array
-     */
-    protected $router = array();
 
-    /**
-     * @var
-     */
-    protected $base_path;
-
-    /**
-     * @var int
-     */
-    protected $permissions = 0740;
-
-    /**
-     * @var Log
-     */
-    protected $log;
-
-    /**
-     * @var bool
-     */
-    protected $keep_elements;
-
-    /**
-     * SimpleQueue constructor.
-     */
     function __construct()
     {
+        $this->log = DataCache::getInstance()->getLog();
         $this->base_path     = GlobalSettings::getInstance()->getPathToQueue();
         $this->keep_elements = GlobalSettings::getInstance()->isKeepElementInQueue();
-        $this->log           = DataCache::getInstance()->getLog();
     }
 
-    /**
-     * @param $keep
-     */
-    protected function keepElements($keep)
-    {
-        $this->keep_elements = $keep;
-    }
-
-    /**
-     * @param $queue_name
-     * @return array
-     */
-    public function pop($queue_name)
+    public function pop(string $queue_name) : array
     {
         if ($this->queueExists($queue_name)) {
             $queue_dir = $this->getQueueDirectory($queue_name);
@@ -104,11 +70,7 @@ class SimpleQueue
         return array(null, null);
     }
 
-    /**
-     * @param $queue_name
-     * @return bool
-     */
-    public function queueExists($queue_name)
+    public function queueExists(string $queue_name) : bool
     {
         if (!is_dir($this->getQueueDirectory($queue_name))) {
             mkdir($this->getQueueDirectory($queue_name), $this->permissions, true);
@@ -117,20 +79,12 @@ class SimpleQueue
         return true;
     }
 
-    /**
-     * @param $queue_name
-     * @return string
-     */
-    private function getQueueDirectory($queue_name)
+    private function getQueueDirectory(string $queue_name) : string
     {
         return $this->base_path . str_replace(array('\\', '.'), '-', $queue_name);
     }
 
-    /**
-     * @param $queue_name
-     * @return int
-     */
-    public function getSize($queue_name)
+    public function getSize(string $queue_name) : int
     {
         if ($this->queueExists($queue_name)) {
             $iterator = new RecursiveDirectoryIterator(
@@ -146,10 +100,7 @@ class SimpleQueue
         return 0;
     }
 
-    /**
-     *
-     */
-    public function cleanUpStaleJobs()
+    public function cleanUpStaleJobs() : void
     {
         $queue_dir = $this->getQueueDirectory(QueueConstants::SERVICE_QUEUE);
         $it        = new GlobIterator($queue_dir . DIRECTORY_SEPARATOR . '*.job.done', FilesystemIterator::KEY_AS_FILENAME);
@@ -169,17 +120,10 @@ class SimpleQueue
             }
         }
 
-        $this->push(QueueConstants::MAINTENANCE_QUEUE, array(), QueueConstants::CLEAN_UP_STALE_JOBS, '', time() + $sec_a_day);
+        $this->push(QueueConstants::MAINTENANCE_QUEUE, '', QueueConstants::CLEAN_UP_STALE_JOBS, '', time() + $sec_a_day);
     }
 
-    /**
-     * @param        $queue_name
-     * @param        $data
-     * @param        $receiver
-     * @param string $function
-     * @param int    $unix_time
-     */
-    public function push($queue_name, $data, $function = '', $receiver = '', $unix_time = 0)
+    public function push(string $queue_name, string $data, string $function = '', string $receiver = '', int $unix_time = 0) : void
     {
         if ($this->queueExists($queue_name)) {
             $queue_dir = $this->getQueueDirectory($queue_name);
@@ -194,11 +138,7 @@ class SimpleQueue
         }
     }
 
-    /**
-     * @param $queue_name
-     * @return string
-     */
-    private function getJobFilename($queue_name)
+    private function getJobFilename(string $queue_name) : string
     {
         $path = $this->base_path . '/simple_queue.meta';
         if (!is_file($path)) {
@@ -223,32 +163,24 @@ class SimpleQueue
         return $filename;
     }
 
-    /**
-     * @param $queue_name
-     * @param $file
-     */
-    public function acknowledgeMessage($queue_name, $file)
+    public function removeMessage(string $queue_name, string $id) : void
     {
         $queue_dir = $this->getQueueDirectory($queue_name);
-        $path      = $queue_dir . DIRECTORY_SEPARATOR . $file . '.done';
+        $path      = $queue_dir . DIRECTORY_SEPARATOR . $id . '.done';
         if (!is_file($path)) {
             return;
         }
-        $this->log->debug(sprintf('Acknowledged entry %s from queue %s, removing it.', $file, $queue_name));
+        $this->log->debug(sprintf('Acknowledged entry %s from queue %s, removing it.', $id, $queue_name));
 
         if (!$this->keep_elements) {
             unlink($path);
         }
     }
 
-    /**
-     * @param $queue_name
-     * @param $file
-     */
-    public function reAddMessageToQueue($queue_name, $file)
+    public function reAddMessageToQueue(string $queue_name, string $id) : void
     {
         $queue_dir = $this->getQueueDirectory($queue_name);
-        rename($queue_dir . DIRECTORY_SEPARATOR . $file . '.done', $queue_dir . DIRECTORY_SEPARATOR . $file);
-        $this->log->debug(sprintf('Re-added entry %s to queue %s.', $file, $queue_name));
+        rename($queue_dir . DIRECTORY_SEPARATOR . $id . '.done', $queue_dir . DIRECTORY_SEPARATOR . $id);
+        $this->log->debug(sprintf('Re-added entry %s to queue %s.', $id, $queue_name));
     }
 }
