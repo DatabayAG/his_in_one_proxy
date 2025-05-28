@@ -64,7 +64,7 @@ $app->get(SYS_EVENTS_FIFO, function (Request $request, Response $response) use (
 
     $value = [];
     $data = $db->pop(QueueConstants::SERVICE_QUEUE);
-    if(is_array($data) && sizeof($data) > 0) {
+    if(sizeof($data) > 0) {
         foreach ($data as $row) {
             if (isset($row['service_id']) && $row['service_id'] > 0 && isset($row['cmd'])) {
                 $value[] = $local_functions->convertEventsFifoData($row);
@@ -189,6 +189,7 @@ $app->get(CC_COURSE_LINKS, function (Request $request, Response $response, array
     return $response;
 });
 
+//Todo: needs to be optimized
 $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions) {
     if($local_functions->isValidParticipant()->isInvalidAuth()) {
         return $response;

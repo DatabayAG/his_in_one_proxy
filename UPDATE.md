@@ -32,7 +32,6 @@ Example config for nginx:
         auth_basic_user_file /PATH/TO/.htpasswd;
     
         location / {
-            autoindex on;
             try_files $uri /index.php$is_args$args;
         }
     
