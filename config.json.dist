@@ -34,10 +34,10 @@
 		"password"            : "",
 		"url"                 : ""
 		},
-		"HIStoECSMapping": {
+	"HIStoECSMapping": {
 			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS (MembershipID (mid) Community)"
 		},
-		"HIStoECSCourseMapping" : {
+	"HIStoECSCourseMapping" : {
 			"COURSE_TYPE_ID_HIS" : "COURSE_TYPE_ID_ECS"
 		},
 	"Database" : {

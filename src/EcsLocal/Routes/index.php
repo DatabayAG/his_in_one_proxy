@@ -3,13 +3,10 @@
 namespace HisInOneProxy\EcsLocal\Routes;
 require_once '../../../libs/composer/vendor/autoload.php';
 
-use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\EcsLocal\EcsLocalFunctions;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue\QueueConstants;
 use HisInOneProxy\Queue\QueueDatabase;
-use HisInOneProxy\Soap\CourseInterfaceService;
-use HisInOneProxy\Soap\SoapServiceRouter;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -70,9 +67,8 @@ $app->get(SYS_EVENTS_FIFO, function (Request $request, Response $response) use (
     if(is_array($data) && sizeof($data) > 0) {
         foreach ($data as $row) {
             if (isset($row['service_id']) && $row['service_id'] > 0 && isset($row['cmd'])) {
-                $localFunctions = new EcsLocalFunctions();
-                $value[] = $localFunctions->convertEventsFifoData($row);
-          }
+                $value[] = $local_functions->convertEventsFifoData($row);
+            }
         }
 
         $json = json_encode($value, JSON_PRETTY_PRINT);
@@ -107,8 +103,7 @@ $app->get(SYS_MEMBERSHIPS, function (Request $request, Response $response) use (
         return $response;
     }
 
-    $memberships = new EcsLocalFunctions();
-    $memberships_json = json_encode($memberships->getMemberships($valid_participant));
+    $memberships_json = json_encode($local_functions->getMemberships($valid_participant));
     $response->getBody()->write($memberships_json);
 
     return $response;
@@ -125,7 +120,6 @@ $app->get('/campusconnect/courses/{id}/details', function (Request $request, Res
 
     $memberships_json = json_encode($payload);
     $response->getBody()->write($memberships_json);
-    $logging->debug('>> GET ' . CC_COURSES . '/details' );
     $logging->info(sprintf('Sent message details for %s', CC_COURSES . '/details'));
     return $response;
 });
@@ -208,12 +202,11 @@ $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array
         $ecs_course_url = $course_urls->getEcsCourseUrl();
         $lms_course_urls = $course_urls->getLmsCourseUrls();
         $first_found_url = reset($lms_course_urls);
-        $logging->info(sprintf("got POST for course_urls with LectureId %s and ecs_course_url %s", $lectureId, $first_found_url->getUrl()));
         #$router  = new SoapServiceRouter($logging);
         #$course_interface_service    = new CourseInterfaceService($logging, $router);
 
         #$links = $course_interface_service->getLinksForCourse(202530293, 30, 2025);
-       # $logging->info(sprintf("%s", $links));
+        # $logging->info(sprintf("%s", $links));
     } else {
         $logging->warning('This does not seem to be a valid course urls array');
     }
