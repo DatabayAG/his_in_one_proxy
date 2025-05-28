@@ -1,7 +1,7 @@
 New entries in config.json:
   - HIS/workstation_status_ids is now configurable in the config
   - ECS/use_local_ecs true/false
-    - If you want to use the new local implementation of the ecs campusmanagement this has to be set to true
+    - If you want to use the new local implementation of the ecs campus management this value has to be set to true
   - ECS/ecs_community_id
   - Database
   - queue_type file_based/db_based
@@ -12,7 +12,7 @@ After configuring the database, following script has to run to create the databa
 
     php src/Database/DBUpdate.php
 
-This will create three tables, please ensure to configure your participants in the table "participants" in your database.
+This will create three new tables, please ensure to configure your participants in the table "participants" in your database.
 
 To use the local ecs implementation you have to create a ".htpasswd" file and configure your nginx accordingly, you find an example bellow:
 
