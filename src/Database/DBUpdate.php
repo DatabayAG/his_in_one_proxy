@@ -4,6 +4,8 @@ namespace HisInOneProxy\Database;
 
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Log\Log;
+use HisInOneProxy\System\Utils;
+use PHPUnit\Exception;
 
 class DBUpdate
 {
@@ -59,13 +61,17 @@ class DBUpdate
      */
     private function initializeConnection()
     {
-        $host = GlobalSettings::getInstance()->getDatabaseHost();
-        $name = GlobalSettings::getInstance()->getDatabaseDbname();
-        $user = GlobalSettings::getInstance()->getDatabaseUser();
-        $pass = GlobalSettings::getInstance()->getDatabasePass();
-        $connection = new DbPdo($host, $name, $user, $pass);
-        $this->pdo = $connection->getPdo();
-        $GLOBALS['DBPDO'] = $connection->getDbPdo();
+        try {
+            $host = GlobalSettings::getInstance()->getDatabaseHost();
+            $name = GlobalSettings::getInstance()->getDatabaseDbname();
+            $user = GlobalSettings::getInstance()->getDatabaseUser();
+            $pass = GlobalSettings::getInstance()->getDatabasePass();
+            $connection = new DbPdo($host, $name, $user, $pass);
+            $this->pdo = $connection->getPdo();
+            $GLOBALS['DBPDO'] = $connection->getDbPdo();
+        } catch (Exception $e) {
+            Utils::LogToShellAndExit('No connection to database possible');
+        }
     }
 
     private function getFileForStep()
