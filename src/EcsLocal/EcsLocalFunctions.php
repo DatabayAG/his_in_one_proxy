@@ -90,7 +90,7 @@ class EcsLocalFunctions
     public function isValidParticipant() : EcsAuth {
         $user = $_SERVER['REMOTE_USER'] ?: '';
         if($user === '') {
-            Utils::LogToShellAndExit('Unknown user given or no knonw user found, exiting process');
+            Utils::LogToShellAndExit('Unknown user given or no known user found, exiting process');
         } else {
             $database = new QueueDatabase();
             $participants = $database->getParticipants();
@@ -100,6 +100,8 @@ class EcsLocalFunctions
                     $pid = $user_data['pid'];
                     $mid = $user_data['mid'];
                     return new EcsAuth($cid, $pid, $mid);
+                } else {
+                    Utils::LogToShellAndExit(sprintf('Given user name "%s" is not know, please check your participants table, if the user exists.', $user));
                 }
             }
         }
