@@ -38,6 +38,9 @@ This will print something like this and create to files two track the updates:
 This will create three new tables, please ensure to configure your participants in the table "participants" in your database.
 
 ## ECS light implementation
+
+To ensure ILIAS can connect the REST API and is authenticated, there must exist an participant in the table participant, which name matches an entry in the ".htpasswd" file.
+
 To use the local ecs implementation you have to create a ".htpasswd" file and configure your nginx accordingly, you find an example bellow:
 
 Example config for nginx:
