@@ -5,6 +5,7 @@ namespace HisInOneProxy\Soap;
 use HisInOneProxy\DataModel\CompleteAccount;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser\ParseAccounts;
+use HisInOneProxy\System\Utils;
 use SoapFault;
 
 /**
@@ -38,6 +39,7 @@ class AccountService extends SoapService
             return $account_list;
         } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
+            Utils::LogToShellAndExit($exception->getMessage());
         }
         return null;
     }

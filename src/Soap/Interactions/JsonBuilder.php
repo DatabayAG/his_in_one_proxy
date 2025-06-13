@@ -176,13 +176,22 @@ class JsonBuilder
         $plan_element_cont = $unit->getPlanElementContainer();
         if (count($plan_element_cont) == 1) {
             $title = array_pop($plan_element_cont);
-            $row->title = $title->getText();
+            $row->title = self::replaceUnwantedCharacters($title->getText());
         } else {
-            $row->title = $unit->getText();
+            $row->title = self::replaceUnwantedCharacters($unit->getText());
         }
         $row->url = '';
     }
 
+    /**
+     * @param $string
+     * @return array|string|string[]|null
+     */
+   public static function replaceUnwantedCharacters($string)
+   {
+       // replace control characters with space
+       return preg_replace('/[[:cntrl:]]/', ' ', $string);
+   }
     /**
      * @param      $row
      * @param Unit $unit

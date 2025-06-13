@@ -7,6 +7,7 @@ use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Parser;
 use HisInOneProxy\Soap\Interactions\DataCache;
+use HisInOneProxy\System\Utils;
 use SoapFault;
 
 /**
@@ -44,6 +45,7 @@ class PersonService extends SoapService
             }
         } catch (SoapFault $exception) {
             $this->log->error($exception->getMessage());
+            Utils::LogToShellAndExit($exception->getMessage());
         }
         return null;
     }
