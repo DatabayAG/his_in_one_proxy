@@ -299,13 +299,13 @@ class CourseInterfaceService extends SoapService
      */
     public function readPersonExamPlanEnrollmentsForUnit($plan_element, $unit_id, $term_type_id, $year, $cancellation = null, $updated_since = null): void
     {
-        $workStationStatusIds = GlobalSettings::getInstance()->getWorkStationStatusIds();
+        $workStatusIds = GlobalSettings::getInstance()->getWorkStatusIds();
 
         $params = [[
             'unitId' => $unit_id,
             'termTypeId' => $term_type_id,
             'year' => $year,
-            'workstatusIds' => $workStationStatusIds,
+            'workstatusIds' => $workStatusIds,
             'cancellation' => $cancellation,
             'updatedSince' => $updated_since
         ]];

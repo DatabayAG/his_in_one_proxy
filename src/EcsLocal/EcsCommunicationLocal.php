@@ -2,8 +2,13 @@
 
 namespace HisInOneProxy\EcsLocal;
 
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\REST\EcsResources;
 use HisInOneProxy\REST\GuzzleWrapper;
+use HisInOneProxy\REST\HttpStatusCode;
+use HisInOneProxy\Soap\Interactions\DataCache;
 
 class EcsCommunicationLocal implements EcsCommunicationInterface
 {
@@ -16,28 +21,108 @@ class EcsCommunicationLocal implements EcsCommunicationInterface
         $this->client    = new GuzzleWrapper($receiver);
         $this->resources = new EcsResources();
     }
+
     public function publishCourseToEcs($json): bool
     {
         return true;
     }
 
+    protected function appendAuthData(): array
+    {
+        return [GlobalSettings::getInstance()->getEcsAuthId(), GlobalSettings::getInstance()->getEcsPassword()];
+    }
+
+    /**
+     * @throws GuzzleException
+     */
     public function publishMembersToEcs($json): bool
     {
-        // TODO: Implement publishMembersToEcs() method.
+        try {
+            $response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getMembersUrlPath(), ['json' => $json, 'auth' => $this->appendAuthData(), 'verify' => false]);
+            if ($this->client->getStatusCode($response) == HttpStatusCode::CREATED) {
+                return true;
+            }
+        } catch (Exception $e) {
+            DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e->getMessage()));
+        }
+        return false;
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function publishCourseCatalogToEcs($json): bool
     {
-        // TODO: Implement publishCourseCatalogToEcs() method.
+        try {
+            $response = $this->client->makeRequest('POST', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseCatalogUrlPath(), ['json' => $json, 'auth' => $this->appendAuthData(), 'verify' => false]);
+            if ($this->client->getStatusCode($response) == HttpStatusCode::CREATED) {
+                return true;
+            }
+        } catch (Exception $e) {
+            DataCache::getInstance()->getLog()->warning(sprintf('Something went wrong %s.', $e->getMessage()));
+        }
+        return false;
     }
 
+    /**
+     * @throws GuzzleException
+     */
     public function getCourseIds($path, $course_urls)
     {
-        // TODO: Implement getCourseIds() method.
+        $response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCoursePath() . $path, ['auth' => $this->appendAuthData(), 'verify' => false]);
+        $content  = $this->client->getContent($response);
+        $json     = json_decode($content);
+        $id       = null;
+        if (is_object($json)) {
+            if (array_key_exists('lectureID', $json)) {
+                $id = $json->lectureID;
+            } else {
+                if (array_key_exists('courseID', $json)) {
+                    $id = $json->courseID;
+                } else {
+                    if (array_key_exists('id', $json)) {
+                        $id = $json->id;
+                    } else {
+                        DataCache::getInstance()->getLog()->warning(sprintf('Did not find an export id for id %s.', $path));
+                    }
+                }
+            }
+            var_dump($id);
+            var_dump($course_urls);
+        } else {
+            DataCache::getInstance()->getLog()->warning(sprintf('Did not get back valid json for id %s.', $path));
+        }
     }
 
+
+    /**
+     * @throws GuzzleException
+     */
     public function getCoursesUrls()
     {
-        // TODO: Implement getCoursesUrls() method.
+        $response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getCourseUrlPath(), ['auth' => $this->appendAuthData(), 'verify' => false]);
+        if ($this->client->getStatusCode($response) == HttpStatusCode::OK) {
+            $content = $this->client->getContent($response);
+            $array   = preg_split('/\n/', $content);
+            if (count($array) > 0) {
+                foreach ($array as $path) {
+                    if ($path != "") {
+                        $response = $this->client->makeRequest('GET', GlobalSettings::getInstance()->getEcsServerUrl() . $this->resources->getPlainPath() . $path, ['auth' => $this->appendAuthData(), 'verify' => false]);
+                        $content  = json_decode($this->client->getContent($response));
+                        if (isset($content->ecs_course_url) && $content->ecs_course_url != '') {
+                            $path = $content->ecs_course_url;
+                            if (isset($content->lms_course_urls) && is_array($content->lms_course_urls)) {
+                                var_dump($content);
+                                foreach ($content->lms_course_urls as $lms_course_url) {
+                                    var_dump($lms_course_url->url);
+                                }
+                            }
+                            #$this->getCourseIds(basename($path),$content->lms_course_urls );
+                        }
+                    }
+                }
+
+            }
+        }
     }
 }

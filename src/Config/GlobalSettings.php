@@ -11,6 +11,7 @@ use HisInOneProxy\Queue\QueueBase;
 use HisInOneProxy\System\Utils;
 use Noodlehaus\Config;
 use Noodlehaus\Exception\EmptyDirectoryException;
+use React\Stream\Util;
 use function json_decode;
 use function json_last_error_msg;
 
@@ -54,7 +55,7 @@ class GlobalSettings
     protected string $database_pass;
     protected bool $use_local_ecs = false;
     protected string $ecs_community_id = "0";
-    protected array $workStationStatusIds = [];
+    protected array $workStatusIds = [];
 
     private function __construct()
     {
@@ -88,6 +89,7 @@ class GlobalSettings
         }
 
         $this->setValues();
+        $this->validateSettings();
     }
 
     protected function getConfigFileName(): string
@@ -109,7 +111,7 @@ class GlobalSettings
         $this->setLoginSuffix($this->config->get('HIS.login_suffix'));
         $this->setBlockedIds($this->config->get('HIS.blocked_ids'));
         $this->setTextConfig($this->config->get('HIS.text'));
-        $this->setWorkStationStatusIds($this->config->get('HIS.workstation_status_ids'));
+        $this->setWorkStatusIds($this->config->get('HIS.work_status_ids'));
 
         $this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
         $this->end_point = new Endpoint();
@@ -184,7 +186,7 @@ class GlobalSettings
             "HIS.actual_term_year" => $this->getActualTermYear(),
             "HIS.blocked_ids" => $this->getBlockedIds(),
             "HIS.text" => $this->getTextConfig(),
-            "HIS.workstation_status_ids" => $this->getWorkStationStatusIds(),
+            "HIS.work_status_ids" => $this->getWorkStatusIds(),
             "ECS.use_local_ecs" => $this->isUseLocalEcs(),
             "ECS.ecs_community_id" => $this->getEcsCommunityId(),
             "ECS.auth_id" => $this->getEcsAuthId(),
@@ -549,14 +551,21 @@ class GlobalSettings
         $this->ecs_community_id = $ecs_community_id;
     }
 
-    public function getWorkStationStatusIds(): array
+    public function getWorkStatusIds(): array
     {
-        return $this->workStationStatusIds;
+        return $this->workStatusIds;
     }
 
-    public function setWorkStationStatusIds(array $workStationStatusIds): void
+    public function setWorkStatusIds(array $workStatusIds): void
     {
-        $this->workStationStatusIds = $workStationStatusIds;
+        $this->workStatusIds = $workStatusIds;
+    }
+
+    private function validateSettings()
+    {
+        if($this->isUseLocalEcs() && $this->getQueueType() === 'file_based') {
+            Utils::LogToShellAndExit('The usage of the local ecs implementation needs a "db_based" queue type, you have selected "file_base", this will not work.');
+        }
     }
 
 }
