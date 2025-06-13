@@ -31,7 +31,8 @@ class Functions
     {
         if (count(self::$collection) == 0) {
             self::appendFunction('lc', 'getLectures', 'Gets all lectures and add them to queue.');
-            self::appendFunction('li', 'getLectureById', 'Gets a Lecture by id. Uses id as param.');
+            self::appendFunction('li', 'getLectureById', 'Gets a Lecture by UnitId. Uses id as param.');
+            self::appendFunction('fo', 'getLectureByIdForced', 'Gets a Lecture by UnitId amd force push this course. Uses id as param.');
             self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
             self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
             self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.');
@@ -39,7 +40,6 @@ class Functions
             self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');
             self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
             self::appendFunction('se', 'startHisListener', 'Starts his listener which listens to the system events from his server.');
-            self::appendFunction('cm', 'getAllCourseMappingTypes', 'Gets all course mapping types.');
             self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
             self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
             self::appendFunction('gg', 'getAllGenders', 'Gets all gender types.', true);

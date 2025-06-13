@@ -12,6 +12,7 @@ class QueueBase implements QueueInterface
     const FILE_BASED = 'file_based';
     const DB_BASED = 'db_based';
     private static QueueBase $instance;
+    private bool $force_write_message_to_queue = false;
 
     protected Log $log;
     protected ?QueueInterface $queue_type = null;
@@ -28,7 +29,7 @@ class QueueBase implements QueueInterface
     /**
      * @throws Exception
      */
-    public function __construct()
+    public function __construct(bool $force_push = false)
     {
         if(null === $this->queue_type) {
             $this->log = DataCache::getInstance()->getLog();
@@ -38,7 +39,7 @@ class QueueBase implements QueueInterface
                 if ($type === self::FILE_BASED) {
                     $this->queue_type = new QueueFile();
                 } elseif ($type === self::DB_BASED) {
-                    $this->queue_type = new QueueDatabase();
+                    $this->queue_type = new QueueDatabase($force_push);
                 }
             }
         }
@@ -83,6 +84,16 @@ class QueueBase implements QueueInterface
     public function getQueueType(): QueueInterface
     {
         return $this->queue_type;
+    }
+
+    public function setForceWriteMessageToQueue(bool $force_write_message_to_queue): void
+    {
+        $this->force_write_message_to_queue = $force_write_message_to_queue;
+    }
+
+    public function isForceWriteMessageToQueue(): bool
+    {
+        return $this->force_write_message_to_queue;
     }
 
 }

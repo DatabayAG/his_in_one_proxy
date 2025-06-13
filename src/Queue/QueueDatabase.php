@@ -18,7 +18,6 @@ use React\Stream\Util;
  */
 class QueueDatabase extends QueueBase
 {
-    private bool $force_write_message_to_queue = false;
     private bool $keep_elements;
     private ?DbPdo $db_connection = null;
     private ?PDO $pdo = null;
@@ -33,10 +32,11 @@ class QueueDatabase extends QueueBase
     private ?PDOStatement $prepare_select_service_queue = null;
     private ?PDOStatement $prepare_select_participants = null;
 
-    function __construct()
+    function __construct(bool $force_push = false)
     {
         try {
             $this->log = DataCache::getInstance(false)->getLog();
+            $this->setForceWriteMessageToQueue($force_push);
             $this->createDBConnection();
             $this->validateDBQueueStructure();
             $this->prepareStatements();
@@ -241,8 +241,7 @@ class QueueDatabase extends QueueBase
         if ($unix_time === 0) {
             $unix_time = time();
         }
-
-        if($lectureId > 0 && !$this->force_write_message_to_queue) {
+        if($lectureId > 0 && !$this->isForceWriteMessageToQueue()) {
             $select_data = [
                 'checksum' => $checksum,
                 'lectureId' => $lectureId
@@ -261,13 +260,13 @@ class QueueDatabase extends QueueBase
         } else {
             if ($lectureId === 0) {
                 $this->log->warning('Collision check is ignored, since lectureId is "0".');
-            } elseif ($this->force_write_message_to_queue) {
+            } elseif ($this->isForceWriteMessageToQueue()) {
                 $this->log->info('Collision check is ignored, since "force write to queue" was activated.');
             }
         }
 
         if($lectureId > 0) {
-            if($write_message_in_queue || $this->force_write_message_to_queue) {
+            if($write_message_in_queue || $this->isForceWriteMessageToQueue()) {
                 $data = json_encode($raw);
                 $receiver_split = explode(',', $receiver);
                 if(is_array($receiver_split) && count($receiver_split) > 0) {
@@ -356,11 +355,6 @@ class QueueDatabase extends QueueBase
             ];
         }
         return $data;
-    }
-
-    public function setForceWriteMessageToQueue(bool $force_write_message_to_queue): void
-    {
-        $this->force_write_message_to_queue = $force_write_message_to_queue;
     }
 
 }

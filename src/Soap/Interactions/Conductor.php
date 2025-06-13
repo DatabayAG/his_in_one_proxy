@@ -343,14 +343,15 @@ class Conductor
      * @param $units
      * @throws Exception
      */
-    protected function finishHandlingUnits($units)
+    protected function finishHandlingUnits($units, $force_write = false)
     {
         DataCache::getInstance()->readPersonDetailsToCache();
         DataCache::getInstance()->readAccountsForPersons();
         $this->data_printer->printUnits($units);
         $builder = new JsonBuilder();
         $courses = $builder::convertUnitsToArray($units);
-        $queue   = new QueueBase();
+        $queue   = new QueueBase($force_write);
+
         foreach ($courses as $course) {
             $queue->push(QueueConstants::SERVICE_QUEUE, json_encode($course), QueueConstants::PUBLISH_COURSE_TO_ECS, $course->elearning_sys_string);
         }
@@ -386,6 +387,23 @@ class Conductor
 
         $units = $this->startHandlingUnitList($unit_list, $cos_map, $cos_already);
         $this->finishHandlingUnits($units);
+    }
+
+    /**
+     * @param $unit_id
+     * @throws Exception
+     */
+    public function getLectureByUnitIdForTermAndForcePush($unit_id)
+    {
+        $services    = DataCache::getInstance();
+        $cos_map     = $services->getCourseOfStudyService()->findCourseOfStudy();
+        $cos_already = array();
+
+        $unit_list = new UnitIdList();
+        $unit_list->appendUnitId($unit_id);
+
+        $units = $this->startHandlingUnitList($unit_list, $cos_map, $cos_already);
+        $this->finishHandlingUnits($units, true);
     }
 
     /**
