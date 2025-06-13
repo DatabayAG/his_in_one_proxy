@@ -1,3 +1,6 @@
+# Update Informations
+
+## Config.json
 New entries in config.json, please take a look at the "config.json.dist" for details:
   - HIS/workstation_status_ids is now configurable in the config
   - ECS/use_local_ecs => true/false
@@ -7,7 +10,13 @@ New entries in config.json, please take a look at the "config.json.dist" for det
   - queue_type file_based/db_based
     - file_based => classic mode
     - db_based => new db based mode
+
+## Commandline functions
+New function shortcuts:
+    
+    php cmd.php fo TERM_TYPE_ID TERM_YEAR UNIT_ID => Gets a Lecture by UnitId amd force push this course. Uses id as param.
   
+## Database
 After configuring the database, following script has to run to create the database tables:
 
     php src/Database/DBUpdate.php
@@ -28,6 +37,7 @@ This will print something like this and create to files two track the updates:
 
 This will create three new tables, please ensure to configure your participants in the table "participants" in your database.
 
+## ECS light implementation
 To use the local ecs implementation you have to create a ".htpasswd" file and configure your nginx accordingly, you find an example bellow:
 
 Example config for nginx:
