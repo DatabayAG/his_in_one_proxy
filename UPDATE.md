@@ -13,8 +13,11 @@ New entries in config.json, please take a look at the "config.json.dist" for det
 
 ## Commandline functions
 New function shortcuts:
-    
-    php cmd.php fo TERM_TYPE_ID TERM_YEAR UNIT_ID => Gets a Lecture by UnitId amd force push this course. Uses id as param.
+
+- Gets a Lecture by UnitId and force push this course. Uses id as param.
+
+
+    php cmd.php fo TERM_TYPE_ID TERM_YEAR UNIT_ID
 
 ## Database
 After configuring the database, following script has to run to create the database tables:
