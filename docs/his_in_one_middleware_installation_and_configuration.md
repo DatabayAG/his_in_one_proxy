@@ -3,7 +3,7 @@
 **You need a running HISinOne, ECS Server and ILIAS installation.**  
   
 ## Needed packages  
-    apt-get install php7.0 php7.0-xml php7.0-soap php7.0-curl
+    apt-get install php php-xml php-soap php-curl
 ## Clone the project   
     git clone https://gitlab.databay.de/ilias-utils/his_in_one_proxy  
   
@@ -77,7 +77,7 @@
             "url"             : "https://myGreatHISinOneURL/qisserver/services2/", 
             "soap_caching"    : "1", 
             "soap_debug"      : "false"
-             "ssl_validation"     : "false",
+            "ssl_validation"     : "false",
             "actual_term_id"  : 2, 
             "actual_term_year" : 2017, 
             "endpoint"         : { 
@@ -89,7 +89,8 @@
             }, 
             "person_id_type" : "ecs_loginUID", 
             "login_suffix" : "", 
-            "blocked_ids" : [4, 2], 
+            "blocked_ids" : [4, 2],
+		    "workstation_status_ids" : [1,6,26,27,22,8,20,28,30,32],
             "text" : { 
                 "current_term" : "getDefaultText", 
                 "event_type"   : "getDefaultText", 
@@ -99,6 +100,8 @@
               } 
             }, 
             "ECS" : { 
+              "use_local_ecs"       : "",
+              "ecs_community_id"    : "",
               "auth_id"            : "myECSAuthId", 
               "password"           : "myHighlySecretPasswort47!!", 
               "url"                : "http://192.168.1.183:8080"
@@ -112,6 +115,13 @@
               "2" : "1", 
               "3" : "2" 
             }, 
+            "Database" : {
+                "host" : "",
+                "dbname" : "",
+                "user" : "",
+                "pass" : "",
+            },
+          "queue_type"             : "file_based",
           "path_to_queue"          : "/opt/his_middleware/simple_queue2/", 
           "path_to_log"            : "/opt/his_middleware/log/debug.log",
           "keep_elements_in_queue" : "true", 

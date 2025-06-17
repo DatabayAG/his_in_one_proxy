@@ -44,9 +44,9 @@
 	        "host" : "",
 	        "dbname" : "",
 	        "user" : "",
-	        "pass" : "",
+	        "pass" : ""
 	},
-	"queue_type"             : "" (file_based, db_based),
+	"queue_type"             : "(file_based, db_based)",
 	"path_to_queue"          : "",
 	"path_to_log"            : "",
 	"keep_elements_in_queue" : "",
