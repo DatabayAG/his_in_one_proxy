@@ -15,7 +15,7 @@ New entries in config.json, please take a look at the "config.json.dist" for det
 New function shortcuts:
     
     php cmd.php fo TERM_TYPE_ID TERM_YEAR UNIT_ID => Gets a Lecture by UnitId amd force push this course. Uses id as param.
-  
+
 ## Database
 After configuring the database, following script has to run to create the database tables:
 
@@ -73,3 +73,86 @@ Example config for nginx:
             fastcgi_read_timeout 180;
         }
     }
+
+
+# Helpful commands for installation
+
+    php cmd.php cm
+
+Displays the active course mapping types, example output:
+
+    HisInOneProxy\DataModel\Container\CourseMappingTypeContainer Object
+    (
+        [container:protected] => Array
+        (
+            [1] => HisInOneProxy\DataModel\CourseMappingType Object
+            (
+                [his_key_id:protected] => 2
+                [language_id:protected] => 12
+                [id:protected] => 1
+                [sort_order:protected] => 1
+                [default_text:protected] => Ein ILIAS-Kurs mit Gruppen
+            )
+
+            [2] => HisInOneProxy\DataModel\CourseMappingType Object
+                (
+                    [his_key_id:protected] => 1
+                    [language_id:protected] => 12
+                    [id:protected] => 2
+                    [sort_order:protected] => 2
+                    [default_text:protected] => Ein ILIAS-Kurs ohne Gruppen
+                )
+        )
+    )
+
+---
+
+    php cmd.php ge
+
+Displays the elearning plattform containers example output:
+
+    HisInOneProxy\DataModel\Container\ElearningPlatformContainer Object
+    (
+    [container:protected] => Array
+        (
+            [1] => HisInOneProxy\DataModel\ElearningPlatform Object
+                (
+                    [his_key_id:protected] => 20
+                    [language_id:protected] => 12
+                    [id:protected] => 1
+                    [sort_order:protected] => 1
+                    [default_text:protected] => ILIAS (e-Learning)
+                    [unique_name:protected] => ilias
+                )
+        )
+    )
+
+---
+
+    php cmd.php gt
+
+Displays all term types example output:
+
+    (
+        [30] => HisInOneProxy\DataModel\TermType Object
+            (
+                [language_id:protected] => 12
+                [sort_order:protected] => 1
+                [id:protected] => 30
+                [short_text:protected] => SoSe
+                [long_text:protected] => Sommersemester
+                [default_text:protected] => Sommersemester
+                [unique_name:protected] => SoSe
+            )
+    
+        [31] => HisInOneProxy\DataModel\TermType Object
+            (
+                [language_id:protected] => 12
+                [sort_order:protected] => 2
+                [id:protected] => 31
+                [short_text:protected] => WiSe
+                [long_text:protected] => Wintersemester
+                [default_text:protected] => Wintersemester
+                [unique_name:protected] => WiSe
+            )
+    )
