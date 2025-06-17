@@ -13,6 +13,8 @@ use HisInOneProxy\Parser\ParseParallelGroupValues;
 use HisInOneProxy\Parser\ParseTermType;
 use HisInOneProxy\Parser\ParseTermTypeList;
 use SoapFault;
+use HisInOneProxy\Parser\ParseCourseMappingType;
+use HisInOneProxy\DataModel\Container\CourseMappingTypeContainer;
 
 /**
  * Class KeyvalueService
@@ -53,7 +55,7 @@ class KeyvalueService extends SoapService
     /**
      * @param $valueClass
      * @param $lang
-     * @return array|ElearningPlatformContainer|ParallelGroupValuesContainer|DefaultObject[]|EAddressType[]|null
+     * @return array|ElearningPlatformContainer|ParallelGroupValuesContainer|DefaultObject[]|EAddressType[]|CourseMappingTypeContainer|null
      */
     public function getAllValid($valueClass, $lang)
     {
@@ -64,23 +66,28 @@ class KeyvalueService extends SoapService
 
             $parser   = new ParseDefaultObject($this->log);
             switch($valueClass){
-                case 'ElearningPlatform': 
+                case 'ElearningPlatform':
                     $parser = new ParseElearningPlatform($this->log);
                     $default_object_list = $parser->parse($response);
                     return $default_object_list;
-                break; 
-                case 'ParallelgroupValue': 
+                break;
+                case 'ParallelgroupValue':
                     $parser = new ParseParallelGroupValues($this->log);
                     $default_object_list = $parser->parse($response);
                     return $default_object_list;
-                break; 
-                case 'TermTypeValue': 
+                break;
+                case 'TermTypeValue':
                     $parser = new ParseTermTypeList($this->log);
                     $default_object_list = $parser->parse($response);
                     return $default_object_list;
                 break;
                 case 'EventtypeValue':
                     $parser = new ParseEventType($this->log);
+                    $default_object_list = $parser->parse($response);
+                    return $default_object_list;
+                    break;
+                case 'ElearningCourseMappingType':
+                    $parser = new ParseCourseMappingType($this->log);
                     $default_object_list = $parser->parse($response);
                     return $default_object_list;
                     break;
@@ -98,7 +105,7 @@ class KeyvalueService extends SoapService
             }
 
 
-        
+
         }
         catch(SoapFault $exception)
         {
@@ -106,6 +113,4 @@ class KeyvalueService extends SoapService
         }
         return null;
     }
-
-   
 }

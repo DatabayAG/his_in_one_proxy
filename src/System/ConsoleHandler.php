@@ -155,6 +155,14 @@ class ConsoleHandler
         $this->endTimer();
     }
 
+    protected function getAllCourseMappingTypes()
+    {
+        $this->startTimer();
+        $lng = $this->getDefaultLanguageId();
+        $obj = DataCache::getInstance()->getKeyValueService()->getAllValid("ElearningCourseMappingType", $lng);
+        print_r($obj);
+        $this->endTimer();
+    }
     protected function getCourseCatalog()
     {
         $this->startTimer();
