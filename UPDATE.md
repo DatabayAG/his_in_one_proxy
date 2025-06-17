@@ -77,9 +77,11 @@ Example config for nginx:
 
 # Helpful commands for installation
 
+Displays the active course mapping types
+
     php cmd.php cm
 
-Displays the active course mapping types, example output:
+Example output:
 
     HisInOneProxy\DataModel\Container\CourseMappingTypeContainer Object
     (
@@ -107,9 +109,11 @@ Displays the active course mapping types, example output:
 
 ---
 
+Displays the elearning plattform containers
+
     php cmd.php ge
 
-Displays the elearning plattform containers example output:
+Example output:
 
     HisInOneProxy\DataModel\Container\ElearningPlatformContainer Object
     (
@@ -128,10 +132,11 @@ Displays the elearning plattform containers example output:
     )
 
 ---
+Displays all term types
 
     php cmd.php gt
 
-Displays all term types example output:
+Example output:
 
     (
         [30] => HisInOneProxy\DataModel\TermType Object
