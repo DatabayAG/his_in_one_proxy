@@ -60,6 +60,7 @@ If the Unittest with coverage segfaults remove the opcache extension!
 	        "dbname" : "",
 	        "user" : "",
 	        "pass" : "",
+			"sqlite" : ""
 	},
 	"queue_type"             : "file_based/db_based",
 	"path_to_queue"          : "Path to queue from his_in_one_proxy",

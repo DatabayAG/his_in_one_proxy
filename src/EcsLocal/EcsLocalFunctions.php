@@ -100,11 +100,10 @@ class EcsLocalFunctions
                     $pid = $user_data['pid'];
                     $mid = $user_data['mid'];
                     return new EcsAuth($cid, $pid, $mid);
-                } else {
-                    Utils::LogToShellAndExit(sprintf('Given user name "%s" is not know, please check your participants table, if the user exists.', $user));
                 }
             }
         }
+        Utils::LogToShellAndExit(sprintf('Given user name "%s" is not know, please check your participants table, if the user exists.', $user));
     }
 
     /**

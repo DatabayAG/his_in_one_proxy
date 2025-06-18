@@ -53,6 +53,7 @@ class GlobalSettings
     protected string $database_dbname;
     protected string $database_user;
     protected string $database_pass;
+    protected string $database_sqlite;
     protected bool $use_local_ecs = false;
     protected string $ecs_community_id = "0";
     protected array $workStatusIds = [];
@@ -130,6 +131,7 @@ class GlobalSettings
         $this->setDatabaseDbname($this->config->get('Database.dbname'));
         $this->setDatabaseUser($this->config->get('Database.user'));
         $this->setDatabasePass($this->config->get('Database.pass'));
+        $this->setDatabaseSqlite($this->config->get('Database.sqlite'));
 
         $this->setQueueType($this->config->get('queue_type'));
         $this->setPathToQueue($this->config->get('path_to_queue'));
@@ -196,6 +198,7 @@ class GlobalSettings
             "Database.dbname" => $this->getDatabaseDbname(),
             "Database.user" => $this->getDatabaseUser(),
             "Database.pass" => $this->getDatabasePass(),
+            "Database.sqlite" => $this->getDatabaseSqlite(),
             "queue_type" => $this->getQueueType(),
             "path_to_queue" => $this->getPathToQueue(),
             "queue_timer" => $this->getQueueTimer(),
@@ -560,6 +563,17 @@ class GlobalSettings
     {
         $this->workStatusIds = $workStatusIds;
     }
+
+    public function getDatabaseSqlite(): string
+    {
+        return $this->database_sqlite;
+    }
+
+    public function setDatabaseSqlite(string $database_sqlite): void
+    {
+        $this->database_sqlite = $database_sqlite;
+    }
+
 
     private function validateSettings()
     {

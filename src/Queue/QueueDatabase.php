@@ -34,15 +34,11 @@ class QueueDatabase extends QueueBase
 
     function __construct(bool $force_push = false)
     {
-        try {
             $this->log = DataCache::getInstance(false)->getLog();
             $this->setForceWriteMessageToQueue($force_push);
             $this->createDBConnection();
             $this->validateDBQueueStructure();
             $this->prepareStatements();
-        } catch (Exception $e) {
-            $this->log->critical(sprintf('Could not initialize database, error message: "%s"', $e->getMessage()));
-        }
     }
 
     /**
@@ -54,8 +50,15 @@ class QueueDatabase extends QueueBase
         $name = GlobalSettings::getInstance()->getDatabaseDbname();
         $user = GlobalSettings::getInstance()->getDatabaseUser();
         $pass = GlobalSettings::getInstance()->getDatabasePass();
-        $this->db_connection = new DbPdo($host, $name, $user, $pass);
-        $this->pdo = $this->db_connection->getPdo();
+        $file = GlobalSettings::getInstance()->getDatabaseSqlite();
+        try{
+            $this->db_connection = new DbPdo($host, $name, $user, $pass, null, $file);
+            $this->pdo = $this->db_connection->getPdo();
+        } catch (Exception $e) {
+            $msg = sprintf('Could not initialize database, error message: "%s"', $e->getMessage());
+            Utils::LogToShellAndExit($msg);
+            $this->log->critical($msg);
+        }
     }
 
     private function validateDBQueueStructure(): void
@@ -63,7 +66,7 @@ class QueueDatabase extends QueueBase
         $service_queue_found = $this->db_connection->tableExists(QueueConstants::SERVICE_QUEUE);
         $maintenance_queue_found = $this->db_connection->tableExists(QueueConstants::MAINTENANCE_QUEUE);
         if (!$service_queue_found || !$maintenance_queue_found) {
-           Utils::LogToShellAndExit('Please ensure to run the DBUpdate.php script!');
+           Utils::LogToShellAndExit('Queue tables not found. Please ensure to run the DBUpdate.php script!');
         }
     }
     private function prepareStatements()
@@ -137,21 +140,21 @@ class QueueDatabase extends QueueBase
     public function getParticipants(): array
     {
         $participants = [];
-            $this->prepare_select_participants->execute();
-            while ($row = $this->prepare_select_participants->fetch(PDO::FETCH_ASSOC)) {
-                $participants[] = [
-                    'pid' => $row['pid'],
-                    'mid' => $row['mid'],
-                    'name' => $row['name'],
-                    'description' => $row['description'],
-                    'dns' => $row['dns'] ? : '' ,
-                    'email' => $row['email'],
-                    'org' => [
-                        'name' => $row['org_name'],
-                        'abbr' => $row['org_abbr']
-                        ]
-                ];
-            }
+        $this->prepare_select_participants->execute();
+        while ($row = $this->prepare_select_participants->fetch(PDO::FETCH_ASSOC)) {
+            $participants[] = [
+                'pid' => $row['pid'],
+                'mid' => $row['mid'],
+                'name' => $row['name'],
+                'description' => $row['description'],
+                'dns' => $row['dns'] ? : '' ,
+                'email' => $row['email'],
+                'org' => [
+                    'name' => $row['org_name'],
+                    'abbr' => $row['org_abbr']
+                    ]
+            ];
+        }
         return $participants;
     }
 

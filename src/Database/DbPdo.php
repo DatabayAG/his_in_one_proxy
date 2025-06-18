@@ -6,6 +6,7 @@ use Exception;
 use HisInOneProxy\Database\FieldDefinition\DBPdoFieldDefinition;
 use HisInOneProxy\Database\FieldDefinition\DBPdoMySQLFieldDefinition;
 use HisInOneProxy\Log\Log;
+use HisInOneProxy\System\Utils;
 use PDO;
 
 class DbPdo
@@ -20,27 +21,30 @@ class DbPdo
     private string $username = '';
     private string $password = '';
     private int $port = 3306;
+    private ?string $sq_lite_dsn = null;
     private ?int $limit = null;
     private ?int $offset = null;
     private string $storage_engine = 'InnoDB';
     private string $dsn = '';
-    private ?PDO $pdo = null;
+    protected ?PDO $pdo = null;
     private $DbPdo = null;
     private int $error_code = 0;
     private Log $log;
     private DBPdoMySQLFieldDefinition $field_definition;
     private DBPdoManager $manager;
-
+    public string $SQL_TYPE;
     /**
      * @throws Exception
      */
-    public function __construct(string $host, string $dbname, string $username, string $password, ?int $port = null)
+    public function __construct(string $host, string $dbname, string $username, string $password, ?int $port = null, string $sq_lite_file = null)
     {
         $this->log = new Log();
         $this->host = $host;
         $this->dbname = $dbname;
         $this->username = $username;
         $this->password = $password;
+        $this->sq_lite_dsn = 'sqlite:' . $sq_lite_file;
+
         if ($port !== null) {
             $this->port = $port;
         }
@@ -52,7 +56,9 @@ class DbPdo
                 return $this->pdo;
             }
         } catch (Exception $e) {
-            $this->log->critical($e->getMessage());
+                $msg = sprintf('Could not initialize database, ERROR: "%s"', $e->getMessage());
+                Utils::LogToShellAndExit($msg);
+                $this->log->critical($msg);
         }
         $this->DbPdo = $this;
         $this->field_definition = new DBPdoMySQLFieldDefinition($this);
@@ -67,12 +73,19 @@ class DbPdo
     /**
      * @throws Exception
      */
-    private function connect(bool $return_false_for_error = false): ?bool
+    protected function connect(bool $return_false_for_error = false): ?bool
     {
         $this->generateDSN();
         try {
-            $options = $this->getAttributes();
-            $this->pdo = new PDO($this->getDSN(), $this->getUsername(), $this->getPassword(), $options);
+            if($this->sq_lite_dsn !== 'sqlite:') {
+                $file = $this->sq_lite_dsn;
+                $this->pdo = new PDO($file);
+                $this->SQL_TYPE = 'SQLITE';
+            } else {
+                $options = $this->getAttributes();
+                $this->SQL_TYPE = 'MYSQL';
+                $this->pdo = new PDO($this->getDSN(), $this->getUsername(), $this->getPassword(), $options);
+            }
         } catch (Exception $e) {
             $this->error_code = $e->getCode();
             if ($return_false_for_error) {
@@ -149,10 +162,20 @@ class DbPdo
 
     public function tableExists(string $table_name): bool
     {
-        $result = $this->pdo->prepare("SHOW TABLES LIKE :table_name");
-        $result->execute(['table_name' => $table_name]);
-        $return = $result->rowCount();
-        $result->closeCursor();
+        if($this->SQL_TYPE === 'SQLITE') {
+            $result = $this->pdo->prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?;");
+            $result->execute([$table_name]);
+            $return = $result->fetch();
+            if(isset($return['name'])) {
+                $return = 1;
+            }
+            $result->closeCursor();
+        } else {
+            $result = $this->pdo->prepare("SHOW TABLES LIKE :table_name");
+            $result->execute(['table_name' => $table_name]);
+            $return = $result->rowCount();
+            $result->closeCursor();
+        }
 
         return $return > 0;
     }

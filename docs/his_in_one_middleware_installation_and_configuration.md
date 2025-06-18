@@ -120,6 +120,7 @@
                 "dbname" : "",
                 "user" : "",
                 "pass" : "",
+			    "sqlite" : ""
             },
           "queue_type"             : "file_based",
           "path_to_queue"          : "/opt/his_middleware/simple_queue2/", 
