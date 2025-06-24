@@ -66,6 +66,10 @@ class DBUpdate
             $name = GlobalSettings::getInstance()->getDatabaseDbname();
             $user = GlobalSettings::getInstance()->getDatabaseUser();
             $pass = GlobalSettings::getInstance()->getDatabasePass();
+            $file = GlobalSettings::getInstance()->getDatabaseSqlite();
+            if($file !== '') {
+                Utils::LogToShellAndExit('You seem to use the sqlite implementation, please create your db tables with the template.');
+            }
             $connection = new DbPdo($host, $name, $user, $pass);
             $this->pdo = $connection->getPdo();
             $GLOBALS['DBPDO'] = $connection->getDbPdo();
