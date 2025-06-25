@@ -162,7 +162,7 @@ class Conductor
             $units = $this->startHandlingUnitList($unit_list, $cos_map, $cos_already);
             $this->finishHandlingUnits($units);
 
-            $this->log->info(sprintf('Unit relevant for export: %s. Unit irrelevant for export: %s. Unit ignored since found collisions: %s',
+            $this->log->info(sprintf('Unit relevant for export: %s. Unit irrelevant for export: %s. Entries ignored since found collisions: %s',
                 $services->getRelevantForExport(), $services->getIrRelevantForExport(), $services->getFoundCollisions()));
 
         } else {
