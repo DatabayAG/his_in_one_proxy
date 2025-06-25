@@ -378,4 +378,12 @@ class CourseInterfaceService extends SoapService
         return null;
     }
 
+    public function replaceLinkToCourse($unit_id, string $term_type, int $term_year, $link, $desc)
+    {
+        $this->getLinksForCourse($unit_id, $term_type, $term_year);
+        $this->deleteLinkFromCourse($unit_id, $term_type, $term_year, $link);
+        $this->addLinkToCourse($unit_id, $term_type, $term_year, $desc, $link);
+        return $this->getLinksForCourse($unit_id, $term_type, $term_year);
+    }
+
 }

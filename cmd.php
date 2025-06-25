@@ -29,11 +29,9 @@ function startHandler()
 		{
 			$year = $_SERVER['argv'][3];
 		}
-		if(array_key_exists(4, $_SERVER['argv']))
-		{
-			$param = $_SERVER['argv'][4];
-		}
 
+        array_splice($_SERVER['argv'], 0, 4);
+        $param = $_SERVER['argv'];
 		$handler	= new ConsoleHandler($term, $year);
 		$handler->functionMap($func, $param);
 	}

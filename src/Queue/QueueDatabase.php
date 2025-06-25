@@ -31,6 +31,10 @@ class QueueDatabase extends QueueBase
     private ?PDOStatement $prepare_remove_entry_service_queue = null;
     private ?PDOStatement $prepare_select_service_queue = null;
     private ?PDOStatement $prepare_select_participants = null;
+    private ?PDOStatement $prepare_insert_link_queue = null;
+    private ?PDOStatement $prepare_pop_link_queue = null;
+
+    private ?PDOStatement $prepare_update_sent_link_queue = null;
 
     function __construct(bool $force_push = false)
     {
@@ -113,6 +117,21 @@ class QueueDatabase extends QueueBase
         if ($this->prepare_insert_maintenance_queue === null) {
             $sql = 'INSERT INTO ' . QueueConstants::MAINTENANCE_QUEUE . ' (data, func, receiver, unix_time) VALUES (?,?,?,?)';
             $this->prepare_insert_maintenance_queue = $this->pdo->prepare($sql);
+        }
+
+        if ($this->prepare_insert_link_queue === null) {
+            $sql = 'INSERT INTO ' . QueueConstants::LINK_QUEUE . ' (unit_id, term_type, term_year, description, link, ecs_course_url) VALUES (?,?,?,?,?,?)';
+            $this->prepare_insert_link_queue = $this->pdo->prepare($sql);
+        }
+
+        if ($this->prepare_pop_link_queue === null) {
+            $sql = 'SELECT * FROM ' . QueueConstants::LINK_QUEUE . ' WHERE sent IS NULL ORDER BY link_id LIMIT 1';
+            $this->prepare_pop_link_queue = $this->pdo->prepare($sql);
+        }
+
+        if ($this->prepare_update_sent_link_queue === null) {
+            $sql = 'UPDATE ' . QueueConstants::LINK_QUEUE . ' SET sent=:sent WHERE link_id=:id';
+            $this->prepare_update_sent_link_queue = $this->pdo->prepare($sql);
         }
     }
 
@@ -358,6 +377,33 @@ class QueueDatabase extends QueueBase
             ];
         }
         return $data;
+    }
+
+    public function popLink() : array {
+        $data = [];
+        $this->prepare_pop_link_queue->execute();
+        while ($row = $this->prepare_pop_link_queue->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+
+        return $data;
+    }
+
+    public function insertLink($unit_id, $term_type, $term_year, $description, $link, $ecs_course_url, $logging) {
+        $this->prepare_insert_link_queue->execute([$unit_id, $term_type, $term_year, $description, $link, $ecs_course_url]);
+        $this->log->info(sprintf('Link for unit (%s), was written to database.', $unit_id));
+    }
+
+    public function markSentLink(int $link_id, int $unit_id) {
+        $unix_time = time();
+
+        $data = [
+            'sent' => $unix_time,
+            'link_id' => $link_id,
+        ];
+
+        $this->prepare_update_sent_link_queue->execute($data);
+        $this->log->debug(sprintf('Acknowledged entry %s from queue %s, removing it.', $link_id, QueueConstants::LINK_QUEUE));
     }
 
 }

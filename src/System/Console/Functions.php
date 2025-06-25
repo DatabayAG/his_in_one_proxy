@@ -65,7 +65,7 @@ class Functions
             self::appendFunction('ea', 'readEAddressesForPerson', 'Reads electronic addresses by person id.', true);
             self::appendFunction('et', 'getAllElementtypes', 'Reads element types.', true);
             self::appendFunction('cs', 'getAllEventtypes', 'Reads all event types.', true);
-            self::appendFunction('lf', 'getLinksForCourse', 'Reads links for a course.', true);
+            self::appendFunction('lf', 'addLinkForCourse', 'Adds link for a course. Params: UnitId Description Link', true);
         }
     }
 

@@ -6,12 +6,16 @@ use Exception;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Person;
 use HisInOneProxy\Log\Log;
+use HisInOneProxy\Queue\QueueDatabase;
 use HisInOneProxy\Queue\QueueProcess;
+use HisInOneProxy\Soap\CourseCatalogService;
+use HisInOneProxy\Soap\CourseInterfaceService;
 use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\Soap\Interactions\DataPrinter;
 use HisInOneProxy\Soap\Interactions\HisHttpServer;
 use HisInOneProxy\Soap\SoapService;
+use HisInOneProxy\Soap\SoapServiceRouter;
 use HisInOneProxy\System\Console\FunctionObject;
 use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
@@ -79,8 +83,6 @@ class ConsoleHandler
         if (GlobalSettings::getInstance()->getHisServerUrl() == '/') {
             Utils::LogToShellAndExit('No his server url found.');
         }
-
-        //Todo: Re-add function
 
         self::$conductor = new Conductor($term, $year, $log);
         $this->year      = $year;
@@ -486,21 +488,22 @@ class ConsoleHandler
      * @param $param
      * @throws Exception
      */
-    protected function getLinksForCourse($param)
+    protected function addLinkForCourse($param)
     {
-        $unit_id = 1815;
-        $term_type = 30;
-        $term_year = 2025;
+        if(is_array($param) && sizeof($param) >= 3) {
+            $unit_id = $param[0];
+            $desc = $param[1];
+            $link = $param[2];
+            $term_type = GlobalSettings::getInstance()->getActualTermId();
+            $term_year = GlobalSettings::getInstance()->getActualTermYear();
 
-        $this->startTimer();
-        $obj = DataCache::getInstance()->getCourseInterfaceService()->getLinksForCourse($unit_id, $term_type, $term_year);
-        print_r($obj);
-        $obj = DataCache::getInstance()->getCourseInterfaceService()->deleteLinkFromCourse($unit_id, $term_type, $term_year,   'https://heise.de');
-        $obj = DataCache::getInstance()->getCourseInterfaceService()->addLinkToCourse($unit_id, $term_type, $term_year,  'Test2', 'https://heise.de');
-        print_r($obj);
-        $obj = DataCache::getInstance()->getCourseInterfaceService()->getLinksForCourse($unit_id, $term_type, $term_year);
-        print_r($obj);
-        $this->endTimer();
+            $this->startTimer();
+            $db = new QueueDatabase();
+            $db->insertLink($unit_id, $term_type, $term_year, $desc,  $link, '', null);
+            $this->endTimer();
+        } else {
+            echo "Please enter all needed params for " . __FUNCTION__ ."\n";
+        }
     }
 
     /**

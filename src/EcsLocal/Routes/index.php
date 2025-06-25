@@ -3,10 +3,12 @@
 namespace HisInOneProxy\EcsLocal\Routes;
 require_once '../../../libs/composer/vendor/autoload.php';
 
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\EcsLocal\EcsLocalFunctions;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue\QueueConstants;
 use HisInOneProxy\Queue\QueueDatabase;
+use HisInOneProxy\Soap\Interactions\DataCache;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -190,7 +192,6 @@ $app->get(CC_COURSE_LINKS, function (Request $request, Response $response, array
     return $response;
 });
 
-//Todo: needs to be optimized
 $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions) {
     if($local_functions->isValidParticipant()->isInvalidAuth()) {
         return $response;
@@ -199,16 +200,17 @@ $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array
     $post = $request->getParsedBody();
     if(is_array($post)) {
         $course_urls = $local_functions->parseCourseUrls($post);
-        $lectureId = $course_urls->getCmsLectureId();
-        # get JSON Data with lecture id from DB
-        $ecs_course_url = $course_urls->getEcsCourseUrl();
+        $lectureId = $course_urls->getCmsLectureId() ?: '';
+        $ecs_course_url = $course_urls->getEcsCourseUrl() ?: '';
         $lms_course_urls = $course_urls->getLmsCourseUrls();
         $first_found_url = reset($lms_course_urls);
-        #$router  = new SoapServiceRouter($logging);
-        #$course_interface_service    = new CourseInterfaceService($logging, $router);
+        $term_type_id = GlobalSettings::getInstance()->getActualTermId();
+        $term_year = GlobalSettings::getInstance()->getActualTermYear();
 
-        #$links = $course_interface_service->getLinksForCourse(202530293, 30, 2025);
-        # $logging->info(sprintf("%s", $links));
+        if($lectureId !== '') {
+            $db->insertLink($lectureId, $term_type_id, $term_year, $first_found_url->getTitle(), $first_found_url->getUrl(), $ecs_course_url, $logging);
+        }
+
     } else {
         $logging->warning('This does not seem to be a valid course urls array');
     }

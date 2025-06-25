@@ -108,7 +108,7 @@ class Conductor
         var_dump(DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText(12));
         var_dump(DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText(7));
         var_dump(DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText(8));
-        var_dump(DataCache::getInstance()->getValueService()->getAllCourseMappingTypes(12));
+        #var_dump(DataCache::getInstance()->getValueService()->getAllCourseMappingTypes(12));
         var_dump(DataCache::getInstance()->getCourseMappingTypeContainer()->translateIdToDefaultText(4));
     }
 
@@ -136,7 +136,7 @@ class Conductor
                 $this->log->warning(sprintf('No catalog leaf found for term id %s.', $term_id));
             }
         } else {
-            $this->log->warning(sprintf('No term id found for year %s and term type value id.', $year, $term_type_value_id));
+            $this->log->warning(sprintf('No term id found for year %s and term type value id %s.', $year, $term_type_value_id));
         }
         return $catalog_leaf;
     }
@@ -293,7 +293,6 @@ class Conductor
 
         if (!array_key_exists($unit->getId(), $this->course_of_studies)) {
             $course_ids = $services->getCourseInterfaceService()->getCourseOfStudiesForUnit($unit->getId());
-            //Todo: check whats wrong here, only a quick fix
             if ($course_ids !== null) {
                 foreach ($course_ids->getCourseOfStudyIdContainer() as $course_id) {
                     if (array_key_exists($course_id, $cos_map)) {

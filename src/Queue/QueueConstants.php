@@ -27,6 +27,7 @@ class QueueConstants
     const PARTICIPANTS = 'participants';
 
     const MAINTENANCE_QUEUE = 'maintenance_queue';
+    const LINK_QUEUE = 'link_queue';
 
     const STATUS = 'status';
     const CREATED = 'created';

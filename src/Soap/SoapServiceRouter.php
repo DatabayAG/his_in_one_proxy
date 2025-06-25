@@ -91,7 +91,7 @@ class SoapServiceRouter
 	 * @var WSSoapClient
 	 */
 	protected $soap_client_keyvalue_service;
-	
+
     /**
      * @var WSSoapClient
      */
@@ -474,6 +474,6 @@ class SoapServiceRouter
     {
         $this->soap_client_account_service = $soap_client_account_service;
     }
-    
-    
+
+
 }
