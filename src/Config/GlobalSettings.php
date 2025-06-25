@@ -57,6 +57,7 @@ class GlobalSettings
     protected bool $use_local_ecs = false;
     protected string $ecs_community_id = "0";
     protected array $workStatusIds = [];
+    protected bool $create_links = false;
 
     private function __construct()
     {
@@ -133,6 +134,7 @@ class GlobalSettings
         $this->setDatabasePass($this->config->get('Database.pass'));
         $this->setDatabaseSqlite($this->config->get('Database.sqlite'));
 
+        $this->setCreateLinks($this->config->get('create_links'));
         $this->setQueueType($this->config->get('queue_type'));
         $this->setPathToQueue($this->config->get('path_to_queue'));
         $this->setQueueTimer($this->config->get('queue_timer'));
@@ -199,6 +201,7 @@ class GlobalSettings
             "Database.user" => $this->getDatabaseUser(),
             "Database.pass" => $this->getDatabasePass(),
             "Database.sqlite" => $this->getDatabaseSqlite(),
+            "create_links" => $this->isCreateLinks(),
             "queue_type" => $this->getQueueType(),
             "path_to_queue" => $this->getPathToQueue(),
             "queue_timer" => $this->getQueueTimer(),
@@ -580,6 +583,16 @@ class GlobalSettings
         if($this->isUseLocalEcs() && $this->getQueueType() === 'file_based') {
             Utils::LogToShellAndExit('The usage of the local ecs implementation needs a "db_based" queue type, you have selected "file_base", this will not work.');
         }
+    }
+
+    public function isCreateLinks(): bool
+    {
+        return $this->create_links;
+    }
+
+    public function setCreateLinks(bool $create_links): void
+    {
+        $this->create_links = $create_links;
     }
 
 }

@@ -122,6 +122,7 @@
                 "pass" : "",
 			    "sqlite" : ""
             },
+          "create_links"			 : "true",
           "queue_type"             : "file_based",
           "path_to_queue"          : "/opt/his_middleware/simple_queue2/", 
           "path_to_log"            : "/opt/his_middleware/log/debug.log",

@@ -97,8 +97,7 @@ class Conductor
      */
     protected function getCurrentTerm()
     {
-        $term_service = DataCache::getInstance()->getTermService();
-        return $term_service->getCurrentTerm();
+        return DataCache::getInstance()->getTermService()->getCurrentTerm();
     }
 
     protected function getParallelGroupValues()
@@ -148,7 +147,7 @@ class Conductor
     {
         $services    = DataCache::getInstance();
         $cos_map     = $services->getCourseOfStudyService()->findCourseOfStudy();
-        $cos_already = array();
+        $cos_already = [];
 
         $year               = $this->year;
         $term_type_value_id = $this->term_id;

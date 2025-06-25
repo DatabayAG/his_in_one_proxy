@@ -196,23 +196,24 @@ $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array
     if($local_functions->isValidParticipant()->isInvalidAuth()) {
         return $response;
     }
+    if(GlobalSettings::getInstance()->isCreateLinks()) {
+        $post = $request->getParsedBody();
+        if(is_array($post)) {
+            $course_urls = $local_functions->parseCourseUrls($post);
+            $lectureId = $course_urls->getCmsLectureId() ?: '';
+            $ecs_course_url = $course_urls->getEcsCourseUrl() ?: '';
+            $lms_course_urls = $course_urls->getLmsCourseUrls();
+            $first_found_url = reset($lms_course_urls);
+            $term_type_id = GlobalSettings::getInstance()->getActualTermId();
+            $term_year = GlobalSettings::getInstance()->getActualTermYear();
 
-    $post = $request->getParsedBody();
-    if(is_array($post)) {
-        $course_urls = $local_functions->parseCourseUrls($post);
-        $lectureId = $course_urls->getCmsLectureId() ?: '';
-        $ecs_course_url = $course_urls->getEcsCourseUrl() ?: '';
-        $lms_course_urls = $course_urls->getLmsCourseUrls();
-        $first_found_url = reset($lms_course_urls);
-        $term_type_id = GlobalSettings::getInstance()->getActualTermId();
-        $term_year = GlobalSettings::getInstance()->getActualTermYear();
+            if($lectureId !== '') {
+                $db->insertLink($lectureId, $term_type_id, $term_year, $first_found_url->getTitle(), $first_found_url->getUrl(), $ecs_course_url, $logging);
+            }
 
-        if($lectureId !== '') {
-            $db->insertLink($lectureId, $term_type_id, $term_year, $first_found_url->getTitle(), $first_found_url->getUrl(), $ecs_course_url, $logging);
+        } else {
+            $logging->warning('This does not seem to be a valid course urls array');
         }
-
-    } else {
-        $logging->warning('This does not seem to be a valid course urls array');
     }
 
     return $response;
