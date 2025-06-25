@@ -33,7 +33,6 @@ class QueueDatabase extends QueueBase
     private ?PDOStatement $prepare_select_participants = null;
     private ?PDOStatement $prepare_insert_link_queue = null;
     private ?PDOStatement $prepare_pop_link_queue = null;
-
     private ?PDOStatement $prepare_update_sent_link_queue = null;
 
     function __construct(bool $force_push = false)
@@ -278,6 +277,7 @@ class QueueDatabase extends QueueBase
                     $lectureId,
                     $row['service_id']
                 ));
+                DataCache::getInstance()->incrementFoundCollisions();
             }
         } else {
             if ($lectureId === 0) {

@@ -193,6 +193,8 @@ class DataCache
      */
     protected $accounts = array();
 
+    private int $found_collisions = 0;
+
     /**
      * @return CourseService
      */
@@ -813,4 +815,15 @@ class DataCache
         }
         return null;
     }
+
+    public function getFoundCollisions(): int
+    {
+        return $this->found_collisions;
+    }
+
+    public function incrementFoundCollisions(): void
+    {
+        $this->found_collisions++;
+    }
+
 }
