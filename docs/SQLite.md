@@ -39,3 +39,19 @@
         sent TEXT DEFAULT NULL,
         lecture_id TEXT DEFAULT NULL
     );
+
+---
+
+    DROP TABLE IF EXISTS link_queue;
+
+    CREATE TABLE link_queue (
+        link_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        unit_id INTEGER NOT NULL,
+        term_type INTEGER NOT NULL,
+        term_year INTEGER NOT NULL,
+        description TEXT NOT NULL,
+        link TEXT NOT NULL,
+        ecs_course_url TEXT NOT NULL,
+        checksum TEXT DEFAULT NULL,
+        sent TEXT DEFAULT NULL
+    );
