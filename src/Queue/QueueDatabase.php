@@ -394,7 +394,7 @@ class QueueDatabase extends QueueBase
         $this->log->info(sprintf('Link for unit (%s), was written to database.', $unit_id));
     }
 
-    public function markSentLink(int $link_id, int $unit_id) {
+    public function markSentLink(int $link_id, int $unit_id = 0) {
         $unix_time = time();
 
         $data = [

@@ -19,10 +19,10 @@ use XMLWriter;
  *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-final class Writer
+final readonly class Writer
 {
     /**
-     * @psalm-param non-empty-string $baselineFile
+     * @param non-empty-string $baselineFile
      */
     public function write(string $baselineFile, Baseline $baseline): void
     {

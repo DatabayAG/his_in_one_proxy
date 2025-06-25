@@ -31,6 +31,7 @@ use PHPUnit\Event\Test\Finished;
 use PHPUnit\Event\Test\MarkedIncomplete;
 use PHPUnit\Event\Test\PreparationStarted;
 use PHPUnit\Event\Test\Prepared;
+use PHPUnit\Event\Test\PrintedUnexpectedOutput;
 use PHPUnit\Event\Test\Skipped;
 use PHPUnit\Event\TestSuite\Started;
 use PHPUnit\Event\UnknownSubscriberTypeException;
@@ -54,32 +55,32 @@ final class JunitXmlLogger
     private array $testSuites = [];
 
     /**
-     * @psalm-var array<int,int>
+     * @var array<int,int>
      */
     private array $testSuiteTests = [0];
 
     /**
-     * @psalm-var array<int,int>
+     * @var array<int,int>
      */
     private array $testSuiteAssertions = [0];
 
     /**
-     * @psalm-var array<int,int>
+     * @var array<int,int>
      */
     private array $testSuiteErrors = [0];
 
     /**
-     * @psalm-var array<int,int>
+     * @var array<int,int>
      */
     private array $testSuiteFailures = [0];
 
     /**
-     * @psalm-var array<int,int>
+     * @var array<int,int>
      */
     private array $testSuiteSkipped = [0];
 
     /**
-     * @psalm-var array<int,int>
+     * @var array<int,int>
      */
     private array $testSuiteTimes        = [0];
     private int $testSuiteLevel          = 0;
@@ -87,6 +88,7 @@ final class JunitXmlLogger
     private ?HRTime $time                = null;
     private bool $prepared               = false;
     private bool $preparationFailed      = false;
+    private ?string $unexpectedOutput    = null;
 
     /**
      * @throws EventFacadeIsSealedException
@@ -184,20 +186,19 @@ final class JunitXmlLogger
         $this->createTestCase($event);
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
     public function testPreparationFailed(): void
     {
         $this->preparationFailed = true;
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
     public function testPrepared(): void
     {
         $this->prepared = true;
+    }
+
+    public function testPrintedUnexpectedOutput(PrintedUnexpectedOutput $event): void
+    {
+        $this->unexpectedOutput = $event->output();
     }
 
     /**
@@ -270,6 +271,15 @@ final class JunitXmlLogger
             sprintf('%F', $time),
         );
 
+        if ($this->unexpectedOutput !== null) {
+            $systemOut = $this->document->createElement(
+                'system-out',
+                Xml::prepareString($this->unexpectedOutput),
+            );
+
+            $this->currentTestCase->appendChild($systemOut);
+        }
+
         $this->testSuites[$this->testSuiteLevel]->appendChild(
             $this->currentTestCase,
         );
@@ -277,9 +287,10 @@ final class JunitXmlLogger
         $this->testSuiteTests[$this->testSuiteLevel]++;
         $this->testSuiteTimes[$this->testSuiteLevel] += $time;
 
-        $this->currentTestCase = null;
-        $this->time            = null;
-        $this->prepared        = false;
+        $this->currentTestCase  = null;
+        $this->time             = null;
+        $this->prepared         = false;
+        $this->unexpectedOutput = null;
     }
 
     /**
@@ -294,6 +305,7 @@ final class JunitXmlLogger
             new TestPreparationStartedSubscriber($this),
             new TestPreparationFailedSubscriber($this),
             new TestPreparedSubscriber($this),
+            new TestPrintedUnexpectedOutputSubscriber($this),
             new TestFinishedSubscriber($this),
             new TestErroredSubscriber($this),
             new TestFailedSubscriber($this),
@@ -421,7 +433,7 @@ final class JunitXmlLogger
     /**
      * @throws InvalidArgumentException
      *
-     * @psalm-assert !null $this->currentTestCase
+     * @phpstan-assert !null $this->currentTestCase
      */
     private function createTestCase(Errored|Failed|MarkedIncomplete|PreparationStarted|Prepared|Skipped $event): void
     {

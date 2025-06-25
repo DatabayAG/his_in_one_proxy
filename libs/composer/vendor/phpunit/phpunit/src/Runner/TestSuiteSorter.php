@@ -71,18 +71,18 @@ final class TestSuiteSorter
     ];
 
     /**
-     * @psalm-var array<string, int> Associative array of (string => DEFECT_SORT_WEIGHT) elements
+     * @var array<string, int> Associative array of (string => DEFECT_SORT_WEIGHT) elements
      */
     private array $defectSortOrder = [];
     private readonly ResultCache $cache;
 
     /**
-     * @psalm-var array<string> A list of normalized names of tests before reordering
+     * @var array<string> A list of normalized names of tests before reordering
      */
     private array $originalExecutionOrder = [];
 
     /**
-     * @psalm-var array<string> A list of normalized names of tests affected by reordering
+     * @var array<string> A list of normalized names of tests affected by reordering
      */
     private array $executionOrder = [];
 
@@ -138,11 +138,17 @@ final class TestSuiteSorter
         }
     }
 
+    /**
+     * @return array<string>
+     */
     public function getOriginalExecutionOrder(): array
     {
         return $this->originalExecutionOrder;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getExecutionOrder(): array
     {
         return $this->executionOrder;
@@ -171,6 +177,8 @@ final class TestSuiteSorter
         if ($resolveDependencies && !($suite instanceof DataProviderTestSuite)) {
             $tests = $suite->tests();
 
+            /** @noinspection PhpParamsInspection */
+            /** @phpstan-ignore argument.type */
             $suite->setTests($this->resolveDependencies($tests));
         }
     }
@@ -193,11 +201,21 @@ final class TestSuiteSorter
         $this->defectSortOrder[$suite->sortId()] = $max;
     }
 
+    /**
+     * @param list<Test> $tests
+     *
+     * @return list<Test>
+     */
     private function reverse(array $tests): array
     {
         return array_reverse($tests);
     }
 
+    /**
+     * @param list<Test> $tests
+     *
+     * @return list<Test>
+     */
     private function randomize(array $tests): array
     {
         shuffle($tests);
@@ -205,6 +223,11 @@ final class TestSuiteSorter
         return $tests;
     }
 
+    /**
+     * @param list<Test> $tests
+     *
+     * @return list<Test>
+     */
     private function sortDefectsFirst(array $tests): array
     {
         usort(
@@ -215,6 +238,11 @@ final class TestSuiteSorter
         return $tests;
     }
 
+    /**
+     * @param list<Test> $tests
+     *
+     * @return list<Test>
+     */
     private function sortByDuration(array $tests): array
     {
         usort(
@@ -225,6 +253,11 @@ final class TestSuiteSorter
         return $tests;
     }
 
+    /**
+     * @param list<Test> $tests
+     *
+     * @return list<Test>
+     */
     private function sortBySize(array $tests): array
     {
         usort(
@@ -302,9 +335,9 @@ final class TestSuiteSorter
      * 3. If the test has dependencies but none left to do: mark done, start again from the top
      * 4. When we reach the end add any leftover tests to the end. These will be marked 'skipped' during execution.
      *
-     * @psalm-param array<DataProviderTestSuite|TestCase> $tests
+     * @param array<DataProviderTestSuite|TestCase> $tests
      *
-     * @psalm-return array<DataProviderTestSuite|TestCase>
+     * @return array<DataProviderTestSuite|TestCase>
      */
     private function resolveDependencies(array $tests): array
     {
@@ -325,6 +358,9 @@ final class TestSuiteSorter
         return array_merge($newTestOrder, $tests);
     }
 
+    /**
+     * @return array<string>
+     */
     private function calculateTestExecutionOrder(Test $suite): array
     {
         $tests = [];

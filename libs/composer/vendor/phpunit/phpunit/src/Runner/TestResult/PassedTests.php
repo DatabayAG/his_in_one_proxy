@@ -27,12 +27,12 @@ final class PassedTests
     private static ?self $instance = null;
 
     /**
-     * @psalm-var list<class-string>
+     * @var list<class-string>
      */
     private array $passedTestClasses = [];
 
     /**
-     * @psalm-var array<string,array{returnValue: mixed, size: TestSize}>
+     * @var array<string,array{returnValue: mixed, size: TestSize}>
      */
     private array $passedTestMethods = [];
 
@@ -48,7 +48,7 @@ final class PassedTests
     }
 
     /**
-     * @psalm-param class-string $className
+     * @param class-string $className
      */
     public function testClassPassed(string $className): void
     {
@@ -82,7 +82,7 @@ final class PassedTests
     }
 
     /**
-     * @psalm-param class-string $className
+     * @param class-string $className
      */
     public function hasTestClassPassed(string $className): bool
     {
