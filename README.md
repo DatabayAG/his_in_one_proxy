@@ -56,11 +56,7 @@ If the Unittest with coverage segfaults remove the opcache extension!
 			Use "php cmd.php cm" to get the course Mapping Id from your HIS installation
 		},
 	"Database" : { //Can be used instead of the file based queue, see queue_type and the local ECS implementation
-	        "host" : "",
-	        "dbname" : "",
-	        "user" : "",
-	        "pass" : "",
-			"sqlite" : ""
+		"dsn" : "mysql:host=xxx;port=xxx;dbname=xxx;user=xxx;password=xxx"
 	},
 	"queue_type"             : "file_based/db_based",
 	"path_to_queue"          : "Path to queue from his_in_one_proxy",

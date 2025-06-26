@@ -49,13 +49,9 @@ class QueueDatabase extends QueueBase
      */
     private function createDBConnection() {
         $this->keep_elements = GlobalSettings::getInstance()->isKeepElementInQueue();
-        $host = GlobalSettings::getInstance()->getDatabaseHost();
-        $name = GlobalSettings::getInstance()->getDatabaseDbname();
-        $user = GlobalSettings::getInstance()->getDatabaseUser();
-        $pass = GlobalSettings::getInstance()->getDatabasePass();
-        $file = GlobalSettings::getInstance()->getDatabaseSqlite();
+        $dsn = GlobalSettings::getInstance()->getDatabaseDsn();
         try{
-            $this->db_connection = new DbPdo($host, $name, $user, $pass, null, $file);
+            $this->db_connection = new DbPdo($dsn);
             $this->pdo = $this->db_connection->getPdo();
         } catch (Exception $e) {
             $msg = sprintf('Could not initialize database, error message: "%s"', $e->getMessage());

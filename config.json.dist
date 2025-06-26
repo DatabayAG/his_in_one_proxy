@@ -41,11 +41,7 @@
 			"COURSE_TYPE_ID_HIS" : "COURSE_TYPE_ID_ECS"
 		},
 	"Database" : {
-	        "host" : "",
-	        "dbname" : "",
-	        "user" : "",
-	        "pass" : "",
-            "sqlite" : ""
+		"dsn" : "mysql:host=xxx;port=xxx;dbname=xxx;user=xxx;password=xxx"
 	},
 	"create_links"			 : "true|false",
 	"queue_type"             : "(file_based, db_based)",

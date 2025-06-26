@@ -8,6 +8,7 @@ use HisInOneProxy\Database\FieldDefinition\DBPdoMySQLFieldDefinition;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\System\Utils;
 use PDO;
+use PDOException;
 
 class DbPdo
 {
@@ -15,13 +16,8 @@ class DbPdo
     private array $attributes = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     );
-    private string $host = '';
-    private string $dbname = '';
+
     private string $charset = 'utf8';
-    private string $username = '';
-    private string $password = '';
-    private int $port = 3306;
-    private ?string $sq_lite_dsn = null;
     private ?int $limit = null;
     private ?int $offset = null;
     private string $storage_engine = 'InnoDB';
@@ -36,18 +32,10 @@ class DbPdo
     /**
      * @throws Exception
      */
-    public function __construct(string $host, string $dbname, string $username, string $password, ?int $port = null, string $sq_lite_file = null)
+    public function __construct(string $dsn)
     {
         $this->log = new Log();
-        $this->host = $host;
-        $this->dbname = $dbname;
-        $this->username = $username;
-        $this->password = $password;
-        $this->sq_lite_dsn = 'sqlite:' . $sq_lite_file;
-
-        if ($port !== null) {
-            $this->port = $port;
-        }
+        $this->dsn = $dsn;
 
         try {
             $connection = $this->connect();
@@ -75,18 +63,10 @@ class DbPdo
      */
     protected function connect(bool $return_false_for_error = false): ?bool
     {
-        $this->generateDSN();
+        $options = $this->getAttributes();
         try {
-            if($this->sq_lite_dsn !== 'sqlite:') {
-                $file = $this->sq_lite_dsn;
-                $this->pdo = new PDO($file);
-                $this->SQL_TYPE = 'SQLITE';
-            } else {
-                $options = $this->getAttributes();
-                $this->SQL_TYPE = 'MYSQL';
-                $this->pdo = new PDO($this->getDSN(), $this->getUsername(), $this->getPassword(), $options);
-            }
-        } catch (Exception $e) {
+            $this->pdo = new PDO($this->getDSN(), null, null, $options);
+        } catch (PDOException $e) {
             $this->error_code = $e->getCode();
             if ($return_false_for_error) {
                 return false;
@@ -94,40 +74,6 @@ class DbPdo
             throw $e;
         }
         return ($this->pdo->errorCode() === PDO::ERR_NONE);
-    }
-
-    private function generateDSN()
-    {
-        $port = $this->getPort() !== 0 ? ";port=" . $this->getPort() : "";
-        $dbname = $this->getDbname() !== '' ? ';dbname=' . $this->getDbname() : '';
-        $charset = ';charset=' . $this->getCharset();
-
-        $this->setDsn('mysql:host=' . $this->getHost() . $port . $dbname . $charset);
-    }
-
-    private function getPort(): int
-    {
-        return $this->port;
-    }
-
-    private function getDbname(): string
-    {
-        return $this->dbname;
-    }
-
-    private function getCharset(): string
-    {
-        return $this->charset;
-    }
-
-    private function setDsn(string $dsn): void
-    {
-        $this->dsn = $dsn;
-    }
-
-    private function getHost(): string
-    {
-        return $this->host;
     }
 
     protected function getAttributes(): array
@@ -142,7 +88,10 @@ class DbPdo
 
     protected function getAdditionalAttributes(): array
     {
-        return [];
+        return [
+            PDO::ATTR_PERSISTENT => false,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        ];
     }
 
     private function getDsn(): string
@@ -150,19 +99,10 @@ class DbPdo
         return $this->dsn;
     }
 
-    private function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    private function getPassword(): string
-    {
-        return $this->password;
-    }
-
     public function tableExists(string $table_name): bool
     {
-        if($this->SQL_TYPE === 'SQLITE') {
+        $dbType = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+        if($dbType === 'sqlite') {
             $result = $this->pdo->prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=?;");
             $result->execute([$table_name]);
             $return = $result->fetch();
@@ -178,16 +118,6 @@ class DbPdo
         }
 
         return $return > 0;
-    }
-
-    public function setCharset(string $charset): void
-    {
-        $this->charset = $charset;
-    }
-
-    public function setPort(int $port): void
-    {
-        $this->port = $port;
     }
 
     public function setLimit(?int $limit): void

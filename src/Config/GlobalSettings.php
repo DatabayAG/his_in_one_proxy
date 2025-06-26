@@ -49,11 +49,7 @@ class GlobalSettings
     protected string $login_suffix;
     protected array $blocked_ids = [];
     protected array $text_config = [];
-    protected string $database_host;
-    protected string $database_dbname;
-    protected string $database_user;
-    protected string $database_pass;
-    protected string $database_sqlite;
+    protected string $database_dsn;
     protected bool $use_local_ecs = false;
     protected string $ecs_community_id = "0";
     protected array $workStatusIds = [];
@@ -128,11 +124,7 @@ class GlobalSettings
         $this->setEcsAuthId($this->config->get('ECS.auth_id'));
         $this->setEcsPassword($this->config->get('ECS.password'));
 
-        $this->setDatabaseHost($this->config->get('Database.host'));
-        $this->setDatabaseDbname($this->config->get('Database.dbname'));
-        $this->setDatabaseUser($this->config->get('Database.user'));
-        $this->setDatabasePass($this->config->get('Database.pass'));
-        $this->setDatabaseSqlite($this->config->get('Database.sqlite'));
+        $this->setDatabaseDsn($this->config->get('Database.dsn'));
 
         $this->setCreateLinks($this->config->get('create_links'));
         $this->setQueueType($this->config->get('queue_type'));
@@ -196,11 +188,7 @@ class GlobalSettings
             "ECS.auth_id" => $this->getEcsAuthId(),
             "ECS.password" => $this->getEcsPassword(),
             "ECS.url" => $this->getEcsServerUrl(),
-            "Database.host" => $this->getDatabaseHost(),
-            "Database.dbname" => $this->getDatabaseDbname(),
-            "Database.user" => $this->getDatabaseUser(),
-            "Database.pass" => $this->getDatabasePass(),
-            "Database.sqlite" => $this->getDatabaseSqlite(),
+            "Database.dsn" => $this->getDatabaseDsn(),
             "create_links" => $this->isCreateLinks(),
             "queue_type" => $this->getQueueType(),
             "path_to_queue" => $this->getPathToQueue(),
@@ -497,44 +485,14 @@ class GlobalSettings
         return (bool) $value;
     }
 
-    public function getDatabaseHost(): string
+    public function getDatabaseDsn(): string
     {
-        return $this->database_host;
+        return $this->database_dsn;
     }
 
-    public function setDatabaseHost(string $database_host): void
+    public function setDatabaseDsn(string $dsn): void
     {
-        $this->database_host = $database_host;
-    }
-
-    public function getDatabaseDbname(): string
-    {
-        return $this->database_dbname;
-    }
-
-    public function setDatabaseDbname(string $database_dbname): void
-    {
-        $this->database_dbname = $database_dbname;
-    }
-
-    public function getDatabaseUser(): string
-    {
-        return $this->database_user;
-    }
-
-    public function setDatabaseUser(string $database_user): void
-    {
-        $this->database_user = $database_user;
-    }
-
-    public function getDatabasePass(): string
-    {
-        return $this->database_pass;
-    }
-
-    public function setDatabasePass(string $database_pass): void
-    {
-        $this->database_pass = $database_pass;
+        $this->database_dsn = $dsn;
     }
 
     public function isUseLocalEcs(): bool
@@ -566,17 +524,6 @@ class GlobalSettings
     {
         $this->workStatusIds = $workStatusIds;
     }
-
-    public function getDatabaseSqlite(): string
-    {
-        return $this->database_sqlite;
-    }
-
-    public function setDatabaseSqlite(string $database_sqlite): void
-    {
-        $this->database_sqlite = $database_sqlite;
-    }
-
 
     private function validateSettings()
     {

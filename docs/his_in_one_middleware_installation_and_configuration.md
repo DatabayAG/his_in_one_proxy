@@ -116,11 +116,7 @@
               "3" : "2" 
             }, 
             "Database" : {
-                "host" : "",
-                "dbname" : "",
-                "user" : "",
-                "pass" : "",
-			    "sqlite" : ""
+		        "dsn" : "mysql:host=xxx;port=xxx;dbname=xxx;user=xxx;password=xxx"
             },
           "create_links"			 : "true",
           "queue_type"             : "file_based",
