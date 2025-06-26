@@ -172,6 +172,14 @@ class ConsoleHandler
         $this->endTimer();
     }
 
+    protected function truncateServiceQueue()
+    {
+        $this->startTimer();
+        $db = new QueueDatabase();
+        $db->truncateServiceQueue();
+        $this->endTimer();
+    }
+
 	protected function getAllBlockeds()
 	{
 		$this->startTimer();

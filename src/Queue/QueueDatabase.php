@@ -351,6 +351,14 @@ class QueueDatabase extends QueueBase
         $this->log->debug(sprintf('Removed entry %s from queue %s.', $id, QueueConstants::SERVICE_QUEUE));
     }
 
+    public function truncateServiceQueue(): void
+    {
+        $sql = 'Truncate Table ' . QueueConstants::SERVICE_QUEUE . ';';
+        $prepared = $this->pdo->query($sql);
+        $prepared->execute();
+        $this->log->debug(sprintf('Truncated table %s!', QueueConstants::SERVICE_QUEUE));
+    }
+
     public function reAddMessageToQueue(string $queue_name, string $id): void
     {
         if ($this->queueExists($queue_name) && $queue_name === QueueConstants::SERVICE_QUEUE) {
