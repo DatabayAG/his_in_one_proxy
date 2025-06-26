@@ -5,6 +5,7 @@ namespace HisInOneProxy\Database;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\System\Utils;
+use PDO;
 use PHPUnit\Exception;
 
 class DBUpdate
@@ -62,10 +63,15 @@ class DBUpdate
     private function initializeConnection()
     {
         try {
-            $dsn = GlobalSettings::getInstance()->getDsn();
+            $dsn = GlobalSettings::getInstance()->getDatabaseDsn();
             $connection = new DbPdo($dsn);
             $this->pdo = $connection->getPdo();
+            $dbType = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
             $GLOBALS['DBPDO'] = $connection->getDbPdo();
+
+            if($dbType === 'sqlite') {
+                Utils::LogToShellAndExit('You seem to use the sqlite implementation, please create your db tables with the template.');
+            }
         } catch (Exception $e) {
             Utils::LogToShellAndExit('No connection to database possible');
         }

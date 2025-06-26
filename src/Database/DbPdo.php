@@ -41,6 +41,8 @@ class DbPdo
             $connection = $this->connect();
             $this->initHelpers();
             if ($connection && $this->pdo !== null) {
+                $this->DbPdo = $this;
+                $this->field_definition = new DBPdoMySQLFieldDefinition($this);
                 return $this->pdo;
             }
         } catch (Exception $e) {
@@ -48,8 +50,7 @@ class DbPdo
                 Utils::LogToShellAndExit($msg);
                 $this->log->critical($msg);
         }
-        $this->DbPdo = $this;
-        $this->field_definition = new DBPdoMySQLFieldDefinition($this);
+
         return null;
     }
 
