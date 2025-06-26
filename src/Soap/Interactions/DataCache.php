@@ -225,10 +225,8 @@ class DataCache
 	protected static function init(bool $with_wsdl = true): DataCache
     {
 		self::$log = new Log();
-
        if($with_wsdl) {
            self::initializeRouterAndServices();
-
            self::readDefaultLanguage();
            self::readParallelGroupValues();
            self::readTermTypeValues();
