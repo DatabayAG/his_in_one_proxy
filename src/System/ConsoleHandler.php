@@ -136,18 +136,24 @@ class ConsoleHandler
      * @param $id
      * @throws Exception
      */
-    protected function getLectureById($id)
+    protected function getLectureById(array $id)
     {
-        $this->startTimer();
-        self::$conductor->getLectureByUnitIdForTerm($id);
-        $this->endTimer();
+        if(isset($id[0])) {
+            $unit_id = $id[0];
+            $this->startTimer();
+            self::$conductor->getLectureByUnitIdForTerm($unit_id);
+            $this->endTimer();
+        }
     }
 
-    protected function getLectureByIdForced($id)
+    protected function getLectureByIdForced(array $id)
     {
-        $this->startTimer();
-        self::$conductor->getLectureByUnitIdForTermAndForcePush($id);
-        $this->endTimer();
+        if(isset($id[0])) {
+            $unit_id = $id[0];
+            $this->startTimer();
+            self::$conductor->getLectureByUnitIdForTermAndForcePush($unit_id);
+            $this->endTimer();
+        }
     }
 
     protected function getInstitutions()

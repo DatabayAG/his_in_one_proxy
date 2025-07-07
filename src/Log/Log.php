@@ -6,6 +6,7 @@ namespace HisInOneProxy\Log;
 
 use Exception;
 use HisInOneProxy\Config\GlobalSettings;
+use HisInOneProxy\System\Utils;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -25,19 +26,32 @@ class Log
      */
     public function __construct($channel = 'default', $logger = null)
     {
-        if ($logger == null) {
-            $this->logger = new Logger($channel);
-            $this->logger->pushHandler(new StreamHandler(GlobalSettings::getInstance()->getPathToLog(), Logger::DEBUG));
+        if ($logger === null) {
+            $this->initializeLog($channel);
         } else {
             $this->logger = $logger;
         }
     }
 
     /**
-     * @param       $a_message
-     * @param array $a_context
-     * @return bool
+     * @param string $channel
+     * @return void
      */
+    protected function initializeLog(string $channel): void
+    {
+        $file = GlobalSettings::getInstance()->getPathToLog();
+        if (!file_exists($file)) {
+            touch($file);
+        }
+
+        if (is_writable($file)) {
+            $this->logger = new Logger($channel);
+            $this->logger->pushHandler(new StreamHandler(GlobalSettings::getInstance()->getPathToLog(), Logger::DEBUG));
+        } else {
+            Utils::LogToShellAndExit(sprintf('Log file is not writable. Please ensure the file: "%s" has the correct permissions.', $file));
+        }
+    }
+
     public function debug($a_message, $a_context = array())
     {
         return $this->getLogger()->debug($a_message, $a_context);

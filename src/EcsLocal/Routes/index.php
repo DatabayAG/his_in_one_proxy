@@ -215,7 +215,7 @@ $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array
             $logging->warning('This does not seem to be a valid course urls array');
         }
     }
-
-    return $response;
+    $fixedResponse = $response->withStatus(201);
+    return $fixedResponse;
 });
 $app->run();
