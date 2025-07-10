@@ -44,6 +44,7 @@
 		"dsn" : "mysql:host=xxx;port=xxx;dbname=xxx;user=xxx;password=xxx"
 	},
 	"create_links"			 : "true|false",
+	"process_links_count"	 : 5,
 	"queue_type"             : "(file_based, db_based)",
 	"path_to_queue"          : "",
 	"path_to_log"            : "",

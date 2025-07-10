@@ -4,6 +4,7 @@ namespace HisInOneProxy\Soap\Interactions;
 
 require_once './libs/composer/vendor/autoload.php';
 
+use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue\QueueDatabase;
 use HisInOneProxy\Soap\CourseInterfaceService;
@@ -12,13 +13,14 @@ use HisInOneProxy\System\Utils;
 
 class HisLinksCron
 {
-    private const MESSAGES = 5;
+    private int $messages = 5;
     private QueueDatabase $db;
 
     public function __construct()
     {
         $this->db = new QueueDatabase();
         $this->checkForNewLinks();
+        $this->messages = GlobalSettings::getInstance()->getProcessLinksCount();
     }
 
     private function checkForNewLinks() {
@@ -27,7 +29,7 @@ class HisLinksCron
         $router                      = new SoapServiceRouter($log);
         $course_interface_service    = new CourseInterfaceService($log, $router);
 
-        for($i=0; $i<= self::MESSAGES; $i++) {
+        for($i=0; $i<= $this->messages; $i++) {
             $link_id = 0;
             $unit_id = 0;
 

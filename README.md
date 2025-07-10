@@ -58,6 +58,8 @@ If the Unittest with coverage segfaults remove the opcache extension!
 	"Database" : { //Can be used instead of the file based queue, see queue_type and the local ECS implementation
 		"dsn" : "mysql:host=xxx;port=xxx;dbname=xxx;user=xxx;password=xxx"
 	},
+	"create_links"			 : "true|false", //Turn this to true if you want to process ILIAS links
+	"process_links_count"	 : 5, //Count of max links getting processed in one run
 	"queue_type"             : "file_based/db_based",
 	"path_to_queue"          : "Path to queue from his_in_one_proxy",
 	"path_to_log"            : "Path to logfile from his_in_one_proxy",

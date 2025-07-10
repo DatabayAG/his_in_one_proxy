@@ -118,7 +118,8 @@
             "Database" : {
 		        "dsn" : "mysql:host=xxx;port=xxx;dbname=xxx;user=xxx;password=xxx"
             },
-          "create_links"			 : "true",
+	      "create_links"			 : "true|false",
+          "process_links_count"	 : 5,
           "queue_type"             : "file_based",
           "path_to_queue"          : "/opt/his_middleware/simple_queue2/", 
           "path_to_log"            : "/opt/his_middleware/log/debug.log",

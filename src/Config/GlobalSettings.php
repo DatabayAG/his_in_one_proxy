@@ -54,6 +54,7 @@ class GlobalSettings
     protected string $ecs_community_id = "0";
     protected array $workStatusIds = [];
     protected bool $create_links = false;
+    protected int $process_links_count = 5;
 
     private function __construct()
     {
@@ -127,6 +128,7 @@ class GlobalSettings
         $this->setDatabaseDsn($this->config->get('Database.dsn'));
 
         $this->setCreateLinks($this->config->get('create_links'));
+        $this->setProcessLinksCount($this->config->get('process_links_count'));
         $this->setQueueType($this->config->get('queue_type'));
         $this->setPathToQueue($this->config->get('path_to_queue'));
         $this->setQueueTimer($this->config->get('queue_timer'));
@@ -190,6 +192,7 @@ class GlobalSettings
             "ECS.url" => $this->getEcsServerUrl(),
             "Database.dsn" => $this->getDatabaseDsn(),
             "create_links" => $this->isCreateLinks(),
+            "process_links_count" => $this->getProcessLinksCount(),
             "queue_type" => $this->getQueueType(),
             "path_to_queue" => $this->getPathToQueue(),
             "queue_timer" => $this->getQueueTimer(),
@@ -542,4 +545,13 @@ class GlobalSettings
         $this->create_links = $create_links;
     }
 
+    public function getProcessLinksCount(): int
+    {
+        return $this->process_links_count;
+    }
+
+    public function setProcessLinksCount(int $process_links_count): void
+    {
+        $this->process_links_count = $process_links_count;
+    }
 }
