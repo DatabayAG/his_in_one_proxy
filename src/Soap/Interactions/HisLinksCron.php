@@ -20,8 +20,8 @@ class HisLinksCron
     public function __construct()
     {
         $this->db = new QueueDatabase();
-        $this->checkForNewLinks();
         $this->messages = GlobalSettings::getInstance()->getProcessLinksCount();
+        $this->checkForNewLinks();
     }
 
     private function checkForNewLinks(): void
@@ -52,6 +52,10 @@ class HisLinksCron
                 $desc = $link['description'];
                 $link_id = $link['link_id'];
                 $link_lcms = $link['link'];
+
+                if(GlobalSettings::getInstance()->getLinkCreationTitle() !== '') {
+                    $desc = GlobalSettings::getInstance()->getLinkCreationTitle();
+                }
 
                 if($unit_id !== 0 && $link_id !== 0) {
                     $course_interface_service->deleteLinkFromCourse($unit_id, $term_type, $term_year, $link_lcms);

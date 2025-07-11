@@ -55,6 +55,7 @@ class GlobalSettings
     protected array $workStatusIds = [];
     protected bool $create_links = false;
     protected int $process_links_count = 5;
+    protected string $link_creation_title = "";
 
     private function __construct()
     {
@@ -129,6 +130,7 @@ class GlobalSettings
 
         $this->setCreateLinks($this->config->get('create_links'));
         $this->setProcessLinksCount($this->config->get('process_links_count'));
+        $this->setLinkCreationTitle($this->config->get('link_creation_title'));
         $this->setQueueType($this->config->get('queue_type'));
         $this->setPathToQueue($this->config->get('path_to_queue'));
         $this->setQueueTimer($this->config->get('queue_timer'));
@@ -193,6 +195,7 @@ class GlobalSettings
             "Database.dsn" => $this->getDatabaseDsn(),
             "create_links" => $this->isCreateLinks(),
             "process_links_count" => $this->getProcessLinksCount(),
+            "link_creation_title" => $this->getLinkCreationTitle(),
             "queue_type" => $this->getQueueType(),
             "path_to_queue" => $this->getPathToQueue(),
             "queue_timer" => $this->getQueueTimer(),
@@ -554,4 +557,15 @@ class GlobalSettings
     {
         $this->process_links_count = $process_links_count;
     }
+
+    public function getLinkCreationTitle(): string
+    {
+        return $this->link_creation_title;
+    }
+
+    public function setLinkCreationTitle(string $link_creation_title): void
+    {
+        $this->link_creation_title = $link_creation_title;
+    }
+
 }

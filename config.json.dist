@@ -45,6 +45,7 @@
 	},
 	"create_links"			 : "true|false",
 	"process_links_count"	 : 5,
+	"link_creation_title"	 : "ILIAS",
 	"queue_type"             : "(file_based, db_based)",
 	"path_to_queue"          : "",
 	"path_to_log"            : "",

@@ -82,7 +82,7 @@ Example config for nginx:
  - Set "process_links_count" in the "config.json" to the number of links you want to send to HISinOne in one run
    - Configure your system cron to run or execute it manually
 
-            src/Soap/Interactions/HisLinksCron.php
+            php src/Soap/Interactions/HisLinksCron.php
 
 # Helpful commands for installation
 
@@ -122,6 +122,8 @@ Displays the elearning plattform containers
 
     php cmd.php ge
 
+Relevant Information is the id field.
+
 Example output:
 
     HisInOneProxy\DataModel\Container\ElearningPlatformContainer Object
@@ -144,6 +146,8 @@ Example output:
 Displays all term types
 
     php cmd.php gt
+
+Relevant Information is the id field.
 
 Example output:
 

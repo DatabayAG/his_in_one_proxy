@@ -420,7 +420,9 @@ class QueueDatabase extends QueueBase
         $map = [];
         $this->prepare_get_unit_id_from_json->execute();
         while ($row = $this->prepare_get_unit_id_from_json->fetch(PDO::FETCH_ASSOC)) {
-            $map[$row['lecture_id']] = ['lecture_id' =>  $row['lecture_id'], 'unit_id' => $row['unitId']];
+            if(isset($row['unitId'])) {
+                $map[$row['lecture_id']] = ['lecture_id' =>  $row['lecture_id'], 'unit_id' => $row['unitId']];
+            }
         }
 
         return $map;

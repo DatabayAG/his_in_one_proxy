@@ -14,6 +14,7 @@ use HisInOneProxy\Soap\Interactions\Conductor;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\Soap\Interactions\DataPrinter;
 use HisInOneProxy\Soap\Interactions\HisHttpServer;
+use HisInOneProxy\Soap\Interactions\HisLinksCron;
 use HisInOneProxy\Soap\SoapService;
 use HisInOneProxy\Soap\SoapServiceRouter;
 use HisInOneProxy\System\Console\FunctionObject;
@@ -476,6 +477,9 @@ class ConsoleHandler
     {
         #$this->readPersonRange();
         $this->startTimer();
+        if(is_array($param) && sizeof($param) === 1) {
+            $param = $param[0];
+        }
         $obj = DataCache::getInstance()->getPersonService()->readPerson($param);
         if ($obj != null && $obj instanceof Person) {
             DataCache::getInstance()->appendPersonIdToCache($param);
@@ -518,15 +522,28 @@ class ConsoleHandler
         } else {
             echo "Please enter all needed params for " . __FUNCTION__ ."\n";
         }
+    }    /**
+     * @param $param
+     * @throws Exception
+     */
+    protected function runHISLinkCron()
+    {
+
+            $this->startTimer();
+            $cron = new HisLinksCron();
+            $this->endTimer();
     }
 
     /**
      * @param $id
      * @throws Exception
      */
-    public function readAccount($id)
+    public function readAccount($param)
     {
-        var_dump(DataCache::getInstance()->getAccountService()->searchAccountForPerson61($id));
+        if(isset($param[0])) {
+            $param = $param[0];
+        }
+        var_dump(DataCache::getInstance()->getAccountService()->searchAccountForPerson61($param));
     }
 
     /**

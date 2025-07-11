@@ -60,6 +60,10 @@
          * PARALLEL_ALL_COURSES => 2 
          * PARALLEL_COURSES_FOR_LECTURERS => 3
 
+* _Database_: You can enter here the dsn to your database
+* _create_links_ : Boolean to de-/activate the creation of ILIAS links in HISinOne
+* _process_links_count_ : Integer of links which should be process in one run, 
+* _link_creation_title_	: This title will be used for links in HISinOne if this is empty, the lecture title will be used,
 * _path_to_queue_: Path to queue from his_in_one_proxy  
 * _path_to_log_: Path to logfile from his_in_one_proxy  
 * _keep_elements_in_queue_: Keep elements in queue and do not delete them (true/false)  
@@ -120,6 +124,7 @@
             },
 	      "create_links"			 : "true|false",
           "process_links_count"	 : 5,
+          "link_creation_title"	 : "ILIAS",
           "queue_type"             : "file_based",
           "path_to_queue"          : "/opt/his_middleware/simple_queue2/", 
           "path_to_log"            : "/opt/his_middleware/log/debug.log",

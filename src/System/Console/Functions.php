@@ -67,6 +67,7 @@ class Functions
             self::appendFunction('et', 'getAllElementtypes', 'Reads element types.', true);
             self::appendFunction('cs', 'getAllEventtypes', 'Reads all event types.', true);
             self::appendFunction('lf', 'addLinkForCourse', 'Adds link for a course. Params: UnitId Description Link', true);
+            self::appendFunction('ls', 'runHISLinkCron', 'Runs the cron script to send the links from ILIAS to HISinOne', true);
         }
     }
 
