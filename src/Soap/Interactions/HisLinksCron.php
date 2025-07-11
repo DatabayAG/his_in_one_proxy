@@ -13,8 +13,9 @@ use HisInOneProxy\System\Utils;
 
 class HisLinksCron
 {
-    private int $messages = 5;
+
     private QueueDatabase $db;
+    private int $messages;
 
     public function __construct()
     {
@@ -23,7 +24,8 @@ class HisLinksCron
         $this->messages = GlobalSettings::getInstance()->getProcessLinksCount();
     }
 
-    private function checkForNewLinks() {
+    private function checkForNewLinks(): void
+    {
         $unit_ids = $this->db->getUnitIdsFromJson();
         $log = new Log();
         $router                      = new SoapServiceRouter($log);
