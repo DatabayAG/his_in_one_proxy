@@ -2,15 +2,15 @@
 
 ## New Config.json entries
 New entries in config.json, please take a look at the "config.json.dist" for details:
-  - HIS/workstation_status_ids is now configurable in the config
-  - ECS/use_local_ecs => true/false
+  - `HIS/workstation_status_ids` is now configurable in the config
+  - `ECS/use_local_ecs` => true/false
     - If you want to use the new local implementation of the ecs campus management this value has to be set to true
-  - ECS/ecs_community_id
-  - Database DSN
-  - create_links Should links from ILIAS created in HISinOne: true/false 
-  - process_links_count How many Links should be processed to HISinOne in one process: int
-  - link_creation_title Alternative title with which the links are named in HISinOne, default would be the course title: string
-  - queue_type file_based/db_based
+  - `ECS/ecs_community_id`
+  - `Database DSN`
+  - `create_links` Should links from ILIAS created in HISinOne: true/false 
+  - `process_links_count` How many Links should be processed to HISinOne in one process: int
+  - `link_creation_title` Alternative title with which the links are named in HISinOne, default would be the course title: string
+  - `queue_type` file_based/db_based
     - file_based => classic mode
     - db_based => new db based mode
 
