@@ -41,7 +41,7 @@ class Functions
             self::appendFunction('sq', 'startQueue', 'Starts queue which is used to communicate with the ecs server.');
             self::appendFunction('se', 'startHisListener', 'Starts his listener which listens to the system events from his server.');
             self::appendFunction('cm', 'getAllCourseMappingTypes', 'Gets all course mapping types.');
-            self::appendFunction('tr', 'TruncateServiceQueue', 'Warning: Truncates the service queue table, please be careful using this command!');
+            self::appendFunction('tr', 'truncateServiceQueue', 'Warning: Truncates the service queue table, please be careful using this command!');
             self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
             self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
             self::appendFunction('gg', 'getAllGenders', 'Gets all gender types.', true);

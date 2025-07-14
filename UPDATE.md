@@ -16,8 +16,19 @@ New function shortcuts:
 
 - Gets a Lecture by UnitId and force push this course. Uses id as param.
 
+        php cmd.php fo TERM_TYPE_ID TERM_YEAR UNIT_ID
 
-    php cmd.php fo TERM_TYPE_ID TERM_YEAR UNIT_ID
+- Adds link for a course. Params: UnitId Description Link
+
+        php cmd.php lf TERM_TYPE_ID TERM_YEAR UNIT_ID DESCRIPTION LINK
+
+- Runs the cron script to send the links from ILIAS to HISinOne
+
+        php cmd.php ls TERM_TYPE_ID TERM_YEAR
+
+- Warning: Truncates the service queue table, please be careful using this command!
+
+       php cmd.php tr TERM_TYPE_ID TERM_YEAR
 
 ## Database
 After configuring the database, following script has to run to create the database tables:
