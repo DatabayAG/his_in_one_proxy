@@ -1,17 +1,20 @@
 # Update Informations
 
-## Config.json
+## New Config.json entries
 New entries in config.json, please take a look at the "config.json.dist" for details:
   - HIS/workstation_status_ids is now configurable in the config
   - ECS/use_local_ecs => true/false
     - If you want to use the new local implementation of the ecs campus management this value has to be set to true
   - ECS/ecs_community_id
-  - Database
+  - Database DSN
+  - create_links Should links from ILIAS created in HISinOne: true/false 
+  - process_links_count How many Links should be processed to HISinOne in one process: int
+  - link_creation_title Alternative title with which the links are named in HISinOne, default would be the course title: string
   - queue_type file_based/db_based
     - file_based => classic mode
     - db_based => new db based mode
 
-## Commandline functions
+## New Commandline functions
 New function shortcuts:
 
 - Gets a Lecture by UnitId and force push this course. Uses id as param.
@@ -49,7 +52,7 @@ This will print something like this and create to files two track the updates:
     ...update nr 3 applied.
 
 
-This will create three new tables, please ensure to configure your participants in the table "participants" in your database.
+This will create three new tables, please ensure to configure your participants in the table "participants" in your database. The update script will NOT work with sqlite, please create the table for sqlite manually with the template under "docs/SQLITE.md"
 
 ## ECS light implementation
 
