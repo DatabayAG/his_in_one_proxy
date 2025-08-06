@@ -164,7 +164,7 @@ class Conductor
             $this->log->info(sprintf('Unit relevant for export %s. Unit irrelevant for export %s',
                 $services->getRelevantForExport(), $services->getIrRelevantForExport()));
         } else {
-            $this->log->warning(sprintf('No unit ids found for year %s and term type value id.', $year, $term_type_value_id));
+            $this->log->warning(sprintf('No unit ids found for year %s and term type value id %s.', $year, $term_type_value_id));
         }
     }
 

@@ -15,7 +15,7 @@ class CourseOfStudyClient implements SoapClientService
      */
     public function appendRouterConfig($router)
     {
-        $router->setSoapClientCourseOfStudyService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir(), 'remove_secure_header' => true)));
+        $router->setSoapClientCourseOfStudyService(new Soap\WSSoapClient($router->getUrl() . $this->getServiceWsdl(), array('path' => $this->getServiceDir())));
     }
 
     /**
