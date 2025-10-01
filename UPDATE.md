@@ -1,8 +1,10 @@
 # Update Informations
+## If you update from the classic his_in_one_proxy with a standalone ECS server, please ensure you make the following preparations
+- Please reset/empty your ECS Queue if you update to the new system.
 
 ## New Config.json entries
 New entries in config.json, please take a look at the "config.json.dist" for details:
-  - `HIS/workstation_status_ids` is now configurable in the config
+  - `HIS/work_status_ids` is now configurable in the config
   - `ECS/use_local_ecs` => true/false
     - If you want to use the new local implementation of the ecs campus management this value has to be set to true
   - `ECS/ecs_community_id`
@@ -56,7 +58,11 @@ This will create three new tables, please ensure to configure your participants 
 
 ## ECS light implementation
 
-To ensure ILIAS can connect the REST API and is authenticated, there must exist an participant in the table participant, which name matches an entry in the ".htpasswd" file.
+To ensure ILIAS can connect the REST API and is authenticated, there must exist a participant in the table "participants", which name matches an entry in the ".htpasswd" file. For example if you have a ".htpasswd" entry in your file like:
+
+    testing:$apr1$lxdmua31$qdGm8B0lRW0ANJSdSVrls0
+
+In your participants table, in the database, must exist an entry with the "name" "testing".
 
 To use the local ecs implementation you have to create a ".htpasswd" file and configure your nginx accordingly, you find an example bellow:
 

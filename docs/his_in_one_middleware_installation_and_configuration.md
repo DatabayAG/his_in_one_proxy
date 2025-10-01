@@ -94,7 +94,7 @@
             "person_id_type" : "ecs_loginUID", 
             "login_suffix" : "", 
             "blocked_ids" : [4, 2],
-		    "workstation_status_ids" : [1,6,26,27,22,8,20,28,30,32],
+		    "work_status_ids" : [1,6,26,27,22,8,20,28,30,32],
             "text" : { 
                 "current_term" : "getDefaultText", 
                 "event_type"   : "getDefaultText", 

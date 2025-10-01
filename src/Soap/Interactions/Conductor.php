@@ -155,8 +155,8 @@ class Conductor
         $unit_list = DataCache::getInstance()->getCourseInterfaceService()->findUnit($term_type_value_id, $year);
 
         if ($unit_list != null && $unit_list->getSizeOfContainer() > 0) {
-            $this->log->info(sprintf('Starting looking for all lectures in term id %s and year %s.',
-                $term_type_value_id, $year));
+            $this->log->info(sprintf('Starting looking for all lectures (%s) in term id %s and year %s.',
+                $unit_list->getSizeOfContainer(), $term_type_value_id, $year));
 
             $units = $this->startHandlingUnitList($unit_list, $cos_map, $cos_already);
             $this->finishHandlingUnits($units);
