@@ -99,7 +99,7 @@ class EcsLocalFunctions
                     $cid = GlobalSettings::getInstance()->getEcsCommunityId();
                     $pid = $user_data['pid'];
                     $mid = $user_data['mid'];
-                    return new EcsAuth($cid, $pid, $mid);
+                    return new EcsAuth($pid, $mid, $cid);
                 }
             }
         }
