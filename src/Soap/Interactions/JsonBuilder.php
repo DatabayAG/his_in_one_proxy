@@ -251,6 +251,10 @@ class JsonBuilder
             }
         }
 
+        if (GlobalSettings::getInstance()->isRemoveDuplicateDegreeProgrammes()) {
+            return self::removeDuplicatesByProperty($programs, 'title');
+        }
+
         return $programs;
     }
 
@@ -546,5 +550,17 @@ class JsonBuilder
             }
         }
         return $nodes;
+    }
+
+    /**
+     * @param array $array
+     * @param string $property
+     * @return array
+     */
+
+    public static function removeDuplicatesByProperty(array $array, string $property): array
+    {
+        $tempArray = array_unique(array_column($array, $property));
+        return array_values(array_intersect_key($array, $tempArray));
     }
 }
