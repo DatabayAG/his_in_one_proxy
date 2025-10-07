@@ -48,6 +48,7 @@ class GlobalSettings
     protected int $actual_term_year;
     protected string $login_suffix;
     protected array $blocked_ids = [];
+    protected array $blocked_form_of_studies_ids = [];
     protected array $text_config = [];
     protected string $database_dsn;
     protected bool $use_local_ecs = false;
@@ -110,6 +111,7 @@ class GlobalSettings
         $this->setPersonIdType($this->config->get('HIS.person_id_type'));
         $this->setLoginSuffix($this->config->get('HIS.login_suffix'));
         $this->setBlockedIds($this->config->get('HIS.blocked_ids'));
+        $this->setBlockedFormOfStudiesIds($this->config->get('HIS.blocked_form_of_studies_ids'));
         $this->setTextConfig($this->config->get('HIS.text'));
         $this->setWorkStatusIds($this->config->get('HIS.work_status_ids'));
 
@@ -185,6 +187,7 @@ class GlobalSettings
             "HIS.actual_term_id" => $this->getActualTermId(),
             "HIS.actual_term_year" => $this->getActualTermYear(),
             "HIS.blocked_ids" => $this->getBlockedIds(),
+            "HIS.blocked_form_of_studies_ids" => $this->getBlockedFormOfStudiesIds(),
             "HIS.text" => $this->getTextConfig(),
             "HIS.work_status_ids" => $this->getWorkStatusIds(),
             "ECS.use_local_ecs" => $this->isUseLocalEcs(),
@@ -330,6 +333,16 @@ class GlobalSettings
     public function setBlockedIds(array $blocked_ids): void
     {
         $this->blocked_ids = $blocked_ids;
+    }
+
+    public function getBlockedFormOfStudiesIds(): array
+    {
+        return $this->blocked_form_of_studies_ids;
+    }
+
+    public function setBlockedFormOfStudiesIds(array $blocked_form_of_studies_ids): void
+    {
+        $this->blocked_form_of_studies_ids = $blocked_form_of_studies_ids;
     }
 
     public function getTextConfig(): array

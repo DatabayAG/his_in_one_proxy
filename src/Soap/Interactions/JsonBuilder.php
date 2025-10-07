@@ -239,6 +239,14 @@ class JsonBuilder
                 $program->courseUnitYearOfStudy = $course_of_study->getValidFromTermYear();
                 $program->from                  = $course_of_study->getValidFrom();
                 $program->to                    = $course_of_study->getValidTo();
+
+                if (in_array($course_of_study->getFormOfStudiesId(),
+                    GlobalSettings::getInstance()->getBlockedFormOfStudiesIds())) {
+                    DataCache::getInstance()->getLog()->debug(sprintf('DegreeProgramme with title (%s) will be ignored, since it is blocked, id (%s)!',
+                        $program->title, $course_of_study->getFormOfStudiesId()));
+                    continue;
+                }
+
                 $programs[]                     = $program;
             }
         }
