@@ -37,6 +37,8 @@
 * _login_suffix_: String which should be appended to login name  
 * _blocked_ids_: Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with:   
     `php cmd.php gb`  
+* _blocked_form_of_studies_ids_: Array of blocked form of studies ids. These ids can be queried with `php cmd.php gf`
+* _remove_duplicate_degree_programmes_: If true, duplicate degreeProgrammes with the same title from courses with multiple study forms will be removed
 * _text_: Which function should be used to retrieve a text from an object, possible values are: 
   * getShortText    
   * getDefaultText   
@@ -94,7 +96,9 @@
             "person_id_type" : "ecs_loginUID", 
             "login_suffix" : "", 
             "blocked_ids" : [4, 2],
-		    "work_status_ids" : [1,6,26,27,22,8,20,28,30,32],
+            "blocked_form_of_studies_ids" : [],
+            "work_status_ids" : [1,6,26,27,22,8,20,28,30,32],
+            "remove_duplicate_degree_programmes": true,
             "text" : { 
                 "current_term" : "getDefaultText", 
                 "event_type"   : "getDefaultText", 

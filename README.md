@@ -30,6 +30,8 @@ If the Unittest with coverage segfaults remove the opcache extension!
 		//   ecs_email
 		"login_suffix" : "", // String which should be appended to login name
 		"blocked_ids" : [], // Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with php with "php cmd.php gb"
+		"blocked_form_of_studies_ids" : [], // Array of blocked form of studies ids. These ids can be queried with with "php cmd.php gf"
+		"remove_duplicate_degree_programmes": true, // If true, duplicate degreeProgrammes with the same title from courses with multiple study forms will be removed
 		"text" : { //getShortText | getDefaultText | getLongText
 			"current_term" : "getDefaultText",
 			"event_type"   : "getDefaultText",
