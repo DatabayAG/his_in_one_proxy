@@ -239,8 +239,20 @@ class JsonBuilder
                 $program->courseUnitYearOfStudy = $course_of_study->getValidFromTermYear();
                 $program->from                  = $course_of_study->getValidFrom();
                 $program->to                    = $course_of_study->getValidTo();
+
+                if (in_array($course_of_study->getFormOfStudiesId(),
+                    GlobalSettings::getInstance()->getBlockedFormOfStudiesIds())) {
+                    DataCache::getInstance()->getLog()->debug(sprintf('DegreeProgramme with title (%s) will be ignored, since it is blocked, id (%s)!',
+                        $program->title, $course_of_study->getFormOfStudiesId()));
+                    continue;
+                }
+
                 $programs[]                     = $program;
             }
+        }
+
+        if (GlobalSettings::getInstance()->isRemoveDuplicateDegreeProgrammes()) {
+            return self::removeDuplicatesByProperty($programs, 'title');
         }
 
         return $programs;
@@ -538,5 +550,17 @@ class JsonBuilder
             }
         }
         return $nodes;
+    }
+
+    /**
+     * @param array $array
+     * @param string $property
+     * @return array
+     */
+
+    public static function removeDuplicatesByProperty(array $array, string $property): array
+    {
+        $tempArray = array_unique(array_column($array, $property));
+        return array_values(array_intersect_key($array, $tempArray));
     }
 }
