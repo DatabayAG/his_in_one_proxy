@@ -154,7 +154,7 @@ class EcsLocalFunctions
                     "mid" => $valid_participant->getMid()
                 ]
             ],
-            "url" => "courselinks/" . $courseId,
+            "url" => "courses/" . $courseId,
             "lectureId" => $courseId,
             "content_type" => JSON_CONTENT_TYPE,
             "owner" => [
@@ -180,7 +180,7 @@ class EcsLocalFunctions
                     "mid" => $valid_participant->getMid()
                 ]
             ],
-            "url" => "courselinks/" . $courseId,
+            "url" => "course_members/" . $courseId,
             "content_type" => JSON_CONTENT_TYPE,
             "owner" => [
                 "pid" => $valid_participant->getPid(),
