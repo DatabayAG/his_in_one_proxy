@@ -32,7 +32,7 @@ class QueueConstants
     const STATUS = 'status';
     const CREATED = 'created';
     const RESSOURCE = 'ressource';
-    const ECS_CAMPUS_LIGHT_COURSES = 'ecs_campus_light/courses/';
-    const ECS_CAMPUS_LIGHT_COURSE_MEMBERS = 'ecs_campus_light/course_members/';
+    const ECS_CAMPUS_LIGHT_COURSES = 'campusconnect/courses/';
+    const ECS_CAMPUS_LIGHT_COURSE_MEMBERS = 'campusconnect/course_members/';
 
 }
