@@ -74,14 +74,14 @@ $app->get(SYS_EVENTS_FIFO, function (Request $request, Response $response) use (
                 $value[] = $local_functions->convertEventsFifoData($row);
             }
         }
-
-        $json = json_encode($value, JSON_PRETTY_PRINT);
-        $response->getBody()->write(print_r($json, true));
         $logging->info(sprintf('Transmitted fifo event with following data: "status" => %s, "ressource" => %s',
             $value[0]['status'] ?? '', $value[0]['ressource'] ?? ''));
     }
 
-    return $response;
+    $json = json_encode($value, JSON_PRETTY_PRINT);
+    $response->getBody()->write(print_r($json, true));
+
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->post(SYS_EVENTS_FIFO, function (Request $request, Response $response) use ($db, $logging, $local_functions)  {
@@ -97,7 +97,7 @@ $app->post(SYS_EVENTS_FIFO, function (Request $request, Response $response) use 
         }
     }
 
-    return $response;
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->get(SYS_MEMBERSHIPS, function (Request $request, Response $response) use ($db, $logging, $local_functions)  {
@@ -109,7 +109,7 @@ $app->get(SYS_MEMBERSHIPS, function (Request $request, Response $response) use (
     $memberships_json = json_encode($local_functions->getMemberships($valid_participant));
     $response->getBody()->write($memberships_json);
 
-    return $response;
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->get('/campusconnect/courses/{id}/details', function (Request $request, Response $response, $args) use ($db, $logging, $local_functions)  {
@@ -124,7 +124,7 @@ $app->get('/campusconnect/courses/{id}/details', function (Request $request, Res
     $response->getBody()->write($memberships_json);
     $logging->info(sprintf('Sent message details for %s', CC_COURSES . '/details'));
 
-    return $response;
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->get(CC_COURSES, function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions)  {
@@ -137,7 +137,7 @@ $app->get(CC_COURSES, function (Request $request, Response $response, array $arg
     $json = json_encode($data, JSON_PRETTY_PRINT);
     $response->getBody()->write($json);
 
-    return $response;
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->get('/campusconnect/course_members/{id}/details', function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions)  {
@@ -152,7 +152,7 @@ $app->get('/campusconnect/course_members/{id}/details', function (Request $reque
     $response->getBody()->write($json);
     $logging->info(sprintf('Sent message details for %s', '/campusconnect/course_members/{id}/details'));
 
-    return $response;
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->get('/campusconnect/course_members/{id}', function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions)  {
@@ -169,7 +169,7 @@ $app->get('/campusconnect/course_members/{id}', function (Request $request, Resp
     $json = json_encode($data, JSON_PRETTY_PRINT);
     $response->getBody()->write($json);
 
-    return $response;
+    return $response->withHeader('Content-Type', 'application/json');
 });
 
 $app->get('/campusconnect/categories', function (Request $request, Response $response) {
