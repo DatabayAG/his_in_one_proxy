@@ -5,6 +5,9 @@
 ## New Config.json entries
 New entries in config.json, please take a look at the "config.json.dist" for details:
   - `HIS/work_status_ids` is now configurable in the config
+  - `HIS/blocked_form_of_studies_ids` Array of blocked form of studies ids
+  - `HIS/remove_duplicate_degree_programmes` => true/false
+    - If true, duplicate degreeProgrammes with the same title from courses with multiple study forms will be removed
   - `ECS/use_local_ecs` => true/false
     - If you want to use the new local implementation of the ecs campus management this value has to be set to true
   - `ECS/ecs_community_id`
