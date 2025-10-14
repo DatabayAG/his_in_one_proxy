@@ -112,6 +112,25 @@ $app->get(SYS_MEMBERSHIPS, function (Request $request, Response $response) use (
     return $response;
 });
 
+$app->get(CC_COURSES, function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions)  {
+    if($local_functions->isValidParticipant()->isInvalidAuth()) {
+        return $response;
+    }
+
+    if(isset($args['id'])) {
+        $courseId = $args['id'];
+        $data = $db->select($courseId);
+        $json = json_encode($data, JSON_PRETTY_PRINT);
+        $response->getBody()->write($json);
+        return $response;
+    }
+
+    $data = $db->selectQueueWaitingEntries($local_functions->isValidParticipant()->getPid(), COURSES);
+    $json = json_encode($data, JSON_PRETTY_PRINT);
+    $response->getBody()->write($json);
+    return $response->withHeader('Content-Type', 'text/uri-list');
+});
+
 $app->get('/campusconnect/courses/{id}/details', function (Request $request, Response $response, $args) use ($db, $logging, $local_functions)  {
     $valid_participant = $local_functions->isValidParticipant();
     if($valid_participant->isInvalidAuth()) {
@@ -127,17 +146,24 @@ $app->get('/campusconnect/courses/{id}/details', function (Request $request, Res
     return $response;
 });
 
-$app->get(CC_COURSES, function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions)  {
-    if($local_functions->isValidParticipant()->isInvalidAuth()) {
+$app->get('/campusconnect/course_members/[{id}]', function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions) {
+    if ($local_functions->isValidParticipant()->isInvalidAuth()) {
+        return $response;
+    }
+    if (isset($args['id'])) {
+        $membersId = $args['id'];
+        if ($membersId > 0) {
+            $data = $db->select($membersId);
+        }
+        $json = json_encode($data, JSON_PRETTY_PRINT);
+        $response->getBody()->write($json);
         return $response;
     }
 
-    $courseId = $args['id'];
-    $data = $db->select($courseId);
-    $json = json_encode($data, JSON_PRETTY_PRINT);
+    $data = $db->selectQueueWaitingEntries($local_functions->isValidParticipant()->getPid(), COURSE_MEMBERS);
+    $json = json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
     $response->getBody()->write($json);
-
-    return $response;
+    return $response->withHeader('Content-Type', 'text/uri-list');
 });
 
 $app->get('/campusconnect/course_members/{id}/details', function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions)  {
@@ -155,24 +181,7 @@ $app->get('/campusconnect/course_members/{id}/details', function (Request $reque
     return $response;
 });
 
-$app->get('/campusconnect/course_members/{id}', function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions)  {
-    if($local_functions->isValidParticipant()->isInvalidAuth()) {
-        return $response;
-    }
-
-    $membersId = $args['id'];
-    if($membersId > 0) {
-        $data = $db->select($membersId);
-    } else {
-        $data = [];
-    }
-    $json = json_encode($data, JSON_PRETTY_PRINT);
-    $response->getBody()->write($json);
-
-    return $response;
-});
-
-$app->get('/campusconnect/categories', function (Request $request, Response $response) {
+$app->get('/campusconnect/categories/[{id}]', function (Request $request, Response $response) {
     return $response;
 });
 
@@ -215,7 +224,19 @@ $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array
             $logging->warning('This does not seem to be a valid course urls array');
         }
     }
-    $fixedResponse = $response->withStatus(201);
-    return $fixedResponse;
+    return $response->withStatus(201);
+});
+
+$app->get(CC_COURSE_URLS, function (Request $request, Response $response, array $args) use ($db, $logging, $local_functions) {
+    if($local_functions->isValidParticipant()->isInvalidAuth()) {
+        return $response;
+    }
+
+    $data = $db->selectQueueWaitingEntries($local_functions->isValidParticipant()->getPid(), COURSE_MEMBERS);
+
+    $json = json_encode($data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+    $response->getBody()->write($json);
+
+    return $response->withHeader('Content-Type', 'text/uri-list');
 });
 $app->run();
