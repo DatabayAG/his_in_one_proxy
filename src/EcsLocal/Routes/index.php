@@ -106,7 +106,7 @@ $app->get(SYS_MEMBERSHIPS, function (Request $request, Response $response) use (
         return $response;
     }
 
-    $memberships_json = json_encode($local_functions->getMemberships($valid_participant));
+    $memberships_json = json_encode($local_functions->getMemberships($valid_participant), JSON_PRETTY_PRINT);
     $response->getBody()->write($memberships_json);
 
     return $response->withHeader('Content-Type', 'application/json');
@@ -120,7 +120,7 @@ $app->get('/campusconnect/courses/{id}/details', function (Request $request, Res
 
     $courseId = (int) $args['id'];
     $payload = $local_functions->getPayloadForCourses($valid_participant, $courseId);
-    $memberships_json = json_encode($payload);
+    $memberships_json = json_encode($payload, JSON_PRETTY_PRINT);
     $response->getBody()->write($memberships_json);
     $logging->info(sprintf('Sent message details for %s', CC_COURSES . '/details'));
 
