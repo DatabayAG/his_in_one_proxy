@@ -8,6 +8,7 @@ use HisInOneProxy\Queue\QueueConstants;
 use HisInOneProxy\Queue\QueueDatabase;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\System\Utils;
+use JsonException;
 use const HisInOneProxy\EcsLocal\Routes\JSON_CONTENT_TYPE;
 
 class EcsLocalFunctions
@@ -187,5 +188,19 @@ class EcsLocalFunctions
                 "itsyou" => true
             ]
         ];
+    }
+
+    public function echoReturnFunction($param, $response) {
+        $json = json_encode($param, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function jsonEncodeWrapper($array) {
+        return json_encode($array, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
     }
 }
