@@ -2,11 +2,17 @@
 
 namespace HisInOneProxy\DataModel;
 
+use JsonSerializable;
+
 /**
  * Class CourseMappingType
  * @package HisInOneProxy\DataModel
  */
-class CourseMappingType
+class CourseMappingType implements JsonSerializable
 {
     use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText;
+
+    public function jsonSerialize() {
+        return get_object_vars( $this );
+    }
 }

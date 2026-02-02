@@ -9,7 +9,7 @@ use InvalidArgumentException;
  * Class CourseMappingTypeContainer
  * @package HisInOneProxy\DataModel\Container
  */
-class CourseMappingTypeContainer
+class CourseMappingTypeContainer implements \JsonSerializable
 {
     /**
      * @var CourseMappingType[]
@@ -46,5 +46,15 @@ class CourseMappingTypeContainer
             return $this->container[$id]->getUniqueName();
         }
         return null;
+    }
+
+    public function jsonSerialize() {
+        $class = get_object_vars( $this );
+        $this->json_header[] = $class;
+        return $class;
+    }
+
+    public function addHeadData($head_data) {
+        $this->json_header = $head_data;
     }
 }

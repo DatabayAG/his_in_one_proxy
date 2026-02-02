@@ -35,6 +35,8 @@ require_once 'libs/composer/vendor/autoload.php';
  */
 class ConsoleHandler
 {
+    const PLAIN_TEXT = 'plain';
+    const JSON = 'json';
     /**
      * @var Conductor
      */
@@ -64,6 +66,8 @@ class ConsoleHandler
      * @var DataPrinter
      */
     protected $printer;
+    protected string $output_mode = self::PLAIN_TEXT;
+    protected array $head = [];
 
     /**
      * ConsoleHandler constructor.
@@ -71,13 +75,14 @@ class ConsoleHandler
      * @param null $year
      * @throws Exception
      */
-    public function __construct($term = null, $year = null)
+    public function __construct($term = null, $year = null, $output_type = self::PLAIN_TEXT)
     {
         $this->startTimer();
         $log           = new Log('debug');
         $streamHandler = new StreamHandler('php://stdout', 'debug');
         $output        = "%message%\n";
         $formatter     = new LineFormatter($output);
+        $this->output_mode = $output_type;
         $streamHandler->setFormatter($formatter);
         $log->getLogger()->pushHandler($streamHandler);
 
@@ -108,11 +113,22 @@ class ConsoleHandler
     protected function endTimer($what = 'Queries')
     {
         $end_time = microtime(true);
-        DataCache::getInstance()->getLog()->info(sprintf($what . ' took %s seconds for %s soap calls.',
-                round($end_time - $this->start_time, 4),
-                GlobalSettings::getInstance()->getCallsCounter()
-            )
-        );
+        $timer = round($end_time - $this->start_time, 4);
+        $call_counter = GlobalSettings::getInstance()->getCallsCounter();
+        if($this->output_mode == self::PLAIN_TEXT) {
+            DataCache::getInstance()->getLog()->info(sprintf($what . ' took %s seconds for %s soap calls.',
+                    $timer,
+                    $call_counter
+                )
+            );
+        } else if($this->output_mode == self::JSON) {
+            $this->head = [
+                'status' => '',
+                'message' => '',
+                'duration_seconds' => $timer,
+                'soap_calls' => $call_counter,
+            ];
+        }
     }
 
     /**
@@ -169,7 +185,7 @@ class ConsoleHandler
         $this->startTimer();
         $lng = $this->getDefaultLanguageId();
         $obj = DataCache::getInstance()->getKeyValueService()->getAllValid("ElearningCourseMappingType", $lng);
-        print_r($obj);
+        $this->printObject($obj);
         $this->endTimer();
     }
     protected function getCourseCatalog()
@@ -367,7 +383,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('ElearningPlatform', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -713,5 +729,18 @@ class ConsoleHandler
     protected function getPhpUnitConfigWithoutCoverage()
     {
         return array('configuration' => 'test/phpunit.xml');
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    private function printObject($obj)
+    {
+        if($this->output_mode === self::PLAIN_TEXT) {
+            print_r($obj);
+        } else if($this->output_mode === self::JSON) {
+            $obj->addHeadData($this->head);
+            print_r(json_encode($obj, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT));
+        }
     }
 }

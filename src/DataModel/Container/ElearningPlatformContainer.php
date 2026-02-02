@@ -4,12 +4,14 @@ namespace HisInOneProxy\DataModel\Container;
 
 use HisInOneProxy\DataModel\ElearningPlatform;
 use InvalidArgumentException;
+use ReflectionClass;
+use ReturnTypeWillChange;
 
 /**
  * Class ElearningPlatformContainer
  * @package HisInOneProxy\DataModel\Container
  */
-class ElearningPlatformContainer
+class ElearningPlatformContainer implements \JsonSerializable
 {
     /**
      * @var ElearningPlatform[]
@@ -46,5 +48,31 @@ class ElearningPlatformContainer
             return $this->container[$id]->getDefaultText();
         }
         return null;
+    }
+
+    public function jsonSerialize() {
+        $class = $this->serializeItem( $this );
+        $this->json_header[] = $class;
+        return $class;
+    }
+
+    private function serializeItem($item)
+    {
+        if (!is_object($item)) {
+            return $item;
+        }
+
+        return $this->getProperties($item);
+    }
+
+    private function getProperties($obj)
+    {
+        $rc = new ReflectionClass($obj);
+
+        return $rc->getProperties();
+    }
+
+    public function addHeadData($head_data) {
+        $this->json_header = $head_data;
     }
 }

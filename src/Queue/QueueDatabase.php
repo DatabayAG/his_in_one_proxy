@@ -38,6 +38,7 @@ class QueueDatabase extends QueueBase
     private ?PDOStatement $prepare_pop_link_queue = null;
     private ?PDOStatement $prepare_update_sent_link_queue = null;
     private ?PDOStatement $prepare_get_unit_id_from_json = null;
+    private ?PDOStatement $prepare_get_link_details_from_json = null;
 
     function __construct(bool $force_push = false)
     {
@@ -136,6 +137,14 @@ class QueueDatabase extends QueueBase
         if ($this->prepare_get_unit_id_from_json === null) {
             $sql = 'SELECT JSON_EXTRACT(data, "$.unitId") unitId, lecture_id FROM link_queue INNER JOIN service_queue WHERE link_queue.unit_id = service_queue.lecture_id;';
             $this->prepare_get_unit_id_from_json = $this->pdo->prepare($sql);
+        }
+
+        if ($this->prepare_get_link_details_from_json === null) {
+            $sql = 'SELECT JSON_EXTRACT(data, "$.unitId") unitId, 
+                        JSON_EXTRACT(data, "$.originalYear") originalYear, 
+                        JSON_EXTRACT(data, "$.originalTerm") originalTerm,
+                        lecture_id FROM link_queue INNER JOIN service_queue WHERE link_queue.unit_id = service_queue.lecture_id;';
+            $this->prepare_get_link_details_from_json = $this->pdo->prepare($sql);
         }
 
         if ($this->prepare_update_sent_link_queue === null) {
@@ -471,6 +480,18 @@ class QueueDatabase extends QueueBase
         while ($row = $this->prepare_get_unit_id_from_json->fetch(PDO::FETCH_ASSOC)) {
             if(isset($row['unitId'])) {
                 $map[$row['lecture_id']] = ['lecture_id' =>  $row['lecture_id'], 'unit_id' => $row['unitId']];
+            }
+        }
+
+        return $map;
+    }
+    public function getLinkDetailsFromJson(): array
+    {
+        $map = [];
+        $this->prepare_get_link_details_from_json->execute();
+        while ($row = $this->prepare_get_link_details_from_json->fetch(PDO::FETCH_ASSOC)) {
+            if(isset($row['unitId'])) {
+                $map[$row['lecture_id']] = ['lecture_id' =>  $row['lecture_id'], 'unit_id' => $row['unitId'], 'term_type' => $row['originalTerm'], 'term_year' => $row['originalYear']];
             }
         }
 
