@@ -8,6 +8,7 @@ use HisInOneProxy\Queue\QueueConstants;
 use HisInOneProxy\Queue\QueueDatabase;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\System\Utils;
+use JsonException;
 use const HisInOneProxy\EcsLocal\Routes\JSON_CONTENT_TYPE;
 
 class EcsLocalFunctions
@@ -154,7 +155,7 @@ class EcsLocalFunctions
                     "mid" => $valid_participant->getMid()
                 ]
             ],
-            "url" => "courselinks/" . $courseId,
+            "url" => "courses/" . $courseId,
             "lectureId" => $courseId,
             "content_type" => JSON_CONTENT_TYPE,
             "owner" => [
@@ -180,12 +181,26 @@ class EcsLocalFunctions
                     "mid" => $valid_participant->getMid()
                 ]
             ],
-            "url" => "courselinks/" . $courseId,
+            "url" => "course_members/" . $courseId,
             "content_type" => JSON_CONTENT_TYPE,
             "owner" => [
                 "pid" => $valid_participant->getPid(),
                 "itsyou" => true
             ]
         ];
+    }
+
+    public function echoReturnFunction($param, $response) {
+        $json = json_encode($param, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+        $response->getBody()->write($json);
+
+        return $response;
+    }
+
+    /**
+     * @throws JsonException
+     */
+    public function jsonEncodeWrapper($array) {
+        return json_encode($array, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
     }
 }

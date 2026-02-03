@@ -11,6 +11,8 @@ use HisInOneProxy\System\Utils;
 use PDO;
 use PDOStatement;
 use React\Stream\Util;
+use const HisInOneProxy\EcsLocal\Routes\COURSE_MEMBERS;
+use const HisInOneProxy\EcsLocal\Routes\COURSES;
 
 /**
  * Class SimpleQueueInterface
@@ -30,6 +32,7 @@ class QueueDatabase extends QueueBase
     private ?PDOStatement $prepare_update_sent_service_queue = null;
     private ?PDOStatement $prepare_remove_entry_service_queue = null;
     private ?PDOStatement $prepare_select_service_queue = null;
+    private ?PDOStatement $prepare_select_waiting_service_queue = null;
     private ?PDOStatement $prepare_select_participants = null;
     private ?PDOStatement $prepare_insert_link_queue = null;
     private ?PDOStatement $prepare_pop_link_queue = null;
@@ -91,6 +94,11 @@ class QueueDatabase extends QueueBase
         if ($this->prepare_select_service_queue === null) {
             $sql = 'SELECT * FROM ' . QueueConstants::SERVICE_QUEUE . '  WHERE service_id=:id';
             $this->prepare_select_service_queue = $this->pdo->prepare($sql);
+        }
+
+        if ($this->prepare_select_waiting_service_queue === null) {
+            $sql = 'SELECT * FROM ' . QueueConstants::SERVICE_QUEUE . '  WHERE receiver=:id AND func=:func AND sent IS null';
+            $this->prepare_select_waiting_service_queue = $this->pdo->prepare($sql);
         }
 
         if ($this->prepare_collision_service_queue === null) {
@@ -202,6 +210,47 @@ class QueueDatabase extends QueueBase
             }
         }
         return $data;
+    }
+
+    public function selectQueueWaitingEntries(int $service_id, string $type)
+    {
+        if($type === COURSES) {
+            $type = 'publish_course_to_ecs';
+        } elseif($type === COURSE_MEMBERS) {
+            $type = 'publish_members_to_ecs';
+        }
+        $args = [
+            'id' => $service_id,
+            'func' => $type
+        ];
+
+        $data_courses = [];
+        $data_course_members = [];
+
+        $this->prepare_select_waiting_service_queue->execute($args);
+        while ($row = $this->prepare_select_waiting_service_queue->fetch(PDO::FETCH_ASSOC)) {
+            $data_row = [
+                        'cmd' => $row['func'],
+                        'lecture_id' => $row['lecture_id']
+            ];
+            if($data_row['cmd'] === 'publish_course_to_ecs') {
+                if($data_row['lecture_id'] !== null) {
+                    $data_courses[] = 'courses/' . json_decode($data_row['lecture_id']);
+                }
+            } elseif($data_row['cmd'] === 'publish_members_to_ecs') {
+                $data_course_members[] = 'course_members/' . json_decode($data_row['lecture_id']);
+            }
+        }
+
+        if ($data_courses !== []) {
+            return $data_courses;
+        }
+
+        if($data_course_members !== []) {
+            return $data_course_members;
+        }
+
+        return [];
     }
 
     public function getSize(string $queue_name): int
