@@ -66,7 +66,7 @@ class QueueWatcher
     public function processMessage($queue_name): void
     {
         $message   = $this->queue->pop($queue_name);
-        if($message !== []) {
+        if(! is_array($message)) {
             $file_name = $message[1];
             $message   = json_decode($message[0]);
         }
