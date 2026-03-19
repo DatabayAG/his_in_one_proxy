@@ -1,0 +1,2 @@
+- Add security headers to CourseOfStudy service
+  - Since 2025.06 the CourseOfStudy service seems to need a security header also
