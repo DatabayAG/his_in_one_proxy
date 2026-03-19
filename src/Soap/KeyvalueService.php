@@ -10,16 +10,11 @@ use HisInOneProxy\Parser\ParseDefaultObject;
 use HisInOneProxy\Parser\ParseElearningPlatform;
 use HisInOneProxy\Parser\ParseEventType;
 use HisInOneProxy\Parser\ParseParallelGroupValues;
-use HisInOneProxy\Parser\ParseTermType;
 use HisInOneProxy\Parser\ParseTermTypeList;
 use SoapFault;
 use HisInOneProxy\Parser\ParseCourseMappingType;
 use HisInOneProxy\DataModel\Container\CourseMappingTypeContainer;
 use HisInOneProxy\DataModel\Container\LanguageList;
-use HisInOneProxy\DataModel\Container\GenderList;
-use HisInOneProxy\DataModel\Container\TermTypeList;
-use HisInOneProxy\Parser\ParseGenders;
-use HisInOneProxy\DataModel\Container\EventTypeList;
 
 /**
  * Class KeyvalueService
