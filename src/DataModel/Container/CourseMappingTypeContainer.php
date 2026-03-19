@@ -3,6 +3,7 @@
 namespace HisInOneProxy\DataModel\Container;
 
 use HisInOneProxy\DataModel\CourseMappingType;
+use HisInOneProxy\DataModel\Traits\JsonData;
 use InvalidArgumentException;
 
 /**
@@ -11,6 +12,8 @@ use InvalidArgumentException;
  */
 class CourseMappingTypeContainer implements \JsonSerializable
 {
+    use JsonData;
+
     /**
      * @var CourseMappingType[]
      */
@@ -48,17 +51,4 @@ class CourseMappingTypeContainer implements \JsonSerializable
         return null;
     }
 
-    private array $json_header;
-
-    public function jsonSerialize()
-    {
-        return [
-            'header' => $this->json_header ?? [],
-            'mapping_types' => array_values($this->container),
-        ];
-    }
-
-    public function addHeadData($head_data) {
-        $this->json_header = $head_data;
-    }
 }

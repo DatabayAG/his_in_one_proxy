@@ -10,7 +10,7 @@ use HisInOneProxy\DataModel\Traits;
  */
 class ElearningPlatform implements \JsonSerializable
 {
-    use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText;
+    use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText, Traits\JsonData;
 
     /**
      * @var string
@@ -33,9 +33,4 @@ class ElearningPlatform implements \JsonSerializable
         $this->connection_info = $connection_info;
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return get_object_vars($this);
-    }
 }

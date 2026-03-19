@@ -3,6 +3,7 @@
 namespace HisInOneProxy\DataModel\Container;
 
 use HisInOneProxy\DataModel\ParallelGroupValue;
+use HisInOneProxy\DataModel\Traits\JsonData;
 use Psr\Log\InvalidArgumentException;
 
 /**
@@ -11,9 +12,9 @@ use Psr\Log\InvalidArgumentException;
  */
 class ParallelGroupValuesContainer implements \JsonSerializable
 {
-    protected $parallel_group_value_container = [];
+    use JsonData;
 
-    private array $json_header;
+    protected $parallel_group_value_container = [];
 
     /**
      * @return array
@@ -55,16 +56,4 @@ class ParallelGroupValuesContainer implements \JsonSerializable
         return null;
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return [
-            'header' => $this->json_header ?? [],
-            'parallel_groups' => array_values($this->parallel_group_value_container),
-        ];
-    }
-
-    public function addHeadData($head_data) {
-        $this->json_header = $head_data;
-    }
 }

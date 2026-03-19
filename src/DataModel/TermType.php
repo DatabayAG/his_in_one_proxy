@@ -14,14 +14,12 @@ class TermType implements \JsonSerializable
 
     const TEXT = 'term';
 
-    use Traits\LanguageId, Traits\SortingOrder, Traits\ObjGuid, Traits\TermNumber, Traits\UniqueNameAndText;
+    use Traits\LanguageId, Traits\SortingOrder, Traits\ObjGuid, Traits\TermNumber, Traits\UniqueNameAndText, Traits\JsonData;
 
     /**
      * @var int
      */
     protected $term_category;
-
-    private array $json_header;
 
     /**
      * @return string
@@ -52,13 +50,4 @@ class TermType implements \JsonSerializable
         $this->term_category = $term_category;
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return get_object_vars($this);
-    }
-
-    public function addHeadData($head_data) {
-        $this->json_header = $head_data;
-    }
 }

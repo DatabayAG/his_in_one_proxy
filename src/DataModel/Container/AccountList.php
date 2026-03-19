@@ -4,6 +4,7 @@ namespace HisInOneProxy\DataModel\Container;
 
 use Generator;
 use HisInOneProxy\DataModel\CompleteAccount;
+use HisInOneProxy\DataModel\Traits\JsonData;
 
 /**
  * Class AccountList
@@ -11,12 +12,12 @@ use HisInOneProxy\DataModel\CompleteAccount;
  */
 class AccountList implements \JsonSerializable
 {
+    use JsonData;
+
     /**
      * @var array
      */
     protected $account_container = array();
-
-    private array $json_header;
 
     /**
      * @return array
@@ -52,16 +53,4 @@ class AccountList implements \JsonSerializable
         return count($this->account_container);
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return [
-            'header' => $this->json_header ?? [],
-            'accounts' => array_values($this->account_container),
-        ];
-    }
-
-    public function addHeadData($head_data) {
-        $this->json_header = $head_data;
-    }
 }

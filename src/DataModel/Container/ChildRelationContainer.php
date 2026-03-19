@@ -3,6 +3,7 @@
 namespace HisInOneProxy\DataModel\Container;
 
 use HisInOneProxy\DataModel\ChildRelation;
+use HisInOneProxy\DataModel\Traits\JsonData;
 use InvalidArgumentException;
 
 /**
@@ -11,12 +12,12 @@ use InvalidArgumentException;
  */
 class ChildRelationContainer implements \JsonSerializable
 {
+    use JsonData;
+
     /**
      * @var ChildRelation[]
      */
     protected $container = array();
-
-    private array $json_header;
 
     /**
      * @return ChildRelation[]
@@ -47,16 +48,4 @@ class ChildRelationContainer implements \JsonSerializable
         $this->container[$id] = $child;
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return [
-            'header' => $this->json_header ?? [],
-            'child_relations' => array_values($this->container),
-        ];
-    }
-
-    public function addHeadData($head_data) {
-        $this->json_header = $head_data;
-    }
 }

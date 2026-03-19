@@ -11,10 +11,4 @@ use HisInOneProxy\DataModel\Traits;
 class DefaultObject implements \JsonSerializable
 {
     use Traits\DefaultObject;
-
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return get_object_vars($this);
-    }
 }

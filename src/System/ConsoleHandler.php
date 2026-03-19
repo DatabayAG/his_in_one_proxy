@@ -395,7 +395,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getTermService()->getCurrentTerm($lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -741,6 +741,8 @@ class ConsoleHandler
         } else if($this->output_mode === self::JSON) {
             if(is_object($obj) && method_exists($obj, 'addHeadData')) {
                 $obj->addHeadData($this->head);
+            } else if(is_array($obj)) {
+                $obj['json_header'] = $this->head;
             }
 
             echo json_encode($obj, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) . PHP_EOL;

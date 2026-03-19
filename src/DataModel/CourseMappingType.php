@@ -12,7 +12,10 @@ class CourseMappingType implements JsonSerializable
 {
     use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText;
 
-    public function jsonSerialize() {
-        return get_object_vars( $this );
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
+
 }

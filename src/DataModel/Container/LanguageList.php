@@ -4,6 +4,7 @@ namespace HisInOneProxy\DataModel\Container;
 
 use Generator;
 use HisInOneProxy\DataModel\DefaultObject;
+use HisInOneProxy\DataModel\Traits\JsonData;
 
 /**
  * Class LanguageList
@@ -11,12 +12,12 @@ use HisInOneProxy\DataModel\DefaultObject;
  */
 class LanguageList implements \JsonSerializable
 {
+    use JsonData;
+
     /**
      * @var array
      */
     protected $language_container = array();
-
-    private array $json_header;
 
     /**
      * @return array
@@ -52,16 +53,4 @@ class LanguageList implements \JsonSerializable
         return count($this->language_container);
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return [
-            'header' => $this->json_header ?? [],
-            'languages' => array_values($this->language_container),
-        ];
-    }
-
-    public function addHeadData($head_data) {
-        $this->json_header = $head_data;
-    }
 }

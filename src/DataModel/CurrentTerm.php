@@ -9,7 +9,7 @@ use HisInOneProxy\DataModel\Traits;
  * Class CurrentTerm
  * @package HisInOneProxy\DataModel
  */
-class CurrentTerm
+class CurrentTerm implements \JsonSerializable
 {
     const TEXT = 'current_term';
 
@@ -26,5 +26,18 @@ class CurrentTerm
             }
         }
         return $this->getDefaultText();
+    }
+
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        return [
+            'json_header' => $this->json_header ?? [],
+            'data' => get_object_vars($this),
+        ];
+    }
+
+    public function addHeadData($head_data) {
+        $this->json_header = $head_data;
     }
 }

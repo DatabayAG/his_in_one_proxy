@@ -3,9 +3,8 @@
 namespace HisInOneProxy\DataModel\Container;
 
 use HisInOneProxy\DataModel\ElearningPlatform;
+use HisInOneProxy\DataModel\Traits\JsonData;
 use InvalidArgumentException;
-use ReflectionClass;
-use ReturnTypeWillChange;
 
 /**
  * Class ElearningPlatformContainer
@@ -13,11 +12,12 @@ use ReturnTypeWillChange;
  */
 class ElearningPlatformContainer implements \JsonSerializable
 {
+    use JsonData;
+
     /**
      * @var ElearningPlatform[]
      */
     protected array $container = [];
-    private array $json_header;
 
     /**
      * @return ElearningPlatform[]
@@ -51,16 +51,4 @@ class ElearningPlatformContainer implements \JsonSerializable
         return null;
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return [
-            'header' => $this->json_header ?? [],
-            'platforms' => array_values($this->container),
-        ];
-    }
-
-    public function addHeadData($head_data) {
-        $this->json_header = $head_data;
-    }
 }

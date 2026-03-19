@@ -2,6 +2,7 @@
 
 namespace HisInOneProxy\DataModel\Container;
 
+use HisInOneProxy\DataModel\Traits\JsonData;
 use HisInOneProxy\DataModel\WorkStatus;
 use InvalidArgumentException;
 
@@ -11,12 +12,12 @@ use InvalidArgumentException;
  */
 class WorkStatusContainer implements \JsonSerializable
 {
+    use JsonData;
+
     /**
      * @var WorkStatus[]
      */
     protected $container = array();
-
-    private array $json_header;
 
     /**
      * @return WorkStatus[]
@@ -50,16 +51,4 @@ class WorkStatusContainer implements \JsonSerializable
         return null;
     }
 
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize()
-    {
-        return [
-            'header' => $this->json_header ?? [],
-            'work_statuses' => array_values($this->container),
-        ];
-    }
-
-    public function addHeadData($head_data) {
-        $this->json_header = $head_data;
-    }
 }
