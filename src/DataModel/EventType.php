@@ -5,11 +5,11 @@ namespace HisInOneProxy\DataModel;
 use HisInOneProxy\Config\GlobalSettings;
 use HisInOneProxy\DataModel\Traits;
 
-class EventType
+class EventType implements \JsonSerializable
 {
     const TEXT = 'event_type';
 
-    use Traits\Text, Traits\DefaultLanguage, Traits\HisKeyId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueName;
+    use Traits\Text, Traits\DefaultLanguage, Traits\HisKeyId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueName, Traits\JsonData;
 
     /**
      * @var string

@@ -37,6 +37,9 @@ class ConsoleHandler
 {
     const PLAIN_TEXT = 'plain';
     const JSON = 'json';
+
+    const STATUS_FOUND = 200;
+    const STATUS_NOT_FOUND = 404;
     /**
      * @var Conductor
      */
@@ -232,9 +235,23 @@ class ConsoleHandler
         }
         $id = DataCache::getInstance()->getCourseCatalogService()->getRootIdOfTerm($this->year, $this->term_id);
         if ($id != '') {
-            DataCache::getInstance()->getLog()->info(sprintf('Found %s as root id of term for term id (%s) and year (%s).', $id, $this->term_id, $this->year));
+            $msg = sprintf('Found %s as root id of term for term id (%s) and year (%s).', $id, $this->term_id, $this->year);
+            if($this->output_mode === self::PLAIN_TEXT) {
+                DataCache::getInstance()->getLog()->info($msg);
+            } else if($this->output_mode === self::JSON) {
+                $this->head['message'] = $msg;
+                $this->head['status'] = self::STATUS_FOUND;
+                $this->printHead();
+            }
         } else {
-            DataCache::getInstance()->getLog()->info(sprintf('Found nothing as root id of term for term id (%s) and year (%s).', $this->term_id, $this->year));
+            $msg = sprintf('Found nothing as root id of term for term id (%s) and year (%s).', $this->term_id, $this->year);
+            if($this->output_mode === self::PLAIN_TEXT) {
+                DataCache::getInstance()->getLog()->info($msg);
+            } else if($this->output_mode === self::JSON) {
+                $this->head['message'] = $msg;
+                $this->head['status'] = self::STATUS_NOT_FOUND;
+                $this->printHead();
+            }
         }
         $this->endTimer();
     }
@@ -407,7 +424,9 @@ class ConsoleHandler
 	{
 		$this->startTimer();
 		$lng = DataCache::getInstance()->getKeyValueService()->getDefaultLanguageId();
-        var_dump($lng);
+        if($this->output_mode === self::PLAIN_TEXT) {
+            var_dump($lng);
+        }
 		$this->endTimer();
         return $lng;
 	}
@@ -747,5 +766,9 @@ class ConsoleHandler
 
             echo json_encode($obj, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) . PHP_EOL;
         }
+    }
+    private function printHead()
+    {
+            echo json_encode($this->head, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) . PHP_EOL;
     }
 }

@@ -29,6 +29,9 @@ trait JsonData
     {
         $data = get_object_vars($this);
         unset($data['json_header']);
+        if (empty($this->json_header)) {
+            return $data;
+        }
         return [
             'json_header' => $this->json_header ?? [],
             'data'    => $data,

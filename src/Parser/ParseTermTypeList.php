@@ -10,11 +10,11 @@ class ParseTermTypeList extends SimpleXmlParser
 {
 	/**
 	 * @param $xml
-	 * @return array
+	 * @return \HisInOneProxy\DataModel\Container\TermTypeList
 	 */
 	public function parse($xml)
 	{
-		$term_type_list = array();
+		$term_type_list = new \HisInOneProxy\DataModel\Container\TermTypeList();
 
 		if($this->isAttributeValid($xml, 'values'))
 		{
@@ -27,7 +27,7 @@ class ParseTermTypeList extends SimpleXmlParser
                         $this->log->info(sprintf('Found TermType start parsing.'));
                         $parser    = new ParseTermType($this->log);
                         $term_type = $parser->parse($value);
-                        $term_type_list[(string) $term_type->getId()] = $term_type;
+                        $term_type_list->appendTermType($term_type);
                     }
                     else
                     {
