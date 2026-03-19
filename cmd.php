@@ -17,7 +17,6 @@ function startHandler()
 		$term	= null;
 		$year	= null;
         $output_format = 'plain';
-        #$output_format = 'json';
 
 		if(array_key_exists(1, $_SERVER['argv']))
 		{
