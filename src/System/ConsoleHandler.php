@@ -115,13 +115,13 @@ class ConsoleHandler
         $end_time = microtime(true);
         $timer = round($end_time - $this->start_time, 4);
         $call_counter = GlobalSettings::getInstance()->getCallsCounter();
-        if($this->output_mode == self::PLAIN_TEXT) {
+        if($this->output_mode === self::PLAIN_TEXT) {
             DataCache::getInstance()->getLog()->info(sprintf($what . ' took %s seconds for %s soap calls.',
                     $timer,
                     $call_counter
                 )
             );
-        } else if($this->output_mode == self::JSON) {
+        } else if($this->output_mode === self::JSON) {
             $this->head = [
                 'status' => '',
                 'message' => '',
@@ -254,9 +254,9 @@ class ConsoleHandler
 	protected function getAllParallelGroups()
 	{
 		$this->startTimer();
-		$lng = $this->getDefaultLanguageId();
+        $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('ParallelgroupValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -265,7 +265,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('GenderValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -274,7 +274,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('ElementtypeValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -283,7 +283,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('EventtypeValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -292,7 +292,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('LanguageValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -301,7 +301,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('EAddresstypeValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -311,7 +311,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('FormOfStudiesValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -320,7 +320,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('AddresstagValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -329,7 +329,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('ExternalsystemValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -338,7 +338,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('MajorFieldOfStudy', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -347,7 +347,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('OrgunitAttributeValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -356,7 +356,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('OrgunittypeValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -365,7 +365,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('PersonGroupCategoryValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -374,7 +374,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('WorkstatusValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -444,7 +444,7 @@ class ConsoleHandler
 		$this->startTimer();
         $lng = $this->getDefaultLanguageId();
 		$obj = DataCache::getInstance()->getKeyValueService()->getAllValid('TermTypeValue', $lng);
-		print_r($obj);
+		$this->printObject($obj);
 		$this->endTimer();
 	}
 
@@ -739,8 +739,11 @@ class ConsoleHandler
         if($this->output_mode === self::PLAIN_TEXT) {
             print_r($obj);
         } else if($this->output_mode === self::JSON) {
-            $obj->addHeadData($this->head);
-            print_r(json_encode($obj, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT));
+            if(is_object($obj) && method_exists($obj, 'addHeadData')) {
+                $obj->addHeadData($this->head);
+            }
+
+            echo json_encode($obj, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT) . PHP_EOL;
         }
     }
 }

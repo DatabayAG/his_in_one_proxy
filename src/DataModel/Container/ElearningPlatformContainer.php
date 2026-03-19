@@ -17,6 +17,7 @@ class ElearningPlatformContainer implements \JsonSerializable
      * @var ElearningPlatform[]
      */
     protected array $container = [];
+    private array $json_header;
 
     /**
      * @return ElearningPlatform[]
@@ -50,26 +51,13 @@ class ElearningPlatformContainer implements \JsonSerializable
         return null;
     }
 
-    public function jsonSerialize() {
-        $class = $this->serializeItem( $this );
-        $this->json_header[] = $class;
-        return $class;
-    }
-
-    private function serializeItem($item)
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
     {
-        if (!is_object($item)) {
-            return $item;
-        }
-
-        return $this->getProperties($item);
-    }
-
-    private function getProperties($obj)
-    {
-        $rc = new ReflectionClass($obj);
-
-        return $rc->getProperties();
+        return [
+            'header' => $this->json_header ?? [],
+            'platforms' => array_values($this->container),
+        ];
     }
 
     public function addHeadData($head_data) {

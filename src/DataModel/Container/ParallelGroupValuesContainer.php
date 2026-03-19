@@ -9,12 +9,14 @@ use Psr\Log\InvalidArgumentException;
  * Class ParallelGroupValuesContainer
  * @package HisInOneProxy\DataModel\Container
  */
-class ParallelGroupValuesContainer
+class ParallelGroupValuesContainer implements \JsonSerializable
 {
-    protected $parallel_group_value_container;
+    protected $parallel_group_value_container = [];
+
+    private array $json_header;
 
     /**
-     * @return ParallelGroupValuesContainer
+     * @return array
      */
     public function getParallelGroupValueContainer()
     {
@@ -53,4 +55,16 @@ class ParallelGroupValuesContainer
         return null;
     }
 
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        return [
+            'header' => $this->json_header ?? [],
+            'parallel_groups' => array_values($this->parallel_group_value_container),
+        ];
+    }
+
+    public function addHeadData($head_data) {
+        $this->json_header = $head_data;
+    }
 }

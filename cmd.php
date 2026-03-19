@@ -16,8 +16,8 @@ function startHandler()
 		$func	= null;
 		$term	= null;
 		$year	= null;
-        #$output_format = 'plain';
-        $output_format = 'json';
+        $output_format = 'plain';
+        #$output_format = 'json';
 
 		if(array_key_exists(1, $_SERVER['argv']))
 		{
@@ -31,8 +31,12 @@ function startHandler()
 		{
 			$year = $_SERVER['argv'][3];
 		}
+        if(array_key_exists(4, $_SERVER['argv']))
+        {
+            $output_format = $_SERVER['argv'][4];
+        }
 
-        array_splice($_SERVER['argv'], 0, 4);
+        array_splice($_SERVER['argv'], 0, 5);
         $param = $_SERVER['argv'];
 		$handler	= new ConsoleHandler($term, $year, $output_format);
 		$handler->functionMap($func, $param);

@@ -9,12 +9,14 @@ use HisInOneProxy\DataModel\TermType;
  * Class TermTypeList
  * @package HisInOneProxy\DataModel\Container
  */
-class TermTypeList
+class TermTypeList implements \JsonSerializable
 {
     /**
      * @var array
      */
     protected $term_type_container = array();
+
+    private array $json_header;
 
     /**
      * @return array
@@ -48,5 +50,18 @@ class TermTypeList
     public function getSizeOfContainer()
     {
         return count($this->term_type_container);
+    }
+
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        return [
+            'header' => $this->json_header ?? [],
+            'term_types' => array_values($this->term_type_container),
+        ];
+    }
+
+    public function addHeadData($head_data) {
+        $this->json_header = $head_data;
     }
 }

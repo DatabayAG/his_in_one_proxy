@@ -9,7 +9,7 @@ use HisInOneProxy\DataModel\Traits;
  * Class TermType
  * @package HisInOneProxy\DataModel
  */
-class TermType
+class TermType implements \JsonSerializable
 {
 
     const TEXT = 'term';
@@ -20,6 +20,8 @@ class TermType
      * @var int
      */
     protected $term_category;
+
+    private array $json_header;
 
     /**
      * @return string
@@ -48,5 +50,15 @@ class TermType
     public function setTermCategory($term_category)
     {
         $this->term_category = $term_category;
+    }
+
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
+    public function addHeadData($head_data) {
+        $this->json_header = $head_data;
     }
 }

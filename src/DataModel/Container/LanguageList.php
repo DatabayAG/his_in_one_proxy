@@ -3,45 +3,45 @@
 namespace HisInOneProxy\DataModel\Container;
 
 use Generator;
-use HisInOneProxy\DataModel\CompleteAccount;
+use HisInOneProxy\DataModel\DefaultObject;
 
 /**
- * Class AccountList
+ * Class LanguageList
  * @package HisInOneProxy\DataModel\Container
  */
-class AccountList implements \JsonSerializable
+class LanguageList implements \JsonSerializable
 {
     /**
      * @var array
      */
-    protected $account_container = array();
+    protected $language_container = array();
 
     private array $json_header;
 
     /**
      * @return array
      */
-    public function getAccountContainer()
+    public function getLanguageContainer()
     {
-        return $this->account_container;
+        return $this->language_container;
     }
 
     /**
      * @return Generator
      */
-    public function getAccount()
+    public function getLanguage()
     {
-        foreach ($this->account_container as $account) {
-            yield $account;
+        foreach ($this->language_container as $language) {
+            yield $language;
         }
     }
 
     /**
-     * @param CompleteAccount $account
+     * @param DefaultObject $language
      */
-    public function appendAccount($account)
+    public function appendLanguage($language)
     {
-        $this->account_container[] = $account;
+        $this->language_container[(string) $language->getId()] = $language;
     }
 
     /**
@@ -49,7 +49,7 @@ class AccountList implements \JsonSerializable
      */
     public function getSizeOfContainer()
     {
-        return count($this->account_container);
+        return count($this->language_container);
     }
 
     #[\ReturnTypeWillChange]
@@ -57,7 +57,7 @@ class AccountList implements \JsonSerializable
     {
         return [
             'header' => $this->json_header ?? [],
-            'accounts' => array_values($this->account_container),
+            'languages' => array_values($this->language_container),
         ];
     }
 

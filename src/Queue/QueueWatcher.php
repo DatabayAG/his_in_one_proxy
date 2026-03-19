@@ -84,9 +84,9 @@ class QueueWatcher
             if ($this->jobCanBeProcessed($unix_time, $file_name, $queue_name)) {
 
                 $service = new QueueService();
-                $service->setUseLocalEcs($this->use_local_ecs);
+                $service::setUseLocalEcs($this->use_local_ecs);
 
-                if ($cmd != null && $service->doesFunctionExists($cmd)) {
+                if ($cmd !== null && $service::doesFunctionExists($cmd)) {
                     if ($service->$cmd($data, $receiver)) {
                         $this->queue->removeMessage($queue_name, $file_name);
                     } else {
@@ -113,7 +113,7 @@ class QueueWatcher
                 $this->processMessage($queue_name);
             }
         } else {
-            if ($unix_time == 0 || $unix_time <= time()) {
+            if ($unix_time === 0 || $unix_time <= time()) {
                 return true;
             } else {
                 if ($unix_time > time()) {

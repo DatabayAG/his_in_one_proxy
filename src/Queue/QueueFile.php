@@ -73,7 +73,9 @@ class QueueFile extends QueueBase
     public function queueExists(string $queue_name) : bool
     {
         if (!is_dir($this->getQueueDirectory($queue_name))) {
-            mkdir($this->getQueueDirectory($queue_name), $this->permissions, true);
+            if (!mkdir($concurrentDirectory = $this->getQueueDirectory($queue_name), $this->permissions, true) && !is_dir($concurrentDirectory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            }
             $this->log->debug(sprintf('Queue %s not found, initialised it.', $queue_name));
         }
         return true;

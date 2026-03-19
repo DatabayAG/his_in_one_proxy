@@ -8,7 +8,7 @@ use HisInOneProxy\DataModel\Traits;
  * Class ElearningPlatform
  * @package HisInOneProxy\DataModel
  */
-class ElearningPlatform
+class ElearningPlatform implements \JsonSerializable
 {
     use Traits\HisKeyId, Traits\LanguageId, Traits\ObjGuid, Traits\SortingOrder, Traits\UniqueNameAndText;
 
@@ -31,5 +31,11 @@ class ElearningPlatform
     public function setConnectionInfo($connection_info)
     {
         $this->connection_info = $connection_info;
+    }
+
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 }

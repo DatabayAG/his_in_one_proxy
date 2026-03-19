@@ -9,12 +9,14 @@ use InvalidArgumentException;
  * Class ChildRelationContainer
  * @package HisInOneProxy\DataModel\Container
  */
-class ChildRelationContainer
+class ChildRelationContainer implements \JsonSerializable
 {
     /**
      * @var ChildRelation[]
      */
     protected $container = array();
+
+    private array $json_header;
 
     /**
      * @return ChildRelation[]
@@ -45,4 +47,16 @@ class ChildRelationContainer
         $this->container[$id] = $child;
     }
 
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
+    {
+        return [
+            'header' => $this->json_header ?? [],
+            'child_relations' => array_values($this->container),
+        ];
+    }
+
+    public function addHeadData($head_data) {
+        $this->json_header = $head_data;
+    }
 }

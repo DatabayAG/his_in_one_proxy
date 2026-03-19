@@ -48,10 +48,14 @@ class CourseMappingTypeContainer implements \JsonSerializable
         return null;
     }
 
-    public function jsonSerialize() {
-        $class = get_object_vars( $this );
-        $this->json_header[] = $class;
-        return $class;
+    private array $json_header;
+
+    public function jsonSerialize()
+    {
+        return [
+            'header' => $this->json_header ?? [],
+            'mapping_types' => array_values($this->container),
+        ];
     }
 
     public function addHeadData($head_data) {
