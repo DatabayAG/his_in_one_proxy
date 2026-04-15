@@ -24,7 +24,12 @@ class ParseAccounts extends SimpleXmlParser
                     $container[] = $this->buildObject($account);
                 }
             } else {
-                $container[] = $this->buildObject($xml->completeAccount60);
+                if(isset($xml->completeAccount60)){
+                    $container[] = $this->buildObject($xml->completeAccount60);
+                } else {
+                    $container[] = $this->buildObject($xml);
+                }
+
             }
         }
         return $container;
