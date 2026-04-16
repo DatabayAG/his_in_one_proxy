@@ -104,7 +104,7 @@ class QueueDatabase extends QueueBase
         if ($this->prepare_collision_service_queue === null) {
             $sql = 'SELECT service_id, checksum, lecture_id FROM ' .
                 QueueConstants::SERVICE_QUEUE .
-                ' WHERE checksum=:checksum AND lecture_id=:lectureId LIMIT 1';
+                ' WHERE lecture_id=:lectureId AND func=:func ORDER BY service_id DESC LIMIT 1';
             $this->prepare_collision_service_queue = $this->pdo->prepare($sql);
         }
 
@@ -315,20 +315,22 @@ class QueueDatabase extends QueueBase
         }
         if($lectureId > 0 && !$this->isForceWriteMessageToQueue()) {
             $select_data = [
-                'checksum' => $checksum,
-                'lectureId' => $lectureId
+                'lectureId' => $lectureId,
+                'func' => $function
             ];
 
             $this->prepare_collision_service_queue->execute($select_data);
             while ($row =  $this->prepare_collision_service_queue->fetch(PDO::FETCH_ASSOC)) {
-                $write_message_in_queue = false;
-                $log_message = 'Collision found for checksum %s for lectureId %s is already stored with service id %s, ignoring message.';
-                $this->log->info(sprintf($log_message,
-                    $checksum,
-                    $lectureId,
-                    $row['service_id']
-                ));
-                DataCache::getInstance()->incrementFoundCollisions();
+                if ($row['checksum'] === $checksum) {
+                    $write_message_in_queue = false;
+                    $log_message = 'Collision found for checksum %s for lectureId %s is already stored with service id %s, ignoring message.';
+                    $this->log->info(sprintf($log_message,
+                        $checksum,
+                        $lectureId,
+                        $row['service_id']
+                    ));
+                    DataCache::getInstance()->incrementFoundCollisions();
+                }
             }
         } else {
             if ($lectureId === 0) {
