@@ -9,6 +9,7 @@ use HisInOneProxy\Queue\QueueDatabase;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\System\Utils;
 use JsonException;
+use Psr\Http\Message\ResponseInterface;
 use const HisInOneProxy\EcsLocal\Routes\JSON_CONTENT_TYPE;
 
 class EcsLocalFunctions
@@ -202,5 +203,12 @@ class EcsLocalFunctions
      */
     public function jsonEncodeWrapper($array) {
         return json_encode($array, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
+    }
+
+    public function checkResponseDataSizeForStatus($data, $response) : ResponseInterface{
+        if($data === []) {
+            return $response->withStatus(404);
+        }
+        return $response;
     }
 }
