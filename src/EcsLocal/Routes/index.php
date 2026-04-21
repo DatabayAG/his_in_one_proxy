@@ -116,7 +116,7 @@ $app->get(CC_COURSES, function (Request $request, Response $response, array $arg
 
     if(isset($args['id'])) {
         $courseId = $args['id'];
-        $data = $db->select($courseId);
+        $data = $db->select($courseId, 'publish_course_to_ecs');
         $json = $ecs_local_functions->jsonEncodeWrapper($data);
         $response->getBody()->write($json);
 
@@ -164,13 +164,13 @@ $app->get('/campusconnect/course_members/[{id}]', function (Request $request, Re
     if (isset($args['id'])) {
         $membersId = $args['id'];
         if ($membersId > 0) {
-            $data = $db->select($membersId);
+            $data = $db->select($membersId, 'publish_members_to_ecs');
         }
         $json = $ecs_local_functions->jsonEncodeWrapper($data);
         $response->getBody()->write($json);
         return $ecs_local_functions->checkResponseDataSizeForStatus($data, $response);
     }
-    
+
     return $ecs_local_functions->checkResponseDataSizeForStatus($data, $response);
 });
 

@@ -205,7 +205,7 @@ class EcsLocalFunctions
         return json_encode($array, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
     }
 
-    public function checkResponseDataSizeForStatus($data, $response) : ResponseInterface{
+    public function checkResponseDataSizeForStatus(array|\stdClass $data, ResponseInterface $response) : ResponseInterface{
         if($data === []) {
             return $response->withStatus(404);
         }

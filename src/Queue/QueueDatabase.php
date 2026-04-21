@@ -92,7 +92,7 @@ class QueueDatabase extends QueueBase
         }
 
         if ($this->prepare_select_service_queue === null) {
-            $sql = 'SELECT * FROM ' . QueueConstants::SERVICE_QUEUE . '  WHERE service_id=:id';
+            $sql = 'SELECT * FROM ' . QueueConstants::SERVICE_QUEUE . '  WHERE service_id=:id AND func=:func';
             $this->prepare_select_service_queue = $this->pdo->prepare($sql);
         }
 
@@ -186,10 +186,11 @@ class QueueDatabase extends QueueBase
         return $participants;
     }
 
-    public function select(int $service_id)
+    public function select(int $service_id, string $func)
     {
         $args = [
             'id' => $service_id,
+            'func' => $func
         ];
         $data = [];
 
