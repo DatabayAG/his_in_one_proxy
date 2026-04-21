@@ -41,6 +41,8 @@ const CC_TERMS = CC . TERMS . ID_PARAM;
 const CC_DIRECTORY_TREES = CC . DIRECTORY_TREES . ID_PARAM;
 const CC_COURSE_LINKS = CC . COURSE_LINKS . ID_PARAM;
 const CC_COURSE_URLS = CC . COURSE_URLS ;
+const COURSE_MEMBERS_FUNC = 'publish_members_to_ecs';
+const COURSES_FUNC = 'publish_course_to_ecs';
 
 $app = AppFactory::create();
 $app->addErrorMiddleware(true, true, true);
@@ -116,7 +118,7 @@ $app->get(CC_COURSES, function (Request $request, Response $response, array $arg
 
     if(isset($args['id'])) {
         $courseId = $args['id'];
-        $data = $db->select($courseId, 'publish_course_to_ecs');
+        $data = $db->select($courseId, COURSES_FUNC);
         $json = $ecs_local_functions->jsonEncodeWrapper($data);
         $response->getBody()->write($json);
 
@@ -164,7 +166,7 @@ $app->get('/campusconnect/course_members/[{id}]', function (Request $request, Re
     if (isset($args['id'])) {
         $membersId = $args['id'];
         if ($membersId > 0) {
-            $data = $db->select($membersId, 'publish_members_to_ecs');
+            $data = $db->select($membersId, COURSE_MEMBERS_FUNC);
         }
         $json = $ecs_local_functions->jsonEncodeWrapper($data);
         $response->getBody()->write($json);
