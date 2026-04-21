@@ -186,8 +186,14 @@ class QueueDatabase extends QueueBase
         return $participants;
     }
 
-    public function select(int $service_id, string $func)
+    public function select(int $service_id, string $type)
     {
+        if($type === COURSES) {
+            $func = 'publish_course_to_ecs';
+        } elseif($type === COURSE_MEMBERS) {
+            $func = 'publish_members_to_ecs';
+        }
+
         $args = [
             'id' => $service_id,
             'func' => $func
