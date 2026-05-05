@@ -38,7 +38,6 @@ class QueueDatabase extends QueueBase
     private ?PDOStatement $prepare_pop_link_queue = null;
     private ?PDOStatement $prepare_update_sent_link_queue = null;
     private ?PDOStatement $prepare_get_unit_id_from_json = null;
-
     function __construct(bool $force_push = false)
     {
             $this->log = DataCache::getInstance(false)->getLog();
@@ -188,11 +187,7 @@ class QueueDatabase extends QueueBase
 
     public function select(int $service_id, string $type)
     {
-        if($type === COURSES) {
-            $func = 'publish_course_to_ecs';
-        } elseif($type === COURSE_MEMBERS) {
-            $func = 'publish_members_to_ecs';
-        }
+        $func = $this->getFuncType($type);
 
         $args = [
             'id' => $service_id,
@@ -221,11 +216,7 @@ class QueueDatabase extends QueueBase
 
     public function selectQueueWaitingEntries(int $service_id, string $type)
     {
-        if($type === COURSES) {
-            $type = 'publish_course_to_ecs';
-        } elseif($type === COURSE_MEMBERS) {
-            $type = 'publish_members_to_ecs';
-        }
+        $type = $this->getFuncType($type);
         $args = [
             'id' => $service_id,
             'func' => $type
@@ -482,6 +473,20 @@ class QueueDatabase extends QueueBase
         }
 
         return $map;
+    }
+
+    /**
+     * @param string $type
+     * @return string
+     */
+    protected function getFuncType(string $type): string
+    {
+        if ($type === COURSES) {
+            $type = 'publish_course_to_ecs';
+        } elseif ($type === COURSE_MEMBERS) {
+            $type = 'publish_members_to_ecs';
+        }
+        return $type;
     }
 
 }
