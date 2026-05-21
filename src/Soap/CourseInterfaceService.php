@@ -253,7 +253,7 @@ class CourseInterfaceService extends SoapService
      */
     public function getPersonExternalForCourse($unit_id, $plan_element, $term_type_id, $term_year)
     {
-        $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $term_year));
+        $params = array(array('unitId' => $unit_id, 'termTypeId' => $term_type_id, 'year' => $term_year, 'planelementId' => $plan_element->getId()));
         try {
             $response             = $this->soap_course_interface->__soapCall('getPersonExternalForCourse', $params);
             $person_plan_elements = new Parser\ParsePersonExternals($this->log);
