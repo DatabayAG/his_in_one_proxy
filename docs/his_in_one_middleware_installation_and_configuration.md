@@ -150,7 +150,8 @@ This should give you a list of all possible commands, below you see an example f
     Usage: php cmd.php function [term] [year] [param]  
        lc => Gets all lectures and add them to queue. 
        li => Gets a Lecture by id. Uses id as param. 
-       in => Gets all institutions. cc => Gets course catalog. 
+       in => Gets all institutions. 
+       cc => Gets course catalog. 
        ge => Gets all elearning platforms. 
        gb => Gets all blocked id states. 
        ts => Gets wsdls needed for unittests and runs tests. 
