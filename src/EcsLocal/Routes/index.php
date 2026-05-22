@@ -136,7 +136,13 @@ $app->get('/campusconnect/courses/{id}/details', function (Request $request, Res
     }
 
     $courseId = (int) $args['id'];
-    $payload = $ecs_local_functions->getPayloadForCourses($valid_participant, $courseId);
+    $data = $db->select($courseId, COURSES);
+    if($data !== []) {
+        $payload = $ecs_local_functions->getPayloadForCourses($valid_participant, $courseId);
+    } else {
+        $payload = [];
+    }
+
     $memberships_json = $ecs_local_functions->jsonEncodeWrapper($payload);
     $response->getBody()->write($memberships_json);
     $logging->info(sprintf('Sent message details for %s', CC_COURSES . '/details'));
@@ -179,9 +185,17 @@ $app->get('/campusconnect/course_members/{id}/details', function (Request $reque
     if($valid_participant->isInvalidAuth()) {
         return $response;
     }
+    $data = [];
 
-    $courseId = (int) $args['id'];
-    $payload = $ecs_local_functions->getPayloadForCourseMembers($valid_participant, $courseId);
+    $membersId = (int) $args['id'];
+    if ($membersId > 0) {
+        $data = $db->select($membersId, COURSE_MEMBERS);
+    }
+    if($data !== []) {
+        $payload = $ecs_local_functions->getPayloadForCourseMembers($valid_participant, $membersId);
+    } else {
+        $payload = [];
+    }
     $json = $ecs_local_functions->jsonEncodeWrapper($payload);
     $response->getBody()->write($json);
     $logging->info(sprintf('Sent message details for %s', '/campusconnect/course_members/{id}/details'));
