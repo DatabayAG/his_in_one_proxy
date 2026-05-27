@@ -38,7 +38,6 @@ class QueueDatabase extends QueueBase
     private ?PDOStatement $prepare_pop_link_queue = null;
     private ?PDOStatement $prepare_update_sent_link_queue = null;
     private ?PDOStatement $prepare_get_unit_id_from_json = null;
-
     function __construct(bool $force_push = false)
     {
             $this->log = DataCache::getInstance(false)->getLog();
@@ -92,7 +91,7 @@ class QueueDatabase extends QueueBase
         }
 
         if ($this->prepare_select_service_queue === null) {
-            $sql = 'SELECT * FROM ' . QueueConstants::SERVICE_QUEUE . '  WHERE service_id=:id';
+            $sql = 'SELECT * FROM ' . QueueConstants::SERVICE_QUEUE . '  WHERE service_id=:id AND func=:func';
             $this->prepare_select_service_queue = $this->pdo->prepare($sql);
         }
 
@@ -186,10 +185,13 @@ class QueueDatabase extends QueueBase
         return $participants;
     }
 
-    public function select(int $service_id)
+    public function select(int $service_id, string $type)
     {
+        $func = $this->getFuncType($type);
+
         $args = [
             'id' => $service_id,
+            'func' => $func
         ];
         $data = [];
 
@@ -214,11 +216,7 @@ class QueueDatabase extends QueueBase
 
     public function selectQueueWaitingEntries(int $service_id, string $type)
     {
-        if($type === COURSES) {
-            $type = 'publish_course_to_ecs';
-        } elseif($type === COURSE_MEMBERS) {
-            $type = 'publish_members_to_ecs';
-        }
+        $type = $this->getFuncType($type);
         $args = [
             'id' => $service_id,
             'func' => $type
@@ -477,6 +475,20 @@ class QueueDatabase extends QueueBase
         }
 
         return $map;
+    }
+
+    /**
+     * @param string $type
+     * @return string
+     */
+    protected function getFuncType(string $type): string
+    {
+        if ($type === COURSES) {
+            $type = 'publish_course_to_ecs';
+        } elseif ($type === COURSE_MEMBERS) {
+            $type = 'publish_members_to_ecs';
+        }
+        return $type;
     }
 
 }
