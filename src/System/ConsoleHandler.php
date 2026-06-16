@@ -634,7 +634,7 @@ class ConsoleHandler
     public function printHelp()
     {
         echo "Usage: php cmd.php function [term] [year] [param] [output_mode]\n";
-        echo "Example for JSON output: php cmd.php function [term|null] [term|null] json\n\n";
+        echo "Example for JSON output: php cmd.php function [term|null] [year|null] json\n\n";
 
         foreach ($this->collection as $func) {
             $this->printHelpLine($func);
