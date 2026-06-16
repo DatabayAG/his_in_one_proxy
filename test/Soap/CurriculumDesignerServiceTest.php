@@ -16,11 +16,11 @@ class CurriculumDesignerServiceTest extends TestCaseExtension
 	 */
 	protected $soap_client_router;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
-		$this->soap_client_router->getSoapClientCurriculumDesingerService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'UnitService.wsdl'));
+		$this->soap_client_router->setSoapClientCurriculumDesignerService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'UnitService.wsdl'));
 	}
 
 	public function test_getRootIdOfTerm_shouldReturnValue()

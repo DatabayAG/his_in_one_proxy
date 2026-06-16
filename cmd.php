@@ -35,7 +35,7 @@ function startHandler()
             $output_format = $_SERVER['argv'][4];
         }
 
-        array_splice($_SERVER['argv'], 0, 5);
+        array_splice($_SERVER['argv'], 0, count($_SERVER['argv']) -1);
         $param = $_SERVER['argv'];
 		$handler	= new ConsoleHandler($term, $year, $output_format);
 		$handler->functionMap($func, $param);

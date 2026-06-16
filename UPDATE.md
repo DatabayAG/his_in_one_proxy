@@ -168,32 +168,95 @@ Example output:
 ---
 Displays all term types
 
-    php cmd.php gt
-
-Relevant Information is the id field.
+    php cmd.php gt 30 2025
 
 Example output:
 
+    Initialisation took 1.2575 seconds for 9 soap calls.
+    Queries took 0.0244 seconds for 10 soap calls.
+    HisInOneProxy\DataModel\Container\TermTypeList Object
     (
-        [30] => HisInOneProxy\DataModel\TermType Object
+        [term_type_container:protected] => Array
             (
-                [language_id:protected] => 12
-                [sort_order:protected] => 1
-                [id:protected] => 30
-                [short_text:protected] => SoSe
-                [long_text:protected] => Sommersemester
-                [default_text:protected] => Sommersemester
-                [unique_name:protected] => SoSe
-            )
+                [30] => HisInOneProxy\DataModel\TermType Object
+                    (
+                        [term_category:protected] => 
+                        [language_id:protected] => 12
+                        [sort_order:protected] => 1
+                        [obj_guid:protected] => e7558afe-9544-4bab-b20b-ba7d0a0d0d4b
+                        [id:protected] => 30
+                        [term_number:protected] => 
+                        [short_text:protected] => SoSe
+                        [long_text:protected] => Sommersemester
+                        [default_text:protected] => Sommersemester
+                        [unique_name:protected] => SoSe
+                        [json_header:protected] => Array
+                            (
+                            )
     
-        [31] => HisInOneProxy\DataModel\TermType Object
-            (
-                [language_id:protected] => 12
-                [sort_order:protected] => 2
-                [id:protected] => 31
-                [short_text:protected] => WiSe
-                [long_text:protected] => Wintersemester
-                [default_text:protected] => Wintersemester
-                [unique_name:protected] => WiSe
+                    )
+    
+                [31] => HisInOneProxy\DataModel\TermType Object
+                    (
+                        [term_category:protected] => 
+                        [language_id:protected] => 12
+                        [sort_order:protected] => 2
+                        [obj_guid:protected] => 449ed827-8672-4525-a52e-6c9eaffe78b0
+                        [id:protected] => 31
+                        [term_number:protected] => 
+                        [short_text:protected] => WiSe
+                        [long_text:protected] => Wintersemester
+                        [default_text:protected] => Wintersemester
+                        [unique_name:protected] => WiSe
+                        [json_header:protected] => Array
+                            (
+                            )
+    
+                    )
+    
             )
-    )
+        )
+
+
+Display all term years as json
+
+    php cmd.php gt 30 2025 json 
+
+Example output:
+
+    {
+    "json_header": {
+        "status": 200,
+        "message": "",
+        "duration_seconds": 0.0256,
+        "soap_calls": 10
+    },
+    "data": {
+        "term_type_container": {
+            "30": {
+                "term_category": null,
+                "language_id": 12,
+                "sort_order": 1,
+                "obj_guid": "e7558afe-9544-4bab-b20b-ba7d0a0d0d4b",
+                "id": 30,
+                "term_number": null,
+                "short_text": "SoSe",
+                "long_text": "Sommersemester",
+                "default_text": "Sommersemester",
+                "unique_name": "SoSe"
+            },
+            "31": {
+                "term_category": null,
+                "language_id": 12,
+                "sort_order": 2,
+                "obj_guid": "449ed827-8672-4525-a52e-6c9eaffe78b0",
+                "id": 31,
+                "term_number": null,
+                "short_text": "WiSe",
+                "long_text": "Wintersemester",
+                "default_text": "Wintersemester",
+                "unique_name": "WiSe"
+            }
+        }
+    }
+}

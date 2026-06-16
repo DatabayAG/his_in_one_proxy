@@ -17,7 +17,7 @@ class TestCaseExtension extends \PHPUnit\Framework\TestCase
 	 */
 	protected $collectedMessages = array();
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->log = $this->createMock('HisInOneProxy\Log\Log');
 		$this->log->expects($this->any())

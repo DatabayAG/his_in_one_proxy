@@ -7,24 +7,24 @@ namespace Composer\Autoload;
 class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
 {
     public static $files = array (
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
+        'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Slim\\Psr7\\' => 10,
             'Slim\\' => 5,
         ),
-        'R' => 
+        'R' =>
         array (
             'React\\Stream\\' => 13,
             'React\\Socket\\' => 13,
@@ -34,7 +34,7 @@ class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
             'React\\Dns\\' => 10,
             'React\\Cache\\' => 12,
         ),
-        'P' => 
+        'P' =>
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Server\\' => 16,
@@ -43,153 +43,153 @@ class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
             'Psr\\Container\\' => 14,
             'PhpParser\\' => 10,
         ),
-        'N' => 
+        'N' =>
         array (
             'Nyholm\\Psr7\\' => 12,
             'Nyholm\\Psr7Server\\' => 18,
             'Noodlehaus\\' => 11,
         ),
-        'M' => 
+        'M' =>
         array (
             'Monolog\\' => 8,
         ),
-        'H' => 
+        'H' =>
         array (
             'HisInOneProxy\\' => 14,
         ),
-        'G' => 
+        'G' =>
         array (
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
-        'F' => 
+        'F' =>
         array (
             'Fig\\Http\\Message\\' => 17,
             'FastRoute\\' => 10,
         ),
-        'E' => 
+        'E' =>
         array (
             'Evenement\\' => 10,
         ),
-        'D' => 
+        'D' =>
         array (
             'DeepCopy\\' => 9,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Slim\\Psr7\\' => 
+        'Slim\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/slim/psr7/src',
         ),
-        'Slim\\' => 
+        'Slim\\' =>
         array (
             0 => __DIR__ . '/..' . '/slim/slim/Slim',
         ),
-        'React\\Stream\\' => 
+        'React\\Stream\\' =>
         array (
             0 => __DIR__ . '/..' . '/react/stream/src',
         ),
-        'React\\Socket\\' => 
+        'React\\Socket\\' =>
         array (
             0 => __DIR__ . '/..' . '/react/socket/src',
         ),
-        'React\\Promise\\' => 
+        'React\\Promise\\' =>
         array (
             0 => __DIR__ . '/..' . '/react/promise/src',
         ),
-        'React\\Http\\' => 
+        'React\\Http\\' =>
         array (
             0 => __DIR__ . '/..' . '/react/http/src',
         ),
-        'React\\EventLoop\\' => 
+        'React\\EventLoop\\' =>
         array (
             0 => __DIR__ . '/..' . '/react/event-loop/src',
         ),
-        'React\\Dns\\' => 
+        'React\\Dns\\' =>
         array (
             0 => __DIR__ . '/..' . '/react/dns/src',
         ),
-        'React\\Cache\\' => 
+        'React\\Cache\\' =>
         array (
             0 => __DIR__ . '/..' . '/react/cache/src',
         ),
-        'Psr\\Log\\' => 
+        'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
-        'Psr\\Http\\Server\\' => 
+        'Psr\\Http\\Server\\' =>
         array (
-            0 => __DIR__ . '/..' . '/psr/http-server-handler/src',
-            1 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
+            0 => __DIR__ . '/..' . '/psr/http-server-middleware/src',
+            1 => __DIR__ . '/..' . '/psr/http-server-handler/src',
         ),
-        'Psr\\Http\\Message\\' => 
+        'Psr\\Http\\Message\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
             1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Psr\\Http\\Client\\' => 
+        'Psr\\Http\\Client\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
-        'Psr\\Container\\' => 
+        'Psr\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'PhpParser\\' => 
+        'PhpParser\\' =>
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
-        'Nyholm\\Psr7\\' => 
+        'Nyholm\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/nyholm/psr7/src',
         ),
-        'Nyholm\\Psr7Server\\' => 
+        'Nyholm\\Psr7Server\\' =>
         array (
             0 => __DIR__ . '/..' . '/nyholm/psr7-server/src',
         ),
-        'Noodlehaus\\' => 
+        'Noodlehaus\\' =>
         array (
             0 => __DIR__ . '/..' . '/hassankhan/config/src',
         ),
-        'Monolog\\' => 
+        'Monolog\\' =>
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
-        'HisInOneProxy\\' => 
+        'HisInOneProxy\\' =>
         array (
             0 => __DIR__ . '/../..' . '/../../src',
         ),
-        'GuzzleHttp\\Psr7\\' => 
+        'GuzzleHttp\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'GuzzleHttp\\Promise\\' => 
+        'GuzzleHttp\\Promise\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
-        'GuzzleHttp\\' => 
+        'GuzzleHttp\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
-        'Fig\\Http\\Message\\' => 
+        'Fig\\Http\\Message\\' =>
         array (
             0 => __DIR__ . '/..' . '/fig/http-message-util/src',
         ),
-        'FastRoute\\' => 
+        'FastRoute\\' =>
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
-        'Evenement\\' => 
+        'Evenement\\' =>
         array (
             0 => __DIR__ . '/..' . '/evenement/evenement/src',
         ),
-        'DeepCopy\\' => 
+        'DeepCopy\\' =>
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
         ),
@@ -197,6 +197,7 @@ class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
 
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'HisInOneProxy\\Config\\GlobalSettings' => __DIR__ . '/../..' . '/../../src/Config/GlobalSettings.php',
         'HisInOneProxy\\Config\\LogConfig' => __DIR__ . '/../..' . '/../../src/Log/LogConfig.php',
         'HisInOneProxy\\DataModel\\Address' => __DIR__ . '/../..' . '/../../src/DataModel/Address.php',
@@ -209,8 +210,10 @@ class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
         'HisInOneProxy\\DataModel\\Container\\CourseMappingTypeContainer' => __DIR__ . '/../..' . '/../../src/DataModel/Container/CourseMappingTypeContainer.php',
         'HisInOneProxy\\DataModel\\Container\\CourseOfStudyIdList' => __DIR__ . '/../..' . '/../../src/DataModel/Container/CourseOfStudyIdList.php',
         'HisInOneProxy\\DataModel\\Container\\ElearningPlatformContainer' => __DIR__ . '/../..' . '/../../src/DataModel/Container/ElearningPlatformContainer.php',
+        'HisInOneProxy\\DataModel\\Container\\EventTypeList' => __DIR__ . '/../..' . '/../../src/DataModel/Container/EventTypeList.php',
         'HisInOneProxy\\DataModel\\Container\\ExamRelationContainer' => __DIR__ . '/../..' . '/../../src/DataModel/Container/ExamRelationContainer.php',
         'HisInOneProxy\\DataModel\\Container\\HisSystemResponseContainer' => __DIR__ . '/../..' . '/../../src/DataModel/Container/HisSystemResponseContainer.php',
+        'HisInOneProxy\\DataModel\\Container\\LanguageList' => __DIR__ . '/../..' . '/../../src/DataModel/Container/LanguageList.php',
         'HisInOneProxy\\DataModel\\Container\\ParallelGroupValuesContainer' => __DIR__ . '/../..' . '/../../src/DataModel/Container/ParallelGroupValuesContainer.php',
         'HisInOneProxy\\DataModel\\Container\\TermTypeList' => __DIR__ . '/../..' . '/../../src/DataModel/Container/TermTypeList.php',
         'HisInOneProxy\\DataModel\\Container\\UnitIdList' => __DIR__ . '/../..' . '/../../src/DataModel/Container/UnitIdList.php',
@@ -273,6 +276,7 @@ class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
         'HisInOneProxy\\DataModel\\Traits\\Grading' => __DIR__ . '/../..' . '/../../src/DataModel/Traits/Grading.php',
         'HisInOneProxy\\DataModel\\Traits\\HisKeyId' => __DIR__ . '/../..' . '/../../src/DataModel/Traits/HisKeyId.php',
         'HisInOneProxy\\DataModel\\Traits\\Id' => __DIR__ . '/../..' . '/../../src/DataModel/Traits/Id.php',
+        'HisInOneProxy\\DataModel\\Traits\\JsonData' => __DIR__ . '/../..' . '/../../src/DataModel/Traits/JsonData.php',
         'HisInOneProxy\\DataModel\\Traits\\LanguageId' => __DIR__ . '/../..' . '/../../src/DataModel/Traits/LanguageId.php',
         'HisInOneProxy\\DataModel\\Traits\\LearningTarget' => __DIR__ . '/../..' . '/../../src/DataModel/Traits/LearningTarget.php',
         'HisInOneProxy\\DataModel\\Traits\\Lid' => __DIR__ . '/../..' . '/../../src/DataModel/Traits/Lid.php',
@@ -418,6 +422,7 @@ class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
         'HisInOneProxy\\Soap\\Interactions\\DataPrinter' => __DIR__ . '/../..' . '/../../src/Soap/Interactions/DataPrinter.php',
         'HisInOneProxy\\Soap\\Interactions\\HisHttpServer' => __DIR__ . '/../..' . '/../../src/Soap/Interactions/HisHttpServer.php',
         'HisInOneProxy\\Soap\\Interactions\\HisHttpServerProcess' => __DIR__ . '/../..' . '/../../src/Soap/Interactions/HisHttpServerProcess.php',
+        'HisInOneProxy\\Soap\\Interactions\\HisLinksCron' => __DIR__ . '/../..' . '/../../src/Soap/Interactions/HisLinksCron.php',
         'HisInOneProxy\\Soap\\Interactions\\JsonBuilder' => __DIR__ . '/../..' . '/../../src/Soap/Interactions/JsonBuilder.php',
         'HisInOneProxy\\Soap\\KeyvalueService' => __DIR__ . '/../..' . '/../../src/Soap/KeyvalueService.php',
         'HisInOneProxy\\Soap\\OrgUnitService' => __DIR__ . '/../..' . '/../../src/Soap/OrgUnitService.php',
@@ -901,6 +906,7 @@ class ComposerStaticInit5d674ac60bf7d15ea2b4aa60705c2873
         'PHPUnit\\Framework\\MockObject\\Stub\\ReturnValueMap' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Runtime/Stub/ReturnValueMap.php',
         'PHPUnit\\Framework\\MockObject\\Stub\\Stub' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Runtime/Stub/Stub.php',
         'PHPUnit\\Framework\\MockObject\\TestDoubleState' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Runtime/Api/TestDoubleState.php',
+        'PHPUnit\\Framework\\NativeType' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/NativeType.php',
         'PHPUnit\\Framework\\NoChildTestSuiteException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/NoChildTestSuiteException.php',
         'PHPUnit\\Framework\\PhptAssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/PhptAssertionFailedError.php',
         'PHPUnit\\Framework\\ProcessIsolationException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/ProcessIsolationException.php',

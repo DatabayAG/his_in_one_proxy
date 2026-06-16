@@ -12,22 +12,22 @@ class ParseEventType extends SimpleXmlParser
 {
     /**
      * @param $xml
-     * @return DataModel\EAddressType[]
+     * @return DataModel\Container\EventTypeList
      */
     public function parse($xml)
     {
-        $container = array();
+        $container = new DataModel\Container\EventTypeList();
         if ($this->doesAttributeExist($xml, 'listOfEventtypes')) {
             $xml = $xml->listOfEventtypes;
             if ($this->doesMoreThanOneElementExists($xml, 'eventtypevalue')) {
                 foreach ($xml->eventtypevalue as $event_type) {
                     $obj                            = $this->buildObject($event_type);
-                    $container[trim($obj->getId())] = $obj;
+                    $container->appendEventType($obj);
                 }
             } else {
                 if ($this->doesExactlyOneElementExists($xml, 'eventtypevalue')) {
                     $obj                            = $this->buildObject($xml->eventtypevalue);
-                    $container[trim($obj->getId())] = $obj;
+                    $container->appendEventType($obj);
                 }
             }
         }

@@ -8,9 +8,9 @@ use HisInOneProxy\DataModel\Traits;
  * Class CompleteAccount
  * @package HisInOneProxy\DataModel
  */
-class CompleteAccount
+class CompleteAccount implements \JsonSerializable
 {
-    use Traits\Valid;
+    use Traits\Valid, Traits\JsonData;
 
     /**
      * @var string

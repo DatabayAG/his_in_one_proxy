@@ -9,9 +9,9 @@ use HisInOneProxy\DataModel\Traits;
  * Class CourseOfStudy
  * @package HisInOneProxy\DataModel
  */
-class CourseOfStudy
+class CourseOfStudy implements \JsonSerializable
 {
-    use Traits\Id, Traits\DefaultLanguage, Traits\Lid, Traits\OrgUnitId, Traits\UniqueNameAndText;
+    use Traits\Id, Traits\DefaultLanguage, Traits\Lid, Traits\OrgUnitId, Traits\UniqueNameAndText, Traits\JsonData;
 
     /**
      * @var int

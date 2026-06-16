@@ -8,10 +8,10 @@ use HisInOneProxy\DataModel\Traits;
  * Class CourseCatalogLeaf
  * @package HisInOneProxy\DataModel
  */
-class CourseCatalogLeaf
+class CourseCatalogLeaf implements \JsonSerializable
 {
 
-    use Traits\Id, Traits\Title, Traits\Valid;
+    use Traits\Id, Traits\Title, Traits\Valid, Traits\JsonData;
 
     /**
      * @var string

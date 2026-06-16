@@ -55,7 +55,6 @@ class KeyvalueService extends SoapService
     /**
      * @param $valueClass
      * @param $lang
-     * @return array|ElearningPlatformContainer|ParallelGroupValuesContainer|DefaultObject[]|EAddressType[]|CourseMappingTypeContainer|LanguageList|null
      */
     public function getAllValid($valueClass, $lang)
     {

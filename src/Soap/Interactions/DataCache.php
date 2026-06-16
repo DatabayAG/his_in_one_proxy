@@ -26,6 +26,7 @@ use HisInOneProxy\Soap\StudentService;
 use HisInOneProxy\Soap\SystemEventAbonnenmentService;
 use HisInOneProxy\Soap\TermService;
 use HisInOneProxy\Soap\KeyvalueService;
+use HisInOneProxy\Soap\PlanelementService;
 
 /**
  * Class DataCache
@@ -58,9 +59,6 @@ class DataCache
      */
     protected static $work_status;
 
-    /**
-     * @var array
-     */
     protected static $term_type_values;
 
     /**
@@ -140,6 +138,11 @@ class DataCache
     protected static $account_service;
 
     /**
+     * @var PlanelementService
+     */
+    protected static $planelement_service;
+
+    /**
      * @var SystemEventAbonnenmentService
      */
     protected static $system_event_abo_service;
@@ -164,10 +167,6 @@ class DataCache
      */
     protected static $org_unit_cache = array();
 
-    /**
-     * @var []
-     */
-    protected static $student_cache = array();
     /**+
      * @var self
      */
@@ -259,6 +258,7 @@ class DataCache
 		self::$keyvalue_service            = new KeyvalueService(self::$log, self::$router);
 		self::$account_service             = new AccountService(self::$log, self::$router);
 		self::$system_event_abo_service    = new SystemEventAbonnenmentService(self::$log, self::$router);
+		self::$planelement_service         = new PlanelementService(self::$log, self::$router);
 	}
 
 	protected static function readDefaultLanguage()
@@ -533,6 +533,14 @@ class DataCache
 	}
 
     /**
+     * @return PlanelementService
+     */
+    public function getPlanelementService()
+    {
+        return self::$planelement_service;
+    }
+
+    /**
      * @return CourseCatalogService
      */
     public function getCourseCatalogService()
@@ -591,8 +599,9 @@ class DataCache
      */
     public function resolveEventTypeById($id)
     {
-        if (array_key_exists($id, self::$event_type_list)) {
-            return self::$event_type_list[$id]->getText();
+        $event_type = self::$event_type_list->getEventTypeById($id);
+        if ($event_type !== null) {
+            return $event_type->getText();
         }
         return null;
     }
@@ -734,8 +743,9 @@ class DataCache
      */
     public function getTermTypeForId($id)
     {
-        if (array_key_exists($id, self::$term_type_values)) {
-            return self::$term_type_values[$id]->getText();
+        $term_type = self::$term_type_values->getTermTypeById($id);
+        if ($term_type !== null) {
+            return $term_type->getText();
         }
         return '';
     }

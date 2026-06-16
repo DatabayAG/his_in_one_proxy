@@ -41,7 +41,7 @@ class DataPrinter
         $tabs = $this->buildTabs($level);
         foreach ($units as $unit) {
             $this->log->debug(sprintf($tabs . '|* Unit: %s', $unit->getText()));
-            $this->log->debug(sprintf($tabs . "\t|- %s, %s, %s, %s", $unit->getId(), $unit->getLid(), $unit->getStatusId(), $unit->getElementNr()));
+            $this->log->debug(sprintf($tabs . "\t|- id (%s),  lid (%s), status (%s), element nr (%s)", $unit->getId(), $unit->getLid(), $unit->getStatusId(), $unit->getElementNr()));
             $this->printPlanElementContainer($unit->getPlanElementContainer(), $unit, $level + 2);
             $this->printOrgUnitForUnit($unit->getOrgUnitsContainer(), $level + 2);
             $this->printCourseOfStudy($unit->getCourseOfStudies(), $level + 2);
@@ -140,7 +140,7 @@ class DataPrinter
             }
         }
     }
-    
+
     /**
      * @param array $ea_list
      * @param       $level
@@ -163,7 +163,7 @@ class DataPrinter
             }
         }
     }
-    
+
 	/**
 	 * @param DataModel\ElearningCourseMapping[] $course_mapping_container
 	 * @param $level
@@ -175,7 +175,7 @@ class DataPrinter
 		foreach($course_mapping_container as $courseMapping)
 		{
 			$this->log->debug(sprintf($tabs . '|* Mapping: eSystemId: %s (%s), MappingId: %s',
-															$courseMapping->getELearningSystemId(), 
+															$courseMapping->getELearningSystemId(),
 															DataCache::getInstance()->getElearningPlatformContainer()->translateIdToDefaultText($courseMapping->getELearningSystemId()),
 															DataModel\HisToEcsCourseIdMapping::getEcsCourseIdFromCourseHisId($courseMapping->getCourseMappingTypeId())));
 		}
@@ -306,7 +306,7 @@ class DataPrinter
             }
         }
     }
-    
+
     /**
      * @param DataModel\OrgUnit               $obj
      * @param array | DataModel\CourseOfStudy $course_of_studies

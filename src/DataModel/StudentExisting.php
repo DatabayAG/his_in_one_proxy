@@ -9,9 +9,9 @@ use HisInOneProxy\DataModel\Traits;
  * Class StudentExisting
  * @package HisInOneProxy\DataModel
  */
-class StudentExisting
+class StudentExisting implements \JsonSerializable
 {
-    use Traits\OrgUnitId, Traits\TermTypeValueId, Traits\Year;
+    use Traits\OrgUnitId, Traits\TermTypeValueId, Traits\Year, Traits\JsonData;
     /**
      * @var int
      */

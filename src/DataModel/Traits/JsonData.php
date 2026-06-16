@@ -37,4 +37,16 @@ trait JsonData
             'data'    => $data,
         ];
     }
+
+    public function isJsonHeaderEmpty(): bool
+    {
+        return empty($this->json_header);
+    }
+
+    public function removeEmptyJsonHeader(): void
+    {
+        if( $this->isJsonHeaderEmpty()) {
+            unset($this->json_header);
+        }
+    }
 }

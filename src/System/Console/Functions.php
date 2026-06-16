@@ -32,7 +32,7 @@ class Functions
         if (count(self::$collection) == 0) {
             self::appendFunction('lc', 'getLectures', 'Gets all lectures and add them to queue.');
             self::appendFunction('li', 'getLectureById', 'Gets a Lecture by UnitId. Uses id as param.');
-            self::appendFunction('fo', 'getLectureByIdForced', 'Gets a Lecture by UnitId amd force push this course. Uses id as param.');
+            self::appendFunction('fo', 'getLectureByIdForced', 'Gets a Lecture by UnitId and force push this course. Uses id as param.');
             self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
             self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
             self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms. (XML|JSON)');
@@ -42,11 +42,11 @@ class Functions
             self::appendFunction('se', 'startHisListener', 'Starts his listener which listens to the system events from his server.');
             self::appendFunction('cm', 'getAllCourseMappingTypes', 'Gets all course mapping types. (XML|JSON)');
             self::appendFunction('tr', 'truncateServiceQueue', 'Warning: Truncates the service queue table, please be careful using this command!');
-            self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term', true);
-            self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id.', true);
-            self::appendFunction('gg', 'getAllGenders', 'Gets all gender types.', true);
-            self::appendFunction('gp', 'getAllParallelGroups', 'Gets all parallel group types.', true);
-            self::appendFunction('gw', 'getAllWorkStatus', 'Gets all work status types.', true);
+            self::appendFunction('ro', 'getRootIdOfTerm', 'Get root id of term. (XML|JSON)', true);
+            self::appendFunction('le', 'getCourseCatalogLeaf', 'Gets course catalog leaf by id. (XML|JSON)', true);
+            self::appendFunction('gg', 'getAllGenders', 'Gets all gender types. (XML|JSON)', true);
+            self::appendFunction('gp', 'getAllParallelGroups', 'Gets all parallel group types. (XML|JSON)', true);
+            self::appendFunction('gw', 'getAllWorkStatus', 'Gets all work status types. (XML|JSON)', true);
             self::appendFunction('gt', 'getAllTermTypes', 'Gets all term types. (XML|JSON)', true);
             self::appendFunction('gl', 'getAllLanguages', 'Gets all language types. (XML|JSON)', true);
             self::appendFunction('ga', 'getAllEAddressTags', 'Gets all eaddress tags. (XML|JSON)', true);
@@ -58,12 +58,12 @@ class Functions
             self::appendFunction('gc', 'getAllPersonGroupCategories', 'Gets all person group types. (XML|JSON)', true);
             self::appendFunction('dl', 'getDefaultLanguageId', 'Gets default language id. (XML|JSON)', true);
             self::appendFunction('ct', 'getCurrentTerm', 'Gets current term. (XML|JSON)', true);
-            self::appendFunction('rs', 'readStudentWithCoursesOfStudyByPersonId', 'Read student with course of study by person id', true);
-            self::appendFunction('ci', 'getCourseOfStudyById', 'Get course of study by id.', true);
-            self::appendFunction('rp', 'readPerson', 'Reads person by id.', true);
-            self::appendFunction('ra', 'readAccount', 'Reads account by id.', true);
-            self::appendFunction('sa', 'searchAccountForPerson61', 'Reads accounts by person id.', true);
-            self::appendFunction('ea', 'readEAddressesForPerson', 'Reads electronic addresses by person id.', true);
+            self::appendFunction('rs', 'readStudentWithCoursesOfStudyByPersonId', 'Read student with course of study by person id. (XML|JSON)', true);
+            self::appendFunction('ci', 'getCourseOfStudyById', 'Get course of study by id. (XML|JSON)', true);
+            self::appendFunction('rp', 'readPerson', 'Reads person by id. (XML|JSON)', true);
+            self::appendFunction('ra', 'readAccount', 'Reads account by id. (XML|JSON)', true);
+            self::appendFunction('sa', 'searchAccountForPerson61', 'Reads accounts by person id. (XML|JSON)', true);
+            self::appendFunction('ea', 'readEAddressesForPerson', 'Reads electronic addresses by person id. (XML|JSON)', true);
             self::appendFunction('et', 'getAllElementtypes', 'Reads element types. (XML|JSON)', true);
             self::appendFunction('cs', 'getAllEventtypes', 'Reads all event types. (XML|JSON)', true);
             self::appendFunction('lf', 'addLinkForCourse', 'Adds link for a course. Params: UnitId Description Link', true);

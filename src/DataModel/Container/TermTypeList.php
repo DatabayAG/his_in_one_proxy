@@ -53,4 +53,16 @@ class TermTypeList implements \JsonSerializable
         return count($this->term_type_container);
     }
 
+    /**
+     * @param $id
+     * @return TermType | null
+     */
+    public function getTermTypeById($id)
+    {
+        if (array_key_exists($id, $this->term_type_container)) {
+            return $this->term_type_container[$id];
+        }
+        return null;
+    }
+
 }

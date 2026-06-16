@@ -148,39 +148,44 @@
 This should give you a list of all possible commands, below you see an example from the output:  
 
     Usage: php cmd.php function [term] [year] [param]  
-       lc => Gets all lectures and add them to queue. 
-       li => Gets a Lecture by id. Uses id as param. 
-       in => Gets all institutions. cc => Gets course catalog. 
-       ge => Gets all elearning platforms. 
-       gb => Gets all blocked id states. 
-       ts => Gets wsdls needed for unittests and runs tests. 
-       sq => Starts queue which is used to communicate with the ecs server. 
-       se => Starts his listener which listens to the system events from his server. 
-       cm => Gets all course mapping types. 
-       ro => (Debug) Get root id of term 
-       le => (Debug) Gets course catalog leaf by id. 
-       gg => (Debug) Gets all gender types. 
-       gp => (Debug) Gets all parallel group types. 
-       gw => (Debug) Gets all work status types. 
-       gt => (Debug) Gets all term types. 
-       gl => (Debug) Gets all language types. 
-       ga => (Debug) Gets all eaddress tags. 
-       gy => (Debug) Gets all eaddress types. 
-       gf => (Debug) Gets all field of study types. 
-       gm => (Debug) Gets all mayor field of studies types. 
-       go => (Debug) Gets all org unit attributes types. 
-       gs => (Debug) Gets all org unit types. 
-       gc => (Debug) Gets all person group types. 
-       dl => (Debug) Gets default language id. 
-       ct => (Debug) Gets current term. 
-       rs => (Debug) Read student with course of study by person id 
-       ci => (Debug) Get course of study by id. 
-       rp => (Debug) Reads person by id. 
-       ra => (Debug) Reads account by id. 
-       sa => (Debug) Reads accounts by person id. 
-       ea => (Debug) Reads electronic addresses by person id. 
-       et => (Debug) Reads element types. 
-       cs => (Debug) Reads all event types. 
+		 lc => Gets all lectures and add them to queue.
+		 li => Gets a Lecture by UnitId. Uses id as param.
+		 fo => Gets a Lecture by UnitId amd force push this course. Uses id as param.
+		 in => Gets all institutions.
+		 cc => Gets course catalog.
+		 ge => Gets all elearning platforms. (XML|JSON)
+		 gb => Gets all blocked id states.
+		 ts => Gets wsdls needed for unittests and runs tests.
+		 sq => Starts queue which is used to communicate with the ecs server.
+		 se => Starts his listener which listens to the system events from his server.
+		 cm => Gets all course mapping types. (XML|JSON)
+		 tr => Warning: Truncates the service queue table, please be careful using this command!
+		 ro => (Debug) Get root id of term
+		 le => (Debug) Gets course catalog leaf by id.
+		 gg => (Debug) Gets all gender types.
+		 gp => (Debug) Gets all parallel group types.
+		 gw => (Debug) Gets all work status types.
+		 gt => (Debug) Gets all term types. (XML|JSON)
+		 gl => (Debug) Gets all language types. (XML|JSON)
+		 ga => (Debug) Gets all eaddress tags. (XML|JSON)
+		 gy => (Debug) Gets all eaddress types. (XML|JSON)
+		 gf => (Debug) Gets all field of study types. (XML|JSON)
+		 gm => (Debug) Gets all mayor field of studies types. (XML|JSON)
+		 go => (Debug) Gets all org unit attributes types. (XML|JSON)
+		 gs => (Debug) Gets all org unit types. (XML|JSON)
+		 gc => (Debug) Gets all person group types. (XML|JSON)
+		 dl => (Debug) Gets default language id. (XML|JSON)
+		 ct => (Debug) Gets current term. (XML|JSON)
+		 rs => (Debug) Read student with course of study by person id
+		 ci => (Debug) Get course of study by id.
+		 rp => (Debug) Reads person by id.
+		 ra => (Debug) Reads account by id.
+		 sa => (Debug) Reads accounts by person id.
+		 ea => (Debug) Reads electronic addresses by person id.
+		 et => (Debug) Reads element types. (XML|JSON)
+		 cs => (Debug) Reads all event types. (XML|JSON)
+		 lf => (Debug) Adds link for a course. Params: UnitId Description Link
+		 ls => (Debug) Runs the cron script to send the links from ILIAS to HISinOne
 
  
 
@@ -194,4 +199,8 @@ php cmd.php lc 2 2017
 The call below would export only the course with the id ```47117230```  
 ```  
 php cmd.php li 2 2017 47117230  
+```
+Some functions are able to return XML or JSON, the default return value is XML. If you want to get JSON you can add the parameter `json` to the function call. 
+```  
+php cmd.php ge 2 2017 json 
 ```

@@ -235,24 +235,23 @@ class ConsoleHandler
             $this->term_id = self::$conductor->getTerm();
         }
         $id = DataCache::getInstance()->getCourseCatalogService()->getRootIdOfTerm($this->year, $this->term_id);
-        if ($id != '') {
-            $msg = sprintf('Found %s as root id of term for term id (%s) and year (%s).', $id, $this->term_id, $this->year);
-            if($this->output_mode === self::PLAIN_TEXT) {
+        if ($this->output_mode === self::PLAIN_TEXT) {
+            if ($id != '') {
+                $msg = sprintf('Found %s as root id of term for term id (%s) and year (%s).', $id, $this->term_id, $this->year);
                 DataCache::getInstance()->getLog()->info($msg);
-            } else if($this->output_mode === self::JSON) {
-                $this->head['message'] = $msg;
-                $this->head['status'] = self::STATUS_FOUND;
-                $this->printHead();
+            } else {
+                $msg = sprintf('Found nothing as root id of term for term id (%s) and year (%s).', $this->term_id, $this->year);
+                DataCache::getInstance()->getLog()->info($msg);
             }
         } else {
-            $msg = sprintf('Found nothing as root id of term for term id (%s) and year (%s).', $this->term_id, $this->year);
-            if($this->output_mode === self::PLAIN_TEXT) {
-                DataCache::getInstance()->getLog()->info($msg);
-            } else if($this->output_mode === self::JSON) {
+            if ($id != '') {
+                $msg = sprintf('Found %s as root id of term for term id (%s) and year (%s).', $id, $this->term_id, $this->year);
                 $this->head['message'] = $msg;
-                $this->head['status'] = self::STATUS_NOT_FOUND;
-                $this->printHead();
+            } else {
+                $msg = sprintf('Found nothing as root id of term for term id (%s) and year (%s).', $this->term_id, $this->year);
+                $this->head['message'] = $msg;
             }
+            $this->printObject($id);
         }
         $this->endTimer();
     }
@@ -265,7 +264,7 @@ class ConsoleHandler
     {
         $this->startTimer();
         $leaf = DataCache::getInstance()->getCourseCatalogService()->getCourseCatalogLeaf($param);
-        print_r($leaf);
+        $this->printObject($leaf);
         $this->endTimer();
     }
 
@@ -444,7 +443,7 @@ class ConsoleHandler
     {
         $this->startTimer();
         $obj = DataCache::getInstance()->getStudentService()->readStudentWithCoursesOfStudyByPersonId($param);
-        print_r($obj);
+        $this->printObject($obj);
         $this->endTimer();
     }
 
@@ -456,7 +455,7 @@ class ConsoleHandler
     {
         $this->startTimer();
         $obj = DataCache::getInstance()->getCourseOfStudyService()->getCourseOfStudyById($param);
-        print_r($obj);
+        $this->printObject($obj);
         $this->endTimer();
     }
 
@@ -481,7 +480,11 @@ class ConsoleHandler
         // 1109
         $this->startTimer();
         $obj = DataCache::getInstance()->getPersonAddressService()->readEAddresses($param);
-        $this->printer->printPersonEAddress($obj, 1);
+        if ($this->output_mode === self::PLAIN_TEXT) {
+            $this->printer->printPersonEAddress($obj, 1);
+        } else {
+            $this->printObject($obj);
+        }
         $this->endTimer();
     }
 
@@ -505,7 +508,11 @@ class ConsoleHandler
         echo "Details done.\n";
         DataCache::getInstance()->readAccountsForPersons();
         echo "Accounts done.\n";
-        $this->printer->printMultiplePersons($persons, 1);
+        if ($this->output_mode === self::PLAIN_TEXT) {
+            $this->printer->printMultiplePersons($persons, 1);
+        } else {
+            $this->printObject($persons);
+        }
         $this->endTimer();
     }
 
@@ -525,7 +532,11 @@ class ConsoleHandler
             DataCache::getInstance()->appendPersonIdToCache($param);
             DataCache::getInstance()->readPersonDetailsToCache();
             DataCache::getInstance()->readAccountsForPersons();
-            $this->printer->printPerson($obj, 1);
+            if ($this->output_mode === self::PLAIN_TEXT) {
+                $this->printer->printPerson($obj, 1);
+            } else {
+                $this->printObject($obj);
+            }
         }
         $this->endTimer();
     }
@@ -538,7 +549,7 @@ class ConsoleHandler
     {
         $this->startTimer();
         $obj = DataCache::getInstance()->getAccountService()->searchAccountForPerson61($param);
-        print_r($obj);
+        $this->printObject($obj);
         $this->endTimer();
     }
 
@@ -580,10 +591,13 @@ class ConsoleHandler
      */
     public function readAccount($param)
     {
+        $this->startTimer();
         if(isset($param[0])) {
             $param = $param[0];
         }
-        var_dump(DataCache::getInstance()->getAccountService()->searchAccountForPerson61($param));
+        $obj = DataCache::getInstance()->getAccountService()->searchAccountForPerson61($param);
+        $this->printObject($obj);
+        $this->endTimer();
     }
 
     /**
@@ -619,7 +633,8 @@ class ConsoleHandler
 
     public function printHelp()
     {
-        echo "Usage: php cmd.php function [term] [year] [param]\n";
+        echo "Usage: php cmd.php function [term] [year] [param] [output_mode]\n";
+        echo "Example for JSON output: php cmd.php function [term|null] [term|null] json\n\n";
 
         foreach ($this->collection as $func) {
             $this->printHelpLine($func);
@@ -761,6 +776,16 @@ class ConsoleHandler
     private function printObject($obj): void
     {
         if($this->output_mode === self::PLAIN_TEXT) {
+            if (is_object($obj) && method_exists($obj, 'removeEmptyJsonHeader')) {
+                $obj->removeEmptyJsonHeader();
+            }
+            if (is_array($obj)) {
+                foreach ($obj as $item) {
+                    if (is_object($item) && method_exists($item, 'removeEmptyJsonHeader')) {
+                        $item->removeEmptyJsonHeader();
+                    }
+                }
+            }
             print_r($obj);
         } else if($this->output_mode === self::JSON) {
             if(is_object($obj) && method_exists($obj, 'addHeadData')) {
@@ -776,9 +801,13 @@ class ConsoleHandler
             } else if(! is_null($obj)) {
                 $this->head['status'] = self::STATUS_FOUND;
                 $this->printHead();
+                $this->getJsonEncodedString($obj);
+                return;
             } else {
                 $this->head['status'] = self::STATUS_NOT_FOUND;
                 $this->printHead();
+                $this->getJsonEncodedString($obj);
+                return;
             }
 
             $this->getJsonEncodedString($obj);
@@ -790,7 +819,7 @@ class ConsoleHandler
      */
     private function printHead(): void
     {
-        $this->getJsonEncodedString($this->head);
+            $this->getJsonEncodedString($this->head);
     }
 
     /**

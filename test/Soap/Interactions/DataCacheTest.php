@@ -19,7 +19,7 @@ class DataCacheTest extends TestCaseExtension
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->instance = DataCache::getInstance();
@@ -125,10 +125,16 @@ class DataCacheTest extends TestCaseExtension
 		$this->assertInstanceOf('HisInOneProxy\Soap\CourseInterfaceService', $instance);
 	}
 
-	public function test_getCourseService_shouldReturnInstance()
+	public function test_getPlanelementService_shouldReturnInstance()
 	{
 		$instance = $this->instance->getPlanelementService();
 		$this->assertInstanceOf('HisInOneProxy\Soap\PlanelementService', $instance);
+	}
+
+	public function test_getCourseService_shouldReturnInstance()
+	{
+		$instance = $this->instance->getCourseService();
+		$this->assertInstanceOf('HisInOneProxy\Soap\SoapService\PlanelementClient', $instance);
 	}
 
 	public function test_getOrgUnitService_shouldReturnInstance()
@@ -267,6 +273,6 @@ class DataCacheTest extends TestCaseExtension
 			'setCourseService',
 			array(null)
 		);
-		$this->assertEquals(null, $this->instance->getPlanelementService());
+		$this->assertEquals(null, $this->instance->getCourseService());
 	}
 }

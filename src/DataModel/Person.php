@@ -8,9 +8,9 @@ use HisInOneProxy\DataModel\Traits;
  * Class Person
  * @package HisInOneProxy\DataModel
  */
-class Person
+class Person implements \JsonSerializable
 {
-    use Traits\GenderId, Traits\ObjGuid, Traits\SortingOrder, Traits\Text, Traits\UpdatedAt;
+    use Traits\GenderId, Traits\ObjGuid, Traits\SortingOrder, Traits\Text, Traits\UpdatedAt, Traits\JsonData;
 
     /**
      * @var string
