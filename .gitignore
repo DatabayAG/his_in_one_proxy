@@ -3,6 +3,7 @@ coverage/*
 config.json
 pid/*.pid
 test/wsdl/*.wsdl
+.phpunit.cache
 dummyTestingScript.php
 notes.txt
 cfg_update_info.php

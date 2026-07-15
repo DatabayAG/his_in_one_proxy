@@ -19,7 +19,7 @@ class SimpleQueueTest extends TestCaseExtension
 	 */
 	protected $queue;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		\HisInOneProxy\Config\GlobalSettings::getInstance()->readCustomConfig('test/php_unit_config.json');
 		$this->base_path = \HisInOneProxy\Config\GlobalSettings::getInstance()->getPathToQueue();
@@ -42,7 +42,7 @@ class SimpleQueueTest extends TestCaseExtension
 		return;
 	}
 
-	protected function tearDown()
+	protected function tearDown(): void
 	{
 		$this->removeDirectory($this->base_path);
 	}
@@ -62,15 +62,15 @@ class SimpleQueueTest extends TestCaseExtension
 	public function test_pushOnEmptyQueue_shouldAppendElement()
 	{
 		$queue = new \HisInOneProxy\Queue\QueueFile();
-		$queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, array(), 'my_great_function');
+		$queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '[]', 'my_great_function');
 		$value = $queue->pop(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
-		$this->assertEquals(array('{"data":[],"cmd":"my_great_function","receiver":"","unix_time":0}', '1.job'), $value);
+		$this->assertEquals(array('{"data":"[]","cmd":"my_great_function","receiver":"","unix_time":0}', '1.job'), $value);
 	}
 
 	public function test_getSize_shouldReturnSize()
 	{
 		$this->assertEquals(0, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE));
-		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, array(), 'my_great_function');
+		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '[]', 'my_great_function');
 		$this->assertEquals(1, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE));
 	}
 
@@ -82,7 +82,7 @@ class SimpleQueueTest extends TestCaseExtension
 	public function test_cleanUpStaleJobs_shouldReAddMaintenance()
 	{
 		$this->assertEquals(0, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::MAINTENANCE_QUEUE));
-		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, array(), 'my_great_function');
+		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '[]', 'my_great_function');
 		$this->queue->pop(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
 		$this->queue->cleanUpStaleJobs();
 		$this->assertEquals(1, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::MAINTENANCE_QUEUE));
@@ -90,14 +90,12 @@ class SimpleQueueTest extends TestCaseExtension
 
 	public function test_acknowledgeMessage_shouldDeleteMessage()
 	{
-		TestCaseExtension::callMethod(
-			$this->queue,
-			'keepElements',
-			array(false)
-		);
+		$keep_elements = new ReflectionProperty($this->queue, 'keep_elements');
+		$keep_elements->setAccessible(true);
+		$keep_elements->setValue($this->queue, false);
 
 		$this->assertEquals(0, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::MAINTENANCE_QUEUE));
-		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, array(), 'my_great_function');
+		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '[]', 'my_great_function');
 		$this->assertEquals(1, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE));
 		$this->queue->pop(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
 		$this->queue->removeMessage(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '1.job');
@@ -108,7 +106,7 @@ class SimpleQueueTest extends TestCaseExtension
 	public function test_reAddMessageToQueue_shouldReAddMessageToQueue()
 	{
 		$this->assertEquals(0, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE));
-		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, array(), 'my_great_function');
+		$this->queue->push(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, '[]', 'my_great_function');
 		$this->assertEquals(1, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE));
 		$this->queue->pop(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
 		$this->assertEquals(0, $this->queue->getSize(\HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE));

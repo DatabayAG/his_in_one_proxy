@@ -30,7 +30,7 @@ class ElearningPlatformContainer
     public function appendElearningPlatform($e_learning_platform)
     {
         if (is_a($e_learning_platform, '\HisInOneProxy\DataModel\ElearningPlatform')) {
-            $this->container[trim($e_learning_platform->getId())] = $e_learning_platform;
+            $this->container[trim((string) $e_learning_platform->getId())] = $e_learning_platform;
         } else {
             throw new InvalidArgumentException();
         }

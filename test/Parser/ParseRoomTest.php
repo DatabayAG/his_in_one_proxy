@@ -11,7 +11,7 @@ require_once 'test/TestCaseExtension.php';
  */
 class ParseRoomTest extends TestCaseExtension
 {
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}
@@ -38,8 +38,8 @@ class ParseRoomTest extends TestCaseExtension
 		$this->assertEquals('default text', $room->getDefaultText());
 		$this->assertEquals('Longtext', $room->getLongText());
 		$this->assertEquals('23', $room->getDefaultLanguageId());
-		$this->assertEquals('My super rooom', $room->getUniqueName());
-		$this->assertEquals('Description', $room->getDescription());
+		$this->assertEquals('Raum 101, Hörsaalzentrum', $room->getUniqueName());
+		$this->assertEquals('Hörsaal mit 120 Plätzen', $room->getDescription());
 		$this->assertEquals('1', $room->getPartOfRoomComposition());
 		$this->assertEquals('My class room name', $room->getClassRoomName());
 		$this->assertEquals('1000', $room->getFloorId());

@@ -18,7 +18,7 @@ class ConfigClientTest extends TestCaseExtension
 	 */
 	protected $soap_client_router;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 	}
 

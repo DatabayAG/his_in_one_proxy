@@ -1,9 +1,9 @@
 <orgunit>
 	<id></id>
-	<shortcut>My Unique OrgUnitName</shortcut>
-	<shorttext>Shortext</shorttext>
+	<shortcut>FMI</shortcut>
+	<shorttext>Fakultät Mathematik und Informatik</shorttext>
 	<displaytext>Displaytext sligthly longer</displaytext>
 	<longtext>Even Longer Text which does not mean here is more information, only longer text.</longtext>
-	<type>4711</type>
+	<type>2</type>
 	<childcount>0</childcount>
 </orgunit>

@@ -12,4 +12,12 @@
 	<php>
 		<const name="PHPUNIT_HisInOneProxy_TEST_SUITE" value="true"/>
 	</php>
+	<source>
+		<include>
+			<directory suffix=".php">../src</directory>
+		</include>
+		<exclude>
+			<directory suffix=".php">../src/Exceptions</directory>
+		</exclude>
+	</source>
 </phpunit>

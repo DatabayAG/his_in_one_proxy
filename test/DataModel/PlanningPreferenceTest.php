@@ -14,7 +14,7 @@ class PlanningPreferenceTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\PlanningPreference();
 	}
@@ -74,15 +74,15 @@ class PlanningPreferenceTest extends PHPUnit\Framework\TestCase
 
 	public function test_getYear_shouldReturnYear()
 	{
-		$this->instance->setYear(1999);
-		$this->assertEquals(1999, $this->instance->getYear());
+		$this->instance->setYear(2017);
+		$this->assertEquals(2017, $this->instance->getYear());
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidPlanElementPreferencePart
 	 */
 	public function test_appendPlanElementPreferencePart_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidPlanElementPreferencePart::class);
 		$this->instance->appendPlanElementPreferencePart('Workload');
 	}
 
@@ -95,10 +95,10 @@ class PlanningPreferenceTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidTimePreference
 	 */
 	public function test_appendTimePreference_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidTimePreference::class);
 		$this->instance->appendTimePreference('Workload');
 	}
 

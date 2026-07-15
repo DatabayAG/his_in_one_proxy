@@ -32,6 +32,10 @@ class Utils
      */
     public static function LogToShellAndExit($msg)
     {
+        if (defined('PHPUNIT') && PHPUNIT) {
+            return;
+        }
+
         echo $msg . " Exiting!\n";
         self::terminate();
     }

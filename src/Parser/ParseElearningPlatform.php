@@ -18,7 +18,7 @@ class ParseElearningPlatform extends SimpleXmlParser
     {
         $container = new DataModel\Container\ElearningPlatformContainer();
         if ($this->isAttributeValid($xml, 'values')) {
-                foreach ($xml->values as $value) {
+                foreach ($xml->values->value as $value) {
                     $platform = new DataModel\ElearningPlatform();
                     if (isset($value->id) && $value->id != null && $value->id != '') {
                         $this->log->info(sprintf('Found elearning plattform mapping with id %s, tying to find the ecs corresponding id.',

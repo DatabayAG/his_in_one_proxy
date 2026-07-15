@@ -11,7 +11,7 @@ require_once 'test/TestCaseExtension.php';
  */
 class ParseStudentExistingTest extends TestCaseExtension
 {
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}
@@ -52,7 +52,7 @@ class ParseStudentExistingTest extends TestCaseExtension
 		$this->assertEquals('2', $student->getSemesterDistrictObjId());
 		$this->assertEquals('3', $student->getStudyStatusId());
 		$this->assertEquals('4', $student->getTermTypeValueId());
-		$this->assertEquals('1999', $student->getYear());
+		$this->assertEquals('2017', $student->getYear());
 		$this->assertEquals('665', $student->getStudentFunctionLocks());
 
 	}

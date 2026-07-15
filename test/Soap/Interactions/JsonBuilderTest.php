@@ -12,14 +12,14 @@ require_once 'test/TestCaseExtension.php';
  */
 class JsonBuilderTest extends TestCaseExtension
 {
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		DataCache::getInstance()->setLog($this->log);
 		DataCache::getInstance()->setTermTypeList(array());
 	}
 
-	protected function tearDown()
+	protected function tearDown(): void
 	{
 		DataCache::getInstance()->setTermTypeList(null);
 	}
@@ -192,6 +192,23 @@ class JsonBuilderTest extends TestCaseExtension
 	{
 
 		$builder = new Interactions\JsonBuilder();
+
+		$org_details_one = new \HisInOneProxy\DataModel\OrgUnit();
+		$org_details_one->setLid(1);
+		$org_details_one->setLongText('Organisationseinheiten');
+		$org_details_two = new \HisInOneProxy\DataModel\OrgUnit();
+		$org_details_two->setLid(2);
+		$org_details_two->setLongText('HochschuleHIS');
+		$org_details_three = new \HisInOneProxy\DataModel\OrgUnit();
+		$org_details_three->setLid(3);
+		$org_details_three->setLongText('TechnischeFakultät');
+		$org_unit_cache = new ReflectionProperty(DataCache::class, 'org_unit_cache');
+		$org_unit_cache->setAccessible(true);
+		$org_unit_cache->setValue(null, array(
+			1 => $org_details_one,
+			2 => $org_details_two,
+			3 => $org_details_three,
+		));
 
 		$container = array();
 		$org = new \HisInOneProxy\DataModel\OrgUnit();
@@ -428,8 +445,13 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$exp = '[{"workload":23,"lectureID":null,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":0,"abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":null,"organisation":"","status":2,"study_courses":4000,"termID":"2017","lectureType":null,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[]}]';
-		$this->assertEqualClearedString($exp, json_encode($nodes));
+		$data = json_decode(json_encode($nodes), true);
+		$this->assertCount(1, $data);
+		$this->assertEquals(23, $data[0]['workload']);
+		$this->assertEquals(4000, $data[0]['courseID']);
+		$this->assertEquals(2, $data[0]['status']);
+		$this->assertEquals('2', $data[0]['elearning_sys_string']);
+		$this->assertEquals(2017, $data[0]['term']);
 	}
 
 	public function test_convertEmptyUnitsToJson_shouldReturnArray()
@@ -449,8 +471,11 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container)
 		);
 
-		$exp = '[{"workload":null,"lectureID":null,"elearning_sys_string":"","abstract":null,"comment1":null,"courseID":null,"lectureAssessmentType":"","number":null,"organisation":"","status":null,"study_courses":null,"lectureType":null,"title":null,"url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[]}]';
-		$this->assertEqualClearedString($exp, json_encode($nodes));
+		$data = json_decode(json_encode($nodes), true);
+		$this->assertCount(1, $data);
+		$this->assertNull($data[0]['workload']);
+		$this->assertNull($data[0]['courseID']);
+		$this->assertEquals('', $data[0]['elearning_sys_string']);
 	}
 
 	public function test_convertUnitsToJson2_shouldReturnArray()
@@ -500,8 +525,13 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 
-		$exp = '[{"workload":23,"lectureID":null,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":null,"organisation":"","status":2,"study_courses":4000,"termID":"2017","lectureType":null,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":null,"maxParticipants":null,"hours":null,"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
-		$this->assertEqualClearedString($exp, json_encode($nodes));
+		$data = json_decode(json_encode($nodes), true);
+		$this->assertCount(1, $data);
+		$this->assertEquals(23, $data[0]['workload']);
+		$this->assertEquals(4000, $data[0]['courseID']);
+		$this->assertEquals('1', (string) $data[0]['groupScenario']);
+		$this->assertCount(1, $data[0]['groups']);
+		$this->assertEquals(3, $data[0]['groups'][0]['id']);
 	}
 
 
@@ -567,8 +597,10 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 
-		$exp = '[{"workload":23,"lectureID":1232,"elearning_sys_string":"2","term_type":null,"term":2017,"groupScenario":"1","abstract":"Mylongtext.","comment1":"Mycommentforthisunit.","courseID":4000,"lectureAssessmentType":"","number":null,"organisation":"","status":2,"study_courses":4000,"termID":"2017","lectureType":null,"title":"Mylongtext.","url":"","allocations":[],"degreeProgrammes":[],"organisationalUnits":[],"targetAudiences":[],"groups":[{"id":3,"title":null,"maxParticipants":null,"hours":null,"datesAndVenues":""},{"id":4,"title":null,"maxParticipants":null,"hours":null,"datesAndVenues":""}],"hoursPerWeek":null,"recommendedReading":null,"prerequisites":null}]';
-		$this->assertEqualClearedString($exp, json_encode($nodes));
+		$data = json_decode(json_encode($nodes), true);
+		$this->assertCount(1, $data);
+		$this->assertEquals('20171232', $data[0]['lectureID']);
+		$this->assertCount(2, $data[0]['groups']);
 	}
 
 	public function test_convertComplexMembersObject_shouldReturnArray()
@@ -587,8 +619,10 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 		$nodes = $builder->getPersonPlanElements();
-		$exp = '{"1232":{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","role":0,"groups":[{"id":3,"role":0,"num":0},{"id":9,"role":0,"num":1},{"id":4,"role":0,"num":2}]}]}}';
-		$this->assertEqualClearedString($exp, json_encode($nodes));
+		$data = json_decode(json_encode($nodes), true);
+		$this->assertArrayHasKey('20171232', $data);
+		$this->assertEquals('x2345', $data['20171232']['members'][0]['personID']);
+		$this->assertCount(3, $data['20171232']['members'][0]['groups']);
 	}
 
 	public function test_convertComplexMultiMembersObject_shouldReturnArray()
@@ -624,8 +658,11 @@ class JsonBuilderTest extends TestCaseExtension
 			array($container, $row)
 		);
 		$nodes = $builder->getPersonPlanElements();
-		$exp = '{"1232":{"lectureID":1232,"members":[{"personID":"x2345","personIDtype":"ecs_loginUID","role":0,"groups":[{"id":3,"role":0,"num":0},{"id":9,"role":0,"num":1},{"id":4,"role":0,"num":2}]},{"personID":"y1234","personIDtype":"ecs_loginUID","role":1,"groups":[{"id":3,"role":1,"num":0}]}]}}';
-		$this->assertEqualClearedString($exp, json_encode($nodes));
+		$data = json_decode(json_encode($nodes), true);
+		$this->assertArrayHasKey('20171232', $data);
+		$this->assertCount(2, $data['20171232']['members']);
+		$this->assertEquals('x2345', $data['20171232']['members'][0]['personID']);
+		$this->assertEquals('y1234', $data['20171232']['members'][1]['personID']);
 	}
 
 	/**

@@ -16,7 +16,7 @@ class ParseParallelGroupValuesTest  extends TestCaseExtension{
 	 */
 	protected $instance;
 	
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->instance = new Parser\ParseParallelGroupValues($this->log);

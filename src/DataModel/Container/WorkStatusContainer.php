@@ -30,7 +30,7 @@ class WorkStatusContainer
     public function appendWorkStatus($work_status)
     {
         if (is_a($work_status, '\HisInOneProxy\DataModel\WorkStatus')) {
-            $this->container[trim($work_status->getId())] = $work_status;
+            $this->container[trim((string) $work_status->getId())] = $work_status;
         } else {
             throw new InvalidArgumentException();
         }

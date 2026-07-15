@@ -16,7 +16,7 @@ class ParseAddressTest  extends TestCaseExtension{
 	 */
 	protected $instance;
 	
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new Parser\ParseAddress($this->log);
 		parent::setUp();
@@ -39,12 +39,13 @@ class ParseAddressTest  extends TestCaseExtension{
 		$this->assertEquals('1', $address[0]->getBuildingId());
 		$this->assertEquals('22-11-1920', $address[0]->getCreatedAt());
 		$this->assertEquals('22-11-2015', $address[0]->getUpdatedAt());
-		$this->assertEquals('Super street', $address[0]->getStreet());
-		$this->assertEquals('Here', $address[0]->getCity());
-		$this->assertEquals('No addition.', $address[0]->getAddressAddition());
+		$this->assertEquals('80333', $address[0]->getPostCode());
+		$this->assertEquals('Universitätsstraße 1', $address[0]->getStreet());
+		$this->assertEquals('München', $address[0]->getCity());
+		$this->assertEquals('', $address[0]->getAddressAddition());
 		$this->assertEquals('2', $address[0]->getPostBoxOffice());
-		$this->assertEquals('23234', $address[0]->getCompany());
-		$this->assertEquals('Enter state here', $address[0]->getState());
+		$this->assertEquals('Universität Musterstadt', $address[0]->getCompany());
+		$this->assertEquals('Bayern', $address[0]->getState());
 		$this->assertEquals('45', $address[0]->getCountryId());
 	}
 

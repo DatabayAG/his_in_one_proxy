@@ -13,7 +13,7 @@ class PlanElementChangeTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\PlanElementChange();
 	}
@@ -96,10 +96,10 @@ class PlanElementChangeTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidInstructor
 	 */
 	public function test_appendInstructor_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidInstructor::class);
 		$this->instance->appendInstructor('Workload');
 	}
 

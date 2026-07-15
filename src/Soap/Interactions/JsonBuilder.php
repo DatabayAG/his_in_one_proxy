@@ -189,8 +189,12 @@ class JsonBuilder
      */
    public static function replaceUnwantedCharacters($string)
    {
+       if ($string === null || $string === '') {
+           return $string ?? '';
+       }
+
        // replace control characters with space
-       return preg_replace('/[[:cntrl:]]/', ' ', $string);
+       return preg_replace('/[[:cntrl:]]/', ' ', (string) $string);
    }
     /**
      * @param      $row

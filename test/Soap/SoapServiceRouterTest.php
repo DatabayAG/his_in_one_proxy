@@ -17,14 +17,14 @@ class SoapServiceRouterTest extends TestCaseExtension
 	 */
 	protected $soap_client_router;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}
 
 	public function test_ConstructNeedsAllServices_shouldLogErrors()
 	{
-		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
+		$this->soap_client_router = new Soap\SoapServiceRouter($this->log, true);
 		$starting_string = array_pop($this->collectedMessages);
 		$starting_string = preg_split('/\./', $starting_string);
 		$this->assertEqualClearedString('Info: ', $starting_string[0]);
@@ -41,7 +41,7 @@ class SoapServiceRouterTest extends TestCaseExtension
 		$this->soap_client_router->getSoapClientPlanelementService();
 		$this->assertEqualClearedString('Emergency: Course service not initialised!', array_pop($this->collectedMessages));
 
-		$this->soap_client_router->getSoapClientCurriculumDesingerService(null);
+		$this->soap_client_router->setSoapClientCurriculumDesignerService(null);
 		$this->soap_client_router->getSoapClientCurriculumDesingerService();
 		$this->assertEqualClearedString('Emergency: Unit service not initialised!', array_pop($this->collectedMessages));
 
@@ -94,7 +94,7 @@ class SoapServiceRouterTest extends TestCaseExtension
 	public function test_ConstructNeedsAllServices2_shouldLogErrors()
 	{
 		$this->assertNull(array_pop($this->collectedMessages));
-		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
+		$this->soap_client_router = new Soap\SoapServiceRouter($this->log, false);
 		$this->soap_client_router->setServiceNumber(20);
 		$this->soap_client_router->initialiseClientServices();
 		$this->assertEqualClearedString('Emergency: Not all Soap Services where initialised! Only 14 from 20 where initialised!', array_pop($this->collectedMessages));

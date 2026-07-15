@@ -13,7 +13,7 @@ class PlannedDateTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp() {
+	protected function setUp(): void {
 		$this->instance =  new DataModel\PlannedDate();
 	}
 
@@ -107,10 +107,10 @@ class PlannedDateTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidIndividualDate
 	 */
 	public function test_appendIndividualDate_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidIndividualDate::class);
 		$this->instance->appendIndividualDate('Workload');
 	}
 
@@ -124,10 +124,10 @@ class PlannedDateTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidInstructor
 	 */
 	public function test_appendInstructor_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidInstructor::class);
 		$this->instance->appendInstructor('Workload');
 	}
 
@@ -140,10 +140,10 @@ class PlannedDateTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidPlanElementCancellation
 	 */
 	public function test_appendPlanElementCancellation_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidPlanElementCancellation::class);
 		$this->instance->appendPlanElementCancellation('Workload');
 	}
 
@@ -158,10 +158,10 @@ class PlannedDateTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidPlanElementChange
 	 */
 	public function test_appendPlanElementChange_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidPlanElementChange::class);
 		$this->instance->appendPlanElementChange('Workload');
 	}
 

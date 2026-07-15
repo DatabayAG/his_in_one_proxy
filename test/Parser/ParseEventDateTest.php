@@ -12,7 +12,7 @@ require_once 'test/TestCaseExtension.php';
 class ParseEventDateTest extends TestCaseExtension
 {
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}

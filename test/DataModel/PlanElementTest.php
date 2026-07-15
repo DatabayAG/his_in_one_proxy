@@ -14,7 +14,7 @@ class PlanElementTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		date_default_timezone_set('UTC');
 		$this->instance = new DataModel\PlanElement();
@@ -45,8 +45,8 @@ class PlanElementTest extends PHPUnit\Framework\TestCase
 
 	public function test_getAttendeeMaximum_shouldReturnAttendeeMaximum()
 	{
-		$this->instance->setAttendeeMaximum(44444);
-		$this->assertEquals(44444, $this->instance->getAttendeeMaximum());
+		$this->instance->setAttendeeMaximum(120);
+		$this->assertEquals(120, $this->instance->getAttendeeMaximum());
 	}
 
 	public function test_getAttendeeMinimum_shouldReturnAttendeeMinimum()
@@ -81,8 +81,9 @@ class PlanElementTest extends PHPUnit\Framework\TestCase
 
 	public function test_getLongText_shouldReturnLongText()
 	{
-		$this->instance->setLongText('Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Proin eget tortor risus. Donec sollicitudin molestie malesuada. Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat.');
-		$this->assertEquals('Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Proin eget tortor risus. Donec sollicitudin molestie malesuada. Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat.', $this->instance->getLongText());
+		$longText = 'Lehrveranstaltung im Bachelorstudiengang Informatik, Wintersemester 2017.';
+		$this->instance->setLongText($longText);
+		$this->assertEquals($longText, $this->instance->getLongText());
 	}
 
 	public function test_getDefaultText_shouldReturnDefaultText()
@@ -254,10 +255,10 @@ class PlanElementTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidPersonPlanElement
 	 */
 	public function test_appendPersonPlanElement_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidPersonPlanElement::class);
 		$this->instance->appendPersonPlanElement('Workload');
 	}
 
@@ -271,10 +272,10 @@ class PlanElementTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidEventDate
 	 */
 	public function test_appendEventDate_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidEventDate::class);
 		$this->instance->appendEventDate('Workload');
 	}
 
@@ -292,10 +293,10 @@ class PlanElementTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidPlannedDate
 	 */
 	public function test_appendPlannedDate_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidPlannedDate::class);
 		$this->instance->appendPlannedDate('Workload');
 	}
 

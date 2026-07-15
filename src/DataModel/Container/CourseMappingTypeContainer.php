@@ -30,7 +30,7 @@ class CourseMappingTypeContainer
     public function appendCourseMappingType($course_mapping_type)
     {
         if (is_a($course_mapping_type, '\HisInOneProxy\DataModel\CourseMappingType')) {
-            $this->container[trim($course_mapping_type->getId())] = $course_mapping_type;
+            $this->container[trim((string) $course_mapping_type->getId())] = $course_mapping_type;
         } else {
             throw new InvalidArgumentException();
         }

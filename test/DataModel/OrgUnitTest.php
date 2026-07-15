@@ -14,7 +14,7 @@ class OrgUnitTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\OrgUnit();
 	}
@@ -56,8 +56,9 @@ class OrgUnitTest extends PHPUnit\Framework\TestCase
 
 	public function test_getLongText_shouldReturnLongText()
 	{
-		$this->instance->setLongText('Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Proin eget tortor risus. Donec sollicitudin molestie malesuada. Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat.');
-		$this->assertEquals('Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Proin eget tortor risus. Donec sollicitudin molestie malesuada. Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat.', $this->instance->getLongText());
+		$longText = 'Lehrveranstaltung im Bachelorstudiengang Informatik, Wintersemester 2017.';
+		$this->instance->setLongText($longText);
+		$this->assertEquals($longText, $this->instance->getLongText());
 	}
 
 	public function test_getDefaultText_shouldReturnDefaultText()
@@ -68,14 +69,14 @@ class OrgUnitTest extends PHPUnit\Framework\TestCase
 
 	public function test_getParentId_shouldReturnParentId()
 	{
-		$this->instance->setParentId(4711);
-		$this->assertEquals(4711, $this->instance->getParentId());
+		$this->instance->setParentId(23);
+		$this->assertEquals(23, $this->instance->getParentId());
 	}
 
 	public function test_getParentLongId_shouldReturnParentLongId()
 	{
-		$this->instance->setParentLongId(4711452222);
-		$this->assertEquals(4711452222, $this->instance->getParentLongId());
+		$this->instance->setParentLongId(553123124343245);
+		$this->assertEquals(553123124343245, $this->instance->getParentLongId());
 	}
 
 	public function test_getTypeId_shouldReturnTypeId()

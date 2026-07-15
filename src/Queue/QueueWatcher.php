@@ -33,8 +33,10 @@ class QueueWatcher
     public function __construct()
     {
         $this->loop = EventLoop\Loop::get();
-        $this->addServicesTimer(Queue\QueueConstants::SERVICE_QUEUE, GlobalSettings::getInstance()->getQueueTimer());
-        $this->addServicesTimer(Queue\QueueConstants::MAINTENANCE_QUEUE, 10);
+        if (!defined('PHPUNIT') || !PHPUNIT) {
+            $this->addServicesTimer(Queue\QueueConstants::SERVICE_QUEUE, GlobalSettings::getInstance()->getQueueTimer());
+            $this->addServicesTimer(Queue\QueueConstants::MAINTENANCE_QUEUE, 10);
+        }
         $queue = new Queue\QueueBase();
         $this->queue = $queue->getQueueType();
         $this->log   = DataCache::getInstance()->getLog();
@@ -66,10 +68,12 @@ class QueueWatcher
     public function processMessage($queue_name): void
     {
         $message   = $this->queue->pop($queue_name);
-        if(! is_array($message)) {
-            $file_name = $message[1];
-            $message   = json_decode($message[0]);
+        if (!is_array($message) || $message[0] === null) {
+            return;
         }
+
+        $file_name = $message[1];
+        $message   = json_decode($message[0]);
 
         if (isset($message->cmd) && isset($message->data) && isset($message->unix_time)) {
             $cmd       = $message->cmd;

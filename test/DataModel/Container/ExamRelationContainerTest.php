@@ -11,7 +11,7 @@ class ExamRelationContainerTest extends PHPUnit\Framework\TestCase
 	
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\Container\ExamRelationContainer();
 	}
@@ -30,10 +30,10 @@ class ExamRelationContainerTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidExamRelation
 	 */
 	public function test_appendEventDate_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidExamRelation::class);
 		$this->instance->appendExamRelation('Workload');
 	}
 }

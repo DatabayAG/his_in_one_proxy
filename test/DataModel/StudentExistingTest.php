@@ -14,7 +14,7 @@ class StudentExistingTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\StudentExisting();
 	}
@@ -167,8 +167,8 @@ class StudentExistingTest extends PHPUnit\Framework\TestCase
 
 	public function test_getYear_shouldReturYear()
 	{
-		$this->instance->setYear(1999);
-		$this->assertEquals(1999, $this->instance->getYear());
+		$this->instance->setYear(2017);
+		$this->assertEquals(2017, $this->instance->getYear());
 	}
 
 	public function test_ggetStudentFunctionLocks_shouldReturnStudentFunctionLocks()

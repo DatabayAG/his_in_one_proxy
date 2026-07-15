@@ -2,12 +2,12 @@
 	<completeAccount60>
 		<id>13</id>
 		<personId>43</personId>
-		<username>4711abc</username>
+		<username>max.mueller</username>
 		<accountauthId>21</accountauthId>
-		<authinfo>Whatever</authinfo>
-		<externalsystemId>47112</externalsystemId>
+		<authinfo>LDAP</authinfo>
+		<externalsystemId>ecs-43</externalsystemId>
 		<isLdapAccount>0</isLdapAccount>
-		<orgunitLid>23325436234</orgunitLid>
+		<orgunitLid>3654775</orgunitLid>
 		<purposeId>41</purposeId>
 	</completeAccount60>
 </completeAccounts60>

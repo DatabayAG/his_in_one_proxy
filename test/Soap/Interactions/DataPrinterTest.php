@@ -15,14 +15,14 @@ class DataPrinterTest extends TestCaseExtension
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		DataCache::getInstance()->setLog($this->log);
 		$this->instance = new DataPrinter();
 	}
 	
-	protected function tearDown()
+	protected function tearDown(): void
 	{
 		DataCache::getInstance()->setWorkStatus(null);
 		DataCache::getInstance()->setParallelGroupValues(null);
@@ -47,7 +47,7 @@ class DataPrinterTest extends TestCaseExtension
 		$eaddress->setObjGuid(1);
 		$eaddress->setSortOrder(2);
 		$eaddress->setEAddressTypeId(232);
-		$eaddress->setEAddress('holla');
+		$eaddress->setEAddress('otto.willy@uni-example.de');
 		$type = new \HisInOneProxy\DataModel\EAddressType();
 		$type->setId(232);
 		$type->setDefaultText('test');
@@ -92,7 +92,7 @@ class DataPrinterTest extends TestCaseExtension
 		$unit->setId(444);
 		$unit->appendCourse(new \HisInOneProxy\DataModel\Course());
 		$org_unit = new \HisInOneProxy\DataModel\OrgUnit();
-		$org_unit->setLongText('bla');
+		$org_unit->setLongText('FMI');
 		$unit->appendOrgUnit($org_unit);
 		$type = new \HisInOneProxy\DataModel\ElearningCourseMapping();
 		$type->setTermTypeValueId(2);
@@ -117,8 +117,8 @@ class DataPrinterTest extends TestCaseExtension
 	{
 		$per = new \HisInOneProxy\DataModel\Person();
 		$per->setId(13423);
-		$per->setFirstName('Hulla');
-		$per->setSurName('Sure');
+		$per->setFirstName('Anna');
+		$per->setSurName('Meyer');
 		$per->setTitleId(23);
 		DataCache::getInstance()->addPersonDetails($per);
 	}
@@ -154,13 +154,13 @@ class DataPrinterTest extends TestCaseExtension
 		$units = $this->buildUnit();
 		$this->instance->printUnits($units);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString( 'Debug:|*OrgUnits:blaOrg-Lid:()Id:()', $msg);
+		$this->assertEqualClearedString( 'Debug:|*OrgUnits:FMIOrg-Lid:()Id:()', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: |* Unit: ', $msg);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString( 'Debug:|*OrgUnits:blaOrg-Lid:()Id:()', $msg);
+		$this->assertEqualClearedString( 'Debug:|*OrgUnits:FMIOrg-Lid:()Id:()', $msg);
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString( 'Debug: 	|- 444, , , ', $msg);
 		$msg = array_pop($this->collectedMessages);
@@ -195,7 +195,7 @@ class DataPrinterTest extends TestCaseExtension
 		$eadresstype->setObjGuid(1);
 		$eadresstype->setSortOrder(2);
 		$eadresstype->setEAddressTypeId(232);
-		$eadresstype->setEAddress('holla');
+		$eadresstype->setEAddress('otto.willy@uni-example.de');
 		$type = new \HisInOneProxy\DataModel\EAddressType();
 		$type->setId(232);
 		$type->setDefaultText('test');
@@ -204,7 +204,7 @@ class DataPrinterTest extends TestCaseExtension
 
 		$this->instance->printPersonEAddress(array($eadresstype), 0);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString($msg, 'Debug: |* eAddress: Id (1), objGuid (1), SortOrder (2), AddressType (232), AddressTypeReadable (test), Address (holla)');
+		$this->assertEqualClearedString($msg, 'Debug: |* eAddress: Id (1), objGuid (1), SortOrder (2), AddressType (232), AddressTypeReadable (test), Address (otto.willy@uni-example.de)');
 	}
 
 	public function test_printPersonAccounts_shouldPrintPersonAccounts()
@@ -216,7 +216,7 @@ class DataPrinterTest extends TestCaseExtension
 		$ca->setPersonId(43);
 		$ca->setIsLdapAccount(2);
 		$ca->setAuthInfo(232);
-		$ca->setUserName('holla');
+		$ca->setUserName('max.mueller');
 		$ca->setExternalSystemId(4);
 		$ca->setPurposeId(2);
 
@@ -230,7 +230,7 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug: |* Purpose: Unittest (2)');
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString($msg, 'Debug: |* Account: Id (1), PersonId (43), Username (holla), BlockedId(), Ldap (2), AuthId (), AuthInfo (232), ExternalId (4)');
+		$this->assertEqualClearedString($msg, 'Debug: |* Account: Id (1), PersonId (43), Username (max.mueller), BlockedId(), Ldap (2), AuthId (), AuthInfo (232), ExternalId (4)');
 	}
 
 	public function test_printPerson_shouldPrintPerson()
@@ -239,7 +239,7 @@ class DataPrinterTest extends TestCaseExtension
 
 		$this->instance->printPerson($per, 0);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString($msg, 'Debug:|*eAddress:Id(1),objGuid(1),SortOrder(2),AddressType(232),AddressTypeReadable(test),Address(holla)');
+		$this->assertEqualClearedString($msg, 'Debug:|*eAddress:Id(1),objGuid(1),SortOrder(2),AddressType(232),AddressTypeReadable(test),Address(otto.willy@uni-example.de)');
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug:|*Person:Otto,Willy,2');
 	}
@@ -253,7 +253,7 @@ class DataPrinterTest extends TestCaseExtension
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug:|*Person:Heinz,Willy,');
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString($msg, 'Debug:|*eAddress:Id(1),objGuid(1),SortOrder(2),AddressType(232),AddressTypeReadable(test),Address(holla)');
+		$this->assertEqualClearedString($msg, 'Debug:|*eAddress:Id(1),objGuid(1),SortOrder(2),AddressType(232),AddressTypeReadable(test),Address(otto.willy@uni-example.de)');
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug:|*Person:Otto,Willy,2');
 
@@ -289,7 +289,7 @@ class DataPrinterTest extends TestCaseExtension
 
 		$this->instance->printPersonPlanElementContainer(array($ppe), 0);
 		$msg = array_pop($this->collectedMessages);
-		$this->assertEqualClearedString($msg, 'Debug: 	|* Person: Hulla, Sure, 23');
+		$this->assertEqualClearedString($msg, 'Debug: 	|* Person: Anna, Meyer, 23');
 		$msg = array_pop($this->collectedMessages);
 		$this->assertEqualClearedString($msg, 'Debug: |* Person: 13423, 5, role: 0');
 	}
