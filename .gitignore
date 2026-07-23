@@ -9,3 +9,4 @@ cfg_update_info.php
 cfg_update_running.php
 participants.json
 .htpasswd
+.cursor/
