@@ -15,6 +15,7 @@
 		"person_id_type" : "ecs_loginUID",
 		"login_suffix" : "",
 		"blocked_ids" : [],
+		"group_title_from_plan_element" : false,
 		"text" : {
 			"current_term" : "getDefaultText",
 			"event_type"   : "getDefaultText",

@@ -32,10 +32,11 @@ If the Unittest with coverage segfaults remove the opcache extension!
 		"blocked_ids" : [], // Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with php with "php cmd.php gb"
 		"blocked_form_of_studies_ids" : [], // Array of blocked form of studies ids. These ids can be queried with with "php cmd.php gf"
 		"remove_duplicate_degree_programmes": true, // If true, duplicate degreeProgrammes with the same title from courses with multiple study forms will be removed
+		"group_title_from_plan_element": false, // If true, groups[].title uses PlanElement text via HIS.text.plan_element; if false (default), ParallelGroupValue longtext
 		"text" : { //getShortText | getDefaultText | getLongText
 			"current_term" : "getDefaultText",
 			"event_type"   : "getDefaultText",
-			"plan_element" : "getDefaultText",
+			"plan_element" : "getDefaultText", // Used for groups[].title when group_title_from_plan_element is true
 			"term"         : "getDefaultText",
 			"unit"         : "getDefaultText"
 		}

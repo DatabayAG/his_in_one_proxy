@@ -287,7 +287,19 @@ Start the listener later with `php cmd.php se`.
 | Key | Suggested | Notes |
 |-----|-----------|-------|
 | `remove_duplicate_degree_programmes` | `true` or `false` | Replace the `"true\|false"` placeholder |
+| `group_title_from_plan_element` | `false` | See below |
 | `text.current_term` / `event_type` / `plan_element` / `term` / `unit` | `"getDefaultText"` | Or `getShortText` / `getLongText` if titles look wrong in ILIAS |
+
+### Parallel group titles (`group_title_from_plan_element`)
+
+Controls the source of `groups[].title` in the ECS/ILIAS course JSON:
+
+| Value | Title source |
+|-------|----------------|
+| `false` (default) | Parallel group type (`ParallelgroupValue` / `longtext` via `parallelgroupId`) |
+| `true` | PlanElement title via `HIS.text.plan_element` (`getDefaultText`, `getShortText`, or `getLongText`) |
+
+Use `true` when ILIAS group names should match the individual PlanElement titles from EXA/HIS instead of the generic parallel-group type labels. After changing the value, re-run a lecture export/sync so Create/Update picks up the new titles.
 
 ---
 

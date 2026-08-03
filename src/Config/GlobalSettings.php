@@ -58,6 +58,7 @@ class GlobalSettings
     protected int $process_links_count = 5;
     protected string $link_creation_title = "";
     protected bool $remove_duplicate_degree_programmes = false;
+    protected bool $group_title_from_plan_element = false;
 
     private function __construct()
     {
@@ -115,6 +116,7 @@ class GlobalSettings
         $this->setBlockedFormOfStudiesIds($this->config->get('HIS.blocked_form_of_studies_ids'));
         $this->setRemoveDuplicateDegreeProgrammes($this->config->get('HIS.remove_duplicate_degree_programmes'));
         $this->setTextConfig($this->config->get('HIS.text'));
+        $this->setGroupTitleFromPlanElement($this->config->get('HIS.group_title_from_plan_element') ?? false);
         $this->setWorkStatusIds($this->config->get('HIS.work_status_ids'));
 
         $this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
@@ -192,6 +194,7 @@ class GlobalSettings
             "HIS.blocked_form_of_studies_ids" => $this->getBlockedFormOfStudiesIds(),
             "HIS.remove_duplicate_degree_programmes" => $this->isRemoveDuplicateDegreeProgrammes(),
             "HIS.text" => $this->getTextConfig(),
+            "HIS.group_title_from_plan_element" => $this->isGroupTitleFromPlanElement(),
             "HIS.work_status_ids" => $this->getWorkStatusIds(),
             "ECS.use_local_ecs" => $this->isUseLocalEcs(),
             "ECS.ecs_community_id" => $this->getEcsCommunityId(),
@@ -592,6 +595,16 @@ class GlobalSettings
     public function setRemoveDuplicateDegreeProgrammes(bool $remove_duplicate_degree_programmes): void
     {
         $this->remove_duplicate_degree_programmes = $remove_duplicate_degree_programmes;
+    }
+
+    public function isGroupTitleFromPlanElement(): bool
+    {
+        return $this->group_title_from_plan_element;
+    }
+
+    public function setGroupTitleFromPlanElement(bool $group_title_from_plan_element): void
+    {
+        $this->group_title_from_plan_element = $group_title_from_plan_element;
     }
 
 }

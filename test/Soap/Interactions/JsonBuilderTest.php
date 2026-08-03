@@ -376,6 +376,49 @@ class JsonBuilderTest extends TestCaseExtension
 		$this->assertEqualClearedString($exp, json_encode($row));
 	}
 
+	public function test_appendGroups_withPlanElementTitle_shouldReturnRow()
+	{
+		$settings = \HisInOneProxy\Config\GlobalSettings::getInstance();
+		$original = $settings->isGroupTitleFromPlanElement();
+		$settings->setGroupTitleFromPlanElement(true);
+
+		$builder = new Interactions\JsonBuilder();
+		$unit = new \HisInOneProxy\DataModel\Unit();
+		$plan = new \HisInOneProxy\DataModel\PlanElement();
+		$plan->setId(1);
+		$plan->setAttendeeMaximum(12);
+		$plan->setHoursPerWeek(40);
+		$plan->setLiterature('My power book.');
+		$plan->setParallelGroupId(1);
+		$plan->setDefaultText('Plan element title from EXA');
+		$plan->setLongText('Plan element long text');
+		$plan->setRecommendedRequirement('You should have done this.');
+		$plan->appendPersonPlanElement(new \HisInOneProxy\DataModel\PersonPlanElement());
+		$unit->appendPlanElement($plan);
+		$row = new stdClass();
+
+		$value = new \HisInOneProxy\DataModel\ParallelGroupValue();
+		$value->setId(1);
+		$value->setLongText('My group value.');
+		$value->setDefaultText('My group value.');
+		$container = new \HisInOneProxy\DataModel\Container\ParallelGroupValuesContainer();
+		$container->appendParallelGroupValue($value);
+		DataCache::getInstance()->setParallelGroupValues($container);
+
+		try {
+			$this->callMethod(
+				$builder,
+				'appendGroups',
+				array($unit, $row, 1)
+			);
+
+			$exp = '{"groups":[{"id":1,"title":"PlanelementtitlefromEXA","maxParticipants":12,"hours":40,"datesAndVenues":""}],"hoursPerWeek":40,"recommendedReading":"Mypowerbook.","prerequisites":"Youshouldhavedonethis."}';
+			$this->assertEqualClearedString($exp, json_encode($row));
+		} finally {
+			$settings->setGroupTitleFromPlanElement($original);
+		}
+	}
+
 	public function test_convertCourseCatalogToJson_shouldReturnArray()
 	{
 
