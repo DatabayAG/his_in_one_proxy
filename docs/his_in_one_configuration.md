@@ -1,9 +1,26 @@
 # HISinOne
 
 ## Tested with version
-2023.12
+2025.06
 
 ## Roles and permissions
+### Roles
+- AccountService 
+- CourseCatalogService 
+- CourseInterfaceService 
+- CourseOfStudyService 
+- CurriculumDesignerService 
+- FacilityService 
+- KeyvalueService 
+- OrgUnitService 
+- PersonAddressService 
+- PersonService 
+- StudentService 
+- SystemEventAbonnenmentService 
+- TermService 
+- PlanelementService
+
+### Permissions
 - Details von Studiengängen ansehen 
 - Vorlesungsverzeichnis ansehen
 - Semesterabhängige Veranstaltung betrachten 
@@ -36,3 +53,4 @@
 
 ## General settings
 
+- Soap-Services in HISinOne has to be activated

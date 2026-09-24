@@ -27,4 +27,8 @@ class CourseUrl
         return $this->url;
     }
 
+    public function isCourse(): bool
+    {
+        return strpos($this->url, '/go/grp/') === false;
+    }
 }

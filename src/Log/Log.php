@@ -98,6 +98,17 @@ class Log
      */
     public function error($a_message)
     {
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        $prefix = '';
+        if (isset($backtrace[1]['class'])) {
+            $prefix .= $backtrace[1]['class'] . '::';
+        }
+        if (isset($backtrace[1]['function'])) {
+            $prefix .= $backtrace[1]['function'];
+        }
+        if ($prefix !== '') {
+            $a_message = $prefix . ': ' . $a_message;
+        }
         return $this->getLogger()->error($a_message);
     }
 

@@ -118,10 +118,11 @@ $app->get(CC_COURSES, function (Request $request, Response $response, array $arg
 
     if(isset($args['id'])) {
         $courseId = $args['id'];
-        $data = $db->select($courseId);
+        $data = $db->select($courseId, COURSES);
         $json = $ecs_local_functions->jsonEncodeWrapper($data);
         $response->getBody()->write($json);
-        return $response;
+
+        return $ecs_local_functions->checkResponseDataSizeForStatus($data, $response);
     }
 
     $data = $db->selectQueueWaitingEntries($ecs_local_functions->isValidParticipant()->getPid(), COURSES);
@@ -137,12 +138,18 @@ $app->get('/campusconnect/courses/{id}/details', function (Request $request, Res
     }
 
     $courseId = (int) $args['id'];
-    $payload = $ecs_local_functions->getPayloadForCourses($valid_participant, $courseId);
+    $data = $db->select($courseId, COURSES);
+    if($data !== []) {
+        $payload = $ecs_local_functions->getPayloadForCourses($valid_participant, $courseId);
+    } else {
+        $payload = [];
+    }
+
     $memberships_json = $ecs_local_functions->jsonEncodeWrapper($payload);
     $response->getBody()->write($memberships_json);
     $logging->info(sprintf('Sent message details for %s', CC_COURSES . '/details'));
 
-    return $response->withHeader('Content-Type', 'application/json');
+    return $ecs_local_functions->checkResponseDataSizeForStatus($payload, $response)->withHeader('Content-Type', 'application/json');
 });
 
 $app->get('/campusconnect/course_members', function (Request $request, Response $response, array $args) use ($db, $logging, $ecs_local_functions) {
@@ -165,15 +172,14 @@ $app->get('/campusconnect/course_members/[{id}]', function (Request $request, Re
     if (isset($args['id'])) {
         $membersId = $args['id'];
         if ($membersId > 0) {
-            $data = $db->select($membersId);
+            $data = $db->select($membersId, COURSE_MEMBERS);
         }
         $json = $ecs_local_functions->jsonEncodeWrapper($data);
         $response->getBody()->write($json);
-        return $response;
+        return $ecs_local_functions->checkResponseDataSizeForStatus($data, $response);
     }
 
-
-    return $response;
+    return $ecs_local_functions->checkResponseDataSizeForStatus($data, $response);
 });
 
 $app->get('/campusconnect/course_members/{id}/details', function (Request $request, Response $response, array $args) use ($db, $logging, $ecs_local_functions)  {
@@ -181,14 +187,22 @@ $app->get('/campusconnect/course_members/{id}/details', function (Request $reque
     if($valid_participant->isInvalidAuth()) {
         return $response;
     }
+    $data = [];
 
-    $courseId = (int) $args['id'];
-    $payload = $ecs_local_functions->getPayloadForCourseMembers($valid_participant, $courseId);
+    $membersId = (int) $args['id'];
+    if ($membersId > 0) {
+        $data = $db->select($membersId, COURSE_MEMBERS);
+    }
+    if($data !== []) {
+        $payload = $ecs_local_functions->getPayloadForCourseMembers($valid_participant, $membersId);
+    } else {
+        $payload = [];
+    }
     $json = $ecs_local_functions->jsonEncodeWrapper($payload);
     $response->getBody()->write($json);
     $logging->info(sprintf('Sent message details for %s', '/campusconnect/course_members/{id}/details'));
 
-    return $response->withHeader('Content-Type', 'application/json');
+    return $ecs_local_functions->checkResponseDataSizeForStatus($payload, $response)->withHeader('Content-Type', 'application/json');
 });
 
 $app->get('/campusconnect/categories', function (Request $request, Response $response, array $args) use ($db, $logging, $ecs_local_functions)  {
@@ -228,7 +242,13 @@ $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array
             $lectureId = $course_urls->getCmsLectureId() ?: '';
             $ecs_course_url = $course_urls->getEcsCourseUrl() ?: '';
             $lms_course_urls = $course_urls->getLmsCourseUrls();
-            $first_found_url = reset($lms_course_urls);
+            $first_found_url = null;
+            foreach($lms_course_urls as $url) {
+                if($url->isCourse()) {
+                    $first_found_url = $url;
+                    break;
+                }
+            }
             $term_type_id = GlobalSettings::getInstance()->getActualTermId();
             $term_year = GlobalSettings::getInstance()->getActualTermYear();
 
@@ -264,7 +284,7 @@ $app->get('/campusconnect/course_urls/[{id}]', function (Request $request, Respo
         return $response;
     }
 
-    return $ecs_local_functions->echoReturnFunction([], $response)->withHeader('Content-Type', 'application/json');
+    return $ecs_local_functions->echoReturnFunction([], $response)->withHeader('Content-Type', 'application/json')->withStatus(404);
 });
 
 $app->get('/campusconnect/course_urls/{id}/details', function (Request $request, Response $response, array $args) use ($db, $logging, $ecs_local_functions) {
@@ -272,7 +292,7 @@ $app->get('/campusconnect/course_urls/{id}/details', function (Request $request,
         return $response;
     }
 
-    return $ecs_local_functions->echoReturnFunction([], $response)->withHeader('Content-Type', 'application/json');
+    return $ecs_local_functions->echoReturnFunction([], $response)->withHeader('Content-Type', 'application/json')->withStatus(404);
 });
 
 $app->run();
