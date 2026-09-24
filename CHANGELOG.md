@@ -1,3 +1,5 @@
+- `php cmd.php qc {termTypeValueId} {year}` counts courses for a term and how many have an e-learning export mapping
+  - Uses `findUnit81` only: one call for the term, one for mapped courses, and one per HIS id in `HIStoECSMapping`. No queue job is written.
 - Group titles can be taken from the plan element
   - Set `HIS.group_title_from_plan_element` to `true`. `HIS.text.plan_element` stays `getDefaultText`, `getShortText`, or `getLongText`. Default `false` keeps the parallel-group type (long text). Re-export after changing it.
 - `link_queue.unit_id` stores lecture ids as text
