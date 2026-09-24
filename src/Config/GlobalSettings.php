@@ -617,6 +617,11 @@ class GlobalSettings
             $state = sprintf('database active, schema version %d', $applied);
         }
 
+        $running = SchemaVersion::readRunning();
+        if ($running > 0) {
+            $state .= sprintf(', update %d running', $running);
+        }
+
         return $state;
     }
 

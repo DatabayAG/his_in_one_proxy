@@ -124,10 +124,14 @@ class WSSoapClient extends SoapClient
      * @param int    $one_way
      * @return mixed|string
      */
-    public function __doRequest(string $request, string $location, string $action, int $version, bool $oneWay = false): ?string
+    public function __doRequest(string $request, string $location, string $action, int $version, bool $oneWay = false, ?string $uriParserClass = null): ?string
     {
 
-        $result = parent::__doRequest($request, $location, $action, $version, $oneWay);
+        if ($uriParserClass !== null) {
+            $result = parent::__doRequest($request, $location, $action, $version, $oneWay, $uriParserClass);
+        } else {
+            $result = parent::__doRequest($request, $location, $action, $version, $oneWay);
+        }
         if (!is_string($result)) {
             return $result;
         }

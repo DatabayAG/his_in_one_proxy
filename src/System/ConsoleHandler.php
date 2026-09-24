@@ -672,7 +672,9 @@ class ConsoleHandler
     protected function runUnitTests()
     {
         try {
-            if (getenv('XDEBUG_MODE') !== 'off') {
+            if (GlobalSettings::getInstance()->isPhpunitWithCoverage()) {
+                $this->ensureXdebugCoverageMode();
+            } elseif (getenv('XDEBUG_MODE') !== 'off') {
                 putenv('XDEBUG_MODE=off');
             }
             $argv = array_merge(array('phpunit'), $this->getPhpUnitArgv());
@@ -696,11 +698,25 @@ class ConsoleHandler
         if (GlobalSettings::getInstance()->isPhpunitWithCoverage()) {
             $argv[1] = 'test/phpunit-coverage.xml';
             $argv[] = '--coverage-text';
-            $argv[] = '--coverage-text-show-uncovered-files';
-            $argv[] = '--coverage-text-show-only-summary';
+            $argv[] = '--show-uncovered-for-coverage-text';
+            $argv[] = '--only-summary-for-coverage-text';
         }
 
         return $argv;
+    }
+
+    protected function ensureXdebugCoverageMode(): void
+    {
+        $mode = function_exists('xdebug_info') ? xdebug_info('mode') : array();
+        if (is_array($mode) && in_array('coverage', $mode, true)) {
+            return;
+        }
+
+        $php = PHP_BINARY !== '' ? PHP_BINARY : 'php';
+        $script = $_SERVER['SCRIPT_FILENAME'] ?? 'cmd.php';
+        $command = 'XDEBUG_MODE=coverage ' . escapeshellarg($php) . ' ' . escapeshellarg($script) . ' ts';
+        passthru($command, $exit_code);
+        exit($exit_code);
     }
 
 }
