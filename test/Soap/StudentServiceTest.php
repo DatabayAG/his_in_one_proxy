@@ -22,22 +22,21 @@ class StudentServiceTest extends TestCaseExtension
 	 */
 	protected $soap_client_router;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 
 		parent::setUp();
 
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
-		$this->soap_client_router->setSoapClientStudentService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'StudentService.wsdl'));
+		$this->soap_client_router->setSoapClientStudentService($this->createSoapClientMock());
 	}
 
 	public function test_readStudentWithCoursesOfStudyByStudentId_shouldReturnStudentExisting()
 	{
-		$this->soap_client_router->getSoapClientStudentService()->expects($this->any())
-			->method('__soapCall')
+		$this->soap_client_router->getSoapClientStudentService()->method('__soapCall')
 			->willReturn(simplexml_load_string('<resp>'.file_get_contents('test/fixtures/student_existing.xml').'</resp>'));
 		$soap_client = new Soap\StudentService($this->log, $this->soap_client_router);
-		$value = $soap_client->readStudentWithCoursesOfStudyByStudentId(1999);
+		$value = $soap_client->readStudentWithCoursesOfStudyByStudentId(978765);
 		$this->assertInstanceOf('HisInOneProxy\DataModel\StudentExisting', $value);
 	}
 

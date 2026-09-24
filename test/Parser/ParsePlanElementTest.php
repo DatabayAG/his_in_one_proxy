@@ -18,7 +18,7 @@ class ParsePlanElementTest extends TestCaseExtension
 
 	protected $collectedMessages = array();
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}
@@ -38,7 +38,7 @@ class ParsePlanElementTest extends TestCaseExtension
 		$parser =  new Parser\ParsePlanElements($this->log);
 		$unit = new \HisInOneProxy\DataModel\Unit();
 		$parser->parse(simplexml_load_string('<res>'.$xml.'</res>'), $unit);
-		$plan = $unit->getPlanElementContainer()[0];
+		$plan = $unit->getPlanElementContainer()['234'];
 
 		$this->assertEquals('234', $plan->getId());
 		$this->assertEquals('324-234-23-4325', $plan->getObjGuid());
@@ -71,8 +71,8 @@ class ParsePlanElementTest extends TestCaseExtension
 		$unit = new \HisInOneProxy\DataModel\Unit();
 		$parser->parse(simplexml_load_string('<res>'.$xml.'</res>'), $unit);
 
-		$this->assertEquals('221321334', $unit->getPlanElementContainer()[0]->getId());
-		$this->assertEquals('23561', $unit->getPlanElementContainer()[1]->getId());
+		$this->assertEquals('221321334', $unit->getPlanElementContainer()['221321334']->getId());
+		$this->assertEquals('23561', $unit->getPlanElementContainer()['23561']->getId());
 	}
 
 

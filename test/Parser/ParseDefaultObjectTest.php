@@ -16,7 +16,7 @@ class ParseDefaultObjectTest  extends TestCaseExtension{
 	 */
 	protected $instance;
 	
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new Parser\ParseDefaultObject($this->log);
 		parent::setUp();

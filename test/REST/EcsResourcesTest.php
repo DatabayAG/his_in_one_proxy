@@ -8,7 +8,7 @@ class EcsResourcesTest extends PHPUnit\Framework\TestCase
 
 	protected $ecs;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->ecs = new \HisInOneProxy\REST\EcsResources();
 	}

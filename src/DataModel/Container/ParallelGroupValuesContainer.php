@@ -35,7 +35,7 @@ class ParallelGroupValuesContainer
     public function appendParallelGroupValue($parallel_group_value)
     {
         if (is_a($parallel_group_value, '\HisInOneProxy\DataModel\ParallelGroupValue')) {
-            $this->parallel_group_value_container[trim($parallel_group_value->getId())] = $parallel_group_value;
+            $this->parallel_group_value_container[trim((string) $parallel_group_value->getId())] = $parallel_group_value;
         } else {
             throw new InvalidArgumentException();
         }

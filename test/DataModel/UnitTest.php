@@ -14,7 +14,7 @@ class UnitTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\Unit();
 	}
@@ -50,8 +50,9 @@ class UnitTest extends PHPUnit\Framework\TestCase
 
 	public function test_getLongText_shouldReturnLongText()
 	{
-		$this->instance->setLongText('Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Proin eget tortor risus. Donec sollicitudin molestie malesuada. Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat.');
-		$this->assertEquals('Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Proin eget tortor risus. Donec sollicitudin molestie malesuada. Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat.', $this->instance->getLongText());
+		$longText = 'Lehrveranstaltung im Bachelorstudiengang Informatik, Wintersemester 2017.';
+		$this->instance->setLongText($longText);
+		$this->assertEquals($longText, $this->instance->getLongText());
 	}
 
 	public function test_getDefaultText_shouldReturnDefaultText()
@@ -117,10 +118,10 @@ class UnitTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidCourse
 	 */
 	public function test_appendCourse_shouldThrowInvalidCourseArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidCourse::class);
 		$this->instance->appendCourse(new DataModel\Allocation());
 	}
 
@@ -133,17 +134,21 @@ class UnitTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidPlanElement
 	 */
 	public function test_appendPlanElement_shouldThrowInvalidPlanElementArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidPlanElement::class);
 		$this->instance->appendPlanElement(new DataModel\Allocation());
 	}
 
 	public function test_getPlanElement_shouldReturnPlanElements()
 	{
-		$this->instance->appendPlanElement(new DataModel\PlanElement());
-		$this->instance->appendPlanElement(new DataModel\PlanElement());
+		$plan_element_one = new DataModel\PlanElement();
+		$plan_element_one->setId(1);
+		$plan_element_two = new DataModel\PlanElement();
+		$plan_element_two->setId(2);
+		$this->instance->appendPlanElement($plan_element_one);
+		$this->instance->appendPlanElement($plan_element_two);
 		$this->assertEquals(2, count($this->instance->getPlanElementContainer()));
 	}
 
@@ -156,10 +161,10 @@ class UnitTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidOrgUnit
 	 */
 	public function test_appendOrgUnit_shouldThrowInvalidOrgUnitArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidOrgUnit::class);
 		$this->instance->appendOrgUnit(new DataModel\Allocation());
 	}
 

@@ -110,12 +110,18 @@ class SoapServiceRouter
     /**
      * SoapServiceRouter constructor.
      * @param $log
+     * @param bool|null $initialize_services null = auto (skip under PHPUnit)
      */
-    public function __construct($log)
+    public function __construct($log, ?bool $initialize_services = null)
     {
         $this->log = $log;
         $this->setServiceNumber(self::SERVICES_TO_INITIALIZE);
-        $this->initialiseClientServices();
+        if ($initialize_services === null) {
+            $initialize_services = !defined('PHPUNIT') || !PHPUNIT;
+        }
+        if ($initialize_services) {
+            $this->initialiseClientServices();
+        }
     }
 
     public function initialiseClientServices()

@@ -17,31 +17,29 @@ class AddressServiceTest extends TestCaseExtension
 	 */
 	protected $soap_client_router;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
-		$this->soap_client_router->setSoapClientPersonAddressService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'AddressService.wsdl'));
+		$this->soap_client_router->setSoapClientPersonAddressService($this->createSoapClientMock());
 	}
 
 	public function test_readPostAddresses_shouldLogErrors()
 	{
-		$this->soap_client_router->getSoapClientPersonAddressService()->expects($this->any())
-								 ->method('__soapCall')
-								 ->will($this->throwException(new SoapFault('Server', 'Something horrible happened in the room.')));
+		$this->soap_client_router->getSoapClientPersonAddressService()->method('__soapCall')
+								 ->willThrowException(new SoapFault('Server', 'No postal addresses found for person 34.'));
 		$soap_client = new Soap\PersonAddressService($this->log, $this->soap_client_router );
-		$soap_client->readPostAddresses(1999);
-		$this->assertEqualClearedString('Error: Something horrible happened in the room.', array_pop($this->collectedMessages));
+		$soap_client->readPostAddresses(34);
+		$this->assertEqualClearedString('Error: No postal addresses found for person 34.', array_pop($this->collectedMessages));
 	}
 
 	public function test_readRoom_shouldReturnValue()
 	{
-		$this->soap_client_router->getSoapClientPersonAddressService()->expects($this->any())
-			->method('__soapCall')
+		$this->soap_client_router->getSoapClientPersonAddressService()->method('__soapCall')
 			->willReturn(simplexml_load_string('<resp>'.file_get_contents('test/fixtures/address.xml') . '</resp>'));
 		$soap_client = new Soap\PersonAddressService($this->log, $this->soap_client_router);
-		$value = $soap_client->readPostAddresses(1999);
+		$value = $soap_client->readPostAddresses(34);
 		$this->assertInstanceOf('HisInOneProxy\DataModel\Address', $value[0]);
 		/**
 		 * @var \HisInOneProxy\DataModel\Address $address
@@ -58,13 +56,13 @@ class AddressServiceTest extends TestCaseExtension
 		$this->assertEquals('1', $address->getBuildingId());
 		$this->assertEquals('22-11-1920', $address->getCreatedAt());
 		$this->assertEquals('22-11-2015', $address->getUpdatedAt());
-		$this->assertEquals('13432', $address->getPostCode());
-		$this->assertEquals('Super street', $address->getStreet());
-		$this->assertEquals('Here', $address->getCity());
-		$this->assertEquals('No addition.', $address->getAddressAddition());
+		$this->assertEquals('80333', $address->getPostCode());
+		$this->assertEquals('Universitätsstraße 1', $address->getStreet());
+		$this->assertEquals('München', $address->getCity());
+		$this->assertEquals('', $address->getAddressAddition());
 		$this->assertEquals('2', $address->getPostBoxOffice());
-		$this->assertEquals('23234', $address->getCompany());
-		$this->assertEquals('Enter state here', $address->getState());
+		$this->assertEquals('Universität Musterstadt', $address->getCompany());
+		$this->assertEquals('Bayern', $address->getState());
 		$this->assertEquals('45', $address->getCountryId());
 	}
 

@@ -16,7 +16,7 @@ class ParseGenderTest  extends TestCaseExtension{
 	 */
 	protected $instance;
 	
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new Parser\ParseGenders($this->log);
 		parent::setUp();

@@ -14,7 +14,7 @@ class TimePreferenceTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\TimePreference();
 	}
@@ -79,10 +79,10 @@ class TimePreferenceTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidTimeSlot
 	 */
 	public function test_setTimeSlot_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidTimeSlot::class);
 		$this->instance->appendTimeSlot('Workload');
 	}
 

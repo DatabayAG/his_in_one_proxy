@@ -5,8 +5,8 @@
 	<defaulttext>default text</defaulttext>
 	<longtext>Longtext</longtext>
 	<defaultlanguageId>23</defaultlanguageId>
-	<uniquename>My super rooom</uniquename>
-	<description>Description</description>
+	<uniquename>Raum 101, Hörsaalzentrum</uniquename>
+	<description>Hörsaal mit 120 Plätzen</description>
 	<partOfRoomComposition>1</partOfRoomComposition>
 	<classRoomName>My class room name</classRoomName>
 	<floorId>1000</floorId>

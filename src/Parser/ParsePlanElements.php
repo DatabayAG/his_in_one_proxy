@@ -44,7 +44,7 @@ class ParsePlanElements extends SimpleXmlParser
     {
         if ($this->isAttributeValid($value, 'id')) {
             $plan_element = new DataModel\PlanElement();
-            $plan_element->setId($value->id);
+            $plan_element->setId((string) $value->id);
             $this->log->info(sprintf('Found PlanElement with id %s.', $plan_element->getId()));
             if ($this->isAttributeValid($value, 'objGuid')) {
                 $plan_element->setObjGuid($value->objGuid);

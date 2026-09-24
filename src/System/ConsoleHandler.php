@@ -21,7 +21,7 @@ use HisInOneProxy\System\Console\FunctionObject;
 use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
-use PHPUnit\TextUI\TestRunner;
+use PHPUnit\TextUI\Application as PHPUnitApplication;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
@@ -671,47 +671,36 @@ class ConsoleHandler
 
     protected function runUnitTests()
     {
-        $phpunit = new TestRunner;
         try {
-            $test_suite = $phpunit->getTest('test/GlobalTestSuite.php');
-            $config     = $this->getPhpUnitConfig();
-            $phpunit->dorun($test_suite, $config);
+            if (getenv('XDEBUG_MODE') !== 'off') {
+                putenv('XDEBUG_MODE=off');
+            }
+            $argv = array_merge(array('phpunit'), $this->getPhpUnitArgv());
+            $exit_code = (new PHPUnitApplication())->run($argv);
+            if ($exit_code !== 0) {
+                die("Unit tests failed.\n");
+            }
         } catch (Exception $e) {
             print $e->getMessage() . "\n";
-            die ("Unit tests failed.");
+            die("Unit tests failed.\n");
         }
     }
 
     /**
      * @return array
      */
-    protected function getPhpUnitConfig()
+    protected function getPhpUnitArgv()
     {
+        $argv = array('-c', 'test/phpunit.xml');
+
         if (GlobalSettings::getInstance()->isPhpunitWithCoverage()) {
-            return $this->getPhpUnitConfigWithCoverage();
-        } else {
-            return $this->getPhpUnitConfigWithoutCoverage();
+            $argv[1] = 'test/phpunit-coverage.xml';
+            $argv[] = '--coverage-text';
+            $argv[] = '--coverage-text-show-uncovered-files';
+            $argv[] = '--coverage-text-show-only-summary';
         }
+
+        return $argv;
     }
 
-    /**
-     * @return array
-     */
-    protected function getPhpUnitConfigWithCoverage()
-    {
-        return array(
-            'configuration'                  => 'test/phpunit.xml',
-            'coverageText'                   => true,
-            'coverageTextShowUncoveredFiles' => true,
-            'coverageTextShowOnlySummary'    => true
-        );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPhpUnitConfigWithoutCoverage()
-    {
-        return array('configuration' => 'test/phpunit.xml');
-    }
 }

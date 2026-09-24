@@ -11,7 +11,7 @@ use HisInOneProxy\Parser;
  */
 class ParseCourseCatalogChildrenTest extends TestCaseExtension
 {
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}

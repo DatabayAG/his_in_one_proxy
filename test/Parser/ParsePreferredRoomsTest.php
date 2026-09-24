@@ -18,7 +18,7 @@ class ParsePreferredRoomsTest extends TestCaseExtension
 
 	protected $collectedMessages = array();
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}

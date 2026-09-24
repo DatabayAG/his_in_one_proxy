@@ -16,24 +16,21 @@ class KeyValueServiceTest extends TestCaseExtension
 	 */
 	protected $soap_client_router;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
-		$this->soap_client_router->setSoapClientKeyValueService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'KeyvalueService.wsdl'));
+		$this->soap_client_router->setSoapClientKeyValueService($this->createSoapClientMock());
 	}
 
 	protected function initEmptySoapClientService()
 	{
-		$this->soap_client_router->getSoapClientKeyValueService()->expects($this->any())
-                                 ->method('__soapCall')
-                                 ->willReturn(simplexml_load_string('<resp></resp>'));
-	}
+		$this->soap_client_router->getSoapClientKeyValueService()->method('__soapCall')
+                                 ->willReturn(simplexml_load_string('<resp></resp>'));	}
 
 	public function test_getAllTermTypes_shouldReturnValue()
 	{
-		$this->soap_client_router->getSoapClientKeyValueService()->expects($this->any())
-                                 ->method('__soapCall')
+		$this->soap_client_router->getSoapClientKeyValueService()->method('__soapCall')
                                  ->willReturn(simplexml_load_string('<resp><values><value>'.file_get_contents('test/fixtures/term_type.xml').'</value></values></resp>'));
 		$soap_client = new Soap\KeyvalueService($this->log, $this->soap_client_router);
 		$value = $soap_client->getAllValid('TermTypeValue', 12);

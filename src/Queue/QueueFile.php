@@ -149,6 +149,9 @@ class QueueFile extends QueueBase
         $file = new SplFileObject($path, 'r+');
         $file->flock(LOCK_EX);
         $meta = unserialize($file->fgets());
+        if (!is_array($meta)) {
+            $meta = [];
+        }
         $id   = isset($meta[$queue_name]) ? $meta[$queue_name] : 0;
         $id++;
 

@@ -9,7 +9,7 @@
 		"actual_term_id"      : null,
 		"actual_term_year"   : null,
 		"endpoint"           : {
-			"register_listener"  : "true",
+			"register_listener"  : "false",
 			"listener_url"       : "",
 			"listener_port"      : "",
 			"username"           : "",

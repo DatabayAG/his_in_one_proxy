@@ -11,13 +11,13 @@
 		<buildingId>1</buildingId>
 		<createdAt>22-11-1920</createdAt>
 		<updatedAt>22-11-2015</updatedAt>
-		<postcode>13432</postcode>
-		<street>Super street</street>
-		<city>Here</city>
-		<addressaddition>No addition.</addressaddition>
+		<postcode>80333</postcode>
+		<street>Universitätsstraße 1</street>
+		<city>München</city>
+		<addressaddition></addressaddition>
 		<postofficebox>2</postofficebox>
-		<company>23234</company>
-		<state>Enter state here</state>
+		<company>Universität Musterstadt</company>
+		<state>Bayern</state>
 		<countryId>45</countryId>
 	</postAddress>
 </postAdresses>
