@@ -284,22 +284,49 @@ Start the listener later with `php cmd.php se`.
 
 ## Step 13 — Text labels and degree programmes
 
-| Key | Suggested | Notes |
-|-----|-----------|-------|
-| `remove_duplicate_degree_programmes` | `true` or `false` | Replace the `"true\|false"` placeholder |
-| `group_title_from_plan_element` | `false` | See below |
-| `text.current_term` / `event_type` / `plan_element` / `term` / `unit` | `"getDefaultText"` | Or `getShortText` / `getLongText` if titles look wrong in ILIAS |
+These keys choose which HIS name is sent to ILIAS for a course, its groups, the term, and the lecture type. IDs stay the same. After you change one, export again (`php cmd.php lc <term> <year>`) so ILIAS receives the new labels.
 
-### Parallel group titles (`group_title_from_plan_element`)
+HIS stores up to three names for the same object. Each value under `HIS.text` must be one of:
 
-Controls the source of `groups[].title` in the ECS/ILIAS course JSON:
+| Value | HIS name |
+|-------|----------|
+| `getShortText` | Short name |
+| `getDefaultText` | Usual name. Keep this unless a label looks wrong |
+| `getLongText` | Long name |
 
-| Value | Title source |
-|-------|----------------|
-| `false` (default) | Parallel group type (`ParallelgroupValue` / `longtext` via `parallelgroupId`) |
-| `true` | PlanElement title via `HIS.text.plan_element` (`getDefaultText`, `getShortText`, or `getLongText`) |
+A missing key, or any other value, falls back to `getDefaultText`.
 
-Use `true` when ILIAS group names should match the individual PlanElement titles from EXA/HIS instead of the generic parallel-group type labels. After changing the value, re-run a lecture export/sync so Create/Update picks up the new titles.
+### Degree programmes
+
+`config.json.dist` still has the placeholder `"true|false"`. Replace it with a JSON boolean (`true` or `false`), not a string.
+
+| Value | What ILIAS receives |
+|-------|---------------------|
+| `true` | If one course is linked to several study forms that share the same title, that title is sent once |
+| `false` | Every study form is sent, even when the titles are identical |
+
+Those titles always come from the HIS default text. `HIS.text` does not change them. Study forms listed in `blocked_form_of_studies_ids` (Step 10) are dropped before this check.
+
+### Course, term, and lecture-type labels
+
+| Key | Label in the export | Change it when |
+|-----|---------------------|----------------|
+| `text.unit` | Course title, when the course has more than one plan element | The course name should be the unit's short or long text |
+| `text.plan_element` | Course title, when the course has exactly one plan element. Also each group title when `group_title_from_plan_element` is `true` | That name should be the plan element's short or long text |
+| `text.event_type` | `lectureType` (for example lecture or seminar) | The type name should be the short or long text |
+| `text.term` | Term name inside `termID`. The year is added after it, for example `Wintersemester 2026` | The term name should be the short or long text |
+| `text.current_term` | Not used in the export | Leave `getDefaultText`. The current term only supplies its number and year |
+
+### Group titles (`group_title_from_plan_element`)
+
+This chooses `groups[].title`:
+
+| Value | Title ILIAS gets |
+|-------|------------------|
+| `false` (default) | The parallel-group type, always its long text (for example "Übung"). `HIS.text` does not change this. List the types with `php cmd.php gp` |
+| `true` | The plan-element title, using `text.plan_element` |
+
+Set `true` when each ILIAS group should be named after its own plan element, not after the shared group type.
 
 ---
 
