@@ -76,6 +76,38 @@ class CourseInterfaceServiceTest extends TestCaseExtension
 		$this->assertEquals(1, $value->getSizeOfContainer());
 	}
 
+	public function test_countUnits_shouldReturnSizeWithoutListingIds()
+	{
+		$xml = '<resp><unitIds><unitId>972</unitId><unitId>973</unitId></unitIds></resp>';
+		$this->soap_client_router->getSoapClientCourseInterfaceService()->expects($this->once())
+								 ->method('__soapCall')
+								 ->with('findUnit81', array(array(
+									 'termTypeValueId'          => 2,
+									 'termYear'                 => 2026,
+									 'termYearForMapping'       => 2026,
+									 'termTypeValueIdForMapping'=> 2,
+									 'elearningSystemId'        => 7,
+								 )))
+								 ->willReturn(simplexml_load_string($xml));
+		$soap_client = new Soap\CourseInterfaceService($this->log, $this->soap_client_router);
+		$value = $soap_client->countUnits(2, 2026, array(
+			'termYearForMapping'        => 2026,
+			'termTypeValueIdForMapping' => 2,
+			'elearningSystemId'         => 7,
+		));
+		$this->assertEquals(2, $value);
+		$this->assertEmpty($this->collectedMessages);
+	}
+
+	public function test_countUnits_shouldReturnNullOnSoapFault()
+	{
+		$this->soap_client_router->getSoapClientCourseInterfaceService()->method('__soapCall')
+								 ->willThrowException(new SoapFault('Server', 'Unit search failed.'));
+		$soap_client = new Soap\CourseInterfaceService($this->log, $this->soap_client_router);
+		$this->assertNull($soap_client->countUnits(2, 2026));
+		$this->assertEquals('Error: Unit search failed.', array_pop($this->collectedMessages));
+	}
+
 	public function test_readUnit_shouldLogError()
 	{
 		$this->soap_client_router->getSoapClientCourseInterfaceService()->method('__soapCall')

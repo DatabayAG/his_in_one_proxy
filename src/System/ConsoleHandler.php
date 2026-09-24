@@ -179,6 +179,53 @@ class ConsoleHandler
         $this->endTimer();
     }
 
+    /**
+     * Two findUnit81 calls: every course of the term, then only those with an e-learning export mapping.
+     * One extra call per HIS id in HIStoECSMapping.
+     *
+     * @throws Exception
+     */
+    protected function quickCheckCatalog()
+    {
+        $this->startTimer();
+        if ($this->year == '') {
+            $this->year = self::$conductor->getYear();
+        }
+        if ($this->term_id == '') {
+            $this->term_id = self::$conductor->getTerm();
+        }
+
+        $service = DataCache::getInstance()->getCourseInterfaceService();
+        $log     = DataCache::getInstance()->getLog();
+        $total   = $service->countUnits($this->term_id, $this->year);
+        $mapped  = $service->countUnits($this->term_id, $this->year, array(
+            'termYearForMapping'        => $this->year,
+            'termTypeValueIdForMapping' => $this->term_id,
+        ));
+
+        $log->info(sprintf(
+            'Courses in term type %s / year %s: %s. Courses with an e-learning export mapping: %s.',
+            $this->term_id,
+            $this->year,
+            $total === null ? 'unavailable' : $total,
+            $mapped === null ? 'unavailable' : $mapped
+        ));
+
+        foreach (GlobalSettings::getInstance()->getHisToEcsSystemIdMapping()->getHisIds() as $his_id) {
+            $platform_count = $service->countUnits($this->term_id, $this->year, array(
+                'termYearForMapping'        => $this->year,
+                'termTypeValueIdForMapping' => $this->term_id,
+                'elearningSystemId'         => $his_id,
+            ));
+            $log->info(sprintf(
+                'Courses mapped to HIS e-learning system %s: %s.',
+                $his_id,
+                $platform_count === null ? 'unavailable' : $platform_count
+            ));
+        }
+        $this->endTimer();
+    }
+
     protected function truncateServiceQueue()
     {
         $this->startTimer();

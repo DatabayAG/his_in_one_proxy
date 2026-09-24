@@ -34,6 +34,14 @@ class HisToEcsIdMapping
     }
 
     /**
+     * @return array
+     */
+    public function getHisIds()
+    {
+        return array_keys(self::$mapping);
+    }
+
+    /**
      * @param $his_ids
      * @return string
      */
