@@ -1,6 +1,6 @@
 # HIS-in-One Proxy
 
-The HIS-in-One Proxy reads lectures, memberships, and the course catalog from HIS-in-One and publishes them to ILIAS through Campus Connect.
+The HIS-in-One Proxy reads lectures, memberships, and the course catalog from HIS-in-One and publishes them to ILIAS.
 
 HIS-in-One and ILIAS do not exchange this data directly. The proxy turns HIS SOAP responses into Campus Connect messages and delivers them, either by pushing to an ECS server or by letting ILIAS poll this host.
 
@@ -8,7 +8,7 @@ HIS-in-One and ILIAS do not exchange this data directly. The proxy turns HIS SOA
 
 - PHP 8.1 or 8.2 with `php-xml`, `php-soap`, and `php-curl`
 - HIS-in-One 2025.06 and a technical user that may call the webservices
-- ILIAS Campus Connect
+- ILIAS
 - A remote ECS server, or MySQL/MariaDB on this host for Local ECS
 
 ## Documentation

@@ -12,7 +12,7 @@ You need:
 
 - A running HIS-in-One with a technical user that may use webservices ([roles](his_in_one_configuration.md))
 - Either a remote ECS server **or** a plan to use Local ECS (ILIAS polls this middleware)
-- An ILIAS Campus Connect setup (or knowledge of the person-ID type it expects)
+- An ILIAS setup (or knowledge of the person-ID type it expects)
 - Write access on the middleware host for queue and log directories
 
 ---
