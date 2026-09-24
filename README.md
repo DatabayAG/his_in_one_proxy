@@ -1,75 +1,25 @@
-# HISinOne Proxy
-If the Unittest with coverage segfaults remove the opcache extension!
+# HIS-in-One Proxy
 
-**For a more detailed instruction consult the ``docs`` folder!**
+The HIS-in-One Proxy reads lectures, memberships, and the course catalog from HIS-in-One and publishes them to ILIAS through Campus Connect.
 
-## Config description
-	"HIS" : {
-		"username"           : "Username for HisInOne Server",
-		"password"           : "Password for HisInOne Server",
-		"url"                : "URL for HisInOneServer with 'qisserver/services2/'",
-		"soap_caching"       : "SOAP Caching active(1) or inactive (0)",
-		"soap_debug"         : "SOAP Debug (true/false) if true all response xml gets dumpt to shell",
-		"ssl_validation"     : "SSL validation (true/false)",
-		"actual_term_id"      : null,
-		"actual_term_year"   : null,
-		"endpoint"           : {
-			"register_listener"  : "Listener active (true/false)",
-			"listener_url"       : "URL/IP for listener",
-			"listener_port"      : "Port for listener",
-			"username"           : "Username for listener",
-			"password"           : "Password for listener"
-		},
-		"person_id_type" : "ecs_loginUID",
-		// possible personIDtype values:
-		//   ecs_PersonalUniqueCode
-		//   ecs_ePPN
-		//   ecs_login
-		//   ecs_loginUID
-		//   ecs_uid
-		//   ecs_email
-		"login_suffix" : "", // String which should be appended to login name
-		"blocked_ids" : [], // Array of ids for inactive Accounts you can query the blocked ids from your HISinOne with php with "php cmd.php gb"
-		"blocked_form_of_studies_ids" : [], // Array of blocked form of studies ids. These ids can be queried with with "php cmd.php gf"
-		"remove_duplicate_degree_programmes": true, // If true, duplicate degreeProgrammes with the same title from courses with multiple study forms will be removed
-		"group_title_from_plan_element": false, // If true, groups[].title uses PlanElement text via HIS.text.plan_element; if false (default), ParallelGroupValue longtext
-		"text" : { //getShortText | getDefaultText | getLongText
-			"current_term" : "getDefaultText",
-			"event_type"   : "getDefaultText",
-			"plan_element" : "getDefaultText", // Used for groups[].title when group_title_from_plan_element is true
-			"term"         : "getDefaultText",
-			"unit"         : "getDefaultText"
-		}
-	},
-	"ECS" : {
-	    "use_local_ecs"       : "",
-		"auth_id"            : "AUTH id for ecs server",
-		"receiver_memberships": "Membership overwrite",
-		"url"                : "URL to ecs server"
-	},
-		"HIStoECSMapping": {
-			"SYSTEM_ID_HIS" : "SYSTEM_ID_ECS (MembershipID (mid) Community)"
-			Use "php cmd.php ge" to get the course Elearning Id from your HIS installation
-		"HIStoECSCourseMapping" : {
-			"COURSE_TYPE_ID_HIS" : "COURSE_TYPE_ID_ECS"
-			// 0 = No parallel groups ("base scenario") AND parallel group scenario 1, ie. just a course (see PDF)
-			// 1 = Parallel group scenario 2, ie. a course with groups
-			// 2 = Parallel group scenario 3, ie. a course for every group
-			// 3 = Parallel group scenario 4, ie. a course with groups for every group lecturer
-			Use "php cmd.php cm" to get the course Mapping Id from your HIS installation
-		},
-	"Database" : { //Can be used instead of the file based queue, see queue_type and the local ECS implementation
-		"dsn" : "mysql:host=xxx;port=xxx;dbname=xxx;user=xxx;password=xxx"
-	},
-	"create_links"			 : "true|false", Turn this to true if you want to process ILIAS links
-	"process_links_count"	 : 5, Count of max links getting processed in one run
-	"link_creation_title"	 : "ILIAS",	This title will be used for links in HISinOne if this is empty, the lecture title will be used
-    "queue_type"             : "file_based/db_based",
-	"path_to_queue"          : "Path to queue from his_in_one_proxy",
-	"path_to_log"            : "Path to logfile from his_in_one_proxy",
-	"keep_elements_in_queue" : "Keep elements in queue and do not delete them (true/false)",
-	"queue_timer"            : "Timer for queue in seconds",
-	"debug"                  : "Debug mode active for his_in_one_proxy (true/false)",
-	"PHPUnit"                : {
-			"coverage" : "PHPUnit coverage when running unittest (true/false)"
-	}
+HIS-in-One and ILIAS do not exchange this data directly. The proxy turns HIS SOAP responses into Campus Connect messages and delivers them, either by pushing to an ECS server or by letting ILIAS poll this host.
+
+## Requirements
+
+- PHP 8.1 or 8.2 with `php-xml`, `php-soap`, and `php-curl`
+- HIS-in-One 2025.06 and a technical user that may call the webservices
+- ILIAS Campus Connect
+- A remote ECS server, or MySQL/MariaDB on this host for Local ECS
+
+## Documentation
+
+| Document | What it covers |
+|----------|----------------|
+| [docs/his_in_one_middleware_config_short_overview.md](docs/his_in_one_middleware_config_short_overview.md) | Every `config.json` key in one table |
+| [docs/his_in_one_middleware_installation_and_configuration_detail_guide.md](docs/his_in_one_middleware_installation_and_configuration_detail_guide.md) | Fill `config.json` step by step, including where each value comes from |
+| [docs/his_in_one_middleware_installation_and_configuration.md](docs/his_in_one_middleware_installation_and_configuration.md) | Install outline, packages, and an example `config.json` |
+| [docs/his_in_one_configuration.md](docs/his_in_one_configuration.md) | HIS webservice roles and permissions the technical user needs |
+| [docs/ecs_installation_configuration.md](docs/ecs_installation_configuration.md) | Install and configure a standalone ECS 4 server |
+| [docs/SQLite.md](docs/SQLite.md) | `CREATE TABLE` statements when the queue database is SQLite |
+
+Release notes are in [CHANGELOG.md](CHANGELOG.md). Upgrade steps from a standalone ECS setup are in [UPDATE.md](UPDATE.md).
