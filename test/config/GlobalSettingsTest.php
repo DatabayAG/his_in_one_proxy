@@ -331,4 +331,77 @@ class GlobalSettingsTest extends TestCaseExtension
 		$this->assertEquals(true, $this->instance->isPhpunitWithCoverage());
 		unlink($json);
 	}
+
+	public function test_describeStartup_shouldReportMissingEssentialsAndInactiveDatabase()
+	{
+		$snapshot = $this->snapshotStartupSettings();
+		try {
+			TestCaseExtension::callMethod($this->instance, 'setHisServerUrl', array(''));
+			TestCaseExtension::callMethod($this->instance, 'setHisUserName', array(''));
+			TestCaseExtension::callMethod($this->instance, 'setHisPassword', array('secret-must-not-appear'));
+			$this->instance->setQueueType(\HisInOneProxy\Queue\QueueBase::FILE_BASED);
+			$this->instance->setDatabaseDsn('');
+			$this->instance->setUseLocalEcs('0');
+
+			$summary = $this->instance->describeStartup();
+
+			$this->assertStringContainsString('HIS url missing', $summary);
+			$this->assertStringContainsString('HIS credentials missing', $summary);
+			$this->assertStringContainsString('queue_type=file_based', $summary);
+			$this->assertStringContainsString('database inactive', $summary);
+			$this->assertStringNotContainsString('secret-must-not-appear', $summary);
+		} finally {
+			$this->restoreStartupSettings($snapshot);
+		}
+	}
+
+	public function test_describeStartup_shouldReportSchemaVersionWhenDatabaseIsActive()
+	{
+		$snapshot = $this->snapshotStartupSettings();
+		$directory = sys_get_temp_dir() . '/his-proxy-startup-' . uniqid('', true);
+		$previous = getcwd();
+		mkdir($directory);
+		try {
+			file_put_contents($directory . '/cfg_update_info.php', "5\n");
+			file_put_contents($directory . '/cfg_update_running.php', "6\n");
+			chdir($directory);
+			$this->instance->setQueueType(\HisInOneProxy\Queue\QueueBase::DB_BASED);
+			$this->instance->setDatabaseDsn('mysql:host=db.example;dbname=proxy;password=secret-must-not-appear');
+
+			$summary = $this->instance->describeStartup();
+
+			$this->assertStringContainsString('queue_type=db_based', $summary);
+			$this->assertStringContainsString('database active, schema version 5, update 6 running', $summary);
+			$this->assertStringNotContainsString('secret-must-not-appear', $summary);
+			$this->assertStringNotContainsString('mysql:', $summary);
+		} finally {
+			chdir($previous);
+			$this->restoreStartupSettings($snapshot);
+			@unlink($directory . '/cfg_update_info.php');
+			@unlink($directory . '/cfg_update_running.php');
+			@rmdir($directory);
+		}
+	}
+
+	private function snapshotStartupSettings(): array
+	{
+		return array(
+			'url' => $this->instance->getHisServerUrl(),
+			'username' => $this->instance->getHisUserName(),
+			'password' => $this->instance->getHisPassword(),
+			'queue_type' => $this->instance->getQueueType(),
+			'dsn' => $this->instance->getDatabaseDsn(),
+			'local_ecs' => $this->instance->isUseLocalEcs() ? '1' : '0',
+		);
+	}
+
+	private function restoreStartupSettings(array $snapshot): void
+	{
+		TestCaseExtension::callMethod($this->instance, 'setHisServerUrl', array($snapshot['url']));
+		TestCaseExtension::callMethod($this->instance, 'setHisUserName', array($snapshot['username']));
+		TestCaseExtension::callMethod($this->instance, 'setHisPassword', array($snapshot['password']));
+		$this->instance->setQueueType($snapshot['queue_type']);
+		$this->instance->setDatabaseDsn($snapshot['dsn']);
+		$this->instance->setUseLocalEcs($snapshot['local_ecs']);
+	}
 }

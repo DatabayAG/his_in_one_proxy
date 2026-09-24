@@ -122,7 +122,10 @@ class SoapServiceRouter
     {
         $service_counter = 0;
         $start_time      = microtime(true);
-        $this->log->info('Starting initializing Services...');
+        $this->log->info(sprintf(
+            'Starting initializing Services... %s',
+            GlobalSettings::getInstance()->describeStartup()
+        ));
         $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(dirname(__FILE__) . '/SoapService'));
         /** @var SplFileInfo $file */
         foreach ($rii as $file) {

@@ -25,6 +25,9 @@ class SoapServiceRouterTest extends TestCaseExtension
 	public function test_ConstructNeedsAllServices_shouldLogErrors()
 	{
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
+		$this->assertStringContainsString('Starting initializing Services...', $this->collectedMessages[0]);
+		$this->assertStringContainsString('queue_type=', $this->collectedMessages[0]);
+		$this->assertStringContainsString('database', $this->collectedMessages[0]);
 		$starting_string = array_pop($this->collectedMessages);
 		$starting_string = preg_split('/\./', $starting_string);
 		$this->assertEqualClearedString('Info: ', $starting_string[0]);

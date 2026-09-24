@@ -4,6 +4,7 @@ namespace HisInOneProxy\Config;
 
 require_once __DIR__ . '/../Log/LogConfig.php';
 
+use HisInOneProxy\Database\SchemaVersion;
 use HisInOneProxy\DataModel\Endpoint;
 use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\HisToEcsIdMapping;
@@ -548,6 +549,80 @@ class GlobalSettings
     public function setWorkStatusIds(array $workStatusIds): void
     {
         $this->workStatusIds = $workStatusIds;
+    }
+
+    public function describeStartup(): string
+    {
+        if ($this->isUseLocalEcs()) {
+            $ecs = sprintf(
+                'local ECS community id %s',
+                $this->configuredLabel($this->getEcsCommunityId() !== '' && $this->getEcsCommunityId() !== '0')
+            );
+        } else {
+            $ecs = sprintf(
+                'ECS url %s, ECS auth %s',
+                $this->configuredLabel($this->getEcsServerUrl() !== ''),
+                $this->configuredLabel($this->getEcsAuthId() !== '' && $this->getEcsPassword() !== '')
+            );
+        }
+
+        return sprintf(
+            'HIS url %s, HIS credentials %s, HIS-to-ECS mapping %s, course mapping %s, queue_type=%s, queue path %s, log path %s, %s, %s.',
+            $this->configuredLabel($this->isHisUrlConfigured()),
+            $this->configuredLabel($this->getHisUserName() !== '' && $this->getHisPassword() !== ''),
+            $this->configuredLabel($this->isConfigListSet('HIStoECSMapping')),
+            $this->configuredLabel($this->isConfigListSet('HIStoECSCourseMapping')),
+            $this->getQueueType(),
+            $this->configuredLabel($this->getPathToQueue() !== ''),
+            $this->configuredLabel($this->getPathToLog() !== ''),
+            $ecs,
+            $this->describeDatabase()
+        );
+    }
+
+    private function configuredLabel(bool $isSet): string
+    {
+        return $isSet ? 'set' : 'missing';
+    }
+
+    private function isHisUrlConfigured(): bool
+    {
+        $url = $this->getHisServerUrl();
+
+        return $url !== '' && $url !== '/';
+    }
+
+    private function isConfigListSet(string $key): bool
+    {
+        $value = $this->config->get($key, []);
+
+        return is_array($value) && $value !== [];
+    }
+
+    private function isDatabaseActive(): bool
+    {
+        return $this->getQueueType() === QueueBase::DB_BASED || trim($this->getDatabaseDsn()) !== '';
+    }
+
+    private function describeDatabase(): string
+    {
+        if (!$this->isDatabaseActive()) {
+            return 'database inactive';
+        }
+
+        $applied = SchemaVersion::readApplied();
+        if ($applied === null) {
+            $state = 'database active, schema version unknown';
+        } else {
+            $state = sprintf('database active, schema version %d', $applied);
+        }
+
+        $running = SchemaVersion::readRunning();
+        if ($running > 0) {
+            $state .= sprintf(', update %d running', $running);
+        }
+
+        return $state;
     }
 
     private function validateSettings()
