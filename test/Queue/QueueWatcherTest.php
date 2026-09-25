@@ -22,7 +22,7 @@ class QueueWatcherTest extends TestCaseExtension
 	 */
 	protected $queue;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		\HisInOneProxy\Config\GlobalSettings::getInstance()->readCustomConfig('test/php_unit_config.json');
 		$this->base_path = \HisInOneProxy\Config\GlobalSettings::getInstance()->getPathToQueue();
@@ -47,7 +47,7 @@ class QueueWatcherTest extends TestCaseExtension
 		return;
 	}
 
-	protected function tearDown()
+	protected function tearDown(): void
 	{
 		$this->removeDirectory($this->base_path);
 	}
@@ -68,9 +68,11 @@ class QueueWatcherTest extends TestCaseExtension
 
 	public function test_jobCanBeProcessed3_shouldReturnTrue()
 	{
-		$this->watcher->jobCanBeProcessed(time() + 1, '1.job', \HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
-		sleep(1);
-		$exists = $this->watcher->jobCanBeProcessed(time() + 1, '1.job', \HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
+		$this->watcher->jobCanBeProcessed(time() + 60, '1.job', \HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
+		$jobs = new \ReflectionProperty($this->watcher, 'jobs_to_be_processed_later');
+		$jobs->setAccessible(true);
+		$jobs->setValue($this->watcher, [time() - 1 => '1.job']);
+		$exists = $this->watcher->jobCanBeProcessed(time() + 60, '1.job', \HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
 		$this->assertTrue($exists);
 	}
 
@@ -79,6 +81,7 @@ class QueueWatcherTest extends TestCaseExtension
 		$queue = new \HisInOneProxy\Queue\QueueFile();
 		$queue->push(HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE, json_encode(['{cmd => custom, data => custom, receiver = "", unix_time => null }']), 'customFunction');
 		$this->watcher->processMessage(HisInOneProxy\Queue\QueueConstants::SERVICE_QUEUE);
-		$this->assertEquals(rtrim('Warning: 	Empty/Invalid command (customFunction) found in queue, ignoring.',"\n\r"), rtrim(array_pop($this->collectedMessages),"\n\r"));
+		$messages = $this->collectedMessages;
+		$this->assertEquals(rtrim('Warning: 	Empty/Invalid command (customFunction) found in queue, ignoring.',"\n\r"), rtrim(end($messages),"\n\r"));
 	}
 }

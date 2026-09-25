@@ -1,2 +1,17 @@
+- `php cmd.php qc {termTypeValueId} {year}` counts courses for a term and how many have an e-learning export mapping
+  - Uses `findUnit81` only: one call for the term, one for mapped courses, and one per HIS id in `HIStoECSMapping`. No queue job is written.
+- Group titles can be taken from the plan element
+  - Set `HIS.group_title_from_plan_element` to `true`. `HIS.text.plan_element` stays `getDefaultText`, `getShortText`, or `getLongText`. Default `false` keeps the parallel-group type (long text). Re-export after changing it.
+- `link_queue.unit_id` stores lecture ids as text
+  - Run `php src/Database/DBUpdate.php` (SQLite: adjust the table as in `docs/SQLite.md`). A failed insert is logged and the Local ECS course-url call returns 500.
+- Service startup logs whether HIS, ECS, queue, and schema settings are present
+  - Credentials and DSNs are not written. Error lines include the calling class and method.
+- Local ECS returns 404 when a requested course or course-members resource is empty
+  - Course and course-members detail calls return an empty payload when that queue row does not exist.
+- Queue collision compares the latest job for the same lecture and function
+  - A later export with a different checksum is queued, so a reverted value is not dropped.
+- `getPersonExternalForCourse` sends `planelementId`
+- Account parsing accepts a single `completeAccount60` element and a bare account node
+- HIS webservice roles and permissions are described in `docs/his_in_one_configuration.md`
 - Add security headers to CourseOfStudy service
   - Since 2025.06 the CourseOfStudy service seems to need a security header also

@@ -135,7 +135,7 @@ class CourseCatalogService extends SoapService
 
             if (is_array($children) && count($children) > 0) {
                 foreach ($children as $id => $unit) {
-                    $units[$id] = $service->readUnitWithChildren($id);
+                    $units[$id] = $service->readChildUnitRelations($id);
                 }
             }
             return $units;

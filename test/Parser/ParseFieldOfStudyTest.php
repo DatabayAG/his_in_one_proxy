@@ -16,7 +16,7 @@ class ParseFieldOfStudyTest  extends TestCaseExtension{
 	 */
 	protected $instance;
 	
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new Parser\ParseFieldOfStudy($this->log);
 		parent::setUp();

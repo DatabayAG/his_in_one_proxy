@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php"
+		 cacheDirectory=".phpunit.cache"
+		 cacheResult="true">
+	<testsuites>
+		<testsuite name="HIS-in-One Proxy Test Suite">
+			<directory suffix="Test.php">.</directory>
+			<exclude>./GlobalTestSuite.php</exclude>
+			<exclude>./Client.php</exclude>
+		</testsuite>
+	</testsuites>
+	<php>
+		<const name="PHPUNIT_HisInOneProxy_TEST_SUITE" value="true"/>
+	</php>
+	<source>
+		<include>
+			<directory suffix=".php">../src</directory>
+		</include>
+		<exclude>
+			<directory suffix=".php">../src/Exceptions</directory>
+		</exclude>
+	</source>
+</phpunit>

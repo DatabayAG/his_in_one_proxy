@@ -16,30 +16,28 @@ class PersonServiceTest extends TestCaseExtension
 	 */
 	protected $soap_client_router;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
-		$this->soap_client_router->setSoapClientPersonService($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'PersonService.wsdl'));
+		$this->soap_client_router->setSoapClientPersonService($this->createSoapClientMock());
 	}
 
 	public function test_readPerson_shouldLogErrors()
 	{
-		$this->soap_client_router->getSoapClientPersonService()->expects($this->any())
-								 ->method('__soapCall')
-								 ->will($this->throwException(new SoapFault('Server', 'Something horrible happened to this person.')));
+		$this->soap_client_router->getSoapClientPersonService()->method('__soapCall')
+								 ->willThrowException(new SoapFault('Server', 'Person with id 122 not found.'));
 		$soap_client = new Soap\PersonService($this->log, $this->soap_client_router );
-		$soap_client->readPerson(1999);
-		$this->assertEqualClearedString('Error: Something horrible happened to this person.', array_pop($this->collectedMessages));
+		$soap_client->readPerson(122);
+		$this->assertEqualClearedString('Error: Person with id 122 not found.', array_pop($this->collectedMessages));
 	}
 
 	public function test_readPerson_shouldReturnValue()
 	{
-		$this->soap_client_router->getSoapClientPersonService()->expects($this->any())
-			->method('__soapCall')
+		$this->soap_client_router->getSoapClientPersonService()->method('__soapCall')
 			->willReturn(simplexml_load_string(file_get_contents('test/fixtures/person.xml')));
 		$soap_client = new Soap\PersonService($this->log, $this->soap_client_router);
-		$value = $soap_client->readPerson(1999);
+		$value = $soap_client->readPerson(122);
 		$this->assertInstanceOf('HisInOneProxy\DataModel\Person', $value);
 		$this->assertEquals('122', $value->getId());
 	}

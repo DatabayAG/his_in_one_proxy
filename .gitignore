@@ -3,9 +3,11 @@ coverage/*
 config.json
 pid/*.pid
 test/wsdl/*.wsdl
+.phpunit.cache
 dummyTestingScript.php
 notes.txt
 cfg_update_info.php
 cfg_update_running.php
 participants.json
 .htpasswd
+.cursor/

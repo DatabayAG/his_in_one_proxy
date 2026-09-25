@@ -1,0 +1,1 @@
+{"version":1,"defects":{"CourseInterfaceServiceTest::test_findUnit_shouldReturnValue":8,"CourseInterfaceServiceTest::test_countUnits_shouldReturnSizeWithoutListingIds":8,"CourseInterfaceServiceTest::test_countUnits_shouldReturnNullOnSoapFault":8},"times":[]}

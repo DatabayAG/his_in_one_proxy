@@ -2,23 +2,23 @@
 	<completeAccount60>
 		<id>13</id>
 		<personId>43</personId>
-		<username>4711abc</username>
+		<username>max.mueller</username>
 		<accountauthId>21</accountauthId>
-		<authinfo>Whatever</authinfo>
-		<externalsystemId>47112</externalsystemId>
+		<authinfo>LDAP</authinfo>
+		<externalsystemId>ecs-43</externalsystemId>
 		<isLdapAccount>0</isLdapAccount>
-		<orgunitLid>23325436234</orgunitLid>
+		<orgunitLid>3654775</orgunitLid>
 		<purposeId>41</purposeId>
 	</completeAccount60>
 	<completeAccount60>
 		<id>132</id>
 		<personId>432</personId>
-		<username>4711abc2</username>
+		<username>helen.schmidt</username>
 		<accountauthId>212</accountauthId>
-		<authinfo>Whatever2</authinfo>
-		<externalsystemId>471122</externalsystemId>
+		<authinfo>Shibboleth</authinfo>
+		<externalsystemId>ecs-432</externalsystemId>
 		<isLdapAccount>1</isLdapAccount>
-		<orgunitLid>233254362342</orgunitLid>
+		<orgunitLid>3654775</orgunitLid>
 		<purposeId>412</purposeId>
 	</completeAccount60>
 </completeAccounts60>

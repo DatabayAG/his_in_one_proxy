@@ -14,7 +14,7 @@ class PlanElementPreferencePartTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\PlanElementPreferencePart();
 	}
@@ -49,10 +49,10 @@ class PlanElementPreferencePartTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidPreferredInstructor
 	 */
 	public function test_appendPreferredInstructors_shouldThrowInvalidPreferredInstructor()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidPreferredInstructor::class);
 		$this->instance->appendPreferredInstructors(new DataModel\Allocation());
 	}
 
@@ -65,10 +65,10 @@ class PlanElementPreferencePartTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException HisInOneProxy\Exceptions\InvalidRoom
 	 */
 	public function test_appendPreferredRooms_shouldThrowInvalidRoomArgumentException()
 	{
+		$this->expectException(HisInOneProxy\Exceptions\InvalidRoom::class);
 		$this->instance->appendPreferredRooms(new DataModel\Allocation());
 	}
 

@@ -189,8 +189,12 @@ class JsonBuilder
      */
    public static function replaceUnwantedCharacters($string)
    {
+       if ($string === null || $string === '') {
+           return $string ?? '';
+       }
+
        // replace control characters with space
-       return preg_replace('/[[:cntrl:]]/', ' ', $string);
+       return preg_replace('/[[:cntrl:]]/', ' ', (string) $string);
    }
     /**
      * @param      $row
@@ -308,10 +312,7 @@ class JsonBuilder
             self::analysePersonContainer($element, $unit->getId(), $course_id);
             $group                  = new stdClass();
             $group->id              = $element->getId();
-            $group->title           = DataCache::getInstance()
-                                               ->getParallelGroupValues()
-                                               ->getGroupValueById($element->getParallelGroupId())
-                                               ->getLongText();
+            $group->title           = self::resolveGroupTitle($element);
             $group->maxParticipants = $element->getAttendeeMaximum();
             $group->hours           = $element->getHoursPerWeek();
             if (array_key_exists($course_id, self::$course_lectures) && array_key_exists($element->getId(), self::$course_lectures[$course_id])) {
@@ -324,6 +325,23 @@ class JsonBuilder
             $row->prerequisites      = $element->getRecommendedRequirement();
         }
         return $row;
+    }
+
+    /**
+     * @param PlanElement $element
+     * @return string
+     * @throws Exception
+     */
+    protected static function resolveGroupTitle(PlanElement $element)
+    {
+        if (GlobalSettings::getInstance()->isGroupTitleFromPlanElement()) {
+            return $element->getText();
+        }
+
+        return DataCache::getInstance()
+                        ->getParallelGroupValues()
+                        ->getGroupValueById($element->getParallelGroupId())
+                        ->getLongText();
     }
 
     /**

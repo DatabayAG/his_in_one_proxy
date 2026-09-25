@@ -17,62 +17,34 @@ class SystemEventAbonnenmentServiceTest extends TestCaseExtension
 	 */
 	protected $soap_client_router;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
 		$this->soap_client_router = new Soap\SoapServiceRouter($this->log);
-		$this->soap_client_router->setSoapSystemEventAbonnenmentClient($this->getMockFromWsdl(\HisInOneProxy\Config\GlobalSettings::getInstance()->getHisServerUrl().'SystemEventAbonnenmentService.wsdl'));
+		$this->soap_client_router->setSoapSystemEventAbonnenmentClient($this->createSoapClientMock());
 	}
 
 	public function test_register_shouldLogErrors()
 	{
-		$this->soap_client_router->getSoapSystemEventAbonnenmentClient()->expects($this->any())
-								 ->method('__soapCall')
-								 ->will($this->throwException(new SoapFault('Server', 'Some horrible event happened.')));
+		$this->soap_client_router->getSoapSystemEventAbonnenmentClient()->method('__soapCall')
+								 ->willThrowException(new SoapFault('Server', 'Event listener registration failed.'));
 		$soap_client = new Soap\SystemEventAbonnenmentService($this->log, $this->soap_client_router );
 		$end = new \HisInOneProxy\DataModel\Endpoint();
-		$end->setEndPointUrl('http://db');
-		$end->setPort(9090);
-		$end->setWebServiceMethod('mySuperMethod');
+		$end->setEndPointUrl('http://localhost');
+		$end->setPort(8080);
+		$end->setWebServiceMethod('onPersonChanged');
 		$soap_client->register('person', $end);
-		$this->assertEqualClearedString('Error: Some horrible event happened.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: Event listener registration failed.', array_pop($this->collectedMessages));
 	}
-
-	/*public function test_readRoom_shouldReturnValue()
-	{
-
-		$this->soap_client_router->getSoapSystemEventAbonnenmentClient()->expects($this->any())
-								 ->method('__soapCall')
-								 ->will($this->returnValue(true));
-		$soap_client = new Soap\SystemEventAbonnenmentService($this->log, $this->soap_client_router );
-		$end = new \HisInOneProxy\DataModel\Endpoint();
-		$end->setEndPointUrl('http://db');
-		$end->setPort(9090);
-		$end->setWebServiceMethod('mySuperMethod');
-		$value = $soap_client->register('person', $end);
-		$this->assertTrue($value);
-	}*/
 
 	public function test_quitRegistration_shouldLogErrors()
 	{
-		$this->soap_client_router->getSoapSystemEventAbonnenmentClient()->expects($this->any())
-								 ->method('__soapCall')
-								 ->will($this->throwException(new SoapFault('Server', 'Some horrible event happened.')));
+		$this->soap_client_router->getSoapSystemEventAbonnenmentClient()->method('__soapCall')
+								 ->willThrowException(new SoapFault('Server', 'Event listener deregistration failed.'));
 		$soap_client = new Soap\SystemEventAbonnenmentService($this->log, $this->soap_client_router );
 		$soap_client->quitRegistration('person');
-		$this->assertEqualClearedString('Error: Some horrible event happened.', array_pop($this->collectedMessages));
+		$this->assertEqualClearedString('Error: Event listener deregistration failed.', array_pop($this->collectedMessages));
 	}
-
-	/*public function test_quitRegistration_shouldReturnValue()
-	{
-
-		$this->soap_client_router->getSoapSystemEventAbonnenmentClient()->expects($this->any())
-								 ->method('__soapCall')
-								 ->will($this->returnValue(true));
-		$soap_client = new Soap\SystemEventAbonnenmentService($this->log, $this->soap_client_router );
-		$value = $soap_client->quitRegistration('person');
-		$this->assertTrue($value);
-	}*/
 
 }

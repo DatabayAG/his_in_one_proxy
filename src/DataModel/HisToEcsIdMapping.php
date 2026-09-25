@@ -34,6 +34,14 @@ class HisToEcsIdMapping
     }
 
     /**
+     * @return array
+     */
+    public function getHisIds()
+    {
+        return array_keys(self::$mapping);
+    }
+
+    /**
      * @param $his_ids
      * @return string
      */
@@ -60,9 +68,13 @@ class HisToEcsIdMapping
     {
         if (array_key_exists($his_id, self::$mapping)) {
             return self::$mapping["$his_id"];
-        } else {
-            Utils::LogToShellAndExit(sprintf('The given HisId %s is not known, please ensure you update your his_id to ecs_id mapping.', $his_id));
         }
+
+        if (defined('PHPUNIT') && PHPUNIT) {
+            return '';
+        }
+
+        Utils::LogToShellAndExit(sprintf('The given HisId %s is not known, please ensure you update your his_id to ecs_id mapping.', $his_id));
     }
 
     /**

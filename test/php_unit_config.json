@@ -5,9 +5,12 @@
 		"url"                : "test/wsdl",
 		"soap_caching"       : "0",
 		"soap_debug"         : "false",
+		"ssl_validation"     : "false",
+		"actual_term_id"     : null,
+		"actual_term_year"   : 2017,
 		"endpoint"           : {
 			"register_listener"  : "false",
-			"listener_url"       : "http://my_his_listener",
+			"listener_url"       : "http://localhost",
 			"listener_port"      : "8080",
 			"username"           : "user",
 			"password"           : "pass"
@@ -15,6 +18,10 @@
 		"person_id_type" : "ecs_loginUID",
 		"login_suffix" : "",
 		"blocked_ids" : [],
+		"blocked_form_of_studies_ids" : [],
+		"work_status_ids" : [1,6,26,27,22,8,20,28,30,32],
+		"remove_duplicate_degree_programmes" : "false",
+		"group_title_from_plan_element" : false,
 		"text" : {
 			"current_term" : "getDefaultText",
 			"event_type"   : "getDefaultText",
@@ -24,19 +31,30 @@
 		}
 	},
 	"ECS" : {
+		"use_local_ecs"       : "false",
+		"ecs_community_id"    : "0",
 		"auth_id"            : "",
+		"password"           : "",
 		"url"                : "",
 		"ssl_validation"     : ""
 	},
 	"HIStoECSMapping": {
-		"7" : "666",
-		"8" : "512"
+		"7" : "512",
+		"8" : "512",
+		"232" : "55"
 	},
 	"HIStoECSCourseMapping" : {
 		"1" : "0",
 		"2" : "1",
 		"3" : "2"
 	},
+	"Database" : {
+		"dsn" : "mysql:host=localhost;port=3306;dbname=test;user=test;password=test"
+	},
+	"create_links"           : "false",
+	"process_links_count"    : 5,
+	"link_creation_title"    : "ILIAS",
+	"queue_type"             : "file_based",
 	"path_to_queue"          : "/tmp/phpunit_test/",
 	"path_to_log"            : "/tmp/phpunit.log",
 	"keep_elements_in_queue" : "true",

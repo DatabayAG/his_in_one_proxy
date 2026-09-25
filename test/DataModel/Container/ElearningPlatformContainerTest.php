@@ -13,7 +13,7 @@ class ElearningPlatformContainerTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\Container\ElearningPlatformContainer();
 	}
@@ -30,10 +30,10 @@ class ElearningPlatformContainerTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function test_appendEventDate_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(\InvalidArgumentException::class);
 		$this->instance->appendElearningPlatform('Workload');
 	}
 

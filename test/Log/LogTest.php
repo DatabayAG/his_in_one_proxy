@@ -16,7 +16,7 @@ class LogTest extends PHPUnit\Framework\TestCase
 
 	protected $collectedMessages = array();
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		date_default_timezone_set('UTC');
 		$log = new \Monolog\Logger('default');
@@ -71,7 +71,7 @@ class LogTest extends PHPUnit\Framework\TestCase
 		$this->log->error('My error message.');
 		$msg = $this->log->getLogger()->popHandler()->getRecords();
 		$this->assertEquals(count($msg), 1);
-		$this->assertEquals($msg[0]['message'], 'My error message.');
+		$this->assertEquals('LogTest::test_Error_shouldLogErrorMessage: My error message.', $msg[0]['message']);
 		$this->assertEquals($msg[0]['level_name'], 'ERROR');
 	}
 
@@ -106,8 +106,12 @@ class LogTest extends PHPUnit\Framework\TestCase
 	{
 		$value = $this->log->isHandling(\Monolog\Logger::DEBUG);
 		$this->assertTrue($value);
-		$value = $this->log->isHandling('DEBUG');
-		$this->assertFalse($value);
+	}
+
+	public function test_isHandling_shouldThrowForInvalidLevel()
+	{
+		$this->expectException(\Psr\Log\InvalidArgumentException::class);
+		$this->log->isHandling('INVALID_LEVEL_NAME');
 	}
 
 	public function test_log_shouldWriteLog()

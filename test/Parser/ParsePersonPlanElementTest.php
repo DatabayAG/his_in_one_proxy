@@ -16,7 +16,7 @@ class ParsePersonPlanElementTest extends TestCaseExtension
 	 */
 	protected $log;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}

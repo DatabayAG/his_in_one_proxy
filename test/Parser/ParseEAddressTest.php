@@ -16,7 +16,7 @@ class ParseEAddressTest  extends TestCaseExtension{
 	 */
 	protected $instance;
 	
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new Parser\ParseElectronicAddress($this->log);
 		parent::setUp();

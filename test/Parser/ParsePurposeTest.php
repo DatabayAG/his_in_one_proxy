@@ -16,7 +16,7 @@ class ParsePurposeTest  extends TestCaseExtension{
 	 */
 	protected $instance;
 	
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new Parser\ParsePurposeList($this->log);
 		parent::setUp();

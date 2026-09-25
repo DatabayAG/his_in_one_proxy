@@ -225,17 +225,19 @@ class DataCache
 	protected static function init(bool $with_wsdl = true): DataCache
     {
 		self::$log = new Log();
-       if($with_wsdl) {
+       if ($with_wsdl) {
            self::initializeRouterAndServices();
-           self::readDefaultLanguage();
-           self::readParallelGroupValues();
-           self::readTermTypeValues();
-           self::readElearningPlatforms();
-           self::readCourseMappingTypes();
-           self::readWorkStatus();
-           self::readEAddressTypes();
-           self::readAllPurposes();
-           self::readAllEventTypes();
+           if (!defined('PHPUNIT') || !PHPUNIT) {
+               self::readDefaultLanguage();
+               self::readParallelGroupValues();
+               self::readTermTypeValues();
+               self::readElearningPlatforms();
+               self::readCourseMappingTypes();
+               self::readWorkStatus();
+               self::readEAddressTypes();
+               self::readAllPurposes();
+               self::readAllEventTypes();
+           }
        }
 		return new DataCache();
 	}
@@ -579,7 +581,7 @@ class DataCache
      */
     public function resolvePurposeTypeById($id)
     {
-        if (array_key_exists($id, self::$purposes_list)) {
+        if (is_array(self::$purposes_list) && array_key_exists($id, self::$purposes_list)) {
             return self::$purposes_list[$id]->getDefaultText();
         }
         return null;
@@ -591,7 +593,7 @@ class DataCache
      */
     public function resolveEventTypeById($id)
     {
-        if (array_key_exists($id, self::$event_type_list)) {
+        if (is_array(self::$event_type_list) && array_key_exists($id, self::$event_type_list)) {
             return self::$event_type_list[$id]->getText();
         }
         return null;
@@ -734,7 +736,7 @@ class DataCache
      */
     public function getTermTypeForId($id)
     {
-        if (array_key_exists($id, self::$term_type_values)) {
+        if (is_array(self::$term_type_values) && array_key_exists($id, self::$term_type_values)) {
             return self::$term_type_values[$id]->getText();
         }
         return '';

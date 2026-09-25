@@ -16,7 +16,7 @@ class ParseCurrentTermTest  extends TestCaseExtension{
 	 */
 	protected $instance;
 	
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 		$this->instance = new Parser\ParseCurrentTerm($this->log);

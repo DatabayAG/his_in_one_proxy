@@ -11,7 +11,7 @@ class GuzzleWrapperTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $wrapper;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->wrapper = new \HisInOneProxy\REST\GuzzleWrapper('2');
 	}

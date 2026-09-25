@@ -202,3 +202,17 @@ if(!$GLOBALS['DBPDO']->tableExists('link_queue'))
     $GLOBALS['DBPDO']->alterColumAutoIncrementAndPrimary('link_queue', 'link_id');
 }
 ?>
+<#5>
+<?php
+if ($GLOBALS['DBPDO']->tableExists('link_queue')) {
+    $column = $GLOBALS['DBPDO']->getPdo()
+        ->query("SHOW COLUMNS FROM link_queue LIKE 'unit_id'")
+        ->fetch(\PDO::FETCH_ASSOC);
+    $type = isset($column['Type']) ? strtolower((string) $column['Type']) : '';
+    if ($type !== '' && strpos($type, 'int') !== false) {
+        $GLOBALS['DBPDO']->getPdo()->exec(
+            'ALTER TABLE link_queue MODIFY unit_id VARCHAR(255) NOT NULL'
+        );
+    }
+}
+?>

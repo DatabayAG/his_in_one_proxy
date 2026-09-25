@@ -99,6 +99,7 @@
             "blocked_form_of_studies_ids" : [],
             "work_status_ids" : [1,6,26,27,22,8,20,28,30,32],
             "remove_duplicate_degree_programmes": true,
+            "group_title_from_plan_element": false,
             "text" : { 
                 "current_term" : "getDefaultText", 
                 "event_type"   : "getDefaultText", 

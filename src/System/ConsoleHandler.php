@@ -21,7 +21,7 @@ use HisInOneProxy\System\Console\FunctionObject;
 use HisInOneProxy\System\Console\Functions;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
-use PHPUnit\TextUI\TestRunner;
+use PHPUnit\TextUI\Application as PHPUnitApplication;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
@@ -176,6 +176,53 @@ class ConsoleHandler
     {
         $this->startTimer();
         self::$conductor->getCourseCatalog();
+        $this->endTimer();
+    }
+
+    /**
+     * Two findUnit81 calls: every course of the term, then only those with an e-learning export mapping.
+     * One extra call per HIS id in HIStoECSMapping.
+     *
+     * @throws Exception
+     */
+    protected function quickCheckCatalog()
+    {
+        $this->startTimer();
+        if ($this->year == '') {
+            $this->year = self::$conductor->getYear();
+        }
+        if ($this->term_id == '') {
+            $this->term_id = self::$conductor->getTerm();
+        }
+
+        $service = DataCache::getInstance()->getCourseInterfaceService();
+        $log     = DataCache::getInstance()->getLog();
+        $total   = $service->countUnits($this->term_id, $this->year);
+        $mapped  = $service->countUnits($this->term_id, $this->year, array(
+            'termYearForMapping'        => $this->year,
+            'termTypeValueIdForMapping' => $this->term_id,
+        ));
+
+        $log->info(sprintf(
+            'Courses in term type %s / year %s: %s. Courses with an e-learning export mapping: %s.',
+            $this->term_id,
+            $this->year,
+            $total === null ? 'unavailable' : $total,
+            $mapped === null ? 'unavailable' : $mapped
+        ));
+
+        foreach (GlobalSettings::getInstance()->getHisToEcsSystemIdMapping()->getHisIds() as $his_id) {
+            $platform_count = $service->countUnits($this->term_id, $this->year, array(
+                'termYearForMapping'        => $this->year,
+                'termTypeValueIdForMapping' => $this->term_id,
+                'elearningSystemId'         => $his_id,
+            ));
+            $log->info(sprintf(
+                'Courses mapped to HIS e-learning system %s: %s.',
+                $his_id,
+                $platform_count === null ? 'unavailable' : $platform_count
+            ));
+        }
         $this->endTimer();
     }
 
@@ -671,47 +718,52 @@ class ConsoleHandler
 
     protected function runUnitTests()
     {
-        $phpunit = new TestRunner;
         try {
-            $test_suite = $phpunit->getTest('test/GlobalTestSuite.php');
-            $config     = $this->getPhpUnitConfig();
-            $phpunit->dorun($test_suite, $config);
+            if (GlobalSettings::getInstance()->isPhpunitWithCoverage()) {
+                $this->ensureXdebugCoverageMode();
+            } elseif (getenv('XDEBUG_MODE') !== 'off') {
+                putenv('XDEBUG_MODE=off');
+            }
+            $argv = array_merge(array('phpunit'), $this->getPhpUnitArgv());
+            $exit_code = (new PHPUnitApplication())->run($argv);
+            if ($exit_code !== 0) {
+                die("Unit tests failed.\n");
+            }
         } catch (Exception $e) {
             print $e->getMessage() . "\n";
-            die ("Unit tests failed.");
+            die("Unit tests failed.\n");
         }
     }
 
     /**
      * @return array
      */
-    protected function getPhpUnitConfig()
+    protected function getPhpUnitArgv()
     {
+        $argv = array('-c', 'test/phpunit.xml');
+
         if (GlobalSettings::getInstance()->isPhpunitWithCoverage()) {
-            return $this->getPhpUnitConfigWithCoverage();
-        } else {
-            return $this->getPhpUnitConfigWithoutCoverage();
+            $argv[1] = 'test/phpunit-coverage.xml';
+            $argv[] = '--coverage-text';
+            $argv[] = '--show-uncovered-for-coverage-text';
+            $argv[] = '--only-summary-for-coverage-text';
         }
+
+        return $argv;
     }
 
-    /**
-     * @return array
-     */
-    protected function getPhpUnitConfigWithCoverage()
+    protected function ensureXdebugCoverageMode(): void
     {
-        return array(
-            'configuration'                  => 'test/phpunit.xml',
-            'coverageText'                   => true,
-            'coverageTextShowUncoveredFiles' => true,
-            'coverageTextShowOnlySummary'    => true
-        );
+        $mode = function_exists('xdebug_info') ? xdebug_info('mode') : array();
+        if (is_array($mode) && in_array('coverage', $mode, true)) {
+            return;
+        }
+
+        $php = PHP_BINARY !== '' ? PHP_BINARY : 'php';
+        $script = $_SERVER['SCRIPT_FILENAME'] ?? 'cmd.php';
+        $command = 'XDEBUG_MODE=coverage ' . escapeshellarg($php) . ' ' . escapeshellarg($script) . ' ts';
+        passthru($command, $exit_code);
+        exit($exit_code);
     }
 
-    /**
-     * @return array
-     */
-    protected function getPhpUnitConfigWithoutCoverage()
-    {
-        return array('configuration' => 'test/phpunit.xml');
-    }
 }

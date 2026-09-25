@@ -14,7 +14,7 @@ class WorkStatusContainerTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\Container\WorkStatusContainer();
 	}
@@ -31,10 +31,10 @@ class WorkStatusContainerTest extends PHPUnit\Framework\TestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function test_appendWorkStatus_shouldThrowInvalidArgumentException()
 	{
+		$this->expectException(\InvalidArgumentException::class);
 		$this->instance->appendWorkStatus('Workload');
 	}
 

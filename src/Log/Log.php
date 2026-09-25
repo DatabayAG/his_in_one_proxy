@@ -46,10 +46,43 @@ class Log
 
         if (is_writable($file)) {
             $this->logger = new Logger($channel);
-            $this->logger->pushHandler(new StreamHandler(GlobalSettings::getInstance()->getPathToLog(), Logger::DEBUG));
-        } else {
-            Utils::LogToShellAndExit(sprintf('Log file is not writable. Please ensure the file: "%s" has the correct permissions.', $file));
+            $this->logger->pushHandler(new StreamHandler($file, Logger::DEBUG));
+            return;
         }
+
+        if ($this->isWebRequest()) {
+            $this->respondLogNotWritable($file);
+            return;
+        }
+
+        Utils::LogToShellAndExit(sprintf('Log file is not writable. Please ensure the file: "%s" has the correct permissions.', $file));
+    }
+
+    protected function isWebRequest(): bool
+    {
+        return PHP_SAPI !== 'cli' && PHP_SAPI !== 'phpdbg';
+    }
+
+    /**
+     * Web bootstrap cannot write the shared logfile. Answer before routes or
+     * the database run, so clients see this failure instead of a later one.
+     */
+    protected function respondLogNotWritable(string $file): void
+    {
+        if (!headers_sent()) {
+            http_response_code(500);
+            header('Content-Type: application/json');
+        }
+
+        echo json_encode(
+            [
+                'error' => 'log_not_writable',
+                'path' => $file,
+            ],
+            JSON_UNESCAPED_SLASHES
+        );
+
+        Utils::terminate(1);
     }
 
     public function debug($a_message, $a_context = array())

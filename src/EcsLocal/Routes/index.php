@@ -8,6 +8,8 @@ use HisInOneProxy\EcsLocal\EcsLocalFunctions;
 use HisInOneProxy\Log\Log;
 use HisInOneProxy\Queue\QueueConstants;
 use HisInOneProxy\Queue\QueueDatabase;
+use HisInOneProxy\Soap\Interactions\DataCache;
+use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -250,8 +252,16 @@ $app->post(CC_COURSE_URLS, function (Request $request, Response $response, array
             $term_type_id = GlobalSettings::getInstance()->getActualTermId();
             $term_year = GlobalSettings::getInstance()->getActualTermYear();
 
-            if($lectureId !== '' && $first_found_url !== null) {
-                $db->insertLink($lectureId, $term_type_id, $term_year, $first_found_url->getTitle(), $first_found_url->getUrl(), $ecs_course_url, $logging);
+            if($lectureId !== '') {
+                if ($first_found_url === false) {
+                    $logging->error(sprintf('No LMS course URL in payload for lecture id %s.', $lectureId));
+                    return $response->withStatus(500);
+                }
+                try {
+                    $db->insertLink($lectureId, $term_type_id, $term_year, $first_found_url->getTitle(), $first_found_url->getUrl(), $ecs_course_url, $logging);
+                } catch (PDOException $e) {
+                    return $response->withStatus(500);
+                }
             }
 
         } else {

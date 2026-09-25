@@ -59,14 +59,15 @@ class CourseInterfaceService extends SoapService
     }
 
     /**
-     * @param null $term_type_id
-     * @param null $year
+     * @param null  $term_type_id
+     * @param null  $year
+     * @param array $criteria Optional findUnit81 filters, for example the e-learning mapping fields.
      * @return UnitIdList|null
      * @throws Exception
      */
-    public function findUnit($term_type_id = null, $year = null)
+    public function findUnit($term_type_id = null, $year = null, array $criteria = array())
     {
-        $params = array(array('termTypeValueId' => $term_type_id, 'termYear' => $year));
+        $params = array($this->buildFindUnitParams($term_type_id, $year, $criteria));
         try {
             $response      = $this->soap_course_interface->__soapCall('findUnit81', $params);
             $parser        = new Parser\ParseUnitIdList(new Log\Log());
@@ -76,6 +77,71 @@ class CourseInterfaceService extends SoapService
             $this->log->error($exception->getMessage());
         }
         return null;
+    }
+
+    /**
+     * Counts units from findUnit81 without logging every id.
+     * Pass termYearForMapping and termTypeValueIdForMapping to count only courses with an export mapping.
+     *
+     * @param null  $term_type_id
+     * @param null  $year
+     * @param array $criteria
+     * @return int|null Null when the SOAP call fails.
+     */
+    public function countUnits($term_type_id = null, $year = null, array $criteria = array())
+    {
+        $params = array($this->buildFindUnitParams($term_type_id, $year, $criteria));
+        try {
+            $response = $this->soap_course_interface->__soapCall('findUnit81', $params);
+            return $this->countUnitIds($response);
+        } catch (SoapFault $exception) {
+            $this->log->error($exception->getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * @param mixed $term_type_id
+     * @param mixed $year
+     * @param array $criteria
+     * @return array
+     */
+    protected function buildFindUnitParams($term_type_id, $year, array $criteria)
+    {
+        return array_merge(
+            array('termTypeValueId' => $term_type_id, 'termYear' => $year),
+            $criteria
+        );
+    }
+
+    /**
+     * @param mixed $response
+     * @return int
+     */
+    protected function countUnitIds($response)
+    {
+        if (!is_object($response) || !isset($response->unitIds) || $response->unitIds === null || $response->unitIds === '') {
+            return 0;
+        }
+
+        $unit_ids = $response->unitIds;
+        if ($unit_ids instanceof \SimpleXMLElement) {
+            return count($unit_ids->unitId);
+        }
+        if (is_object($unit_ids) && isset($unit_ids->unitId)) {
+            if (is_array($unit_ids->unitId)) {
+                return count($unit_ids->unitId);
+            }
+            if ($unit_ids->unitId === null || $unit_ids->unitId === '') {
+                return 0;
+            }
+            return 1;
+        }
+        if (is_array($unit_ids)) {
+            return count($unit_ids);
+        }
+
+        return 0;
     }
 
     /**

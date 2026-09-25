@@ -16,7 +16,7 @@ class ParsePersonExternalsTest extends TestCaseExtension
 	 */
 	protected $log;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 	}

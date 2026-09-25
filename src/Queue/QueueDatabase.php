@@ -9,6 +9,7 @@ use HisInOneProxy\Log\Log;
 use HisInOneProxy\Soap\Interactions\DataCache;
 use HisInOneProxy\System\Utils;
 use PDO;
+use PDOException;
 use PDOStatement;
 use React\Stream\Util;
 use const HisInOneProxy\EcsLocal\Routes\COURSE_MEMBERS;
@@ -449,8 +450,17 @@ class QueueDatabase extends QueueBase
     }
 
     public function insertLink($unit_id, $term_type, $term_year, $description, $link, $ecs_course_url, $logging) {
-        $this->prepare_insert_link_queue->execute([$unit_id, $term_type, $term_year, $description, $link, $ecs_course_url]);
-        $this->log->info(sprintf('Link for unit (%s), was written to database.', $unit_id));
+        try {
+            $this->prepare_insert_link_queue->execute([$unit_id, $term_type, $term_year, $description, $link, $ecs_course_url]);
+            $this->log->info(sprintf('Link for unit (%s), was written to database.', $unit_id));
+        } catch (PDOException $e) {
+            $this->log->error(sprintf(
+                'Could not write link for lecture id %s to link_queue: %s',
+                $unit_id,
+                $e->getMessage()
+            ));
+            throw $e;
+        }
     }
 
     public function markSentLink(int $link_id, int $unit_id = 0) {

@@ -35,6 +35,7 @@ class Functions
             self::appendFunction('fo', 'getLectureByIdForced', 'Gets a Lecture by UnitId amd force push this course. Uses id as param.');
             self::appendFunction('in', 'getInstitutions', 'Gets all institutions.');
             self::appendFunction('cc', 'getCourseCatalog', 'Gets course catalog.');
+            self::appendFunction('qc', 'quickCheckCatalog', 'Counts courses for a term and how many have an e-learning export mapping.');
             self::appendFunction('ge', 'getAllElearningPlatforms', 'Gets all elearning platforms.');
             self::appendFunction('gb', 'getAllBlockeds', 'Gets all blocked id states.');
             self::appendFunction('ts', 'wsdlHelper', 'Gets wsdls needed for unittests and runs tests.');

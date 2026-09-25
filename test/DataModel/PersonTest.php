@@ -14,7 +14,7 @@ class PersonTest extends PHPUnit\Framework\TestCase
 	 */
 	protected $instance;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = new DataModel\Person();
 	}
@@ -56,8 +56,9 @@ class PersonTest extends PHPUnit\Framework\TestCase
 
 	public function test_getLongText_shouldReturnLongText()
 	{
-		$this->instance->setLongText('Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Proin eget tortor risus. Donec sollicitudin molestie malesuada. Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat.');
-		$this->assertEquals('Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec sollicitudin molestie malesuada. Donec sollicitudin molestie malesuada. Proin eget tortor risus. Donec sollicitudin molestie malesuada. Curabitur aliquet quam id dui posuere blandit. Nulla quis lorem ut libero malesuada feugiat.', $this->instance->getLongText());
+		$longText = 'Lehrveranstaltung im Bachelorstudiengang Informatik, Wintersemester 2017.';
+		$this->instance->setLongText($longText);
+		$this->assertEquals($longText, $this->instance->getLongText());
 	}
 
 	public function test_getDefaultText_shouldReturnDefaultText()

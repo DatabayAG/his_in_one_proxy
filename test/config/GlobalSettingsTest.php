@@ -18,13 +18,13 @@ class GlobalSettingsTest extends TestCaseExtension
 	
 	protected $orig_server_url;
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->instance = Config\GlobalSettings::getInstance();
 		$this->orig_server_url = $this->instance->getHisServerUrl();
 	}
 
-	protected function tearDown()
+	protected function tearDown(): void
 	{
 		TestCaseExtension::callMethod(
 			$this->instance,
@@ -42,21 +42,47 @@ class GlobalSettingsTest extends TestCaseExtension
 					"HIS" : {
 						"username"           : "user",
 						"password"           : "pass",
-						"url"                : "http://his_url",
+						"url"                : "https://his.uni-example.de/qisserver/services2",
+						"soap_caching"       : "0",
 						"soap_debug"         : "false",
 						"ssl_validation"     : "false",
+						"person_id_type"     : "ecs_loginUID",
+						"login_suffix"       : "",
+						"blocked_ids"        : [],
+						"blocked_form_of_studies_ids" : [],
+						"work_status_ids"    : [1],
+						"remove_duplicate_degree_programmes" : "false",
 						"endpoint"           : {
 							"register_listener"  : "false",
-							"listener_url"       : "http://my_his_listener",
+							"listener_url"       : "http://localhost",
 							"listener_port"      : "8080",
 							"username"           : "user",
 							"password"           : "pass"
+						},
+						"text" : {
+							"current_term" : "getDefaultText",
+							"event_type"   : "getDefaultText",
+							"plan_element" : "getDefaultText",
+							"term"         : "getDefaultText",
+							"unit"         : "getDefaultText"
 						}
 					},
 					"ECS" : {
+						"use_local_ecs"      : "false",
+						"ecs_community_id"   : "0",
 						"auth_id"            : "user2",
-						"url"                : "http://super_ecs_server_url"
+						"password"           : "",
+						"url"                : "https://ecs.uni-example.de"
 					},
+					"HIStoECSMapping": {},
+					"HIStoECSCourseMapping" : {},
+					"Database" : {
+						"dsn" : "mysql:host=localhost;dbname=test;user=test;password=test"
+					},
+					"create_links"           : "false",
+					"process_links_count"    : 5,
+					"link_creation_title"    : "ILIAS",
+					"queue_type"             : "file_based",
 					"path_to_queue"          : "/tmp/my_path_to_queue",
 					"keep_elements_in_queue" : "true",
 					"path_to_log"          : "/tmp/phpunit.log",
@@ -128,7 +154,7 @@ class GlobalSettingsTest extends TestCaseExtension
 			array()
 		);
 
-		$this->assertEquals('http://his_url/', $this->instance->getHisServerUrl());
+		$this->assertEquals('https://his.uni-example.de/qisserver/services2/', $this->instance->getHisServerUrl());
 		unlink('my_tmp_phpunit_config.json');
 	}
 
@@ -315,20 +341,93 @@ class GlobalSettingsTest extends TestCaseExtension
 		$this->instance->readCustomConfig($json);
 		$this->assertEquals('user', $this->instance->getHisUserName());
 		$this->assertEquals('pass', $this->instance->getHisPassword());
-		$this->assertEquals('http://his_url/', $this->instance->getHisServerUrl());
+		$this->assertEquals('https://his.uni-example.de/qisserver/services2/', $this->instance->getHisServerUrl());
 		$this->assertEquals(false, $this->instance->getHisRegisterListener());
 		$this->assertEquals('user2', $this->instance->getEcsAuthId());
-		$this->assertEquals('http://super_ecs_server_url/', $this->instance->getEcsServerUrl());
+		$this->assertEquals('https://ecs.uni-example.de/', $this->instance->getEcsServerUrl());
 		$this->assertEquals('false', $this->instance->getValidateSsl());
 		$this->assertEquals('/tmp/my_path_to_queue/', $this->instance->getPathToQueue());
 		$this->assertEquals('60', $this->instance->getQueueTimer());
 		$endpoint = $this->instance->getEndPoint();
-		$this->assertEquals('http://my_his_listener', $endpoint->getEndPointUrl());
+		$this->assertEquals('http://localhost', $endpoint->getEndPointUrl());
 		$this->assertEquals('8080', $endpoint->getPort());
-		$this->assertEquals('http://my_his_listener:8080/', $endpoint->getUrlWithPort());
+		$this->assertEquals('http://localhost:8080/', $endpoint->getUrlWithPort());
 		$this->assertEquals('user', $endpoint->getUserName());
 		$this->assertEquals('pass', $endpoint->getPassword());
 		$this->assertEquals(true, $this->instance->isPhpunitWithCoverage());
 		unlink($json);
+	}
+
+	public function test_describeStartup_shouldReportMissingEssentialsAndInactiveDatabase()
+	{
+		$snapshot = $this->snapshotStartupSettings();
+		try {
+			TestCaseExtension::callMethod($this->instance, 'setHisServerUrl', array(''));
+			TestCaseExtension::callMethod($this->instance, 'setHisUserName', array(''));
+			TestCaseExtension::callMethod($this->instance, 'setHisPassword', array('secret-must-not-appear'));
+			$this->instance->setQueueType(\HisInOneProxy\Queue\QueueBase::FILE_BASED);
+			$this->instance->setDatabaseDsn('');
+			$this->instance->setUseLocalEcs('0');
+
+			$summary = $this->instance->describeStartup();
+
+			$this->assertStringContainsString('HIS url missing', $summary);
+			$this->assertStringContainsString('HIS credentials missing', $summary);
+			$this->assertStringContainsString('queue_type=file_based', $summary);
+			$this->assertStringContainsString('database inactive', $summary);
+			$this->assertStringNotContainsString('secret-must-not-appear', $summary);
+		} finally {
+			$this->restoreStartupSettings($snapshot);
+		}
+	}
+
+	public function test_describeStartup_shouldReportSchemaVersionWhenDatabaseIsActive()
+	{
+		$snapshot = $this->snapshotStartupSettings();
+		$directory = sys_get_temp_dir() . '/his-proxy-startup-' . uniqid('', true);
+		$previous = getcwd();
+		mkdir($directory);
+		try {
+			file_put_contents($directory . '/cfg_update_info.php', "5\n");
+			file_put_contents($directory . '/cfg_update_running.php', "6\n");
+			chdir($directory);
+			$this->instance->setQueueType(\HisInOneProxy\Queue\QueueBase::DB_BASED);
+			$this->instance->setDatabaseDsn('mysql:host=db.example;dbname=proxy;password=secret-must-not-appear');
+
+			$summary = $this->instance->describeStartup();
+
+			$this->assertStringContainsString('queue_type=db_based', $summary);
+			$this->assertStringContainsString('database active, schema version 5, update 6 running', $summary);
+			$this->assertStringNotContainsString('secret-must-not-appear', $summary);
+			$this->assertStringNotContainsString('mysql:', $summary);
+		} finally {
+			chdir($previous);
+			$this->restoreStartupSettings($snapshot);
+			@unlink($directory . '/cfg_update_info.php');
+			@unlink($directory . '/cfg_update_running.php');
+			@rmdir($directory);
+		}
+	}
+
+	private function snapshotStartupSettings(): array
+	{
+		return array(
+			'url' => $this->instance->getHisServerUrl(),
+			'username' => $this->instance->getHisUserName(),
+			'password' => $this->instance->getHisPassword(),
+			'queue_type' => $this->instance->getQueueType(),
+			'dsn' => $this->instance->getDatabaseDsn(),
+			'local_ecs' => $this->instance->isUseLocalEcs() ? '1' : '0',
+		);
+	}
+
+	private function restoreStartupSettings(array $snapshot): void
+	{
+		TestCaseExtension::callMethod($this->instance, 'setHisServerUrl', array($snapshot['url']));
+		TestCaseExtension::callMethod($this->instance, 'setHisUserName', array($snapshot['username']));
+		TestCaseExtension::callMethod($this->instance, 'setHisPassword', array($snapshot['password']));
+		$this->instance->setQueueType($snapshot['queue_type']);
+		$this->instance->setDatabaseDsn($snapshot['dsn']);
+		$this->instance->setUseLocalEcs($snapshot['local_ecs']);
 	}
 }

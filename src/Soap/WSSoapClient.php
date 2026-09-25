@@ -81,14 +81,14 @@ class WSSoapClient extends SoapClient
      * @param null   $output_headers
      * @return mixed
      */
-    public function __soapCall($function_name, $arguments, $options = null, $input_headers = null, &$output_headers = null)
+    public function __soapCall(string $name, array $args, ?array $options = null, $inputHeaders = null, &$outputHeaders = null): mixed
     {
         #try{
         if ($this->add_secure_header === true) {
             $this->__setSoapHeaders($this->generateWSSecurityHeader());
         }
         GlobalSettings::getInstance()->incrementCallsCounter();
-        return parent::__soapCall($function_name, $arguments, $options, $input_headers, $output_headers);
+        return parent::__soapCall($name, $args, $options, $inputHeaders, $outputHeaders);
         #}
         #catch(\Exception $e){
         #DataCache::getInstance()->getLog()->critical($e->getMessage());
@@ -124,10 +124,18 @@ class WSSoapClient extends SoapClient
      * @param int    $one_way
      * @return mixed|string
      */
-    public function __doRequest($request, $location, $action, $version, $one_way = 0)
+    public function __doRequest(string $request, string $location, string $action, int $version, bool $oneWay = false, ?string $uriParserClass = null): ?string
     {
 
-        $result = parent::__doRequest($request, $location, $action, $version, $one_way);
+        if ($uriParserClass !== null) {
+            $result = parent::__doRequest($request, $location, $action, $version, $oneWay, $uriParserClass);
+        } else {
+            $result = parent::__doRequest($request, $location, $action, $version, $oneWay);
+        }
+        if (!is_string($result)) {
+            return $result;
+        }
+
         $result = str_replace('<his:childOrgUnit>', '<his:orgunit>', $result);
         $result = str_replace('</his:childOrgUnit>', '</his:orgunit>', $result);
 

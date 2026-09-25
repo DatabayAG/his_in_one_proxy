@@ -4,6 +4,7 @@ namespace HisInOneProxy\Config;
 
 require_once __DIR__ . '/../Log/LogConfig.php';
 
+use HisInOneProxy\Database\SchemaVersion;
 use HisInOneProxy\DataModel\Endpoint;
 use HisInOneProxy\DataModel\HisToEcsCourseIdMapping;
 use HisInOneProxy\DataModel\HisToEcsIdMapping;
@@ -58,6 +59,7 @@ class GlobalSettings
     protected int $process_links_count = 5;
     protected string $link_creation_title = "";
     protected bool $remove_duplicate_degree_programmes = false;
+    protected bool $group_title_from_plan_element = false;
 
     private function __construct()
     {
@@ -101,50 +103,51 @@ class GlobalSettings
 
     protected function setValues(): void
     {
-        $this->setHisServerUrl($this->config->get('HIS.url'));
-        $this->setHisUserName($this->config->get('HIS.username'));
-        $this->setHisPassword($this->config->get('HIS.password'));
-        $this->setSoapDebug($this->config->get('HIS.soap_debug'));
-        $this->setSoapCaching($this->config->get('HIS.soap_caching'));
-        $this->setValidateSsl($this->config->get('HIS.ssl_validation'));
-        $this->setActualTermId($this->config->get('HIS.actual_term_id'));
-        $this->setActualTermYear($this->config->get('HIS.actual_term_year'));
-        $this->setPersonIdType($this->config->get('HIS.person_id_type'));
-        $this->setLoginSuffix($this->config->get('HIS.login_suffix'));
-        $this->setBlockedIds($this->config->get('HIS.blocked_ids'));
-        $this->setBlockedFormOfStudiesIds($this->config->get('HIS.blocked_form_of_studies_ids'));
-        $this->setRemoveDuplicateDegreeProgrammes($this->config->get('HIS.remove_duplicate_degree_programmes'));
-        $this->setTextConfig($this->config->get('HIS.text'));
-        $this->setWorkStatusIds($this->config->get('HIS.work_status_ids'));
+        $this->setHisServerUrl((string) ($this->config->get('HIS.url') ?? ''));
+        $this->setHisUserName((string) ($this->config->get('HIS.username') ?? ''));
+        $this->setHisPassword((string) ($this->config->get('HIS.password') ?? ''));
+        $this->setSoapDebug((string) ($this->config->get('HIS.soap_debug') ?? 'false'));
+        $this->setSoapCaching((string) ($this->config->get('HIS.soap_caching') ?? '0'));
+        $this->setValidateSsl((string) ($this->config->get('HIS.ssl_validation') ?? ''));
+        $this->setActualTermId((string) ($this->config->get('HIS.actual_term_id') ?? ''));
+        $this->setActualTermYear((string) ($this->config->get('HIS.actual_term_year') ?? '0'));
+        $this->setPersonIdType((string) ($this->config->get('HIS.person_id_type') ?? ''));
+        $this->setLoginSuffix((string) ($this->config->get('HIS.login_suffix') ?? ''));
+        $this->setBlockedIds($this->config->get('HIS.blocked_ids') ?? []);
+        $this->setBlockedFormOfStudiesIds($this->config->get('HIS.blocked_form_of_studies_ids') ?? []);
+        $this->setRemoveDuplicateDegreeProgrammes($this->getBoolFromConfigString((string) ($this->config->get('HIS.remove_duplicate_degree_programmes') ?? 'false')));
+        $this->setTextConfig($this->config->get('HIS.text') ?? []);
+        $this->setGroupTitleFromPlanElement((bool) ($this->config->get('HIS.group_title_from_plan_element') ?? false));
+        $this->setWorkStatusIds($this->config->get('HIS.work_status_ids') ?? []);
 
-        $this->setHisRegisterListener($this->config->get('HIS.endpoint.register_listener'));
+        $this->setHisRegisterListener((string) ($this->config->get('HIS.endpoint.register_listener') ?? 'false'));
         $this->end_point = new Endpoint();
-        $this->end_point->setEndPointUrl($this->config->get('HIS.endpoint.listener_url'));
-        $this->end_point->setPort($this->config->get('HIS.endpoint.listener_port'));
-        $this->end_point->setUserName($this->config->get('HIS.endpoint.username'));
-        $this->end_point->setPassword($this->config->get('HIS.endpoint.password'));
+        $this->end_point->setEndPointUrl((string) ($this->config->get('HIS.endpoint.listener_url') ?? ''));
+        $this->end_point->setPort((string) ($this->config->get('HIS.endpoint.listener_port') ?? ''));
+        $this->end_point->setUserName((string) ($this->config->get('HIS.endpoint.username') ?? ''));
+        $this->end_point->setPassword((string) ($this->config->get('HIS.endpoint.password') ?? ''));
 
-        $this->setUseLocalEcs($this->config->get('ECS.use_local_ecs'));
-        $this->setEcsCommunityId($this->config->get('ECS.ecs_community_id'));
-        $this->setEcsServerUrl($this->config->get('ECS.url'));
-        $this->setEcsAuthId($this->config->get('ECS.auth_id'));
-        $this->setEcsPassword($this->config->get('ECS.password'));
+        $this->setUseLocalEcs((string) ($this->config->get('ECS.use_local_ecs') ?? 'false'));
+        $this->setEcsCommunityId((string) ($this->config->get('ECS.ecs_community_id') ?? ''));
+        $this->setEcsServerUrl((string) ($this->config->get('ECS.url') ?? ''));
+        $this->setEcsAuthId((string) ($this->config->get('ECS.auth_id') ?? ''));
+        $this->setEcsPassword((string) ($this->config->get('ECS.password') ?? ''));
 
-        $this->setDatabaseDsn($this->config->get('Database.dsn'));
+        $this->setDatabaseDsn((string) ($this->config->get('Database.dsn') ?? ''));
 
-        $this->setCreateLinks($this->config->get('create_links'));
-        $this->setProcessLinksCount($this->config->get('process_links_count'));
-        $this->setLinkCreationTitle($this->config->get('link_creation_title'));
-        $this->setQueueType($this->config->get('queue_type'));
-        $this->setPathToQueue($this->config->get('path_to_queue'));
-        $this->setQueueTimer($this->config->get('queue_timer'));
-        $this->setPathToLog($this->config->get('path_to_log'));
-        $this->setKeepElementInQueue($this->config->get('keep_elements_in_queue'));
-        $this->setDebug($this->config->get('debug'));
+        $this->setCreateLinks($this->getBoolFromConfigString((string) ($this->config->get('create_links') ?? 'false')));
+        $this->setProcessLinksCount((int) ($this->config->get('process_links_count') ?? 0));
+        $this->setLinkCreationTitle((string) ($this->config->get('link_creation_title') ?? ''));
+        $this->setQueueType((string) ($this->config->get('queue_type') ?? ''));
+        $this->setPathToQueue((string) ($this->config->get('path_to_queue') ?? ''));
+        $this->setQueueTimer((string) ($this->config->get('queue_timer') ?? '0'));
+        $this->setPathToLog((string) ($this->config->get('path_to_log') ?? ''));
+        $this->setKeepElementInQueue((string) ($this->config->get('keep_elements_in_queue') ?? 'false'));
+        $this->setDebug((string) ($this->config->get('debug') ?? 'false'));
 
-        $this->his_to_ecs_system_id_mapping = new HisToEcsIdMapping($this->config->get('HIStoECSMapping'));
-        $this->his_to_ecs_system_course_id_mapping = new HisToEcsCourseIdMapping($this->config->get('HIStoECSCourseMapping'));
-        $this->setPhpunitWithCoverage($this->config->get('PHPUnit.coverage'));
+        $this->his_to_ecs_system_id_mapping = new HisToEcsIdMapping($this->config->get('HIStoECSMapping') ?? []);
+        $this->his_to_ecs_system_course_id_mapping = new HisToEcsCourseIdMapping($this->config->get('HIStoECSCourseMapping') ?? []);
+        $this->setPhpunitWithCoverage((string) ($this->config->get('PHPUnit.coverage') ?? 'false'));
     }
 
     public static function getInstance(): self
@@ -192,6 +195,7 @@ class GlobalSettings
             "HIS.blocked_form_of_studies_ids" => $this->getBlockedFormOfStudiesIds(),
             "HIS.remove_duplicate_degree_programmes" => $this->isRemoveDuplicateDegreeProgrammes(),
             "HIS.text" => $this->getTextConfig(),
+            "HIS.group_title_from_plan_element" => $this->isGroupTitleFromPlanElement(),
             "HIS.work_status_ids" => $this->getWorkStatusIds(),
             "ECS.use_local_ecs" => $this->isUseLocalEcs(),
             "ECS.ecs_community_id" => $this->getEcsCommunityId(),
@@ -325,7 +329,7 @@ class GlobalSettings
 
     public function setActualTermYear(string $actual_term_year): void
     {
-        $this->actual_term_year = $actual_term_year;
+        $this->actual_term_year = (int) $actual_term_year;
     }
 
     public function getBlockedIds(): array
@@ -405,7 +409,7 @@ class GlobalSettings
 
     protected function setQueueTimer(string $queue_timer): void
     {
-        $this->queue_timer = $queue_timer;
+        $this->queue_timer = (int) $queue_timer;
     }
 
     public function getPathToLog(): string
@@ -504,7 +508,7 @@ class GlobalSettings
 
     protected function getBoolFromConfigString(string $value): bool
     {
-        return (bool) $value;
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
     public function getDatabaseDsn(): string
@@ -547,10 +551,84 @@ class GlobalSettings
         $this->workStatusIds = $workStatusIds;
     }
 
+    public function describeStartup(): string
+    {
+        if ($this->isUseLocalEcs()) {
+            $ecs = sprintf(
+                'local ECS community id %s',
+                $this->configuredLabel($this->getEcsCommunityId() !== '' && $this->getEcsCommunityId() !== '0')
+            );
+        } else {
+            $ecs = sprintf(
+                'ECS url %s, ECS auth %s',
+                $this->configuredLabel($this->getEcsServerUrl() !== ''),
+                $this->configuredLabel($this->getEcsAuthId() !== '' && $this->getEcsPassword() !== '')
+            );
+        }
+
+        return sprintf(
+            'HIS url %s, HIS credentials %s, HIS-to-ECS mapping %s, course mapping %s, queue_type=%s, queue path %s, log path %s, %s, %s.',
+            $this->configuredLabel($this->isHisUrlConfigured()),
+            $this->configuredLabel($this->getHisUserName() !== '' && $this->getHisPassword() !== ''),
+            $this->configuredLabel($this->isConfigListSet('HIStoECSMapping')),
+            $this->configuredLabel($this->isConfigListSet('HIStoECSCourseMapping')),
+            $this->getQueueType(),
+            $this->configuredLabel($this->getPathToQueue() !== ''),
+            $this->configuredLabel($this->getPathToLog() !== ''),
+            $ecs,
+            $this->describeDatabase()
+        );
+    }
+
+    private function configuredLabel(bool $isSet): string
+    {
+        return $isSet ? 'set' : 'missing';
+    }
+
+    private function isHisUrlConfigured(): bool
+    {
+        $url = $this->getHisServerUrl();
+
+        return $url !== '' && $url !== '/';
+    }
+
+    private function isConfigListSet(string $key): bool
+    {
+        $value = $this->config->get($key, []);
+
+        return is_array($value) && $value !== [];
+    }
+
+    private function isDatabaseActive(): bool
+    {
+        return $this->getQueueType() === QueueBase::DB_BASED || trim($this->getDatabaseDsn()) !== '';
+    }
+
+    private function describeDatabase(): string
+    {
+        if (!$this->isDatabaseActive()) {
+            return 'database inactive';
+        }
+
+        $applied = SchemaVersion::readApplied();
+        if ($applied === null) {
+            $state = 'database active, schema version unknown';
+        } else {
+            $state = sprintf('database active, schema version %d', $applied);
+        }
+
+        $running = SchemaVersion::readRunning();
+        if ($running > 0) {
+            $state .= sprintf(', update %d running', $running);
+        }
+
+        return $state;
+    }
+
     private function validateSettings()
     {
         if($this->isUseLocalEcs() && $this->getQueueType() === 'file_based') {
-            Utils::LogToShellAndExit('The usage of the local ecs implementation needs a "db_based" queue type, you have selected "file_base", this will not work.');
+            Utils::LogToShellAndExit('The usage of the local ecs implementation needs a "db_based" queue type, you have selected "file_based", this will not work.');
         }
     }
 
@@ -592,6 +670,16 @@ class GlobalSettings
     public function setRemoveDuplicateDegreeProgrammes(bool $remove_duplicate_degree_programmes): void
     {
         $this->remove_duplicate_degree_programmes = $remove_duplicate_degree_programmes;
+    }
+
+    public function isGroupTitleFromPlanElement(): bool
+    {
+        return $this->group_title_from_plan_element;
+    }
+
+    public function setGroupTitleFromPlanElement(bool $group_title_from_plan_element): void
+    {
+        $this->group_title_from_plan_element = $group_title_from_plan_element;
     }
 
 }
