@@ -139,7 +139,7 @@ $app->get('/campusconnect/courses/{id}/details', function (Request $request, Res
     $payload = $ecs_local_functions->getPayloadForCourses($valid_participant, $courseId);
     $memberships_json = $ecs_local_functions->jsonEncodeWrapper($payload);
     $response->getBody()->write($memberships_json);
-    $logging->info(sprintf('Sent message details for %s', CC_COURSES . '/details'));
+    $logging->info(sprintf('Sent message details for %s', $request->getUri()->getPath()));
 
     return $response->withHeader('Content-Type', 'application/json');
 });
@@ -185,7 +185,7 @@ $app->get('/campusconnect/course_members/{id}/details', function (Request $reque
     $payload = $ecs_local_functions->getPayloadForCourseMembers($valid_participant, $courseId);
     $json = $ecs_local_functions->jsonEncodeWrapper($payload);
     $response->getBody()->write($json);
-    $logging->info(sprintf('Sent message details for %s', '/campusconnect/course_members/{id}/details'));
+    $logging->info(sprintf('Sent message details for %s', $request->getUri()->getPath()));
 
     return $response->withHeader('Content-Type', 'application/json');
 });

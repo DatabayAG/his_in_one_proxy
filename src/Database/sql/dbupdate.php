@@ -202,3 +202,46 @@ if(!$GLOBALS['DBPDO']->tableExists('link_queue'))
     $GLOBALS['DBPDO']->alterColumAutoIncrementAndPrimary('link_queue', 'link_id');
 }
 ?>
+<#5>
+<?php
+if ($GLOBALS['DBPDO']->tableExists('link_queue')) {
+    $column = $GLOBALS['DBPDO']->getPdo()
+        ->query("SHOW COLUMNS FROM link_queue LIKE 'unit_id'")
+        ->fetch(\PDO::FETCH_ASSOC);
+    $type = isset($column['Type']) ? strtolower((string) $column['Type']) : '';
+    if ($type !== '' && strpos($type, 'int') !== false) {
+        $GLOBALS['DBPDO']->getPdo()->exec(
+            'ALTER TABLE link_queue MODIFY unit_id VARCHAR(255) NOT NULL'
+        );
+    }
+}
+?>
+<#6>
+<?php
+if ($GLOBALS['DBPDO']->tableExists('service_queue'))
+{
+    $statement = $GLOBALS['DBPDO']->getPdo()->query('SHOW INDEX FROM `service_queue`');
+    $columns_by_index = array();
+    if ($statement !== false) {
+        while ($row = $statement->fetch(\PDO::FETCH_ASSOC)) {
+            $key_name = $row['Key_name'] ?? $row['key_name'];
+            $sequence = (int) ($row['Seq_in_index'] ?? $row['seq_in_index']);
+            $column_name = $row['Column_name'] ?? $row['column_name'];
+            $columns_by_index[$key_name][$sequence] = $column_name;
+        }
+    }
+
+    $index_exists = false;
+    foreach ($columns_by_index as $columns) {
+        ksort($columns);
+        if (array_values($columns) === array('sent', 'service_id')) {
+            $index_exists = true;
+            break;
+        }
+    }
+
+    if (!$index_exists) {
+        $GLOBALS['DBPDO']->addIndex('service_queue', array('sent', 'service_id'), 'ssi');
+    }
+}
+?>

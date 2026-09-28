@@ -40,13 +40,15 @@
         lecture_id TEXT DEFAULT NULL
     );
 
+    CREATE INDEX IF NOT EXISTS ssi_idx ON service_queue (sent, service_id);
+
 ---
 
     DROP TABLE IF EXISTS link_queue;
 
     CREATE TABLE link_queue (
         link_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        unit_id INTEGER NOT NULL,
+        unit_id TEXT NOT NULL,
         term_type INTEGER NOT NULL,
         term_year INTEGER NOT NULL,
         description TEXT NOT NULL,
