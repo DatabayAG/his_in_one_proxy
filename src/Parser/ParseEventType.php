@@ -17,16 +17,16 @@ class ParseEventType extends SimpleXmlParser
     public function parse($xml)
     {
         $container = array();
-        if ($this->doesAttributeExist($xml, 'listOfEventtypes')) {
-            $xml = $xml->listOfEventtypes;
-            if ($this->doesMoreThanOneElementExists($xml, 'eventtypevalue')) {
-                foreach ($xml->eventtypevalue as $event_type) {
+        if ($this->doesAttributeExist($xml, 'values')) {
+            $xml = $xml->values;
+            if ($this->doesMoreThanOneElementExists($xml, 'value')) {
+                foreach ($xml->value as $event_type) {
                     $obj                            = $this->buildObject($event_type);
                     $container[trim($obj->getId())] = $obj;
                 }
             } else {
-                if ($this->doesExactlyOneElementExists($xml, 'eventtypevalue')) {
-                    $obj                            = $this->buildObject($xml->eventtypevalue);
+                if ($this->doesExactlyOneElementExists($xml, 'value')) {
+                    $obj                            = $this->buildObject($xml->value);
                     $container[trim($obj->getId())] = $obj;
                 }
             }
